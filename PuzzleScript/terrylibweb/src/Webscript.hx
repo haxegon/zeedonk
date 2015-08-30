@@ -53,7 +53,7 @@ class Webscript {
 		
 		try {
 			#if terrylibwebhtml5debug
-				loadfile("tests/invalidchar.txt");
+				loadfile("tests/unterminatedcomment.txt");
 			#else
 				ExternalInterface.addCallback("loadscript", loadscript);
 			#end

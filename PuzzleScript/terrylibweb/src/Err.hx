@@ -23,13 +23,13 @@ class Err {
 		}else if (errorcode == PRE_MISSINGUPDATE){
 			Webdebug.error("ERROR: An \"update()\" function is required.");
 		}else if (errorcode == PARSER_INIT) {
-			Webdebug.error("PARSER ERROR in processing script file.");
+			Webdebug.error("PARSER ERROR in processing script file.", errorline);
 			outputdetails(details);
 		}else if (errorcode == PARSER_NEW){
-			Webdebug.error("RUNTIME ERROR (in function new())", linenum);
+			Webdebug.error("RUNTIME ERROR (in function new())", errorline);
 			outputdetails(details);
 		}else if (errorcode == RUNTIME_INIT) {
-			Webdebug.error("RUNTIME ERROR (in initial run)", linenum);
+			Webdebug.error("RUNTIME ERROR (in initial run)", errorline);
 			outputdetails(details);
 		}else if (errorcode == RUNTIME_UPDATE){
 			Webdebug.error("RUNTIME ERROR", errorline);
@@ -69,6 +69,16 @@ class Err {
 				returnarray.push("Unexpected \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
 				returnarray.push(errorstr);
 				return returnarray;
+			}else if (errorhandle.e[0] == "EInvalidChar") {
+				geterrorline(false);
+				returnarray.push("Invalid character \"" + String.fromCharCode(errorhandle.e[2]) + "\" in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
+			}else if (errorhandle.e[0] == "EUnterminatedComment") {
+				geterrorline(false);
+				returnarray.push("Whoops, you forgot to close a comment in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
 			}else if (errorhandle.e[0] == "EUnterminatedString") {
 				geterrorline(false);
 				returnarray.push("Unterminated string in line " + errorline + ":");
@@ -80,6 +90,7 @@ class Err {
 				returnarray.push(errorstr);
 				return returnarray;
 			}else {
+				trace("ERRORHANDLE OBJECT :\n", errorhandle, "\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: "+ errorhandle.e[1] + "\n2: "+ errorhandle.e[2] + "\n3: "+ errorhandle.e[3] + "\n}");
 				trace(errorhandle.e);
 				for (i in 2 ... errorhandle.e.length){
 					errstr = errstr + " " + errorhandle.e[i];

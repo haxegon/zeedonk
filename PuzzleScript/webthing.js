@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "713", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "722", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1785,13 +1785,13 @@ Err.log = function(errorcode,linenum,details) {
 		Webdebug.error("ERROR: Bracket mismatch.");
 		Webdebug.error("(Missing a { or } bracket somewhere.)");
 	} else if(errorcode == Err.PRE_MISSINGUPDATE) Webdebug.error("ERROR: An \"update()\" function is required."); else if(errorcode == Err.PARSER_INIT) {
-		Webdebug.error("PARSER ERROR in processing script file.");
+		Webdebug.error("PARSER ERROR in processing script file.",Err.errorline);
 		Err.outputdetails(details);
 	} else if(errorcode == Err.PARSER_NEW) {
-		Webdebug.error("RUNTIME ERROR (in function new())",linenum);
+		Webdebug.error("RUNTIME ERROR (in function new())",Err.errorline);
 		Err.outputdetails(details);
 	} else if(errorcode == Err.RUNTIME_INIT) {
-		Webdebug.error("RUNTIME ERROR (in initial run)",linenum);
+		Webdebug.error("RUNTIME ERROR (in initial run)",Err.errorline);
 		Err.outputdetails(details);
 	} else if(errorcode == Err.RUNTIME_UPDATE) {
 		Webdebug.error("RUNTIME ERROR",Err.errorline);
@@ -1823,6 +1823,16 @@ Err.process = function(errorhandle) {
 			returnarray.push("Unexpected \"" + errorhandle.e[2] + "\" in line " + Err.errorline + ":");
 			returnarray.push(Err.errorstr);
 			return returnarray;
+		} else if(errorhandle.e[0] == "EInvalidChar") {
+			Err.geterrorline(false);
+			returnarray.push("Invalid character \"" + String.fromCharCode(errorhandle.e[2]) + "\" in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
+		} else if(errorhandle.e[0] == "EUnterminatedComment") {
+			Err.geterrorline(false);
+			returnarray.push("Whoops, you forgot to close a comment in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
 		} else if(errorhandle.e[0] == "EUnterminatedString") {
 			Err.geterrorline(false);
 			returnarray.push("Unterminated string in line " + Err.errorline + ":");
@@ -1834,7 +1844,8 @@ Err.process = function(errorhandle) {
 			returnarray.push(Err.errorstr);
 			return returnarray;
 		} else {
-			haxe.Log.trace(errorhandle.e,{ fileName : "Err.hx", lineNumber : 83, className : "Err", methodName : "process"});
+			haxe.Log.trace("ERRORHANDLE OBJECT :\n",{ fileName : "Err.hx", lineNumber : 93, className : "Err", methodName : "process", customParams : [errorhandle,"\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: " + errorhandle.e[1] + "\n2: " + errorhandle.e[2] + "\n3: " + errorhandle.e[3] + "\n}"]});
+			haxe.Log.trace(errorhandle.e,{ fileName : "Err.hx", lineNumber : 94, className : "Err", methodName : "process"});
 			var _g1 = 2;
 			var _g = errorhandle.e.length;
 			while(_g1 < _g) {
