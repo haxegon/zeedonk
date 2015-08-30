@@ -1,0 +1,3 @@
+cd terrylibweb
+./build
+cd ..
