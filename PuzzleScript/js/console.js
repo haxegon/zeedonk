@@ -17,7 +17,10 @@ function jumpToLine(i,cpos) {
 var consolecache = [];
 
 function consolePrintWithLines(text,lineNumber,urgent) {
-    
+    if (typeof text === "object"){
+        text=JSON.stringify(text);
+    }
+
     if (typeof urgent==="undefined") {
         urgent=false;
     }
