@@ -28,17 +28,16 @@ var instCols = [
   [0x008800,0x55ff55]
 ];
 
-
 var blackNotes = [false,true,false,true,false,false,true,false,true,false,true,false];
 
 /*
 FILE
-	patternLength : [1-16]
-	cellDuration : [1..10]
-	instruments : 5*int8
-	sequences : seqSlotCount*[1..12]
-	notes : seqCount*
-							[ noteCount * ([1..128],[1..16],[1..16],[] )]
+  patternLength : [1-16]
+  cellDuration : [1..10]
+  instruments : 5*int8
+  sequences : seqSlotCount*[1..12]
+  notes : seqCount*
+              [ noteCount * ([1..128],[1..16],[1..16],[] )]
 */
 // a note is [note, length, onset, amplitude]
 var dat = {
@@ -71,46 +70,81 @@ var B62 = [ "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q",
   notes:[]};*/
   
 function loadDat(s){
-  Debug.log(s);
+//  Debug.log(s);
   s = unmakeRLE(s);
   var arr :Array = [];
   for(ci in 0...s.length){
-  	var c = s[ci];
-  	arr.push(B62.indexOf(c));
-	}
-  Debug.log(arr);
+    var c = s[ci];
+    arr.push(B62.indexOf(c));
+  }
   dat = {};
-	
-	var i=0;
-	dat.patternLength=arr[i];
+  
+  var i=0;
+  dat.patternLength=arr[i];
 
-	i++;
-	dat.cellDuration=arr[i];
+  i++;
+  dat.cellDuration=arr[i];
 
-	dat.instruments=[];
-	for (j in 0...5){
+  dat.instruments=[];
+  for (j in 0...5){
     var n=0;
     for (k in 0...5){
       i++;
-   		n = n + Math.pow(62,k)*arr[i];      
+      n = n + Math.pow(62,k)*arr[i];      
     }
     dat.instruments.push(n);
   }
     
   i++;
-	var sequenceSlotCount = arr[i];
+  var sequenceSlotCount = arr[i];
 
-	dat.sequences=[];
-	for (j in 0...sequenceSlotCount){
-  	i++;
+  dat.sequences=[];
+  for (j in 0...sequenceSlotCount){
+    i++;
     dat.sequences.push(arr[i]);
   }
        
-  Debug.log(dat.sequences);
-	Debug.log("patternlength "+dat.patternLength);
-	Debug.log("cellDuration "+dat.cellDuration);
-	Debug.log("instruments "+dat.instruments);
-	Debug.log("sequences "+dat.sequences);
+  var outputAr=[];
+
+  i++;
+  var sequenceCount=arr[i];
+  outputAr.push(arr[i]);
+  dat.notes=[];
+  for (j in 0...sequenceCount){       
+    var sequence = [[],[],[],[],[]];
+    for (m in 0...5){
+      i++;      
+      var noteCount=arr[i];
+  outputAr.push(arr[i]);
+      var noteSeq=sequence[m];
+      for(k in 0...noteCount){
+        i++;
+        var v1 = arr[i];
+  outputAr.push(arr[i]);
+        i++;
+        var v2 = arr[i];
+  outputAr.push(arr[i]);
+        var v = v1+62*v2;
+
+        noteSeq.push([v]);  
+      }
+      for (l in 1...4){
+        for(m in 0...noteCount){
+            i++;
+            noteSeq[m].push(arr[i]);
+  outputAr.push(arr[i]);
+          }
+      }
+    }
+    dat.notes.push(sequence);
+  }
+  Debug.log("loadDat",outputAr);
+/*  Debug.log(dat.sequences);
+  Debug.log("patternlength "+dat.patternLength);
+  Debug.log("cellDuration "+dat.cellDuration);
+  Debug.log("instruments "+dat.instruments);
+  Debug.log("sequences "+dat.sequences);
+  Debug.log("notes "+dat.notes);*/
 }
     
 function saveDat():String{
@@ -120,7 +154,7 @@ function saveDat():String{
   intArray.push(dat.patternLength);
   intArray.push(dat.cellDuration);
   for ( i in 0...5){
-   	var n = dat.instruments[i];
+    var n = dat.instruments[i];
     for ( j in 0...5){
       var p1 = Math.pow(62,j);
       var v = Std.int(n/p1)%62;
@@ -132,50 +166,143 @@ function saveDat():String{
       intArray.push(s);
   }
 
-  intArray.push(dat.notes.length);
+  var outputAr=[];
+//  Debug.log(["dat.notes:",dat.notes]);
+  intArray.push(dat.notes.length);  
+  outputAr.push(intArray[intArray.length-1]);
   for(r in dat.notes){
+//    Debug.log("R"+r+" "+r.length);
     for (i in 0...5){
       var instNotes = r[i];
+//      Debug.log("IN" +instNotes);
       intArray.push(instNotes.length);
+  outputAr.push(intArray[intArray.length-1]);
       for (n in instNotes){
-      	intArray.push(n[0]%62);
-      	intArray.push(Std.int(n[0]/62)%62);    
+        intArray.push(n[0]%62);
+  outputAr.push(intArray[intArray.length-1]);
+        intArray.push(Std.int(n[0]/62)%62);    
+  outputAr.push(intArray[intArray.length-1]);
       }
-    for (j in 1...3){
-      for (n in instNotes){            
-      	intArray.push(n[j]);
+      for (j in 1...4){
+        for (n in instNotes){            
+          intArray.push(n[j]);
+  outputAr.push(intArray[intArray.length-1]);
+        }
       }
-    }
     }
   }
-  Debug.log(intArray);
+  Debug.log("saveDat",outputAr);
 
   var result="";
-	for( n in intArray){
-		result = result+B62[n];    
+  for( n in intArray){
+    result = result+B62[n];    
   }
-  Debug.log(result);
+//  Debug.log(result);
   result = makeRLE(result);
-  Debug.log(result);
-	result = unmakeRLE(result);
-  Debug.log(result);
+//  Debug.log(result);
+//  result = unmakeRLE(result);
+//  Debug.log(result);
   return result;
 }
 
+  /*   Base4K encoding for JavaScript
+ *   Copyright (c) 2014 Secomba GmbH
+ *   Licensed under the MIT license (https://raw.githubusercontent.com/secomba/base4k/master/LICENSE)
+ *   Version: 1.0.0
+ */
+
+//-----CLASS Base4K---------------------------------------------------------
+var BASE_FLAG_START = 0x04000;
+var BASE1_START     = 0x05000;
+var BASE_FLAG_SIZE  = 0x100;
+var BASE1_SIZE      = 0x01000;
+
+// raw=Uint8Array, ret=String
+function encode4K(raw)
+{
+        var offset = 0;
+        var result = "";
+        
+        var i=0;
+        while (i<raw.length*2-2){
+          if(i%2==0)
+            offset = ((raw[i/2]<<4)|((raw[i/2+1]>>>4)&0x0f))&0x0fff;
+          else
+            offset = ((raw[(i-1)/2]<<8)|(raw[(i+1)/2]&0xff))&0x0fff;
+
+          offset += Base4K_BASE1_START;
+
+          result += String.fromCharCode(offset);
+          i+=3;
+        }
+
+        if((raw.length*2) % 3 == 2) {
+                offset = (raw[raw.length-1]&0xff)+Base4K_BASE_FLAG_START;
+                result += String.fromCharCode(offset);
+        } else if((raw.length*2) % 3 == 1) {
+                offset = ((raw[raw.length-1]&0x0f))+Base4K_BASE_FLAG_START;
+                result += String.fromCharCode(offset);
+        }
+
+        return result;
+}
+
+// encoded=String, ret=Uint8Array
+function decode4k (encoded)
+{
+        var code = 0;
+
+        var buffer = new Array();
+        var intCollector = new Array();
+
+        for( i in 0...encoded.length) {
+
+                code = encoded.charCodeAt(i);
+
+                if(!(code>=Base4K_BASE1_START && code<Base4K_BASE1_START+Base4K_BASE1_SIZE)) {
+                   if(i<encoded.length-1 || !(code>=Base4K_BASE_FLAG_START && code<Base4K_BASE_FLAG_START+Base4K_BASE_FLAG_SIZE)) {
+                           throw "invalid Base4K encoding";
+                   }
+                }
+                intCollector.push(code);
+        }
+
+        for( i in 0...intCollector.length) {
+                if(intCollector[i]>=Base4K_BASE1_START) {
+                        intCollector[i] -= Base4K_BASE1_START;
+                } else {
+                        intCollector[i] -= Base4K_BASE_FLAG_START;
+                        if(i%2==0)
+                                buffer.push(intCollector[i]&0xff);
+                        else
+                                buffer.push(((intCollector[i-1]<<4)|((intCollector[i]&0x0f))&0xff));
+                        break;
+                }
+                if(i%2==0) {
+                        buffer.push((intCollector[i]>>>4)&0xff);
+                } else {
+                        buffer.push(((intCollector[i-1]<<4)|((intCollector[i]&0x0f00)>>>8))&0xff);
+                        buffer.push(intCollector[i]&0xff);
+                }
+        }
+
+        return new Uint8Array(buffer);
+}
+  
   function makeRLE(s):String{
-		var result ="";
+    var result ="";
     var lastChar=s[0];
     var lastCharCount=1;
     for (i in 1...s.length){
          var c = s[i];
          if (c == lastChar){
-     		 	lastCharCount++; 
+          lastCharCount++; 
     } else {
       if (lastCharCount>1){
         result = result+lastCharCount;
       }
       result = result + lastChar;
-			lastChar = c;
+      lastChar = c;
       lastCharCount = 1;
       
     }
@@ -190,14 +317,13 @@ function saveDat():String{
   }
 
   function unmakeRLE(s):String{
-		var result ="";
+    var result ="";
     var lastInt=0;
     var i = 0;
     while(i<s.length){
       var c = s[i];
       while (c=="0"||c=="1"||c=="2"||c=="3"||c=="4"||c=="5"||c=="6"||c=="7"||c=="8"||c=="9"){
-				lastInt=lastInt*10+Std.int(c);
-        Debug.log(lastInt);
+        lastInt=lastInt*10+Std.int(c);
         i++;
         c=s[i];
       }
@@ -238,14 +364,14 @@ function drawButton(text,x,y,textcolor,color,colorhover):Bool {
   var collide = !(dx<0||dx>=width||dy<0||dy>=height);
 
 
-	var click = collide && Mouse.leftclick();
+  var click = collide && Mouse.leftclick();
 
   if (collide&& !click){
     color=colorhover;
   }
-	Gfx.fillbox(x,y,width,height,color);
-	Text.display(x+1, y+1+charOffset, text, textcolor);
-	return click;
+  Gfx.fillbox(x,y,width,height,color);
+  Text.display(x+1, y+1+charOffset, text, textcolor);
+  return click;
 }
 
 function drawNumberEntry(tex,x,y,digits){
@@ -329,16 +455,16 @@ function stopPlay(){
 }
 
 function PushNewSequence(){
-	var minNotFound=0;
+  var minNotFound=0;
   var changed=true;
   while(changed){
     changed=false;
     for(i in dat.sequences){
         if (i==minNotFound){
-	      changed=true;
-      	minNotFound++;
-	      break;
-	    }
+        changed=true;
+        minNotFound++;
+        break;
+      }
     }
   }
   if (dat.notes.length==minNotFound){
@@ -367,7 +493,7 @@ function update() {
       } 
     }
   } else {
-  	lCounter=0;      
+    lCounter=0;      
   }
     
   if (Input.pressed(Key.RIGHT)||Input.pressed(Key.D)){
@@ -379,7 +505,7 @@ function update() {
       } 
     }
   } else {
-  	rCounter=0;      
+    rCounter=0;      
   }
     
     
@@ -392,7 +518,7 @@ function update() {
       } 
     }
   } else {
-  	plusCounter=0;      
+    plusCounter=0;      
   }
     
     
@@ -405,7 +531,7 @@ function update() {
       } 
     }
   } else {
-  	minusCounter=0;      
+    minusCounter=0;      
   }
     
   scrollt--;
@@ -418,29 +544,29 @@ function update() {
   Text.display(2,10+charOffset,"SEQ",darkText);
 
   for (i in 0 ... dat.sequences.length) {
-  	var tCol=darkText;
+    var tCol=darkText;
     var collide=collideBox(2,20+i*8,11,7);
- 	 	var col:Int=i==selectedSequenceSlot?mainHighlighter:mainHighlight;
-  	if (collide==1&&i!=selectedSequenceSlot){
-    	col=mainHighlightish;
-    	tCol=Col.GREY;
-	  } 
-  	if (collide==2){
-    	selectedSequenceSlot=i;
-  	}	
+    var col:Int=i==selectedSequenceSlot?mainHighlighter:mainHighlight;
+    if (collide==1&&i!=selectedSequenceSlot){
+      col=mainHighlightish;
+      tCol=Col.GREY;
+    } 
+    if (collide==2){
+      selectedSequenceSlot=i;
+    } 
     if (collide==3){
       if (dat.sequences.length>1){
-				dat.sequences.splice(i,1);
+        dat.sequences.splice(i,1);
         if (selectedSequenceSlot==i){
           selectedSequenceSlot--;
         }
         Debug.log("removed from sequence");
-	      break;
+        break;
       }
     }
-    Gfx.fillbox(2,20+i*8,11,7,col);  	
-	  var seqIndex=dat.sequences[i];
-  	var s = seqIndex>=10? Convert.tostring(seqIndex):("0"+Convert.tostring(seqIndex));
+    Gfx.fillbox(2,20+i*8,11,7,col);   
+    var seqIndex=dat.sequences[i];
+    var s = seqIndex>=10? Convert.tostring(seqIndex):("0"+Convert.tostring(seqIndex));
     Text.display(4,20 + i * 8+charOffset+1,s ,tCol);
   }
   if (dat.sequences.length<12){
@@ -451,44 +577,44 @@ function update() {
       col=Col.WHITE;
     }
     if (collide==2){
-			PushNewSequence();
+      PushNewSequence();
     }
-    Text.display(6,20 + i * 8+charOffset+1,"+" ,col);		
+    Text.display(6,20 + i * 8+charOffset+1,"+" ,col);   
   }
 
   var xOffset=41;
   
-	if (drawButton("save",xOffset+1,1,textCol,mainButton,mainHighlight)){
-		Debug.log("click");
-	}
+  if (drawButton("save",xOffset+1,1,textCol,mainButton,mainHighlight)){
+    Debug.log("click");
+  }
   
   Text.display(1,2+charOffset,"~~BUSKER~~",Col.DARKBROWN);
     
   //bpm box
-	Gfx.fillbox(xOffset+19,1,13,7,panelCol);
-	Gfx.fillbox(xOffset+32,1,13,7,mainHighlight);
-	Text.display(xOffset+20,2+charOffset,"bpm",textCol);
-	Text.display(xOffset+33,2+charOffset,"120",textCol);
+  Gfx.fillbox(xOffset+19,1,13,7,panelCol);
+  Gfx.fillbox(xOffset+32,1,13,7,mainHighlight);
+  Text.display(xOffset+20,2+charOffset,"bpm",textCol);
+  Text.display(xOffset+33,2+charOffset,"120",textCol);
 
   //swing box
-	Gfx.fillbox(xOffset+46,1,21,7,panelCol);
-	Gfx.fillbox(xOffset+67,1,5,7,mainHighlight);
-	Text.display(xOffset+47,2+charOffset,"swing",textCol);
-	Text.display(xOffset+68,2+charOffset,"9",textCol);
+  Gfx.fillbox(xOffset+46,1,21,7,panelCol);
+  Gfx.fillbox(xOffset+67,1,5,7,mainHighlight);
+  Text.display(xOffset+47,2+charOffset,"swing",textCol);
+  Text.display(xOffset+68,2+charOffset,"9",textCol);
 
   //notes box
-	Gfx.fillbox(xOffset+73,1,21,7,panelCol);
-	Gfx.fillbox(xOffset+94,1,9,7,mainHighlight);
-	Text.display(xOffset+74,2+charOffset,"notes",textCol);
-	Text.display(xOffset+95,2+charOffset,"16",textCol);
-	
-	//instruments box
-	Gfx.fillbox(145,2,45,7,panelCol);
-	Gfx.fillbox(15,9,175,9,panelCol);
-	Text.display(146,3+charOffset,"instruments",textCol);
+  Gfx.fillbox(xOffset+73,1,21,7,panelCol);
+  Gfx.fillbox(xOffset+94,1,9,7,mainHighlight);
+  Text.display(xOffset+74,2+charOffset,"notes",textCol);
+  Text.display(xOffset+95,2+charOffset,"16",textCol);
+  
+  //instruments box
+  Gfx.fillbox(145,2,45,7,panelCol);
+  Gfx.fillbox(15,9,175,9,panelCol);
+  Text.display(146,3+charOffset,"instruments",textCol);
 
   //draw sequencer
-	Gfx.fillbox(16+selectedInst*35-1,9,35,9,0xffffff);
+  Gfx.fillbox(16+selectedInst*35-1,9,35,9,0xffffff);
 
 
 var k=0;
@@ -496,7 +622,7 @@ for (k in 0 ... 5){
   var c = collideBox(16-1+k*35,10-1,33+2,7+2);
   if (c>0){
     if (k!=selectedInst){
-			Gfx.fillbox(16-1+k*35,10-1,33+2,7+2,Col.GREY);    
+      Gfx.fillbox(16-1+k*35,10-1,33+2,7+2,Col.GREY);    
     }
     if (c==2){
       setInstrument(k,true);
@@ -505,14 +631,14 @@ for (k in 0 ... 5){
     
   if (c==3){
     dat.instruments[k]=Random.int(0,99999999);
-  	Music.playnote(dat.instruments[k],1,1,1.0);
+    Music.playnote(dat.instruments[k],1,1,1.0);
   }
   {
-		Gfx.fillbox(16+k*35,10,33,7,instCols[k][0]);
+    Gfx.fillbox(16+k*35,10,33,7,instCols[k][0]);
   }
   var n=dat.instruments[k];
 //  Debug.log(k+","+s);
-	Text.display(17+k*35,11+charOffset,Convert.tostring(n),instCols[k][1]);
+  Text.display(17+k*35,11+charOffset,Convert.tostring(n),instCols[k][1]);
   if (c>0){
     var n = getNum();
     if (n>=0){
@@ -520,7 +646,7 @@ for (k in 0 ... 5){
       Debug.log(dat.instruments[k]);
     }
     if (Input.justpressed(Key.BACKSPACE)){
-			dat.instruments[k]=0;
+      dat.instruments[k]=0;
     }
   }
     
@@ -528,20 +654,20 @@ for (k in 0 ... 5){
 
   //draw note
 
-	if (drawButton("  play   ",152,21,textCol,mainButton,mainHighlight)){
-		startPlay();
-	}
-	if (drawButton("  stop   ",152,31,textCol,mainButton,mainHighlight)){
-		playing=false;
-	}
+  if (drawButton("  play   ",152,21,textCol,mainButton,mainHighlight)){
+    startPlay();
+  }
+  if (drawButton("  stop   ",152,31,textCol,mainButton,mainHighlight)){
+    playing=false;
+  }
   
     
-	if (drawButton("clear pat",152,61,textCol,mainButton,mainHighlight)){
-		dat.notes[dat.sequences[selectedSequenceSlot]]=[[],[],[],[],[]];
-	}
+  if (drawButton("clear pat",152,61,textCol,mainButton,mainHighlight)){
+    dat.notes[dat.sequences[selectedSequenceSlot]]=[[],[],[],[],[]];
+  }
     
-	if (drawButton("   new   ",152,100,textCol,mainButton,mainHighlight)){
-		dat = {
+  if (drawButton("   new   ",152,100,textCol,mainButton,mainHighlight)){
+    dat = {
       patternLength:16,
       cellDuration:3,
       instruments:[1,2,61,62,63],
@@ -550,35 +676,35 @@ for (k in 0 ... 5){
         [[],[],[],[],[]],
       ],
     };
-	}
+  }
 
 
-	if (drawButton("  save   ",152,110,textCol,mainButton,mainHighlight)){
-		saveDat();
-	}
+  if (drawButton("  save   ",152,110,textCol,mainButton,mainHighlight)){
+    saveDat();
+  }
     
-	//draw grid
-	var gx=22;
-	var gy=21;
-	var cellWidth=8;
-	var cellHeight=8;
-	var xCells=16;
-	var yCells=12;
+  //draw grid
+  var gx=22;
+  var gy=21;
+  var cellWidth=8;
+  var cellHeight=8;
+  var xCells=16;
+  var yCells=12;
 
-	Gfx.fillbox(gx,gy,xCells*(cellWidth)+1,yCells*(cellHeight)+1,panelCol);
-	
+  Gfx.fillbox(gx,gy,xCells*(cellWidth)+1,yCells*(cellHeight)+1,panelCol);
+  
 
   var octaveDisplay:Int = Math.floor((bottomNote+11)/12);
   var cNotePos = ((bottomNote+11)%12);
-//	Debug.log((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
-	if (octaveDisplay>9){
-		Text.display(gx-7,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));
+//  Debug.log((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
+  if (octaveDisplay>9){
+    Text.display(gx-7,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));
   } else {
-		Text.display(gx-3,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));    
+    Text.display(gx-3,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));    
   }
 
-	Gfx.fillbox(gx-7,gy+cellHeight*(cNotePos+1),xCells*cellWidth+8,1,Col.GREY);
-	
+  Gfx.fillbox(gx-7,gy+cellHeight*(cNotePos+1),xCells*cellWidth+8,1,Col.GREY);
+  
   for (i in 0 ... xCells){
     for (j in 0 ... yCells){
       var col=mainHighlight;
@@ -604,12 +730,12 @@ for (k in 0 ... 5){
     for (n in channel){
         // var n = channel[nIndex];
          // a note is [note, length, onset, amplitude]
-    		 var notePos = n[0];
+         var notePos = n[0];
          var dNote = notePos-bottomNote;   
          var x = gx+1+cellWidth*(n[2]);
-    		 var l = n[1];
+         var l = n[1];
          if (dNote<=0){
-				 	//draw note on bottom
+          //draw note on bottom
            var y = 118;
            Gfx.fillbox(x,y,cellWidth*l-1,1,col);
          } else if (dNote>12){
@@ -620,27 +746,27 @@ for (k in 0 ... 5){
            //draw note on grid
            var y = gy+1+cellHeight*(12-dNote);
            var l = n[1];
-					 var v = n[3];
+           var v = n[3];
            Gfx.fillbox(x,y+maxVol-v,cellWidth*l-1,v,col);
          }
     }
   }
     
   var gridWidth = cellWidth*xCells;
-	var gridHeight = cellHeight*yCells;
-	var dx=Mouse.x-gx;
-	var dy=Mouse.y-gy;
-	if (Mouse.leftclick()){	
+  var gridHeight = cellHeight*yCells;
+  var dx=Mouse.x-gx;
+  var dy=Mouse.y-gy;
+  if (Mouse.leftclick()){ 
     pressedDownOnCanvas=false;
   }
   if (dx>=0 && dx<gridWidth && dy>=0 && dy<gridHeight){
     if (Mouse.leftclick()){
-	    pressedDownOnCanvas=true;      
+      pressedDownOnCanvas=true;      
     }
-		/*
+    /*
     if (bottomNote>0 && Mouse.mousewheel< -1 ){
        bottomNote--;
-	     scrollt=scrollInterval;
+       scrollt=scrollInterval;
     } else if (bottomNote<132-12&& Mouse.mousewheel>1 ){
       bottomNote++;
       scrollt=scrollInterval;
@@ -661,7 +787,7 @@ for (k in 0 ... 5){
       setInstrument(4,false);
     }
     
-		var sx = Math.floor(dx/cellWidth);
+    var sx = Math.floor(dx/cellWidth);
     var sy = Math.floor(dy/cellHeight);
     var l = noteLength;
     //check if it's in range
@@ -674,21 +800,21 @@ for (k in 0 ... 5){
       var clickY = bottomNote+12-sy;
       for (i in 0...l){
         if (Mouse.leftclick()){
-		      blockNote(clickX+i,clickY);         
+          blockNote(clickX+i,clickY);         
         } else {
-		      deleteNote(clickX+i,clickY); 
+          deleteNote(clickX+i,clickY); 
         }
       }
-	    if (oldAddX>=0){
-  	  	blockNote(oldAddX,oldAddY);
+      if (oldAddX>=0){
+        blockNote(oldAddX,oldAddY);
       }
       var newNote=[clickY,l,clickX,noteVol];
       dat.notes[selectedSequence][selectedInst].push(newNote);
       if (Mouse.leftclick()){
-				DoPlayNote(selectedInst,newNote);
+        DoPlayNote(selectedInst,newNote);
       }
-			oldAddX=clickX;
-    	oldAddY=clickY;
+      oldAddX=clickX;
+      oldAddY=clickY;
     } else {
       oldAddX= -1;
       oldAddY= -1;
@@ -715,7 +841,7 @@ for (k in 0 ... 5){
     var globalCell = Std.int(playTick/dat.cellDuration);
     var playPattern = Std.int(globalCell/dat.patternLength);
     selectedSequenceSlot=playPattern;
-   	var patternProgress = globalCell-dat.patternLength*playPattern;
+    var patternProgress = globalCell-dat.patternLength*playPattern;
     
     if (playTick%dat.cellDuration==0){
       TryPlayNote(patternProgress);
@@ -730,14 +856,12 @@ for (k in 0 ... 5){
 
 function DoPlayNote(c,n){
   var notePos = n[2];
-	var pitch = Math.pow(2,(n[0]-61)/12);
-  Debug.log(n[0]+","+pitch);
+  var pitch = Math.pow(2,(n[0]-61)/12);
   var noteLength = n[1]*dat.cellDuration/30;
-	Music.playnote(dat.instruments[c],pitch,noteLength,n[3]/maxVol);
+  Music.playnote(dat.instruments[c],pitch,noteLength,n[3]/maxVol);
 }
 
 function TryPlayNote(x){
-  Debug.log("try play note at "+x);
   var selectedSequence = dat.sequences[selectedSequenceSlot];
   for (c2 in 0...5){
     var c = channelOrder[c2];
@@ -749,15 +873,15 @@ function TryPlayNote(x){
         // a note is [note, length, onset, amplitude]
         var notePos = n[2];
         if (notePos==x){  
-		      DoPlayNote(c,n);
-				}         
+          DoPlayNote(c,n);
+        }         
     }    
   }
 }  
   
 function setInstrument(k,play){
   if (play){
-  	Music.playnote(dat.instruments[k],1,1,1.0);
+    Music.playnote(dat.instruments[k],1,1,1.0);
   }
   selectedInst=k;
   var kIndex=channelOrder.indexOf(k);
@@ -788,12 +912,12 @@ function blockNote(clickX,clickY){
       var noteL=n[1];
       var noteY=n[0];
       if (clickY==noteY && clickX>=noteX && clickX<(noteX+noteL)){  
-		    if (clickX==noteX){
+        if (clickX==noteX){
           //delete it
-    	    var arr = dat.notes[selectedSequence][selectedInst];
-    	    var noteIndex = arr.indexOf(n);
-    	    arr.splice(noteIndex,1);
-      		break;
+          var arr = dat.notes[selectedSequence][selectedInst];
+          var noteIndex = arr.indexOf(n);
+          arr.splice(noteIndex,1);
+          break;
         } else {
           //resize it
           n[1]=clickX-noteX;
@@ -804,7 +928,11 @@ function blockNote(clickX,clickY){
   
 function new(){
   // Music.playnote(4123,1,1,10);
-	Text.setfont(Font.PIXEL,1);
-//  var saved = saveDat();
-//  loadDat(saved);
+  Text.setfont(Font.PIXEL,1);
+  //Debug.log(["notes ",dat.notes]);
+  var saved = saveDat();
+  loadDat(saved);
+  //Debug.log(["notes ",dat.notes]);
+  var saved2 = saveDat();
+  Debug.log(saved+"\n"+saved2);
 }
