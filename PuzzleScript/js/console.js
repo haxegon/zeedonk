@@ -47,6 +47,42 @@ function consolePrint(text,urgent) {
 }
 
 
+function consolePrintWithLinesArray(text,lineNumber,urgent) {
+    if (text.length==1){
+        consolePrintWithLines(text[0],lineNumber,urgent);
+    }
+    if (typeof text === "object"){
+        text=JSON.stringify(text);
+    }
+
+    if (typeof urgent==="undefined") {
+        urgent=false;
+    }
+    if (typeof lineNumber === "undefined") {
+        return consolePrint(text);
+    }
+    var consoleString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + text;
+     if (cache_console_messages && urgent==false) {     
+        consolecache.push(consoleString);
+     } else {
+        consolePrint(consoleString,true);
+    }
+}
+
+function consolePrintArray(text,urgent) {
+    if (text.length==1){
+        consolePrintA(text[0],urgent);
+    }
+    if (urgent===undefined) {
+        urgent=false;
+    }
+    if (cache_console_messages&&urgent==false) {        
+        consolecache.push(text);
+    } else {
+        addToConsole(text);
+    }
+}
+
 var cache_n = 0;
 
 function addToConsole(text) {
