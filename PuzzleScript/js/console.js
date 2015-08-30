@@ -15,6 +15,23 @@ function jumpToLine(i,cpos) {
 }
 
 var consolecache = [];
+
+function consolePrintWithLines(text,lineNumber,urgent) {
+    
+    if (typeof urgent==="undefined") {
+        urgent=false;
+    }
+    if (typeof lineNumber === "undefined") {
+        return consolePrint(text);
+    }
+    var consoleString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + text;
+     if (cache_console_messages && urgent==false) {     
+        consolecache.push(consoleString);
+     } else {
+        consolePrint(consoleString,true);
+    }
+}
+
 function consolePrint(text,urgent) {
 	if (urgent===undefined) {
 		urgent=false;
@@ -117,7 +134,7 @@ function logWarning(str, lineNumber,urgent) {
 
 function logWarningNoLine(str,urgent) {
     if (compiling||urgent) {
-        var errorString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + '<span class="warningText">' + str + '</span>';
+        var errorString = '<span class="warningText">' + str + '</span>';
          if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
          } else {
