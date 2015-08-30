@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "776", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "781", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -2311,6 +2311,7 @@ Webbridge.prototype = {
 		Webscript.scriptloaded = false;
 		Webscript.runscript = false;
 		Webscript.errorinscript = false;
+		Webscript.pausescript = false;
 	}
 	,__class__: Webbridge
 };
@@ -3436,6 +3437,7 @@ Webscript.interpreter = null;
 Webscript.scriptloaded = null;
 Webscript.runscript = null;
 Webscript.errorinscript = null;
+Webscript.pausescript = null;
 Webscript.initfunction = null;
 Webscript.updatefunction = null;
 Webscript.title = null;
@@ -3445,6 +3447,7 @@ Webscript.foreground_color = null;
 Webscript.init = function() {
 	Webscript.scriptloaded = false;
 	Webscript.runscript = false;
+	Webscript.pausescript = false;
 	Webscript.errorinscript = false;
 	terrylib.Text.setfont(Webfont.ZERO4B11,1);
 	terrylib.Text.setfont(Webfont.APPLE,1);
@@ -3480,7 +3483,7 @@ Webscript.loadfile = function(filename) {
 	Webscript.myLoader.load(myRequest);
 };
 Webscript.onIOError = function(e) {
-	haxe.Log.trace("test script not found.",{ fileName : "Webscript.hx", lineNumber : 84, className : "Webscript", methodName : "onIOError"});
+	haxe.Log.trace("test script not found.",{ fileName : "Webscript.hx", lineNumber : 86, className : "Webscript", methodName : "onIOError"});
 };
 Webscript.onLoadComplete = function(e) {
 	Webscript.myscript = terrylib.Convert.tostring(Webscript.myLoader.data);
@@ -3492,7 +3495,7 @@ Webscript.update = function() {
 		terrylib.Gfx.clearscreen(terrylib.Gfx.RGB(32,0,0));
 		terrylib.Text.display(terrylib.Text.CENTER,terrylib.Text.CENTER,"ERROR! ERROR! ERROR!",terrylib.Col.RED);
 	} else if(Webscript.scriptloaded) {
-		if(Webscript.runscript) try {
+		if(Webscript.runscript && !Webscript.pausescript) try {
 			Webscript.updatefunction();
 		} catch( e ) {
 			Err.log(Err.RUNTIME_UPDATE,Err.process(e));
@@ -3528,6 +3531,7 @@ Webscript.loadscript = function(script) {
 Webscript.scriptfound = function() {
 	Webscript.scriptloaded = true;
 	Webscript.errorinscript = false;
+	Webscript.pausescript = false;
 	Webscript.parser = new hscript.Parser();
 	Webscript.parser.allowTypes = true;
 	Webscript.interpreter = new hscript.Interp();
@@ -3575,7 +3579,7 @@ Webscript.scriptfound = function() {
 		} catch( e2 ) {
 			Err.log(Err.PARSER_NEW,Err.process(e2));
 		}
-		if(Webscript.updatefunction == null) Err.log(Err.PRE_MISSINGUPDATE);
+		if(Webscript.updatefunction == null) Webscript.pausescript = true;
 	}
 };
 var XmlType = $hxClasses["XmlType"] = { __ename__ : ["XmlType"], __constructs__ : [] };

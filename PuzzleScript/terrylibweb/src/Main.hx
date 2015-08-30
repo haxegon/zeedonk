@@ -28,6 +28,7 @@ class Webbridge {
 		Webscript.scriptloaded = false;
 		Webscript.runscript = false;
 		Webscript.errorinscript = false;
+		Webscript.pausescript = false;
 	}
 }
 

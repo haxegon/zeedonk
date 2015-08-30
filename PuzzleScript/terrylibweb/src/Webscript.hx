@@ -16,6 +16,7 @@ class Webscript {
 	public static var scriptloaded:Bool;
 	public static var runscript:Bool;
 	public static var errorinscript:Bool;
+	public static var pausescript:Bool;
 	
 	public static var initfunction:Dynamic;
 	public static var updatefunction:Dynamic;
@@ -28,6 +29,7 @@ class Webscript {
 	public static function init() {
 		scriptloaded = false;
 		runscript = false;
+		pausescript = false;
 		errorinscript = false;
 		
 		Text.setfont(Webfont.ZERO4B11, 1);
@@ -111,7 +113,7 @@ class Webscript {
 			Gfx.clearscreen(Gfx.RGB(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
 		}else if (scriptloaded) {
-			if (runscript) {
+			if (runscript && !pausescript) {
 				try {
 					updatefunction();
 				}catch (e:Dynamic) {
@@ -156,6 +158,7 @@ class Webscript {
 	public static function scriptfound(){
 		scriptloaded = true;
 		errorinscript = false;
+		pausescript = false;
    	parser = new hscript.Parser();
 		parser.allowTypes = true;
     interpreter = new hscript.Interp();
@@ -230,7 +233,7 @@ class Webscript {
 			}
 			
 			if (updatefunction == null) {
-				Err.log(Err.PRE_MISSINGUPDATE);
+				Webscript.pausescript = true;
 			}
 		}
 	}	
