@@ -1,4 +1,4 @@
-PuzzleScript
+Not PuzzleScript, to do edit this
 ============
 
 Open Source HTML5 Puzzle Game Engine

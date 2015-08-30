@@ -9,7 +9,6 @@ class Err {
 	public static var PARSER_NEW:Int = 3;
 	public static var RUNTIME_INIT:Int = 4;
 	public static var RUNTIME_UPDATE:Int = 5;
-	public static var RUNTIME_FUNCTION:Int = 6;
 	
 	public static function log(errorcode:Int, ?linenum:Int, ?details:Array<String>) {
 		Webscript.runscript = false;
@@ -19,24 +18,21 @@ class Err {
 		Text.setfont("default", 1);
 		
 		if (errorcode == PRE_BRACKETMISMATCH) {
-			Webdebug.error("Error: Bracket mismatch.");
+			Webdebug.error("ERROR: Bracket mismatch.");
 			Webdebug.error("(Missing a { or } bracket somewhere.)");
 		}else if (errorcode == PRE_MISSINGUPDATE){
-			Webdebug.error("Error: An \"update()\" function is required.");
+			Webdebug.error("ERROR: An \"update()\" function is required.");
 		}else if (errorcode == PARSER_INIT) {
-			Webdebug.error("Parser error in processing script file.");
+			Webdebug.error("PARSER ERROR in processing script file.");
 			outputdetails(details);
 		}else if (errorcode == PARSER_NEW){
-			Webdebug.error("Runtime error in function new().", linenum);
+			Webdebug.error("RUNTIME ERROR (in function new())", linenum);
 			outputdetails(details);
 		}else if (errorcode == RUNTIME_INIT) {
-			Webdebug.error("Runtime error in initial run.", linenum);
+			Webdebug.error("RUNTIME ERROR (in initial run)", linenum);
 			outputdetails(details);
 		}else if (errorcode == RUNTIME_UPDATE){
-			Webdebug.error("Runtime error.", linenum);
-			outputdetails(details);
-		}else if (errorcode == RUNTIME_FUNCTION){
-			Webdebug.error("Runtime error in function:");
+			Webdebug.error("RUNTIME ERROR", errorline);
 			outputdetails(details);
 		}
 	}
@@ -53,58 +49,95 @@ class Err {
 		}
 	}
 	
-	public static function process(e:Dynamic):Array<String> {
+	public static function process(errorhandle:Dynamic):Array<String> {
 		/*
 			e looks like
 			{
 				e { error name , error code id, ? possibly data associated with that error}
 			}
 		*/
-		if (Std.is(e, hscript.Expr.Error) ) {	
+		if (Std.is(errorhandle, hscript.Expr.Error) ) {	
 			var errstr:String;
-			try{
-			  errstr = e.e[0];
-				if (e.e[0] == "EUnknownVariable") {
-					errorstart = e.pmin;
-					errorend = e.pmax;
-					geterrorline();
-					return ["Unknown variable \"" + e.e[2] + "\" in line " + errorline, S.Webscript.loadedscript[errorline]];
-				}else{
-					for (i in 2 ... e.e.length){
-						errstr = errstr + " " + e.e[i];
-					}
-					return [errstr];
+			var returnarray:Array<String> = [];
+			errstr = errorhandle.e[0];
+			errorstart = errorhandle.pmin;
+			errorend = errorhandle.pmax;
+			trace("ERRORHANDLE OBJECT :\n", errorhandle, "\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: "+ errorhandle.e[1] + "\n2: "+ errorhandle.e[2] + "\n3: "+ errorhandle.e[3] + "\n}");
+			
+			if (errorhandle.e[0] == "EUnexpected") {
+				geterrorline();
+				returnarray.push("Unexpected \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
+			}else if (errorhandle.e[0] == "EUnterminatedString") {
+				geterrorline(false);
+				returnarray.push("Unterminated string in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
+			}else	if (errorhandle.e[0] == "EUnknownVariable") {
+				geterrorline();
+				returnarray.push("Unknown variable \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
+			}else {
+				trace(errorhandle.e);
+				for (i in 2 ... errorhandle.e.length){
+					errstr = errstr + " " + errorhandle.e[i];
 				}
-			}catch (err:Dynamic) {
-				return [e.toString()];
+				return [errstr];
 			}
 		}
 		
-		if (e.name == "TypeError") {
+		if (errorhandle.name == "TypeError") {
 			#if flash
 			//trace(CallStack.toString(callStack));
 			return ["TypeError"];
 			#else
-			return [e.stack];
+			return [errorhandle.stack];
 			#end
 		}
-		return [e.toString()];
+		return [errorhandle.toString()];
 	}
 	
-	public static function geterrorline() {
+	public static function geterrorline(userange:Bool = true) {
 		var charcount:Int = 0;
+		var numnewlines:Int = 0;
+		var linestartindex:Int = 0;
+		var lineendindex:Int = 0;
+		var currentchar:String = "";
+		
+		errorline = -1;
 		
 		var i:Int = 0;
-		while (i < Webscript.loadedscript.length) {
-			charcount += Webscript.loadedscript[i].length;
-			if (charcount > errorstart) {
-				errorline = i;
-				break;
+		while (i < Webscript.myscript.length) {
+			currentchar = Webscript.myscript.substr(i, 1);
+			if (currentchar == "\n") {
+				if (errorline > -1) {
+					lineendindex = i - 1;
+					var finalstring:String = Webscript.myscript.substring(linestartindex, lineendindex);
+					while (S.left(finalstring, 1) == " " && finalstring != "") {
+						linestartindex++;
+						finalstring = Webscript.myscript.substring(linestartindex, lineendindex);
+					}
+					if(userange){
+						errorstr = "\"" + finalstring + "\", characters " + (errorstart - linestartindex) + "-" + (errorend - linestartindex + 1);
+					}else {
+						errorstr = "\"" + finalstring + "\", from character " + (errorstart - linestartindex);
+					}
+					break;
+				}else {
+					linestartindex = i + 1;
+				}
+				numnewlines++;
+			}
+			if (i == errorstart) {
+				errorline = numnewlines;
 			}
 			i++;
 		}
 	}
 	
+	public static var errorstr:String;
 	public static var errorline:Int;
 	public static var errorstart:Int;
 	public static var errorend:Int;

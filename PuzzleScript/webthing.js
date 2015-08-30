@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "606", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "712", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1782,22 +1782,19 @@ Err.log = function(errorcode,linenum,details) {
 	terrylib.Gfx.resizescreen(192,120,4);
 	terrylib.Text.setfont("default",1);
 	if(errorcode == Err.PRE_BRACKETMISMATCH) {
-		Webdebug.error("Error: Bracket mismatch.");
+		Webdebug.error("ERROR: Bracket mismatch.");
 		Webdebug.error("(Missing a { or } bracket somewhere.)");
-	} else if(errorcode == Err.PRE_MISSINGUPDATE) Webdebug.error("Error: An \"update()\" function is required."); else if(errorcode == Err.PARSER_INIT) {
-		Webdebug.error("Parser error in processing script file.");
+	} else if(errorcode == Err.PRE_MISSINGUPDATE) Webdebug.error("ERROR: An \"update()\" function is required."); else if(errorcode == Err.PARSER_INIT) {
+		Webdebug.error("PARSER ERROR in processing script file.");
 		Err.outputdetails(details);
 	} else if(errorcode == Err.PARSER_NEW) {
-		Webdebug.error("Runtime error in function new().",linenum);
+		Webdebug.error("RUNTIME ERROR (in function new())",linenum);
 		Err.outputdetails(details);
 	} else if(errorcode == Err.RUNTIME_INIT) {
-		Webdebug.error("Runtime error in initial run.",linenum);
+		Webdebug.error("RUNTIME ERROR (in initial run)",linenum);
 		Err.outputdetails(details);
 	} else if(errorcode == Err.RUNTIME_UPDATE) {
-		Webdebug.error("Runtime error.",linenum);
-		Err.outputdetails(details);
-	} else if(errorcode == Err.RUNTIME_FUNCTION) {
-		Webdebug.error("Runtime error in function:");
+		Webdebug.error("RUNTIME ERROR",Err.errorline);
 		Err.outputdetails(details);
 	}
 };
@@ -1813,25 +1810,75 @@ Err.outputdetails = function(details) {
 		}
 	}
 };
-Err.process = function(e) {
-	if(js.Boot.__instanceof(e,hscript.Error)) {
+Err.process = function(errorhandle) {
+	if(js.Boot.__instanceof(errorhandle,hscript.Error)) {
 		var errstr;
-		try {
-			errstr = e.e[0];
+		var returnarray = [];
+		errstr = errorhandle.e[0];
+		Err.errorstart = errorhandle.pmin;
+		Err.errorend = errorhandle.pmax;
+		haxe.Log.trace("ERRORHANDLE OBJECT :\n",{ fileName : "Err.hx", lineNumber : 65, className : "Err", methodName : "process", customParams : [errorhandle,"\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: " + errorhandle.e[1] + "\n2: " + errorhandle.e[2] + "\n3: " + errorhandle.e[3] + "\n}"]});
+		if(errorhandle.e[0] == "EUnexpected") {
+			Err.geterrorline();
+			returnarray.push("Unexpected \"" + errorhandle.e[2] + "\" in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
+		} else if(errorhandle.e[0] == "EUnterminatedString") {
+			Err.geterrorline(false);
+			returnarray.push("Unterminated string in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
+		} else if(errorhandle.e[0] == "EUnknownVariable") {
+			Err.geterrorline();
+			returnarray.push("Unknown variable \"" + errorhandle.e[2] + "\" in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
+		} else {
+			haxe.Log.trace(errorhandle.e,{ fileName : "Err.hx", lineNumber : 83, className : "Err", methodName : "process"});
 			var _g1 = 2;
-			var _g = e.e.length;
+			var _g = errorhandle.e.length;
 			while(_g1 < _g) {
 				var i = _g1++;
-				errstr = errstr + " " + e.e[i];
+				errstr = errstr + " " + errorhandle.e[i];
 			}
 			return [errstr];
-		} catch( err ) {
-			return [e.toString()];
 		}
 	}
-	if(e.name == "TypeError") return [e.stack];
-	return [e.toString()];
+	if(errorhandle.name == "TypeError") return [errorhandle.stack];
+	return [errorhandle.toString()];
 };
+Err.geterrorline = function(userange) {
+	if(userange == null) userange = true;
+	var charcount = 0;
+	var numnewlines = 0;
+	var linestartindex = 0;
+	var lineendindex = 0;
+	var currentchar = "";
+	Err.errorline = -1;
+	var i = 0;
+	while(i < Webscript.myscript.length) {
+		currentchar = HxOverrides.substr(Webscript.myscript,i,1);
+		if(currentchar == "\n") {
+			if(Err.errorline > -1) {
+				lineendindex = i - 1;
+				var finalstring = Webscript.myscript.substring(linestartindex,lineendindex);
+				while(S.left(finalstring,1) == " " && finalstring != "") {
+					linestartindex++;
+					finalstring = Webscript.myscript.substring(linestartindex,lineendindex);
+				}
+				if(userange) Err.errorstr = "\"" + finalstring + "\", characters " + (Err.errorstart - linestartindex) + "-" + (Err.errorend - linestartindex + 1); else Err.errorstr = "\"" + finalstring + "\", from character " + (Err.errorstart - linestartindex);
+				break;
+			} else linestartindex = i + 1;
+			numnewlines++;
+		}
+		if(i == Err.errorstart) Err.errorline = numnewlines;
+		i++;
+	}
+};
+Err.errorstr = null;
+Err.errorline = null;
+Err.errorstart = null;
+Err.errorend = null;
 var Game = function() { };
 $hxClasses["Game"] = Game;
 Game.__name__ = ["Game"];
@@ -3306,6 +3353,7 @@ var Webscript = function() { };
 $hxClasses["Webscript"] = Webscript;
 Webscript.__name__ = ["Webscript"];
 Webscript.myscript = null;
+Webscript.loadedscript = null;
 Webscript.parsedscript = null;
 Webscript.parser = null;
 Webscript.interpreter = null;
@@ -3345,6 +3393,21 @@ Webscript.init = function() {
 		openfl.external.ExternalInterface.addCallback("loadscript",Webscript.loadscript);
 	} catch( e ) {
 	}
+};
+Webscript.myLoader = null;
+Webscript.loadfile = function(filename) {
+	Webscript.myLoader = new openfl.net.URLLoader();
+	var myRequest = new openfl.net.URLRequest(filename);
+	Webscript.myLoader.addEventListener(openfl.events.Event.COMPLETE,Webscript.onLoadComplete);
+	Webscript.myLoader.addEventListener(openfl.events.IOErrorEvent.IO_ERROR,Webscript.onIOError);
+	Webscript.myLoader.load(myRequest);
+};
+Webscript.onIOError = function(e) {
+	haxe.Log.trace("test script not found.",{ fileName : "Webscript.hx", lineNumber : 83, className : "Webscript", methodName : "onIOError"});
+};
+Webscript.onLoadComplete = function(e) {
+	Webscript.myscript = terrylib.Convert.tostring(Webscript.myLoader.data);
+	Webscript.scriptfound();
 };
 Webscript.update = function() {
 	if(Webscript.errorinscript) {
@@ -3391,6 +3454,7 @@ Webscript.scriptfound = function() {
 	Webscript.parser = new hscript.Parser();
 	Webscript.parser.allowTypes = true;
 	Webscript.interpreter = new hscript.Interp();
+	Webscript.loadedscript = Webscript.myscript.split("\n");
 	Webscript.interpreter.variables.set("Math",Math);
 	Webscript.interpreter.variables.set("Col",terrylib.Col);
 	Webscript.interpreter.variables.set("Convert",terrylib.Convert);
@@ -3401,10 +3465,11 @@ Webscript.scriptfound = function() {
 	Webscript.interpreter.variables.set("Game",Game);
 	Webscript.interpreter.variables.set("Mouse",terrylib.Mouse);
 	Webscript.interpreter.variables.set("Music",Webmusic);
-	Webscript.interpreter.variables.set("Text",terrylibbridge.BText);
+	Webscript.interpreter.variables.set("Text",terrylib.Text);
 	Webscript.interpreter.variables.set("Font",Webfont);
 	Webscript.interpreter.variables.set("Std",Std);
-	Webscript.interpreter.variables.set("Random",terrylibbridge.BRandom);
+	Webscript.interpreter.variables.set("Random",terrylib.Random);
+	Webscript.interpreter.variables.set("String",String);
 	Webscript.runscript = true;
 	try {
 		Webscript.parsedscript = Webscript.parser.parseString(Webscript.myscript);
@@ -10166,7 +10231,6 @@ lime._backend.html5.HTML5Renderer.prototype = {
 				this.parent.context = lime.graphics.RenderContext.CANVAS(this.parent.window.backend.canvas.getContext("2d"));
 				this.parent.type = lime.graphics.RendererType.CANVAS;
 			} else {
-				webgl = WebGLDebugUtils.makeDebugContext(webgl);
 				lime.graphics.opengl.GL.context = webgl;
 				this.parent.context = lime.graphics.RenderContext.OPENGL(lime.graphics.opengl.GL.context);
 				this.parent.type = lime.graphics.RendererType.OPENGL;
@@ -21517,29 +21581,24 @@ openfl.Memory._setPositionTemporarily = function(position,action) {
 	return value;
 };
 openfl.Memory.getByte = function(addr) {
-	if(addr < 0 || addr + 1 > openfl.Memory.len) throw "Bad address";
 	return openfl.Memory.gcRef.data.getInt8(addr);
 };
 openfl.Memory.getDouble = function(addr) {
-	if(addr < 0 || addr + 8 > openfl.Memory.len) throw "Bad address";
 	return openfl.Memory._setPositionTemporarily(addr,function() {
 		return openfl.Memory.gcRef.readDouble();
 	});
 };
 openfl.Memory.getFloat = function(addr) {
-	if(addr < 0 || addr + 4 > openfl.Memory.len) throw "Bad address";
 	return openfl.Memory._setPositionTemporarily(addr,function() {
 		return openfl.Memory.gcRef.readFloat();
 	});
 };
 openfl.Memory.getI32 = function(addr) {
-	if(addr < 0 || addr + 4 > openfl.Memory.len) throw "Bad address";
 	return openfl.Memory._setPositionTemporarily(addr,function() {
 		return openfl.Memory.gcRef.readInt();
 	});
 };
 openfl.Memory.getUI16 = function(addr) {
-	if(addr < 0 || addr + 2 > openfl.Memory.len) throw "Bad address";
 	return openfl.Memory._setPositionTemporarily(addr,function() {
 		return openfl.Memory.gcRef.readUnsignedShort();
 	});
@@ -21549,29 +21608,24 @@ openfl.Memory.select = function(inBytes) {
 	if(inBytes != null) openfl.Memory.len = inBytes.length; else openfl.Memory.len = 0;
 };
 openfl.Memory.setByte = function(addr,v) {
-	if(addr < 0 || addr + 1 > openfl.Memory.len) throw "Bad address";
 	openfl.Memory.gcRef.data.setUint8(addr,v);
 };
 openfl.Memory.setDouble = function(addr,v) {
-	if(addr < 0 || addr + 8 > openfl.Memory.len) throw "Bad address";
 	openfl.Memory._setPositionTemporarily(addr,function() {
 		openfl.Memory.gcRef.writeDouble(v);
 	});
 };
 openfl.Memory.setFloat = function(addr,v) {
-	if(addr < 0 || addr + 4 > openfl.Memory.len) throw "Bad address";
 	openfl.Memory._setPositionTemporarily(addr,function() {
 		openfl.Memory.gcRef.writeFloat(v);
 	});
 };
 openfl.Memory.setI16 = function(addr,v) {
-	if(addr < 0 || addr + 2 > openfl.Memory.len) throw "Bad address";
 	openfl.Memory._setPositionTemporarily(addr,function() {
 		openfl.Memory.gcRef.writeUnsignedShort(v);
 	});
 };
 openfl.Memory.setI32 = function(addr,v) {
-	if(addr < 0 || addr + 4 > openfl.Memory.len) throw "Bad address";
 	openfl.Memory._setPositionTemporarily(addr,function() {
 		openfl.Memory.gcRef.writeInt(v);
 	});
@@ -29505,7 +29559,9 @@ openfl.display.BitmapData.prototype = {
 				while(_g3 < _g2) {
 					var xx = _g3++;
 					position = (width_yy + xx) * 4;
-					pixelValue = openfl.Memory.getI32(position);
+					pixelValue = openfl.Memory._setPositionTemporarily(position,function() {
+						return openfl.Memory.gcRef.readInt();
+					});
 					pixelMask = pixelValue & mask;
 					i = openfl.display.BitmapData.__ucompare(pixelMask,thresholdMask);
 					test = false;
@@ -29567,7 +29623,9 @@ openfl.display.BitmapData.prototype = {
 				while(_g11 < dw) {
 					var xx1 = _g11++;
 					position1 = (xx1 + sx + (yy1 + sy) * sw) * 4;
-					pixelValue1 = openfl.Memory.getI32(canvasMemory + position1);
+					pixelValue1 = openfl.Memory._setPositionTemporarily(canvasMemory + position1,function() {
+						return openfl.Memory.gcRef.readInt();
+					});
 					pixelMask1 = pixelValue1 & mask;
 					i1 = openfl.display.BitmapData.__ucompare(pixelMask1,thresholdMask1);
 					test1 = false;
@@ -43154,317 +43212,6 @@ terrylib.util.Tileset.prototype = {
 	,endframe: null
 	,__class__: terrylib.util.Tileset
 };
-var terrylibbridge = {};
-terrylibbridge.BRandom = function() { };
-$hxClasses["terrylibbridge.BRandom"] = terrylibbridge.BRandom;
-terrylibbridge.BRandom.__name__ = ["terrylibbridge","BRandom"];
-terrylibbridge.BRandom.__properties__ = {set_seed:"set_seed",get_seed:"get_seed"}
-terrylibbridge.BRandom.bool = function() {
-	var result = false;
-	try {
-		result = terrylib.Random.bool();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.bool()"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.occasional = function() {
-	var result = false;
-	try {
-		result = terrylib.Random.occasional();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.occasional()"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.rare = function() {
-	var result = false;
-	try {
-		result = terrylib.Random.rare();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.rare()"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.randint = function(from,to) {
-	var result = 0;
-	try {
-		result = terrylib.Random["int"](from,to);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.randint(" + from + "," + to + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.randfloat = function(from,to) {
-	var result = 0;
-	try {
-		result = terrylib.Random["float"](from,to);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.float(" + from + "," + to + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.randstring = function(length,charactersToUse) {
-	if(charactersToUse == null) charactersToUse = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	var result = "";
-	try {
-		result = terrylib.Random.string(length,charactersToUse);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.string(" + length + "," + charactersToUse + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.pickstring = function(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12) {
-	if(s12 == null) s12 = "";
-	if(s11 == null) s11 = "";
-	if(s10 == null) s10 = "";
-	if(s9 == null) s9 = "";
-	if(s8 == null) s8 = "";
-	if(s7 == null) s7 = "";
-	if(s6 == null) s6 = "";
-	if(s5 == null) s5 = "";
-	if(s4 == null) s4 = "";
-	if(s3 == null) s3 = "";
-	var result = "";
-	try {
-		result = terrylib.Random.pickstring(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.pickstring(" + s1 + "," + s2 + "," + s3 + "," + s4 + "," + s5 + "," + s6 + "," + s7 + "," + s8 + "," + s9 + "," + s10 + "," + s11 + "," + s12 + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.pickint = function(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12) {
-	if(s12 == null) s12 = -10000;
-	if(s11 == null) s11 = -10000;
-	if(s10 == null) s10 = -10000;
-	if(s9 == null) s9 = -10000;
-	if(s8 == null) s8 = -10000;
-	if(s7 == null) s7 = -10000;
-	if(s6 == null) s6 = -10000;
-	if(s5 == null) s5 = -10000;
-	if(s4 == null) s4 = -10000;
-	if(s3 == null) s3 = -10000;
-	var result = 0;
-	try {
-		result = terrylib.Random.pickint(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.pickint(" + s1 + "," + s2 + "," + s3 + "," + s4 + "," + s5 + "," + s6 + "," + s7 + "," + s8 + "," + s9 + "," + s10 + "," + s11 + "," + s12 + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.pickfloat = function(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12) {
-	if(s12 == null) s12 = -10000;
-	if(s11 == null) s11 = -10000;
-	if(s10 == null) s10 = -10000;
-	if(s9 == null) s9 = -10000;
-	if(s8 == null) s8 = -10000;
-	if(s7 == null) s7 = -10000;
-	if(s6 == null) s6 = -10000;
-	if(s5 == null) s5 = -10000;
-	if(s4 == null) s4 = -10000;
-	if(s3 == null) s3 = -10000;
-	var result = 0;
-	try {
-		result = terrylib.Random.pickfloat(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.pickfloat(" + s1 + "," + s2 + "," + s3 + "," + s4 + "," + s5 + "," + s6 + "," + s7 + "," + s8 + "," + s9 + "," + s10 + "," + s11 + "," + s12 + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.random = function() {
-	var result = 0;
-	try {
-		result = terrylib.Random.random();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.random()"]);
-	}
-	return result;
-};
-terrylibbridge.BRandom.setseed = function(s) {
-	try {
-		terrylib.Random.setseed(s);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Random.setseed(" + s + ")"]);
-	}
-};
-terrylibbridge.BRandom.get_seed = function() {
-	try {
-		return terrylib.Random.seed;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to get value of \"Random.seed\"."]);
-	}
-	return 0;
-};
-terrylibbridge.BRandom.set_seed = function(x) {
-	try {
-		return terrylib.Random.seed = x;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to set value of \"Random.seed\"."]);
-	}
-	return 0;
-};
-terrylibbridge.BText = function() { };
-$hxClasses["terrylibbridge.BText"] = terrylibbridge.BText;
-terrylibbridge.BText.__name__ = ["terrylibbridge","BText"];
-terrylibbridge.BText.__properties__ = {set_input_show:"set_input_show",get_input_show:"get_input_show",set_drawto:"set_drawto",get_drawto:"get_drawto",set_currentsize:"set_currentsize",get_currentsize:"get_currentsize",set_currentfont:"set_currentfont",get_currentfont:"get_currentfont"}
-terrylibbridge.BText.init = function(stage) {
-	try {
-		terrylib.Text.init(stage);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.init(" + Std.string(stage) + ")"]);
-	}
-};
-terrylibbridge.BText.resetinput = function(t) {
-	try {
-		terrylib.Text.resetinput(t);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.resetinput(" + t + ")"]);
-	}
-};
-terrylibbridge.BText.input = function(x,y,text,col,responsecol) {
-	if(responsecol == null) responsecol = 13421772;
-	if(col == null) col = 16777215;
-	var result = false;
-	try {
-		result = terrylib.Text.input(x,y,text,col,responsecol);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.input(" + x + ", " + y + ", " + text + ", " + col + ", " + responsecol + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BText.getinput = function() {
-	var result = "";
-	try {
-		result = terrylib.Text.getinput();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.getinput()"]);
-	}
-	return result;
-};
-terrylibbridge.BText.drawstringinput = function() {
-	try {
-		terrylib.Text.drawstringinput();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.drawstringinput()"]);
-	}
-};
-terrylibbridge.BText.len = function(t) {
-	var result = 0;
-	try {
-		result = terrylib.Text.len(t);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.len(" + t + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BText.height = function() {
-	var result = 0;
-	try {
-		result = terrylib.Text.height();
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.height()"]);
-	}
-	return result;
-};
-terrylibbridge.BText.display = function(x,y,text,col,parameters) {
-	if(col == null) col = 16777215;
-	if(!(typeof(x) == "number")) Err.log(Err.RUNTIME_FUNCTION,null,["x variable in Text.display(x, y, text, col, parameters) is not a Float."]);
-	if(!(typeof(y) == "number")) Err.log(Err.RUNTIME_FUNCTION,null,["y variable in Text.display(x, y, text, col, parameters) is not a Float."]);
-	if(!(typeof(text) == "string")) Err.log(Err.RUNTIME_FUNCTION,null,["text variable in Text.display(x, y, text, col, parameters) is not a String."]);
-	if(!((col | 0) === col)) Err.log(Err.RUNTIME_FUNCTION,null,["col variable in Text.display(x, y, text, col, parameters) is not an Int."]);
-	try {
-		terrylib.Text.display(x,y,text,col,parameters);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.display(" + x + ", " + y + ", " + text + ", " + col + ", " + Std.string(parameters) + ")"]);
-	}
-};
-terrylibbridge.BText.setfont = function(t,s) {
-	try {
-		terrylib.Text.setfont(t,s);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.setfont(" + t + ", " + s + ")"]);
-	}
-};
-terrylibbridge.BText.changesize = function(t) {
-	try {
-		terrylib.Text.changesize(t);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.changesize(" + t + ")"]);
-	}
-};
-terrylibbridge.BText.getfonttypename = function(fontname) {
-	var result = "";
-	try {
-		result = terrylib.Text.getfonttypename(fontname);
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Text.getfonttypename(" + fontname + ")"]);
-	}
-	return result;
-};
-terrylibbridge.BText.get_currentfont = function() {
-	try {
-		return terrylib.Text.currentfont;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to get value of \"Text.currentfont\"."]);
-	}
-	return "null";
-};
-terrylibbridge.BText.set_currentfont = function(x) {
-	try {
-		return terrylib.Text.currentfont = x;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to set value of \"Text.currentfont\"."]);
-	}
-	return "null";
-};
-terrylibbridge.BText.get_currentsize = function() {
-	try {
-		return terrylib.Text.currentsize;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to get value of \"Text.currentsize\"."]);
-	}
-	return -1;
-};
-terrylibbridge.BText.set_currentsize = function(x) {
-	try {
-		return terrylib.Text.currentsize = x;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to set value of \"Text.currentsize\"."]);
-	}
-	return -1;
-};
-terrylibbridge.BText.get_drawto = function() {
-	try {
-		return terrylib.Text.drawto;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to get value of \"Text.drawto\"."]);
-	}
-	return new openfl.display.BitmapData(1,1);
-};
-terrylibbridge.BText.set_drawto = function(x) {
-	try {
-		return terrylib.Text.drawto = x;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to set value of \"Text.drawto\"."]);
-	}
-	return new openfl.display.BitmapData(1,1);
-};
-terrylibbridge.BText.get_input_show = function() {
-	try {
-		return terrylib.Text.input_show;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to get value of \"Text.input_show\"."]);
-	}
-	return 0;
-};
-terrylibbridge.BText.set_input_show = function(x) {
-	try {
-		return terrylib.Text.input_show = x;
-	} catch( e ) {
-		Err.log(Err.RUNTIME_FUNCTION,null,["Failed to set value of \"Text.input_show\"."]);
-	}
-	return 0;
-};
 function $iterator(o) { if( o instanceof Array ) return function() { return HxOverrides.iter(o); }; return typeof(o.iterator) == 'function' ? $bind(o,o.iterator) : o.iterator; }
 var $_, $fid = 0;
 function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id__ = $fid++; var f; if( o.hx__closures__ == null ) o.hx__closures__ = {}; else f = o.hx__closures__[m.__id__]; if( f == null ) { f = function(){ return f.method.apply(f.scope, arguments); }; f.scope = o; f.method = m; o.hx__closures__[m.__id__] = f; } return f; }
@@ -43560,7 +43307,6 @@ Err.PARSER_INIT = 2;
 Err.PARSER_NEW = 3;
 Err.RUNTIME_INIT = 4;
 Err.RUNTIME_UPDATE = 5;
-Err.RUNTIME_FUNCTION = 6;
 Webfont.ZERO4B11 = "04b11";
 Webfont.APPLE = "apple";
 Webfont.BOLD = "bold";
@@ -43581,6 +43327,7 @@ Webfont.ROMAN = "roman";
 Webfont.SPECIAL = "special";
 Webfont.VISITOR = "visitor";
 Webfont.YOSTER = "yoster";
+Webscript.reloaddelay = 0;
 Webscript.counter = 0;
 Webscript.oldfont = "";
 Webscript.oldfontsize = 0;
@@ -44848,7 +44595,7 @@ openfl.system.Capabilities.hasStreamingAudio = false;
 openfl.system.Capabilities.hasStreamingVideo = false;
 openfl.system.Capabilities.hasTLS = true;
 openfl.system.Capabilities.hasVideoEncoder = false;
-openfl.system.Capabilities.isDebugger = true;
+openfl.system.Capabilities.isDebugger = false;
 openfl.system.Capabilities.isEmbeddedInAcrobat = false;
 openfl.system.Capabilities.localFileReadDisable = true;
 openfl.system.Capabilities.manufacturer = "OpenFL Contributors";
@@ -45045,12 +44792,5 @@ terrylib.bitmapFont.BitmapFont.COLOR_TRANSFORM = new openfl.geom.ColorTransform(
 terrylib.bitmapFont._BitmapTextAlign.BitmapTextAlign_Impl_.LEFT = "left";
 terrylib.bitmapFont._BitmapTextAlign.BitmapTextAlign_Impl_.CENTER = "center";
 terrylib.bitmapFont._BitmapTextAlign.BitmapTextAlign_Impl_.RIGHT = "right";
-terrylibbridge.BText.LEFT = -20000;
-terrylibbridge.BText.RIGHT = -20001;
-terrylibbridge.BText.TOP = -20002;
-terrylibbridge.BText.BOTTOM = -20003;
-terrylibbridge.BText.CENTER = -20004;
 ApplicationMain.main();
 })(typeof window != "undefined" ? window : exports);
-
-//# sourceMappingURL=webthing.js.map

@@ -53,7 +53,7 @@ class Webscript {
 		
 		try {
 			#if terrylibwebhtml5debug
-				loadfile("test.txt");
+				loadfile("tests/invalidchar.txt");
 			#else
 				ExternalInterface.addCallback("loadscript", loadscript);
 			#end
@@ -181,6 +181,7 @@ class Webscript {
 		interpreter.variables.set("Font", Webfont);
 		interpreter.variables.set("Std", Std);
 		interpreter.variables.set("Random", Random);
+		interpreter.variables.set("String", String);
 		
 		runscript = true;
 		try{
