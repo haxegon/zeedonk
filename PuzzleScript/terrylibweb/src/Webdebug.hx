@@ -19,15 +19,32 @@ class Webdebug {
 		return 0;
 	}
 	
-	public static function log(msg:String) {
+	public static function log(msg1:String, ?msg2:String, ?msg3:String, ?msg4:String, ?msg5:String, ?msg6:String, ?msg7:String, ?msg8:String) {
 		#if (flash || terrylibwebhtml5debug)
-	  trace(msg);
+	  trace(msg1);
 		#else
+		var returnarray:Array<String> = [];
 		var linenum:Int = getlinenum(Webscript.interpreter.curExpr.pmin);
 		if (linenum == 0) {
-			ExternalInterface.call("consolePrint", msg, true);
+			returnarray.push(msg1);
+			if (msg2 != null) returnarray.push(msg2);
+			if (msg3 != null) returnarray.push(msg3);
+			if (msg4 != null) returnarray.push(msg4);
+			if (msg5 != null) returnarray.push(msg5);
+			if (msg6 != null) returnarray.push(msg6);
+			if (msg7 != null) returnarray.push(msg7);
+			if (msg8 != null) returnarray.push(msg8);
+			ExternalInterface.call("consolePrintArray", returnarray, true);
 		}else{
-			ExternalInterface.call("consolePrintWithLines", msg, linenum, true);
+			returnarray.push(msg1);
+			if (msg2 != null) returnarray.push(msg2);
+			if (msg3 != null) returnarray.push(msg3);
+			if (msg4 != null) returnarray.push(msg4);
+			if (msg5 != null) returnarray.push(msg5);
+			if (msg6 != null) returnarray.push(msg6);
+			if (msg7 != null) returnarray.push(msg7);
+			if (msg8 != null) returnarray.push(msg8);
+			ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);
 		}
 		#end
 	}

@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "770", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "776", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1929,6 +1929,10 @@ Game.background = function(c) {
 	Webscript.background_color = c;
 	openfl.external.ExternalInterface.call("setbackgroundcolor",c);
 };
+Game.foreground = function(c) {
+	Webscript.foreground_color = c;
+	openfl.external.ExternalInterface.call("setforegroundcolor",c);
+};
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
 HxOverrides.__name__ = ["HxOverrides"];
@@ -2291,6 +2295,9 @@ Webbridge.prototype = {
 	}
 	,get_background_colour: function() {
 		return Webscript.background_color;
+	}
+	,get_foreground_colour: function() {
+		return Webscript.foreground_color;
 	}
 	,get_title: function() {
 		return Webscript.title;
@@ -3372,9 +3379,30 @@ Webdebug.getlinenum = function(c) {
 	}
 	return 0;
 };
-Webdebug.log = function(msg) {
+Webdebug.log = function(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8) {
+	var returnarray = [];
 	var linenum = Webdebug.getlinenum(Webscript.interpreter.curExpr.pmin);
-	if(linenum == 0) openfl.external.ExternalInterface.call("consolePrint",msg,true); else openfl.external.ExternalInterface.call("consolePrintWithLines",msg,linenum,true);
+	if(linenum == 0) {
+		returnarray.push(msg1);
+		if(msg2 != null) returnarray.push(msg2);
+		if(msg3 != null) returnarray.push(msg3);
+		if(msg4 != null) returnarray.push(msg4);
+		if(msg5 != null) returnarray.push(msg5);
+		if(msg6 != null) returnarray.push(msg6);
+		if(msg7 != null) returnarray.push(msg7);
+		if(msg8 != null) returnarray.push(msg8);
+		openfl.external.ExternalInterface.call("consolePrintArray",returnarray,true);
+	} else {
+		returnarray.push(msg1);
+		if(msg2 != null) returnarray.push(msg2);
+		if(msg3 != null) returnarray.push(msg3);
+		if(msg4 != null) returnarray.push(msg4);
+		if(msg5 != null) returnarray.push(msg5);
+		if(msg6 != null) returnarray.push(msg6);
+		if(msg7 != null) returnarray.push(msg7);
+		if(msg8 != null) returnarray.push(msg8);
+		openfl.external.ExternalInterface.call("consolePrintWithLinesArray",returnarray,linenum,true);
+	}
 };
 Webdebug.error = function(msg,linenum) {
 	openfl.external.ExternalInterface.call("logError",msg,linenum,true,Err.charpos);
@@ -3413,6 +3441,7 @@ Webscript.updatefunction = null;
 Webscript.title = null;
 Webscript.homepage = null;
 Webscript.background_color = null;
+Webscript.foreground_color = null;
 Webscript.init = function() {
 	Webscript.scriptloaded = false;
 	Webscript.runscript = false;
@@ -3451,7 +3480,7 @@ Webscript.loadfile = function(filename) {
 	Webscript.myLoader.load(myRequest);
 };
 Webscript.onIOError = function(e) {
-	haxe.Log.trace("test script not found.",{ fileName : "Webscript.hx", lineNumber : 83, className : "Webscript", methodName : "onIOError"});
+	haxe.Log.trace("test script not found.",{ fileName : "Webscript.hx", lineNumber : 84, className : "Webscript", methodName : "onIOError"});
 };
 Webscript.onLoadComplete = function(e) {
 	Webscript.myscript = terrylib.Convert.tostring(Webscript.myLoader.data);
@@ -3536,6 +3565,8 @@ Webscript.scriptfound = function() {
 		if(Webscript.homepage == null) Webscript.homepage = "";
 		var bg_col = Webscript.interpreter.variables.get("background_color");
 		if(bg_col == null) Webscript.background_color = terrylib.Col.BLACK; else Webscript.background_color = terrylib.Convert.toint(bg_col);
+		var fg_col = Webscript.interpreter.variables.get("foreground_color");
+		if(fg_col == null) Webscript.foreground_color = terrylib.Col.WHITE; else Webscript.foreground_color = terrylib.Convert.toint(bg_col);
 		Webscript.initfunction = Webscript.interpreter.variables.get("new");
 		Webscript.updatefunction = Webscript.interpreter.variables.get("update");
 		terrylib.Text.setfont("default",1);
@@ -39831,36 +39862,9 @@ terrylib.Gfx.fps = function() {
 	return terrylib.Gfx.fpsobj.currentFPS;
 };
 terrylib.Gfx.changetileset = function(tilesetname) {
-	if(terrylib.Gfx.currenttilesetname != tilesetname) {
-		if(terrylib.Gfx.tilesetindex.exists(tilesetname)) {
-			terrylib.Gfx.currenttileset = terrylib.Gfx.tilesetindex.get(tilesetname);
-			terrylib.Gfx.currenttilesetname = tilesetname;
-		} else throw "ERROR: Cannot change to tileset \"" + tilesetname + "\", no tileset with that name found.";
-	}
-};
-terrylib.Gfx.numberoftiles = function() {
-	return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles.length;
 };
 terrylib.Gfx.loadtiles = function(imagename,width,height) {
 	Webdebug.log("Error: \"loadtiles\" function not available in webscript version.");
-};
-terrylib.Gfx.createtiles = function(imagename,width,height,amount) {
-	terrylib.Gfx.tiles.push(new terrylib.util.Tileset(imagename,width | 0,height | 0));
-	terrylib.Gfx.tilesetindex.set(imagename,terrylib.Gfx.tiles.length - 1);
-	terrylib.Gfx.currenttileset = terrylib.Gfx.tiles.length - 1;
-	var _g = 0;
-	while(_g < amount) {
-		var i = _g++;
-		var t = new openfl.display.BitmapData(width | 0,height | 0,true,0);
-		terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles.push(t);
-	}
-	terrylib.Gfx.changetileset(imagename);
-};
-terrylib.Gfx.tilewidth = function() {
-	return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].width;
-};
-terrylib.Gfx.tileheight = function() {
-	return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].height;
 };
 terrylib.Gfx.loadimage = function(imagename) {
 	Webdebug.log("Error: \"loadtiles\" function not available in webscript version.");
@@ -39895,12 +39899,6 @@ terrylib.Gfx.drawtoimage = function(imagename) {
 	terrylib.Gfx.imagenum = terrylib.Gfx.imageindex.get(imagename);
 	terrylib.Gfx.drawto.unlock();
 	terrylib.Gfx.drawto = terrylib.Gfx.images[terrylib.Gfx.imagenum];
-	terrylib.Gfx.drawto.lock();
-};
-terrylib.Gfx.drawtotile = function(tilenumber) {
-	terrylib.Gfx.drawingtoscreen = false;
-	terrylib.Gfx.drawto.unlock();
-	terrylib.Gfx.drawto = terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles[tilenumber];
 	terrylib.Gfx.drawto.lock();
 };
 terrylib.Gfx.imagealignx = function(x) {
@@ -40006,27 +40004,6 @@ terrylib.Gfx.drawimage = function(x,y,imagename,parameters) {
 	if(terrylib.Gfx.changecolours) terrylib.Gfx.drawto.draw(terrylib.Gfx.images[terrylib.Gfx.imagenum],terrylib.Gfx.shapematrix,terrylib.Gfx.alphact); else terrylib.Gfx.drawto.draw(terrylib.Gfx.images[terrylib.Gfx.imagenum],terrylib.Gfx.shapematrix);
 	terrylib.Gfx.shapematrix.identity();
 };
-terrylib.Gfx.grabtilefromscreen = function(tilenumber,x,y) {
-	if(terrylib.Gfx.currenttileset == -1) {
-		throw "ERROR: In grabtilefromscreen, there is no tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.";
-		return;
-	}
-	terrylib.Gfx.settrect(x,y,terrylib.Gfx.tilewidth(),terrylib.Gfx.tileheight());
-	terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles[tilenumber].copyPixels(terrylib.Gfx.backbuffer,terrylib.Gfx.trect,terrylib.Gfx.tl);
-};
-terrylib.Gfx.grabtilefromimage = function(tilenumber,imagename,x,y) {
-	if(!terrylib.Gfx.imageindex.exists(imagename)) {
-		throw "ERROR: In grabtilefromimage, \"" + imagename + "\" does not exist.";
-		return;
-	}
-	if(terrylib.Gfx.currenttileset == -1) {
-		throw "ERROR: In grabtilefromimage, there is no tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.";
-		return;
-	}
-	terrylib.Gfx.imagenum = terrylib.Gfx.imageindex.get(imagename);
-	terrylib.Gfx.settrect(x,y,terrylib.Gfx.tilewidth(),terrylib.Gfx.tileheight());
-	terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles[tilenumber].copyPixels(terrylib.Gfx.images[terrylib.Gfx.imagenum],terrylib.Gfx.trect,terrylib.Gfx.tl);
-};
 terrylib.Gfx.grabimagefromscreen = function(imagename,x,y) {
 	if(!terrylib.Gfx.imageindex.exists(imagename)) {
 		throw "ERROR: In grabimagefromscreen, \"" + imagename + "\" does not exist. You need to create an image label first before using this function.";
@@ -40042,162 +40019,10 @@ terrylib.Gfx.grabimagefromimage = function(imagename,imagetocopyfrom,x,y) {
 		return;
 	}
 	terrylib.Gfx.imagenum = terrylib.Gfx.imageindex.get(imagename);
-	if(!terrylib.Gfx.imageindex.exists(imagetocopyfrom)) haxe.Log.trace("ERROR: No image called \"" + imagetocopyfrom + "\" found.",{ fileName : "Gfx.hx", lineNumber : 400, className : "terrylib.Gfx", methodName : "grabimagefromimage"});
+	if(!terrylib.Gfx.imageindex.exists(imagetocopyfrom)) haxe.Log.trace("ERROR: No image called \"" + imagetocopyfrom + "\" found.",{ fileName : "Gfx.hx", lineNumber : 414, className : "terrylib.Gfx", methodName : "grabimagefromimage"});
 	var imagenumfrom = terrylib.Gfx.imageindex.get(imagetocopyfrom);
 	terrylib.Gfx.settrect(x,y,terrylib.Gfx.images[terrylib.Gfx.imagenum].width,terrylib.Gfx.images[terrylib.Gfx.imagenum].height);
 	terrylib.Gfx.images[terrylib.Gfx.imagenum].copyPixels(terrylib.Gfx.images[imagenumfrom],terrylib.Gfx.trect,terrylib.Gfx.tl);
-};
-terrylib.Gfx.copytile = function(totilenumber,fromtileset,fromtilenumber) {
-	if(terrylib.Gfx.tilesetindex.exists(fromtileset)) {
-		if(terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].width == terrylib.Gfx.tiles[terrylib.Gfx.tilesetindex.get(fromtileset)].width && terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].height == terrylib.Gfx.tiles[terrylib.Gfx.tilesetindex.get(fromtileset)].height) terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles[totilenumber].copyPixels(terrylib.Gfx.tiles[terrylib.Gfx.tilesetindex.get(fromtileset)].tiles[fromtilenumber],terrylib.Gfx.tiles[terrylib.Gfx.tilesetindex.get(fromtileset)].tiles[fromtilenumber].rect,terrylib.Gfx.tl); else {
-			haxe.Log.trace("ERROR: Tilesets " + terrylib.Gfx.currenttilesetname + " (" + Std.string(terrylib.Gfx.tilewidth()) + "x" + Std.string(terrylib.Gfx.tileheight()) + ") and " + fromtileset + " (" + Std.string(terrylib.Gfx.tiles[terrylib.Gfx.tilesetindex.get(fromtileset)].width) + "x" + Std.string(terrylib.Gfx.tiles[terrylib.Gfx.tilesetindex.get(fromtileset)].height) + ") are different sizes. Maybe try just drawing to the tile you want instead with Gfx.drawtotile()?",{ fileName : "Gfx.hx", lineNumber : 413, className : "terrylib.Gfx", methodName : "copytile"});
-			return;
-		}
-	} else {
-		haxe.Log.trace("ERROR: Tileset " + fromtileset + " hasn't been loaded or created.",{ fileName : "Gfx.hx", lineNumber : 417, className : "terrylib.Gfx", methodName : "copytile"});
-		return;
-	}
-};
-terrylib.Gfx.drawtile = function(x,y,t,parameters) {
-	if(terrylib.Gfx.skiprender && terrylib.Gfx.drawingtoscreen) return;
-	if(terrylib.Gfx.currenttileset == -1) {
-		throw "ERROR: No tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.";
-		return;
-	}
-	if(t >= terrylib.Gfx.numberoftiles()) {
-		if(t == terrylib.Gfx.numberoftiles()) {
-			throw "ERROR: Tried to draw tile number " + (t == null?"null":"" + t) + ", but there are only " + Std.string(terrylib.Gfx.numberoftiles()) + " tiles in tileset \"" + terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].name + "\". (Because this includes tile number 0, " + (t == null?"null":"" + t) + " is not a valid tile.)";
-			return;
-		} else {
-			throw "ERROR: Tried to draw tile number " + (t == null?"null":"" + t) + ", but there are only " + Std.string(terrylib.Gfx.numberoftiles()) + " tiles in tileset \"" + terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].name + "\".";
-			return;
-		}
-	}
-	terrylib.Gfx.tempxpivot = 0;
-	terrylib.Gfx.tempypivot = 0;
-	terrylib.Gfx.tempxscale = 1.0;
-	terrylib.Gfx.tempyscale = 1.0;
-	terrylib.Gfx.temprotate = 0;
-	terrylib.Gfx.tempred = 1.0;
-	terrylib.Gfx.tempgreen = 1.0;
-	terrylib.Gfx.tempblue = 1.0;
-	terrylib.Gfx.tempalpha = 1.0;
-	terrylib.Gfx.alphact.redMultiplier = 1.0;
-	terrylib.Gfx.alphact.greenMultiplier = 1.0;
-	terrylib.Gfx.alphact.blueMultiplier = 1.0;
-	terrylib.Gfx.alphact.alphaMultiplier = terrylib.Gfx.tempalpha;
-	terrylib.Gfx.changecolours = false;
-	terrylib.Gfx.tempxalign = x;
-	terrylib.Gfx.tempyalign = y;
-	x = terrylib.Gfx.tilealignx(x);
-	y = terrylib.Gfx.tilealigny(y);
-	if(parameters != null) {
-		if(parameters.xalign != null) {
-			if(parameters.xalign == terrylib.Gfx.CENTER) {
-				if(terrylib.Gfx.tempxalign != terrylib.Gfx.CENTER) x = x - Std["int"](terrylib.Gfx.tilewidth() / 2);
-			} else if(parameters.xalign == terrylib.Gfx.BOTTOM || parameters.xalign == terrylib.Gfx.RIGHT) {
-				if(terrylib.Gfx.tempxalign != terrylib.Gfx.RIGHT) x = x - Std["int"](terrylib.Gfx.tilewidth());
-			}
-		}
-		if(parameters.yalign != null) {
-			if(parameters.yalign == terrylib.Gfx.CENTER) {
-				if(terrylib.Gfx.tempyalign != terrylib.Gfx.CENTER) y = y - Std["int"](terrylib.Gfx.tileheight() / 2);
-			} else if(parameters.yalign == terrylib.Gfx.BOTTOM || parameters.yalign == terrylib.Gfx.RIGHT) {
-				if(terrylib.Gfx.tempyalign != terrylib.Gfx.BOTTOM) y = y - Std["int"](terrylib.Gfx.tileheight());
-			}
-		}
-		if(parameters.xpivot != null) terrylib.Gfx.tempxpivot = terrylib.Gfx.tilealignontilex(parameters.xpivot);
-		if(parameters.ypivot != null) terrylib.Gfx.tempypivot = terrylib.Gfx.tilealignontiley(parameters.ypivot);
-		if(parameters.scale != null) {
-			terrylib.Gfx.tempxscale = parameters.scale;
-			terrylib.Gfx.tempyscale = parameters.scale;
-		} else {
-			if(parameters.xscale != null) terrylib.Gfx.tempxscale = parameters.xscale;
-			if(parameters.yscale != null) terrylib.Gfx.tempyscale = parameters.yscale;
-		}
-		if(parameters.rotation != null) terrylib.Gfx.temprotate = parameters.rotation;
-		if(parameters.alpha != null) {
-			terrylib.Gfx.tempalpha = parameters.alpha;
-			terrylib.Gfx.alphact.alphaMultiplier = terrylib.Gfx.tempalpha;
-			terrylib.Gfx.changecolours = true;
-		}
-		if(parameters.red != null) {
-			terrylib.Gfx.tempred = parameters.red;
-			terrylib.Gfx.alphact.redMultiplier = terrylib.Gfx.tempred;
-			terrylib.Gfx.changecolours = true;
-		}
-		if(parameters.green != null) {
-			terrylib.Gfx.tempgreen = parameters.green;
-			terrylib.Gfx.alphact.greenMultiplier = terrylib.Gfx.tempgreen;
-			terrylib.Gfx.changecolours = true;
-		}
-		if(parameters.blue != null) {
-			terrylib.Gfx.tempblue = parameters.blue;
-			terrylib.Gfx.alphact.blueMultiplier = terrylib.Gfx.tempblue;
-			terrylib.Gfx.changecolours = true;
-		}
-	}
-	terrylib.Gfx.shapematrix.identity();
-	terrylib.Gfx.shapematrix.translate(-terrylib.Gfx.tempxpivot,-terrylib.Gfx.tempypivot);
-	if(terrylib.Gfx.temprotate != 0) terrylib.Gfx.shapematrix.rotate(terrylib.Gfx.temprotate * 3.1415 / 180);
-	if(terrylib.Gfx.tempxscale != 1.0 || terrylib.Gfx.tempyscale != 1.0) terrylib.Gfx.shapematrix.scale(terrylib.Gfx.tempxscale,terrylib.Gfx.tempyscale);
-	terrylib.Gfx.shapematrix.translate(terrylib.Gfx.tempxpivot,terrylib.Gfx.tempypivot);
-	terrylib.Gfx.shapematrix.translate(x,y);
-	if(terrylib.Gfx.changecolours) terrylib.Gfx.drawto.draw(terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles[t],terrylib.Gfx.shapematrix,terrylib.Gfx.alphact); else terrylib.Gfx.drawto.draw(terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].tiles[t],terrylib.Gfx.shapematrix);
-	terrylib.Gfx.shapematrix.identity();
-};
-terrylib.Gfx.currentframe = function() {
-	return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].currentframe;
-};
-terrylib.Gfx.stopanimation = function(animationname) {
-	terrylib.Gfx.animationnum = terrylib.Gfx.animationindex.get(animationname);
-	terrylib.Gfx.animations[terrylib.Gfx.animationnum].reset();
-};
-terrylib.Gfx.defineanimation = function(animationname,tileset,startframe,endframe,delayperframe) {
-	if(delayperframe < 1) {
-		throw "ERROR: Cannot have a delay per frame of less than 1.";
-		return;
-	}
-	terrylib.Gfx.animationindex.set(animationname,terrylib.Gfx.animations.length);
-	terrylib.Gfx.animations.push(new terrylib.util.AnimationContainer(animationname,tileset,startframe,endframe,delayperframe));
-};
-terrylib.Gfx.drawanimation = function(x,y,animationname,parameters) {
-	if(terrylib.Gfx.skiprender && terrylib.Gfx.drawingtoscreen) return;
-	terrylib.Gfx.oldtileset = terrylib.Gfx.currenttilesetname;
-	if(!terrylib.Gfx.animationindex.exists(animationname)) {
-		throw "ERROR: No animated named \"" + animationname + "\" is defined. Define one first using Gfx.defineanimation!";
-		return;
-	}
-	terrylib.Gfx.animationnum = terrylib.Gfx.animationindex.get(animationname);
-	terrylib.Gfx.changetileset(terrylib.Gfx.animations[terrylib.Gfx.animationnum].tileset);
-	terrylib.Gfx.animations[terrylib.Gfx.animationnum].update();
-	terrylib.Gfx.tempframe = terrylib.Gfx.animations[terrylib.Gfx.animationnum].currentframe;
-	if(parameters != null) terrylib.Gfx.drawtile(x,y,terrylib.Gfx.tempframe,parameters); else terrylib.Gfx.drawtile(x,y,terrylib.Gfx.tempframe);
-	terrylib.Gfx.changetileset(terrylib.Gfx.oldtileset);
-};
-terrylib.Gfx.tilealignx = function(x) {
-	if(x == terrylib.Gfx.CENTER) return terrylib.Gfx.screenwidthmid - (terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].width / 2 | 0);
-	if(x == terrylib.Gfx.LEFT || x == terrylib.Gfx.TOP) return 0;
-	if(x == terrylib.Gfx.RIGHT || x == terrylib.Gfx.BOTTOM) return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].width;
-	return x;
-};
-terrylib.Gfx.tilealigny = function(y) {
-	if(y == terrylib.Gfx.CENTER) return terrylib.Gfx.screenheightmid - (terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].height / 2 | 0);
-	if(y == terrylib.Gfx.LEFT || y == terrylib.Gfx.TOP) return 0;
-	if(y == terrylib.Gfx.RIGHT || y == terrylib.Gfx.BOTTOM) return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].height;
-	return y;
-};
-terrylib.Gfx.tilealignontilex = function(x) {
-	if(x == terrylib.Gfx.CENTER) return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].width / 2 | 0;
-	if(x == terrylib.Gfx.LEFT || x == terrylib.Gfx.TOP) return 0;
-	if(x == terrylib.Gfx.RIGHT || x == terrylib.Gfx.BOTTOM) return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].width;
-	return x;
-};
-terrylib.Gfx.tilealignontiley = function(y) {
-	if(y == terrylib.Gfx.CENTER) return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].height / 2 | 0;
-	if(y == terrylib.Gfx.LEFT || y == terrylib.Gfx.TOP) return 0;
-	if(y == terrylib.Gfx.RIGHT || y == terrylib.Gfx.BOTTOM) return terrylib.Gfx.tiles[terrylib.Gfx.currenttileset].height;
-	return y;
 };
 terrylib.Gfx.drawline = function(x1,y1,x2,y2,col,alpha) {
 	if(alpha == null) alpha = 1.0;
