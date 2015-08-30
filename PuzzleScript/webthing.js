@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "740", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "752", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1823,6 +1823,16 @@ Err.process = function(errorhandle) {
 			returnarray.push("Unexpected \"" + errorhandle.e[2] + "\" in line " + Err.errorline + ":");
 			returnarray.push(Err.errorstr);
 			return returnarray;
+		} else if(errorhandle.e[0] == "EInvalidAccess") {
+			Err.geterrorline();
+			returnarray.push("Invalid access of \"" + errorhandle.e[2] + "\" in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
+		} else if(errorhandle.e[0] == "EInvalidIterator") {
+			Err.geterrorline(false);
+			returnarray.push("Invalid iterator \"" + errorhandle.e[2] + "\" in line " + Err.errorline + ":");
+			returnarray.push(Err.errorstr);
+			return returnarray;
 		} else if(errorhandle.e[0] == "EInvalidChar") {
 			Err.geterrorline(false);
 			returnarray.push("Invalid character \"" + String.fromCharCode(errorhandle.e[2]) + "\" in line " + Err.errorline + ":");
@@ -1844,8 +1854,8 @@ Err.process = function(errorhandle) {
 			returnarray.push(Err.errorstr);
 			return returnarray;
 		} else {
-			haxe.Log.trace("ERRORHANDLE OBJECT :\n",{ fileName : "Err.hx", lineNumber : 93, className : "Err", methodName : "process", customParams : [errorhandle,"\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: " + errorhandle.e[1] + "\n2: " + errorhandle.e[2] + "\n3: " + errorhandle.e[3] + "\n}"]});
-			haxe.Log.trace(errorhandle.e,{ fileName : "Err.hx", lineNumber : 94, className : "Err", methodName : "process"});
+			haxe.Log.trace("ERRORHANDLE OBJECT :\n",{ fileName : "Err.hx", lineNumber : 103, className : "Err", methodName : "process", customParams : [errorhandle,"\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: " + errorhandle.e[1] + "\n2: " + errorhandle.e[2] + "\n3: " + errorhandle.e[3] + "\n}"]});
+			haxe.Log.trace(errorhandle.e,{ fileName : "Err.hx", lineNumber : 104, className : "Err", methodName : "process"});
 			Err.geterrorline();
 			returnarray.push("Unknown error in line " + Err.errorline + ":");
 			returnarray.push(Err.errorstr);

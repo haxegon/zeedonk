@@ -53,7 +53,7 @@ class Webscript {
 		
 		try {
 			#if terrylibwebhtml5debug
-				loadfile("tests/invaliditerator.txt");
+				loadfile("tests/invalidaccess.txt");
 			#else
 				ExternalInterface.addCallback("loadscript", loadscript);
 			#end

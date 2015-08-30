@@ -69,6 +69,16 @@ class Err {
 				returnarray.push("Unexpected \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
 				returnarray.push(errorstr);
 				return returnarray;
+			}else if (errorhandle.e[0] == "EInvalidAccess") {
+				geterrorline();
+				returnarray.push("Invalid access of \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
+			}else if (errorhandle.e[0] == "EInvalidIterator") {
+				geterrorline(false);
+				returnarray.push("Invalid iterator \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
 			}else if (errorhandle.e[0] == "EInvalidChar") {
 				geterrorline(false);
 				returnarray.push("Invalid character \"" + String.fromCharCode(errorhandle.e[2]) + "\" in line " + errorline + ":");
