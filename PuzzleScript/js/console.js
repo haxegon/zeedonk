@@ -9,7 +9,7 @@ function jumpToLine(i,cpos) {
 
     // editor.getLineHandle does not help as it does not return the reference of line.    
     editor.scrollIntoView(Math.max(i - 1 - 10,0));
-    editor.scrollIntoView(i - 1 + 10);
+    editor.scrollIntoView(Math.min(i - 1 + 10,editor.doc.size-1));
     editor.scrollIntoView(Math.max(i - 1,0));
     editor.setCursor(Math.max(i - 1,0), cpos);
 }
