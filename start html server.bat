@@ -1,0 +1,1 @@
+C:\coding\python\python.exe -m SimpleHTTPServer 8000
