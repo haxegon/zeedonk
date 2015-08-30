@@ -39,6 +39,10 @@ function consolePrint(text,urgent) {
 	if (urgent===undefined) {
 		urgent=false;
 	}
+    if (typeof text === "object"){
+        text=JSON.stringify(text);
+    }
+
 	if (cache_console_messages&&urgent==false) {		
 		consolecache.push(text);
 	} else {
@@ -76,6 +80,10 @@ function consolePrintArray(text,urgent) {
     if (urgent===undefined) {
         urgent=false;
     }
+    if (typeof text === "object"){
+        text=JSON.stringify(text);
+    }
+
     if (cache_console_messages&&urgent==false) {        
         consolecache.push(text);
     } else {
