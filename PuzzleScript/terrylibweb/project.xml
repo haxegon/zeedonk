@@ -38,7 +38,7 @@
 	<haxelib name="hscript" />
 	
 	<haxedef name="terrylibweb" />
-	<!-- haxedef name="terrylibwebhtml5debug" / -->
+	<!--haxedef name="terrylibwebhtml5debug" /-->
 	<haxedef name="webgl" />
 	<haxedef name="hscriptPos" />
 	

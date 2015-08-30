@@ -25,11 +25,7 @@ class Webdebug{
 		if (linenum == null) {
 			ExternalInterface.call("logError", msg, linenum, true);
 		}else {
-		  if (linenum != -1) {	
-				ExternalInterface.call("logError", msg, null, true);
-			}else {
-				ExternalInterface.call("logError", msg, linenum, true);
-			}
+		  ExternalInterface.call("logError", msg, linenum, true);
 		}
 		#end
 	}

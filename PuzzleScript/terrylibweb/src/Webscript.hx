@@ -53,7 +53,7 @@ class Webscript {
 		
 		try {
 			#if terrylibwebhtml5debug
-				loadfile("tests/unterminatedcomment.txt");
+				loadfile("tests/invaliditerator.txt");
 			#else
 				ExternalInterface.addCallback("loadscript", loadscript);
 			#end
@@ -114,7 +114,7 @@ class Webscript {
 				try {
 					updatefunction();
 				}catch (e:Dynamic) {
-					Err.log(Err.RUNTIME_UPDATE, parser.line, Err.process(e));
+					Err.log(Err.RUNTIME_UPDATE, Err.process(e));
 				}
 			}	
 		}else {
@@ -187,14 +187,14 @@ class Webscript {
 		try{
 			parsedscript = parser.parseString(myscript);
 		}catch (e:Dynamic) {
-			Err.log(Err.PARSER_INIT, null, Err.process(e));
+			Err.log(Err.PARSER_INIT, Err.process(e));
 		}
 		
 		if (runscript) {
 			try{
 				interpreter.execute(parsedscript);
 			}catch (e:Dynamic) {
-				Err.log(Err.RUNTIME_INIT, parser.line, Err.process(e));
+				Err.log(Err.RUNTIME_INIT, Err.process(e));
 			}
 			
 			title = interpreter.variables.get("title");
@@ -217,7 +217,7 @@ class Webscript {
 				try {
 					initfunction();	
 				}catch (e:Dynamic) {
-					Err.log(Err.PARSER_NEW, parser.line, Err.process(e));
+					Err.log(Err.PARSER_NEW, Err.process(e));
 				}
 			}
 			

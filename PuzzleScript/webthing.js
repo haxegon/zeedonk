@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "722", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "729", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1776,7 +1776,7 @@ EReg.prototype = {
 var Err = function() { };
 $hxClasses["Err"] = Err;
 Err.__name__ = ["Err"];
-Err.log = function(errorcode,linenum,details) {
+Err.log = function(errorcode,details) {
 	Webscript.runscript = false;
 	Webscript.errorinscript = true;
 	terrylib.Gfx.resizescreen(192,120,4);
@@ -3340,7 +3340,7 @@ Webdebug.log = function(msg) {
 	openfl.external.ExternalInterface.call("consolePrint",msg,true);
 };
 Webdebug.error = function(msg,linenum) {
-	if(linenum == null) openfl.external.ExternalInterface.call("logError",msg,linenum,true); else if(linenum != -1) openfl.external.ExternalInterface.call("logError",msg,null,true); else openfl.external.ExternalInterface.call("logError",msg,linenum,true);
+	if(linenum == null) openfl.external.ExternalInterface.call("logError",msg,linenum,true); else openfl.external.ExternalInterface.call("logError",msg,linenum,true);
 };
 Webdebug.warn = function(msg,linenum) {
 	openfl.external.ExternalInterface.call("logWarning",msg,linenum,true);
@@ -3429,7 +3429,7 @@ Webscript.update = function() {
 		if(Webscript.runscript) try {
 			Webscript.updatefunction();
 		} catch( e ) {
-			Err.log(Err.RUNTIME_UPDATE,Webscript.parser.line,Err.process(e));
+			Err.log(Err.RUNTIME_UPDATE,Err.process(e));
 		}
 	} else {
 		Webscript.counter += 10;
@@ -3485,13 +3485,13 @@ Webscript.scriptfound = function() {
 	try {
 		Webscript.parsedscript = Webscript.parser.parseString(Webscript.myscript);
 	} catch( e ) {
-		Err.log(Err.PARSER_INIT,null,Err.process(e));
+		Err.log(Err.PARSER_INIT,Err.process(e));
 	}
 	if(Webscript.runscript) {
 		try {
 			Webscript.interpreter.execute(Webscript.parsedscript);
 		} catch( e1 ) {
-			Err.log(Err.RUNTIME_INIT,Webscript.parser.line,Err.process(e1));
+			Err.log(Err.RUNTIME_INIT,Err.process(e1));
 		}
 		Webscript.title = Webscript.interpreter.variables.get("title");
 		if(Webscript.title == null) Webscript.title = "Untitled";
@@ -3505,7 +3505,7 @@ Webscript.scriptfound = function() {
 		if(Webscript.initfunction != null) try {
 			Webscript.initfunction();
 		} catch( e2 ) {
-			Err.log(Err.PARSER_NEW,Webscript.parser.line,Err.process(e2));
+			Err.log(Err.PARSER_NEW,Err.process(e2));
 		}
 		if(Webscript.updatefunction == null) Err.log(Err.PRE_MISSINGUPDATE);
 	}

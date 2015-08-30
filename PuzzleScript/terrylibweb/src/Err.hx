@@ -10,7 +10,7 @@ class Err {
 	public static var RUNTIME_INIT:Int = 4;
 	public static var RUNTIME_UPDATE:Int = 5;
 	
-	public static function log(errorcode:Int, ?linenum:Int, ?details:Array<String>) {
+	public static function log(errorcode:Int, ?details:Array<String>) {
 		Webscript.runscript = false;
 		Webscript.errorinscript = true;
 		
