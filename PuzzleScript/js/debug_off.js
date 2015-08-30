@@ -17,9 +17,19 @@ function consolePrint(str){
 	str=stripTags(str);
 	errorText.innerHTML+=str+"<br>";*/
 }
-
+function consolePrintWithLines(text,lineNumber,urgent) {
+}
+function consolePrintWithLinesArray(text,lineNumber,urgent) {
+}
 function consoleCacheDump(str){
 	
+}
+
+
+function logError(str, lineNumber,urgent,cpos) {
+	var errorText = document.getElementById("errormessage");
+	str=stripTags(str);
+	errorText.innerHTML+=str+"<br>";
 }
 
 function consoleError(str,lineNumber){
