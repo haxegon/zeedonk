@@ -105,6 +105,11 @@ class Err {
 				returnarray.push("Unknown variable \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
 				returnarray.push(errorstr);
 				return returnarray;
+			}else	if (errorhandle.e[0] == "EInvalidOp") {
+				geterrorline();
+				returnarray.push("Invalid operator \"" + errorhandle.e[2] + "\" in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
 			}else {
 				trace("ERRORHANDLE OBJECT :\n", errorhandle, "\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: "+ errorhandle.e[1] + "\n2: "+ errorhandle.e[2] + "\n3: "+ errorhandle.e[3] + "\n}");
 				trace(errorhandle.e);
