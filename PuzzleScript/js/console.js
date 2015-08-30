@@ -77,7 +77,7 @@ function clearConsole() {
 }
 
 function logError(str, lineNumber,urgent) {
-    if (typeof linenum==="undefined"){
+    if (typeof lineNumber==="undefined"){
         return logErrorNoLine(str,true);
     }
     if (compiling||urgent) {
