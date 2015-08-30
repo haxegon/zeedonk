@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "764", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "770", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -40968,6 +40968,10 @@ terrylib.Mouse.visitsite = function(t) {
 terrylib.Mouse.update = function(X,Y) {
 	terrylib.Mouse.x = X;
 	terrylib.Mouse.y = Y;
+	if(terrylib.Mouse.mousewheel > 0) terrylib.Mouse.mousewheel--;
+	if(terrylib.Mouse.mousewheel < 0) terrylib.Mouse.mousewheel++;
+	if(terrylib.Mouse.mousewheel < 1) terrylib.Mouse.mousewheel = -1;
+	if(terrylib.Mouse.mousewheel > 1) terrylib.Mouse.mousewheel = 1;
 	if(terrylib.Mouse._last == -1 && terrylib.Mouse._current == -1) terrylib.Mouse._current = 0; else if(terrylib.Mouse._last == 2 && terrylib.Mouse._current == 2) terrylib.Mouse._current = 1;
 	terrylib.Mouse._last = terrylib.Mouse._current;
 	if(terrylib.Mouse._rightlast == -1 && terrylib.Mouse._rightcurrent == -1) terrylib.Mouse._rightcurrent = 0; else if(terrylib.Mouse._rightlast == 2 && terrylib.Mouse._rightcurrent == 2) terrylib.Mouse._rightcurrent = 1;

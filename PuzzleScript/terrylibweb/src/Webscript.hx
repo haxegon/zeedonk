@@ -23,6 +23,7 @@ class Webscript {
 	public static var title:String;
 	public static var homepage:String;
 	public static var background_color:Int;
+	public static var foreground_color:Int;
 	
 	public static function init() {
 		scriptloaded = false;
@@ -191,7 +192,7 @@ class Webscript {
 		}
 		
 		if (runscript) {
-			try{
+			try {
 				interpreter.execute(parsedscript);
 			}catch (e:Dynamic) {
 				Err.log(Err.RUNTIME_INIT, Err.process(e));
@@ -206,6 +207,13 @@ class Webscript {
 				background_color = Col.BLACK;
 			}else{
 				background_color = Convert.toint(bg_col);
+			}
+			
+			var fg_col:Dynamic = interpreter.variables.get("foreground_color");
+			if (fg_col == null) {
+				foreground_color = Col.WHITE;
+			}else{
+				foreground_color = Convert.toint(bg_col);
 			}
 			
 			initfunction = interpreter.variables.get("new");

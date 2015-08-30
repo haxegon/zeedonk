@@ -1,0 +1,7 @@
+function new(){
+}
+
+function update(){
+  var y=-2;
+  Text.display(Text.CENTER, y, "Test Successful", Col.WHITE);
+}

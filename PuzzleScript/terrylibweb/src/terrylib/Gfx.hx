@@ -70,6 +70,7 @@ class Gfx {
 	}
 	
 	/** Change the tileset that the draw functions use. */
+	#if !terrylibweb
 	public static function changetileset(tilesetname:String) {
 		if (currenttilesetname != tilesetname) {
 			if(tilesetindex.exists(tilesetname)){
@@ -80,10 +81,17 @@ class Gfx {
 			}
 		}
 	}
+	#else
+	public static function changetileset(tilesetname:String) {
+		//Do nothing in web version
+	}
+	#end
 	
+	#if !terrylibweb
 	public static function numberoftiles():Int {
 		return tiles[currenttileset].tiles.length;
 	}
+	#end
 		
 	/** Makes a tile array from a given image. */
 	#if terrylibweb
@@ -121,6 +129,7 @@ class Gfx {
 	}
 	#end
 	
+	#if !terrylibweb
 	/** Creates a blank tileset, with the name "imagename", with each tile a given width and height, containing "amount" tiles. */
 	public static function createtiles(imagename:String, width:Float, height:Float, amount:Int) {
 		tiles.push(new Tileset(imagename, Std.int(width), Std.int(height)));
@@ -144,6 +153,7 @@ class Gfx {
 	public static function tileheight():Int {
 		return tiles[currenttileset].height;
 	}
+	#end
 	
 	/** Loads an image into the game. */
 	#if terrylibweb
@@ -217,6 +227,7 @@ class Gfx {
 		drawto.lock();
 	}
 	
+	#if !terrylibweb
 	/** Tell draw commands to draw to the given tile in the current tileset. */
 	public static function drawtotile(tilenumber:Int) {
 		drawingtoscreen = false;
@@ -224,6 +235,7 @@ class Gfx {
 		drawto = tiles[currenttileset].tiles[tilenumber];
 		drawto.lock();
 	}
+	#end
 	
 	/** Helper function for image drawing functions. */
 	private static function imagealignx(x:Float):Float {
@@ -351,6 +363,7 @@ class Gfx {
 		shapematrix.identity();
 	}
 	
+	#if !terrylibweb
 	public static function grabtilefromscreen(tilenumber:Int, x:Float, y:Float) {
 		if (currenttileset == -1) {
 			throw("ERROR: In grabtilefromscreen, there is no tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.");
@@ -377,6 +390,7 @@ class Gfx {
 		settrect(x, y, tilewidth(), tileheight());
 		tiles[currenttileset].tiles[tilenumber].copyPixels(images[imagenum], trect, tl);
 	}
+	#end
 	
 	public static function grabimagefromscreen(imagename:String, x:Float, y:Float) {
 		if (!imageindex.exists(imagename)) {
@@ -405,6 +419,7 @@ class Gfx {
 		images[imagenum].copyPixels(images[imagenumfrom], trect, tl);
 	}
 	
+	#if !terrylibweb
 	public static function copytile(totilenumber:Int, fromtileset:String, fromtilenumber:Int) {
 		if (tilesetindex.exists(fromtileset)) {
 			if (tiles[currenttileset].width == tiles[tilesetindex.get(fromtileset)].width && tiles[currenttileset].height == tiles[tilesetindex.get(fromtileset)].height) {
@@ -418,11 +433,13 @@ class Gfx {
 			return;
 		}
 	}
+	#end
 	
 	/** Draws tile number t from current tileset.
 	 * Parameters can be: rotation, scale, xscale, yscale, xpivot, ypivoy, alpha
 	 * x and y can be: Gfx.CENTER, Gfx.TOP, Gfx.BOTTOM, Gfx.LEFT, Gfx.RIGHT. 
 	 * */
+	#if !terrylibweb
 	public static function drawtile(x:Float, y:Float, t:Int, ?parameters:Drawparams) {
 		if (skiprender && drawingtoscreen) return;
 		if (currenttileset == -1) {
@@ -593,6 +610,7 @@ class Gfx {
 		if (y == RIGHT || y == BOTTOM) return tiles[currenttileset].height;
 		return y;
 	}
+	#end
 	
 	public static function drawline(x1:Float, y1:Float, x2:Float, y2:Float, col:Int, alpha:Float = 1.0) {
     if (skiprender && drawingtoscreen) return;

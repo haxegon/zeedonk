@@ -21,4 +21,11 @@ class Game {
 		ExternalInterface.call("setbackgroundcolor", c);
 		#end
 	}
+	
+	public static function foreground(c:Int) {
+		Webscript.foreground_color = c;
+		#if !flash
+		ExternalInterface.call("setforegroundcolor", c);
+		#end
+	}
 }

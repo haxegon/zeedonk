@@ -10,6 +10,10 @@ class Webbridge {
 		return Webscript.background_color;
 	}
 	
+	public function get_foreground_colour():Int {
+		return Webscript.foreground_color;
+	}
+	
 	public function get_title():String {
 		return Webscript.title;
 	}
