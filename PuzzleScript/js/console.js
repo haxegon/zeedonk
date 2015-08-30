@@ -1,5 +1,8 @@
-function jumpToLine(i) {
+function jumpToLine(i,cpos) {
 
+    if (typeof cpos === "undefined"){
+        cpos=0;
+    }
     var code = parent.form1.code;
 
     var editor = code.editorreference;
@@ -8,7 +11,7 @@ function jumpToLine(i) {
     editor.scrollIntoView(Math.max(i - 1 - 10,0));
     editor.scrollIntoView(i - 1 + 10);
     editor.scrollIntoView(Math.max(i - 1,0));
-    editor.setCursor(Math.max(i - 1,0), 0);
+    editor.setCursor(Math.max(i - 1,0), cpos);
 }
 
 var consolecache = [];
@@ -76,7 +79,7 @@ function clearConsole() {
 	objDiv.scrollTop = objDiv.scrollHeight;
 }
 
-function logError(str, lineNumber,urgent) {
+function logError(str, lineNumber,urgent,cpos) {
     if (typeof lineNumber==="undefined"){
         return logErrorNoLine(str,true);
     }
@@ -84,7 +87,8 @@ function logError(str, lineNumber,urgent) {
         if (lineNumber === undefined) {
             return logErrorNoLine(str);
         }
-        var errorString = '<a onclick="jumpToLine(' + lineNumber.toString() + ');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + '<span class="errorText">' + str + '</span>';
+        jumpParams = lineNumber.toString()+","+cpos;
+        var errorString = '<a onclick="jumpToLine(' + jumpParams+');"  href="javascript:void(0);"><span class="errorTextLineNumber"> line ' + lineNumber.toString() + '</span></a> : ' + '<span class="errorText">' + str + '</span>';
          if (errorStrings.indexOf(errorString) >= 0 && !urgent) {
             //do nothing, duplicate error
          } else {
