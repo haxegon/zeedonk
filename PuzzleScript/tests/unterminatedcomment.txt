@@ -1,0 +1,7 @@
+function new(){
+}
+
+function update(){
+  /* This is a comment that I forgot to close
+  Text.display(Text.CENTER, Text.CENTER, "Test Successful", Col.WHITE);
+}

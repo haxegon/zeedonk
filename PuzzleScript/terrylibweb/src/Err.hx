@@ -1,6 +1,8 @@
 import terrylib.*;
+import hscript.*;
 import hscript.Expr.Error;
 
+@:access(hscript.Interp)
 class Err {
 	//Central place to report errors.
 	public static var PRE_BRACKETMISMATCH:Int = 0;
@@ -35,6 +37,11 @@ class Err {
 			Webdebug.error("RUNTIME ERROR", errorline);
 			outputdetails(details);
 		}
+		
+		if (dumpstack) {
+			dumpstack = false;
+			outputdetails([javastack]);
+		}
 	}
 	
 	private static function outputdetails(details:Array<String>) {
@@ -56,10 +63,9 @@ class Err {
 				e { error name , error code id, ? possibly data associated with that error}
 			}
 		*/
+		dumpstack = false;
+		var returnarray:Array<String> = [];
 		if (Std.is(errorhandle, hscript.Expr.Error) ) {	
-			var errstr:String;
-			var returnarray:Array<String> = [];
-			errstr = errorhandle.e[0];
 			errorstart = errorhandle.pmin;
 			errorend = errorhandle.pmax;
 			trace("ERRORHANDLE OBJECT :\n", errorhandle, "\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: "+ errorhandle.e[1] + "\n2: "+ errorhandle.e[2] + "\n3: "+ errorhandle.e[3] + "\n}");
@@ -110,15 +116,12 @@ class Err {
 			}
 		}
 		
-		if (errorhandle.name == "TypeError") {
-			#if flash
-			//trace(CallStack.toString(callStack));
-			return ["TypeError"];
-			#else
-			return [errorhandle.stack];
-			#end
-		}
-		return [errorhandle.toString()];
+		errorline = Webdebug.getlinenum(Webscript.interpreter.curExpr.pmin);
+		returnarray.push("Unknown error type in line " + errorline + ":");
+		returnarray.push("Error name: " + errorhandle.name);
+		returnarray.push("Javascript Stack:");
+		dumpstack = true; javastack = errorhandle.stack;
+		return returnarray;
 	}
 	
 	public static function geterrorline(userange:Bool = true) {
@@ -166,4 +169,7 @@ class Err {
 	public static var errorstart:Int;
 	public static var errorend:Int;
 	public static var charpos:Int;
+	
+	public static var dumpstack:Bool = false;
+	public static var javastack:Dynamic;
 }
