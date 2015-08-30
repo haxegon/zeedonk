@@ -41,6 +41,7 @@ function consolePrint(text,urgent) {
 	}
     if (typeof text === "object"){
         text=JSON.stringify(text);
+        text=text.slice(1,text.length-1);
     }
 
 	if (cache_console_messages&&urgent==false) {		
@@ -57,6 +58,7 @@ function consolePrintWithLinesArray(text,lineNumber,urgent) {
     }
     if (typeof text === "object"){
         text=JSON.stringify(text);
+        text=text.slice(1,text.length-1);
     }
 
     if (typeof urgent==="undefined") {
