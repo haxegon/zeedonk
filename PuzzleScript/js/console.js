@@ -53,7 +53,7 @@ function consolePrint(text,urgent) {
 
 function consolePrintWithLinesArray(text,lineNumber,urgent) {
     if (text.length==1){
-        consolePrintWithLines(text[0],lineNumber,urgent);
+        return consolePrintWithLines(text[0],lineNumber,urgent);
     }
     if (typeof text === "object"){
         text=JSON.stringify(text);
@@ -75,7 +75,7 @@ function consolePrintWithLinesArray(text,lineNumber,urgent) {
 
 function consolePrintArray(text,urgent) {
     if (text.length==1){
-        consolePrintA(text[0],urgent);
+        return consolePrintA(text[0],urgent);
     }
     if (urgent===undefined) {
         urgent=false;
