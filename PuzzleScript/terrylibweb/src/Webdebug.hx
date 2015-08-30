@@ -1,12 +1,34 @@
+import hscript.*;
 import terrylib.*;
 import openfl.external.ExternalInterface;
 
-class Webdebug{
+@:access(hscript.Interp)
+class Webdebug {
+	public static function getlinenum(c:Int):Int {
+		var numnewlines:Int = 0;
+		var currentchar:String = "";
+		
+		var i:Int = 0;
+		while (i < Webscript.myscript.length) {
+			currentchar = Webscript.myscript.substr(i, 1);
+			if (currentchar == "\n") numnewlines++;
+			if (i == c) return numnewlines + 1;
+			i++;
+		}
+		
+		return 0;
+	}
+	
 	public static function log(msg:String) {
 		#if (flash || terrylibwebhtml5debug)
 	  trace(msg);
 		#else
-		ExternalInterface.call("consolePrint", msg, true);
+		var linenum:Int = getlinenum(Webscript.interpreter.curExpr.pmin);
+		if (linenum == 0) {
+			ExternalInterface.call("consolePrint", msg, true);
+		}else{
+			ExternalInterface.call("consolePrintWithLines", msg, linenum, true);
+		}
 		#end
 	}
 	

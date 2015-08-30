@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "752", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "754", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3346,8 +3346,21 @@ _UInt.UInt_Impl_.toFloat = function(this1) {
 var Webdebug = function() { };
 $hxClasses["Webdebug"] = Webdebug;
 Webdebug.__name__ = ["Webdebug"];
+Webdebug.getlinenum = function(c) {
+	var numnewlines = 0;
+	var currentchar = "";
+	var i = 0;
+	while(i < Webscript.myscript.length) {
+		currentchar = HxOverrides.substr(Webscript.myscript,i,1);
+		if(currentchar == "\n") numnewlines++;
+		if(i == c) return numnewlines + 1;
+		i++;
+	}
+	return 0;
+};
 Webdebug.log = function(msg) {
-	openfl.external.ExternalInterface.call("consolePrint",msg,true);
+	var linenum = Webdebug.getlinenum(Webscript.interpreter.curExpr.pmin);
+	if(linenum == 0) openfl.external.ExternalInterface.call("consolePrint",msg,true); else openfl.external.ExternalInterface.call("consolePrintWithLines",msg,linenum,true);
 };
 Webdebug.error = function(msg,linenum) {
 	openfl.external.ExternalInterface.call("logError",msg,linenum,true,Err.charpos);
