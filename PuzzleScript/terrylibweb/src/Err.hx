@@ -92,10 +92,11 @@ class Err {
 			}else {
 				trace("ERRORHANDLE OBJECT :\n", errorhandle, "\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: "+ errorhandle.e[1] + "\n2: "+ errorhandle.e[2] + "\n3: "+ errorhandle.e[3] + "\n}");
 				trace(errorhandle.e);
-				for (i in 2 ... errorhandle.e.length){
-					errstr = errstr + " " + errorhandle.e[i];
-				}
-				return [errstr];
+				
+				geterrorline();
+				returnarray.push("Unknown error in line " + errorline + ":");
+				returnarray.push(errorstr);
+				return returnarray;
 			}
 		}
 		

@@ -1,0 +1,8 @@
+function new(){
+}
+
+function update(){
+  for(i in 0 ... 7){
+    Text.display(Text.CENTER, Text.CENTER, "Test Successful", Col.WHITE);
+   }
+}
