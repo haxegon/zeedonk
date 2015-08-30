@@ -22,11 +22,7 @@ class Webdebug{
 			}
 		}
 		#else
-		if (linenum == null) {
-			ExternalInterface.call("logError", msg, linenum, true);
-		}else {
-		  ExternalInterface.call("logError", msg, linenum, true);
-		}
+		ExternalInterface.call("logError", msg, linenum, true, Err.charpos);
 		#end
 	}
 	

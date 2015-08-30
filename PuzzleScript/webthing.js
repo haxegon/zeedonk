@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "736", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "740", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1863,12 +1863,14 @@ Err.geterrorline = function(userange) {
 	var lineendindex = 0;
 	var currentchar = "";
 	Err.errorline = -1;
+	Err.charpos = 0;
 	var i = 0;
 	while(i < Webscript.myscript.length) {
 		currentchar = HxOverrides.substr(Webscript.myscript,i,1);
 		if(currentchar == "\n") {
 			if(Err.errorline > -1) {
 				lineendindex = i - 1;
+				Err.charpos = Err.errorstart - linestartindex;
 				var finalstring = Webscript.myscript.substring(linestartindex,lineendindex);
 				while(S.left(finalstring,1) == " " && finalstring != "") {
 					linestartindex++;
@@ -1879,7 +1881,7 @@ Err.geterrorline = function(userange) {
 			} else linestartindex = i + 1;
 			numnewlines++;
 		}
-		if(i == Err.errorstart) Err.errorline = numnewlines;
+		if(i == Err.errorstart) Err.errorline = numnewlines + 1;
 		i++;
 	}
 };
@@ -1887,6 +1889,7 @@ Err.errorstr = null;
 Err.errorline = null;
 Err.errorstart = null;
 Err.errorend = null;
+Err.charpos = null;
 var Game = function() { };
 $hxClasses["Game"] = Game;
 Game.__name__ = ["Game"];
@@ -3337,7 +3340,7 @@ Webdebug.log = function(msg) {
 	openfl.external.ExternalInterface.call("consolePrint",msg,true);
 };
 Webdebug.error = function(msg,linenum) {
-	if(linenum == null) openfl.external.ExternalInterface.call("logError",msg,linenum,true); else openfl.external.ExternalInterface.call("logError",msg,linenum,true);
+	openfl.external.ExternalInterface.call("logError",msg,linenum,true,Err.charpos);
 };
 Webdebug.warn = function(msg,linenum) {
 	openfl.external.ExternalInterface.call("logWarning",msg,linenum,true);

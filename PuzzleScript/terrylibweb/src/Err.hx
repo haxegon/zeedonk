@@ -119,6 +119,7 @@ class Err {
 		var currentchar:String = "";
 		
 		errorline = -1;
+		charpos = 0;
 		
 		var i:Int = 0;
 		while (i < Webscript.myscript.length) {
@@ -126,6 +127,7 @@ class Err {
 			if (currentchar == "\n") {
 				if (errorline > -1) {
 					lineendindex = i - 1;
+					charpos = (errorstart - linestartindex);
 					var finalstring:String = Webscript.myscript.substring(linestartindex, lineendindex);
 					while (S.left(finalstring, 1) == " " && finalstring != "") {
 						linestartindex++;
@@ -143,7 +145,7 @@ class Err {
 				numnewlines++;
 			}
 			if (i == errorstart) {
-				errorline = numnewlines;
+				errorline = numnewlines + 1;
 			}
 			i++;
 		}
@@ -153,4 +155,5 @@ class Err {
 	public static var errorline:Int;
 	public static var errorstart:Int;
 	public static var errorend:Int;
+	public static var charpos:Int;
 }
