@@ -724,6 +724,21 @@ class Gfx {
 	
 	public static function fillhexagon(x:Float, y:Float, radius:Float, angle:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+		temprotate = ((Math.PI * 2) / 6);
+		
+		tx = (Math.cos(angle) * radius) + x;
+		ty = (Math.sin(angle) * radius) + y;
+		var tx2:Float;
+		var ty2:Float;
+		for (i in 0 ... 7) {
+			tx2 = (Math.cos(angle + (temprotate * i)) * radius) + x;
+		  ty2 = (Math.sin(angle + (temprotate * i)) * radius) + y;
+			
+			filltri(tx, ty, tx2, ty2, x, y, col, alpha);
+			tx = tx2; ty = ty2;
+		}
+		#else
 		tempshape.graphics.clear();
 		temprotate = ((Math.PI * 2) / 6);
 		
@@ -742,15 +757,17 @@ class Gfx {
 		
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x, -y);
+		shapematrix.translate( -x, -y);
+		#end
 	}
 	
 	public static function drawcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
-    tx = radius;
+		radius = fastFloor(radius);
+		tx = radius;
     ty = 0;
-    var decisionOver2:Float = 1 - x;   // Decision criterion divided by 2 evaluated at x=r, y=0
+    var decisionOver2:Float = 1 - tx;   // Decision criterion divided by 2 evaluated at x=r, y=0
 		
 		while(tx >= ty){
 			drawto.setPixel(Std.int(tx + x), Std.int(ty + y), col);
@@ -782,6 +799,30 @@ class Gfx {
 	
 	public static function fillcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+		radius = fastFloor(radius);
+		tx = radius;
+    ty = 0;
+    var decisionOver2:Float = 1 - tx;   // Decision criterion divided by 2 evaluated at x=r, y=0
+		
+		while (tx >= ty) {
+			settrect(x - tx, y + ty, tx + tx, 1);
+			drawto.fillRect(trect, col);
+			settrect(x - ty, y + tx, ty + ty, 1);
+			drawto.fillRect(trect, col);
+			settrect(x - tx, y - ty, tx + tx, 1);
+			drawto.fillRect(trect, col);
+			settrect(x - ty, y - tx, ty + ty, 1);
+			drawto.fillRect(trect, col);
+			ty++;
+			if (decisionOver2<=0){
+				decisionOver2 += 2 * ty + 1;   // Change in decision criterion for y -> y+1
+			}else{
+				tx--;
+				decisionOver2 += 2 * (ty - tx) + 1;   // Change for y -> y+1, x -> x-1
+			}
+		}
+		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.beginFill(col, alpha);
 		tempshape.graphics.drawCircle(0, 0, radius);
@@ -789,7 +830,8 @@ class Gfx {
 		
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x, -y);
+		shapematrix.translate( -x, -y);
+		#end
 	}
 	
 	public static function drawtri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
@@ -813,8 +855,82 @@ class Gfx {
 		#end
 	}
 	
+	#if terrylibweb
+	private static var tri_x1:Float;
+	private static var tri_y1:Float;
+	private static var tri_x2:Float;
+	private static var tri_y2:Float;
+	private static var tri_x3:Float;
+	private static var tri_y3:Float;
+	private static var tri_e_x:Float;
+	private static var tri_e_y:Float;
+	private static var tri_s_x:Float;
+	private static var tri_s_y:Float;
+	private static var dx1:Float;
+	private static var dx2:Float;
+	private static var dx3:Float;
+	#end
 	public static function filltri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
+		gfxstage.quality = StageQuality.LOW;
 		if (skiprender && drawingtoscreen) return;
+		#if !terrylibweb
+		//Sort the points from y value highest to lowest
+		if (y1 < y2 && y1 < y3) {
+			tri_x1 = x1; tri_y1 = y1;
+			if (y2 < y3) { tri_x2 = x2; tri_y2 = y2;	tri_x3 = x3; tri_y3 = y3;
+			}else {	tri_x2 = x3; tri_y2 = y3;	tri_x3 = x2; tri_y3 = y2;}
+		}else if (y2 < y3 && y2 < y1) {
+			tri_x1 = x2; tri_y1 = y2;
+			if (y1 < y3) { tri_x2 = x1; tri_y2 = y1;	tri_x3 = x3; tri_y3 = y3;
+			}else {tri_x2 = x3; tri_y2 = y3;	tri_x3 = x1; tri_y3 = y1;	}
+		}else {
+			tri_x1 = x3; tri_y1 = y3;
+			if (y2 < y1) {tri_x2 = x2; tri_y2 = y2;	tri_x3 = x1; tri_y3 = y1;
+			}else {	tri_x2 = x1; tri_y2 = y1;	tri_x3 = x2; tri_y3 = y2;	}
+		}
+		
+		if (tri_y2 - tri_y1 > 0) dx1 = (tri_x2 - tri_x1) / (tri_y2 - tri_y1) else dx1 = 0;
+		if (tri_y3 - tri_y1 > 0) dx2 = (tri_x3 - tri_x1) / (tri_y3 - tri_y1) else dx2 = 0;
+		if (tri_y3 - tri_y2 > 0) dx3 = (tri_x3 - tri_x2) / (tri_y3 - tri_y2) else dx3 = 0;
+		tri_e_x = tri_x1; tri_e_y = tri_y1;
+		tri_s_x = tri_x1; tri_s_y = tri_y1;
+		
+		if (dx1 > dx2) {
+			while (tri_s_y < tri_y2) {
+				tri_s_y += 1;	tri_e_y += 1;
+				tri_s_x += dx2;	tri_e_x += dx1;
+				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
+				drawto.fillRect(trect, col);
+			}
+			
+			tri_e_x = tri_x2;
+			tri_e_y = tri_y2;
+			
+			while (tri_s_y < tri_y3) {
+				tri_s_y += 1;	tri_e_y += 1;
+				tri_s_x += dx2;	tri_e_x += dx3;
+				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
+				drawto.fillRect(trect, col);
+			}
+		}else {
+			while (tri_s_y < tri_y2) {
+				tri_s_y += 1;	tri_e_y += 1;
+				tri_s_x += dx1;	tri_e_x += dx2;
+				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
+				drawto.fillRect(trect, col);
+			}
+			
+			tri_s_x = tri_x2;
+			tri_s_y = tri_y2;
+			
+			while (tri_s_y < tri_y3) {
+				tri_s_y += 1;	tri_e_y += 1;
+				tri_s_x += dx3;	tri_e_x += dx2;
+				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
+				drawto.fillRect(trect, col);
+			}
+		}
+		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.beginFill(col, alpha);
 		tempshape.graphics.lineTo(0, 0);
@@ -823,10 +939,10 @@ class Gfx {
 		tempshape.graphics.lineTo(0, 0);
 		tempshape.graphics.endFill();
 		
-		
+		shapematrix.identity();
 		shapematrix.translate(x1, y1);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x1, -y1);
+		#end
 	}
 
 	public static function drawbox(x:Float, y:Float, width:Float, height:Float, col:Int, alpha:Float = 1.0) {

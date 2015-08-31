@@ -254,7 +254,12 @@ class Text {
 	private static var cacheindex:Int;
 	private static var cachelabel:String;
 	
+	#if terrylibweb
+	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {
+	  var text:String = Convert.tostring(dytext);
+	#else
 	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {
+	#end
 		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		
 		if (typeface[currentindex].type == "bitmap") {
