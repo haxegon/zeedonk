@@ -135,7 +135,8 @@ class Webscript {
 					Text.display(startpos + currentpos, Gfx.screenheightmid - 10 + Math.sin((((i*5)+counter)%360) * Math.PI * 2 / 360)*5, S.mid(msg, i, 1), Col.WHITE);
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
-			}/*
+			}
+			/*
 			Gfx.clearscreen();
 			Gfx.showfps = true;
 			for (i in 0 ... 20) {
@@ -153,7 +154,10 @@ class Webscript {
 			}
 			*/
 			/*
-			Gfx.filltri(10, 10, 90, 20, 60, 110, Gfx.HSL(counter, 0.5, 0.5));
+			Gfx.filltri(10, 10, 50, 90, 25, 100, Col.RED);
+			
+			Gfx.filltri(10, 10, 90, 60, 60, 110, Gfx.HSL(counter, 0.5, 0.5));
+			Gfx.filltri(10, 10, 50, 50, 20, 100, Gfx.HSL(counter, 0.5, 0.5));
 			Gfx.filltri(60, 40, 190, 50, 40, 80, Gfx.HSL(counter + 90, 0.5, 0.5));
 			
 			Gfx.filltri(5, 20, 40, 10 + counter/100, 30, 120, Gfx.HSL(counter+90, 0.5, 0.5));

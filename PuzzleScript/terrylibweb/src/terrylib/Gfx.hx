@@ -613,10 +613,13 @@ class Gfx {
 	#end
 	
 	#if terrylibweb
-	public static var bresx:Array<Int> = new Array<Int>();
-	public static var bresy:Array<Int> = new Array<Int>();
-	public static var bresswap:Array<Int> = new Array<Int>();
-	public static var bressize:Int;
+	public static var bresx1:Array<Int> = new Array<Int>();
+	public static var bresy1:Array<Int> = new Array<Int>();
+	//public static var bresswap1:Array<Int> = new Array<Int>();
+	public static var bresx2:Array<Int> = new Array<Int>();
+	public static var bresy2:Array<Int> = new Array<Int>();
+	//public static var bresswap2:Array<Int> = new Array<Int>();
+	//public static var bressize:Int;
 	public static inline function fastAbs(v:Int) : Int {
 		return (v ^ (v >> 31)) - (v >> 31);
 	}
@@ -624,56 +627,69 @@ class Gfx {
 	public static inline function fastFloor(v:Float) : Int {
 		return Std.int(v); // actually it's more "truncate" than "round to 0"
 	}
+	
+	public static function bresenhamline(x0:Int, y0:Int, x1:Int, y1:Int, linenum:Int):Void {
+		var startx1:Int = x1;
+		var starty1:Int = y1;
+		var swapXY = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+		var tmp:Int;
+		
+		if (linenum == 0) {
+			bresx1 = []; bresy1 = [];
+		}else {
+			bresx2 = []; bresy2 = [];
+		}
+		if (swapXY) {
+			// swap x and y
+			tmp = x0; x0 = y0; y0 = tmp; // swap x0 and y0
+			tmp = x1; x1 = y1; y1 = tmp; // swap x1 and y1
+		}
+		
+		if(x0 > x1) {
+			// make sure x0 < x1
+			tmp = x0; x0 = x1; x1 = tmp; // swap x0 and x1
+			tmp = y0; y0 = y1; y1 = tmp; // swap y0 and y1
+		}
+		
+		var deltax = x1 - x0;
+		var deltay = Std.int( Math.abs(y1 - y0));
+		var error = Std.int( deltax / 2 );
+		var y = y0;
+		var ystep = if ( y0 < y1 ) 1 else -1;
+		
+			// Y / X
+		for (x in x0 ... x1 + 1 ) {	
+			if(linenum==0){
+				if (swapXY) {
+					bresx1.push(y); bresy1.push(x);
+				}else {
+					bresx1.push(x); bresy1.push(y);
+				}
+			}else {
+				if (swapXY) {
+					bresx2.push(y); bresy2.push(x);
+				}else {
+					bresx2.push(x); bresy2.push(y);
+				}
+			}
+			error -= deltay;
+			if ( error < 0 ) {
+				y = y + ystep;
+				error = error + deltax;
+			}
+		}
+	}
 	#end
 	
 	public static function drawline(_x1:Float, _y1:Float, _x2:Float, _y2:Float, col:Int, alpha:Float = 1.0) {
     if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
-		var x1:Int = Std.int(_x1);
-		var y1:Int = Std.int(_y1);
-		var x2:Int = Std.int(_x2);
-		var y2:Int = Std.int(_y2);
-		var swapXY = fastAbs(y2 - y1) > fastAbs(x2 - x1);
-    var tmp:Int;
-    
-		if (swapXY){
-      // swap x and y
-      tmp = x1; x1 = y1; y1 = tmp; // swap x1 and y1
-      tmp = x2; x2 = y2; y2 = tmp; // swap x2 and y2
-    }
-    
-    if (x1 > x2){
-      // make sure x0 < x1
-      tmp = x1; x1 = x2; x2 = tmp; // swap x1 and x2
-      tmp = y1; y1 = y2; y2 = tmp; // swap y1 and y2
-    }
-    
-    var deltax = x2 - x1;
-    var deltay = fastFloor(fastAbs(y2 - y1));
-    var error = fastFloor(deltax / 2);
-    var y = y1;
-    var ystep = if(y1 < y2) 1 else -1;
-    if(swapXY){
-      // Y / X
-      for (x in x1 ... x2 + 1) {
-				drawto.setPixel(y, x, col);
-        error -= deltay;
-        if (error < 0) {
-          y = y + ystep;
-          error = error + deltax;
-        }
-      }
-	  }else{
-			// X / Y
-			for (x in x1 ... x2 + 1) {
-				drawto.setPixel(x, y, col);
-				error -= deltay;
-				if ( error < 0 ) {
-					y = y + ystep;
-					error = error + deltax;
-				}
-			}
+		bresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), 0);
+		
+		for(i in 0 ... bresx1.length){
+			drawto.setPixel(bresx1[i], bresy1[i], col);
 		}
+    
 		#else
     tempshape.graphics.clear();
 		tempshape.graphics.lineStyle(linethickness, col, alpha);
@@ -856,77 +872,71 @@ class Gfx {
 	}
 	
 	#if terrylibweb
-	private static var tri_x1:Float;
-	private static var tri_y1:Float;
-	private static var tri_x2:Float;
-	private static var tri_y2:Float;
-	private static var tri_x3:Float;
-	private static var tri_y3:Float;
-	private static var tri_e_x:Float;
-	private static var tri_e_y:Float;
-	private static var tri_s_x:Float;
-	private static var tri_s_y:Float;
-	private static var dx1:Float;
-	private static var dx2:Float;
-	private static var dx3:Float;
+	private static var tri_x1:Int;
+	private static var tri_y1:Int;
+	private static var tri_x2:Int;
+	private static var tri_y2:Int;
+	private static var tri_x3:Int;
+	private static var tri_y3:Int;
+	
+	private static function getfilltrimatchpoint(t:Int):Int {
+		//Return the INDEX of bresenham line two where the y value matches t.
+		for (i in 0 ... bresy2.length) {
+			if (bresy2[i] == t) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	#end
 	public static function filltri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
 		gfxstage.quality = StageQuality.LOW;
 		if (skiprender && drawingtoscreen) return;
-		#if !terrylibweb
+		#if terrylibweb
 		//Sort the points from y value highest to lowest
 		if (y1 < y2 && y1 < y3) {
-			tri_x1 = x1; tri_y1 = y1;
-			if (y2 < y3) { tri_x2 = x2; tri_y2 = y2;	tri_x3 = x3; tri_y3 = y3;
-			}else {	tri_x2 = x3; tri_y2 = y3;	tri_x3 = x2; tri_y3 = y2;}
+			tri_x1 = Std.int(x1); tri_y1 = Std.int(y1);
+			if (y2 < y3) { tri_x2 = Std.int(x2); tri_y2 = Std.int(y2);	tri_x3 = Std.int(x3); tri_y3 = Std.int(y3);
+			}else {	tri_x2 = Std.int(x3); tri_y2 = Std.int(y3);	tri_x3 = Std.int(x2); tri_y3 = Std.int(y2);}
 		}else if (y2 < y3 && y2 < y1) {
-			tri_x1 = x2; tri_y1 = y2;
-			if (y1 < y3) { tri_x2 = x1; tri_y2 = y1;	tri_x3 = x3; tri_y3 = y3;
-			}else {tri_x2 = x3; tri_y2 = y3;	tri_x3 = x1; tri_y3 = y1;	}
+			tri_x1 = Std.int(x2); tri_y1 = Std.int(y2);
+			if (y1 < y3) { tri_x2 = Std.int(x1); tri_y2 = Std.int(y1);	tri_x3 = Std.int(x3); tri_y3 = Std.int(y3);
+			}else {tri_x2 = Std.int(x3); tri_y2 = Std.int(y3);	tri_x3 = Std.int(x1); tri_y3 = Std.int(y1);	}
 		}else {
-			tri_x1 = x3; tri_y1 = y3;
-			if (y2 < y1) {tri_x2 = x2; tri_y2 = y2;	tri_x3 = x1; tri_y3 = y1;
-			}else {	tri_x2 = x1; tri_y2 = y1;	tri_x3 = x2; tri_y3 = y2;	}
+			tri_x1 = Std.int(x3); tri_y1 = Std.int(y3);
+			if (y2 < y1) {tri_x2 = Std.int(x2); tri_y2 = Std.int(y2);	tri_x3 = Std.int(x1); tri_y3 = Std.int(y1);
+			}else {	tri_x2 = Std.int(x1); tri_y2 = Std.int(y1);	tri_x3 = Std.int(x2); tri_y3 = Std.int(y2);	}
 		}
 		
-		if (tri_y2 - tri_y1 > 0) dx1 = (tri_x2 - tri_x1) / (tri_y2 - tri_y1) else dx1 = 0;
-		if (tri_y3 - tri_y1 > 0) dx2 = (tri_x3 - tri_x1) / (tri_y3 - tri_y1) else dx2 = 0;
-		if (tri_y3 - tri_y2 > 0) dx3 = (tri_x3 - tri_x2) / (tri_y3 - tri_y2) else dx3 = 0;
-		tri_e_x = tri_x1; tri_e_y = tri_y1;
-		tri_s_x = tri_x1; tri_s_y = tri_y1;
+		//Bresenham from 1 to 2 and 1 to 3
+		bresenhamline(tri_x1, tri_y1, tri_x2, tri_y2, 0);
+		bresenhamline(tri_x1, tri_y1, tri_x3, tri_y3, 1);
+		var matchingpoint:Int = 0;
 		
-		if (dx1 > dx2) {
-			while (tri_s_y < tri_y2) {
-				tri_s_y += 1;	tri_e_y += 1;
-				tri_s_x += dx2;	tri_e_x += dx1;
-				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
+		//1-2 is the shorter line, so run down it and fill that segment up
+		for (i in 0 ... bresx1.length) {
+			matchingpoint = getfilltrimatchpoint(bresy1[i]);
+			if (matchingpoint > -1) {	
+				if (bresx1[i] > bresx2[matchingpoint]) {
+					settrect(bresx2[matchingpoint], bresy1[i], bresx1[i]-bresx2[matchingpoint], 1);
+				}else {
+					settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
+				}
 				drawto.fillRect(trect, col);
 			}
-			
-			tri_e_x = tri_x2;
-			tri_e_y = tri_y2;
-			
-			while (tri_s_y < tri_y3) {
-				tri_s_y += 1;	tri_e_y += 1;
-				tri_s_x += dx2;	tri_e_x += dx3;
-				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
-				drawto.fillRect(trect, col);
-			}
-		}else {
-			while (tri_s_y < tri_y2) {
-				tri_s_y += 1;	tri_e_y += 1;
-				tri_s_x += dx1;	tri_e_x += dx2;
-				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
-				drawto.fillRect(trect, col);
-			}
-			
-			tri_s_x = tri_x2;
-			tri_s_y = tri_y2;
-			
-			while (tri_s_y < tri_y3) {
-				tri_s_y += 1;	tri_e_y += 1;
-				tri_s_x += dx3;	tri_e_x += dx2;
-				settrect(fastFloor(tri_s_x), fastFloor(tri_s_y), fastFloor(tri_e_x - tri_s_x), 1);
+		}
+		
+		//Now get 2 to 3
+		bresenhamline(tri_x2, tri_y2, tri_x3, tri_y3, 0);
+		for (i in 0 ... bresx1.length) {
+			matchingpoint = getfilltrimatchpoint(bresy1[i]);
+			if (matchingpoint > -1) {	
+				if (bresx1[i] > bresx2[matchingpoint]) {
+					settrect(bresx2[matchingpoint], bresy1[i], bresx1[i]-bresx2[matchingpoint], 1);
+				}else {
+					settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
+				}
 				drawto.fillRect(trect, col);
 			}
 		}
@@ -1146,16 +1156,6 @@ class Gfx {
 		backbuffer = new BitmapData(screenwidth, screenheight, false, 0x000000);
 		drawto = backbuffer;
 		drawingtoscreen = true;
-		
-		#if terrylibweb
-		bresx = []; bresy = []; bresswap = [];
-		bressize = 0;
-		for(i in 0 ... 500){
-			bresx.push(0);
-			bresy.push(0);
-			bresswap.push(0);
-		}
-		#end
 		
 		screen = new Bitmap(backbuffer);
 		screen.smoothing = false;
