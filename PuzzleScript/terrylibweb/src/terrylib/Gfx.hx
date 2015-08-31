@@ -747,13 +747,37 @@ class Gfx {
 	
 	public static function drawcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+    tx = radius;
+    ty = 0;
+    var decisionOver2:Float = 1 - x;   // Decision criterion divided by 2 evaluated at x=r, y=0
+		
+		while(tx >= ty){
+			drawto.setPixel(Std.int(tx + x), Std.int(ty + y), col);
+			drawto.setPixel(Std.int(ty + x), Std.int(tx + y), col);
+			drawto.setPixel(Std.int(-tx + x), Std.int(ty + y), col);
+			drawto.setPixel(Std.int(-ty + x), Std.int(tx + y), col);
+			drawto.setPixel(Std.int(-tx + x), Std.int(-ty + y), col);
+			drawto.setPixel(Std.int(-ty + x), Std.int(-tx + y), col);
+			drawto.setPixel(Std.int(tx + x), Std.int(-ty + y), col);
+			drawto.setPixel(Std.int(ty + x), Std.int(-tx + y), col);
+			ty++;
+			if (decisionOver2<=0){
+				decisionOver2 += 2 * ty + 1;   // Change in decision criterion for y -> y+1
+			}else{
+				tx--;
+				decisionOver2 += 2 * (ty - tx) + 1;   // Change for y -> y+1, x -> x-1
+			}
+		}
+		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.lineStyle(linethickness, col, alpha);
 		tempshape.graphics.drawCircle(0, 0, radius);
 		
+		shapematrix.identity();
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x, -y);
+		#end
 	}
 	
 	public static function fillcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
