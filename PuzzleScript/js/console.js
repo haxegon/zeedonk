@@ -77,7 +77,7 @@ function consolePrintWithLinesArray(text,lineNumber,urgent) {
 
 function consolePrintArray(text,urgent) {
     if (text.length==1){
-        return consolePrintA(text[0],urgent);
+        return consolePrint(text[0],urgent);
     }
     if (urgent===undefined) {
         urgent=false;
