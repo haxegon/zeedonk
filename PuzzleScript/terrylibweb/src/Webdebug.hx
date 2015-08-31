@@ -2,6 +2,7 @@ import hscript.*;
 import terrylib.*;
 import openfl.external.ExternalInterface;
 
+@:keep
 @:access(hscript.Interp)
 class Webdebug {
 	public static function getlinenum(c:Int):Int {

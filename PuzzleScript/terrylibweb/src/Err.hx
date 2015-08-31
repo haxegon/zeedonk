@@ -2,6 +2,7 @@ import terrylib.*;
 import hscript.*;
 import hscript.Expr.Error;
 
+@:keep
 @:access(hscript.Interp)
 class Err {
 	//Central place to report errors.

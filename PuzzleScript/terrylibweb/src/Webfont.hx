@@ -1,3 +1,4 @@
+@:keep
 class Webfont {
 	public static var ZERO4B11:String = "04b11";
 	public static var APPLE:String = "apple";

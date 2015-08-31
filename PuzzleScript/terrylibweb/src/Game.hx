@@ -1,5 +1,6 @@
 import openfl.external.ExternalInterface;
 
+@:keep
 class Game {
 	public static function title(t:String) {
 		Webscript.title = t;

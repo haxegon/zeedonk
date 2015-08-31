@@ -1,5 +1,6 @@
 import terrylib.*;
 
+@:keep
 @:expose
 class Webbridge {
 	public function runScript(s:String) {

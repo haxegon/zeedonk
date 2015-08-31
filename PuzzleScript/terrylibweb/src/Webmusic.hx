@@ -1,6 +1,7 @@
 import terrylib.*;
 import openfl.external.ExternalInterface;
 
+@:keep
 class Webmusic{
 	public static function playsound(t:Int) {
 	  #if !flash	
