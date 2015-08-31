@@ -612,17 +612,94 @@ class Gfx {
 	}
 	#end
 	
-	public static function drawline(x1:Float, y1:Float, x2:Float, y2:Float, col:Int, alpha:Float = 1.0) {
+	#if terrylibweb
+	public static var bresx:Array<Int> = new Array<Int>();
+	public static var bresy:Array<Int> = new Array<Int>();
+	public static var bresswap:Array<Int> = new Array<Int>();
+	public static var bressize:Int;
+	public static inline function fastAbs(v:Int) : Int {
+		return (v ^ (v >> 31)) - (v >> 31);
+	}
+	 
+	public static inline function fastFloor(v:Float) : Int {
+		return Std.int(v); // actually it's more "truncate" than "round to 0"
+	}
+	#end
+	
+	public static function drawline(_x1:Float, _y1:Float, _x2:Float, _y2:Float, col:Int, alpha:Float = 1.0) {
     if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+		var x1:Int = Std.int(_x1);
+		var y1:Int = Std.int(_y1);
+		var x2:Int = Std.int(_x2);
+		var y2:Int = Std.int(_y2);
+		var swapXY = fastAbs(y2 - y1) > fastAbs(x2 - x1);
+    var tmp:Int;
+    
+		if (swapXY){
+      // swap x and y
+      tmp = x1; x1 = y1; y1 = tmp; // swap x1 and y1
+      tmp = x2; x2 = y2; y2 = tmp; // swap x2 and y2
+    }
+    
+    if (x1 > x2){
+      // make sure x0 < x1
+      tmp = x1; x1 = x2; x2 = tmp; // swap x1 and x2
+      tmp = y1; y1 = y2; y2 = tmp; // swap y1 and y2
+    }
+    
+    var deltax = x2 - x1;
+    var deltay = fastFloor(fastAbs(y2 - y1));
+    var error = fastFloor(deltax / 2);
+    var y = y1;
+    var ystep = if(y1 < y2) 1 else -1;
+    if(swapXY){
+      // Y / X
+      for (x in x1 ... x2 + 1) {
+				drawto.setPixel(y, x, col);
+        error -= deltay;
+        if (error < 0) {
+          y = y + ystep;
+          error = error + deltax;
+        }
+      }
+	  }else{
+			// X / Y
+			for (x in x1 ... x2 + 1) {
+				drawto.setPixel(x, y, col);
+				error -= deltay;
+				if ( error < 0 ) {
+					y = y + ystep;
+					error = error + deltax;
+				}
+			}
+		}
+		#else
     tempshape.graphics.clear();
 		tempshape.graphics.lineStyle(linethickness, col, alpha);
-		tempshape.graphics.moveTo(x1,y1);
-    tempshape.graphics.lineTo(x2, y2);
+		tempshape.graphics.moveTo(_x1, _y1);
+    tempshape.graphics.lineTo(_x2, _y2);
     drawto.draw(tempshape, shapematrix);
+		#end
 	}
 
 	public static function drawhexagon(x:Float, y:Float, radius:Float, angle:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+		temprotate = ((Math.PI * 2) / 6);
+		
+		tx = (Math.cos(angle) * radius) + x;
+		ty = (Math.sin(angle) * radius) + y;
+		var tx2:Float;
+		var ty2:Float;
+		for (i in 0 ... 7) {
+			tx2 = (Math.cos(angle + (temprotate * i)) * radius) + x;
+		  ty2 = (Math.sin(angle + (temprotate * i)) * radius) + y;
+			
+			drawline(tx, ty, tx2, ty2, col);
+			tx = tx2; ty = ty2;
+		}
+		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.lineStyle(linethickness, col, alpha);
 		
@@ -639,9 +716,10 @@ class Gfx {
 			tempshape.graphics.lineTo(tx, ty);
 		}
 		
+		shapematrix.identity();
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x, -y);
+		#end
 	}
 	
 	public static function fillhexagon(x:Float, y:Float, radius:Float, angle:Float, col:Int, alpha:Float = 1.0) {
@@ -692,6 +770,11 @@ class Gfx {
 	
 	public static function drawtri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+		drawline(x1, y1, x2, y2, col);
+		drawline(x2, y2, x3, y3, col);
+		drawline(x3, y3, x1, y1, col);
+		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.lineStyle(linethickness, col, alpha);
 		tempshape.graphics.lineTo(0, 0);
@@ -702,7 +785,8 @@ class Gfx {
 		
 		shapematrix.translate(x1, y1);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x1, -y1);
+		shapematrix.translate( -x1, -y1);
+		#end
 	}
 	
 	public static function filltri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
@@ -731,7 +815,12 @@ class Gfx {
 			height = -height;
 			y = y - height;
 		}
-		
+		#if terrylibweb
+			drawline(x, y, x + width, y, col, alpha);
+			drawline(x, y + height, x + width, y + height, col, alpha);
+			drawline(x, y + 1, x, y + height, col, alpha);
+			drawline(x + width - 1, y + 1, x + width - 1, y + height, col, alpha);
+		#else
 		if (linethickness < 2) {				
 			drawline(x, y, x + width, y, col, alpha);
 			drawline(x, y + height, x + width, y + height, col, alpha);
@@ -749,6 +838,7 @@ class Gfx {
 			drawto.draw(tempshape, shapematrix);
 			shapematrix.translate( -x, -y);
 		}
+		#end
 	}
 
 	public static function setlinethickness(size:Float) {
@@ -774,6 +864,10 @@ class Gfx {
 
 	public static function fillbox(x:Float, y:Float, width:Float, height:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
+		#if terrylibweb
+		settrect(x, y, width, height);
+		drawto.fillRect(trect, col);
+		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.beginFill(col, alpha);
 		tempshape.graphics.lineTo(width, 0);
@@ -786,6 +880,9 @@ class Gfx {
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
 		shapematrix.translate(-x, -y);
+		settrect(x, y, width, height);
+		drawto.fillRect(trect, col);
+		#end
 	}
 	
 	public static function getred(c:Int):Int {
@@ -909,6 +1006,16 @@ class Gfx {
 		backbuffer = new BitmapData(screenwidth, screenheight, false, 0x000000);
 		drawto = backbuffer;
 		drawingtoscreen = true;
+		
+		#if terrylibweb
+		bresx = []; bresy = []; bresswap = [];
+		bressize = 0;
+		for(i in 0 ... 500){
+			bresx.push(0);
+			bresy.push(0);
+			bresswap.push(0);
+		}
+		#end
 		
 		screen = new Bitmap(backbuffer);
 		screen.smoothing = false;

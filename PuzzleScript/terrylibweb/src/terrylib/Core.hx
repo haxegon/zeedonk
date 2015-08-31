@@ -62,7 +62,9 @@ class Core extends Sprite {
 				_delta -= _rate;
 				while (_delta >= _rate) {
 				  _delta -= _rate;
-					Gfx.skiprender = true;
+					if (Gfx.doclearscreeneachframe) {
+					  Gfx.skiprender = true;
+					}
 					doupdate();
 				}
 			}
@@ -76,18 +78,21 @@ class Core extends Sprite {
 		Mouse.update(Std.int(Lib.current.mouseX / Gfx.screenscale), Std.int(Lib.current.mouseY / Gfx.screenscale));
 		Input.update();
 		
-		if(!Gfx.skiprender) Gfx.backbuffer.lock();
-		
-		if(Gfx.doclearscreeneachframe) Gfx.clearscreen();
+		if (!Gfx.skiprender) {
+			Gfx.backbuffer.lock();			
+			if (Gfx.doclearscreeneachframe) Gfx.clearscreen();
+		}
 		#if terrylibweb
 		terrylibmain.update();
 		#else
 		Scene.update();
 		#end
-		Text.drawstringinput();
-		Debug.showlog();
-		
-		if(!Gfx.skiprender) Gfx.backbuffer.unlock();
+		if(!Gfx.skiprender) {
+			Text.drawstringinput();
+			Debug.showlog();
+			
+			Gfx.backbuffer.unlock();
+		}
 	}
 	
 	#if terrylibweb

@@ -125,7 +125,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "781", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "800", company : "Stephen and Terry", file : "webthing", fps : 30, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -1327,7 +1327,7 @@ terrylib.Core.prototype = $extend(openfl.display.Sprite.prototype,{
 				this._delta -= this._rate;
 				while(this._delta >= this._rate) {
 					this._delta -= this._rate;
-					terrylib.Gfx.skiprender = true;
+					if(terrylib.Gfx.doclearscreeneachframe) terrylib.Gfx.skiprender = true;
 					this.doupdate();
 				}
 			}
@@ -1339,12 +1339,16 @@ terrylib.Core.prototype = $extend(openfl.display.Sprite.prototype,{
 	,doupdate: function() {
 		terrylib.Mouse.update(Std["int"](openfl.Lib.current.get_mouseX() / terrylib.Gfx.screenscale),Std["int"](openfl.Lib.current.get_mouseY() / terrylib.Gfx.screenscale));
 		terrylib.Input.update();
-		if(!terrylib.Gfx.skiprender) terrylib.Gfx.backbuffer.lock();
-		if(terrylib.Gfx.doclearscreeneachframe) terrylib.Gfx.clearscreen();
+		if(!terrylib.Gfx.skiprender) {
+			terrylib.Gfx.backbuffer.lock();
+			if(terrylib.Gfx.doclearscreeneachframe) terrylib.Gfx.clearscreen();
+		}
 		this.terrylibmain.update();
-		terrylib.Text.drawstringinput();
-		terrylib.Debug.showlog();
-		if(!terrylib.Gfx.skiprender) terrylib.Gfx.backbuffer.unlock();
+		if(!terrylib.Gfx.skiprender) {
+			terrylib.Text.drawstringinput();
+			terrylib.Debug.showlog();
+			terrylib.Gfx.backbuffer.unlock();
+		}
 	}
 	,terrylibmain: null
 	,TARGET_FPS: null
@@ -40028,34 +40032,87 @@ terrylib.Gfx.grabimagefromimage = function(imagename,imagetocopyfrom,x,y) {
 	terrylib.Gfx.settrect(x,y,terrylib.Gfx.images[terrylib.Gfx.imagenum].width,terrylib.Gfx.images[terrylib.Gfx.imagenum].height);
 	terrylib.Gfx.images[terrylib.Gfx.imagenum].copyPixels(terrylib.Gfx.images[imagenumfrom],terrylib.Gfx.trect,terrylib.Gfx.tl);
 };
-terrylib.Gfx.drawline = function(x1,y1,x2,y2,col,alpha) {
+terrylib.Gfx.bressize = null;
+terrylib.Gfx.fastAbs = function(v) {
+	return (v ^ v >> 31) - (v >> 31);
+};
+terrylib.Gfx.fastFloor = function(v) {
+	return v | 0;
+};
+terrylib.Gfx.drawline = function(_x1,_y1,_x2,_y2,col,alpha) {
 	if(alpha == null) alpha = 1.0;
 	if(terrylib.Gfx.skiprender && terrylib.Gfx.drawingtoscreen) return;
-	terrylib.Gfx.tempshape.get_graphics().clear();
-	terrylib.Gfx.tempshape.get_graphics().lineStyle(terrylib.Gfx.linethickness,col,alpha);
-	terrylib.Gfx.tempshape.get_graphics().moveTo(x1,y1);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(x2,y2);
-	terrylib.Gfx.drawto.draw(terrylib.Gfx.tempshape,terrylib.Gfx.shapematrix);
+	var x1 = _x1 | 0;
+	var y1 = _y1 | 0;
+	var x2 = _x2 | 0;
+	var y2 = _y2 | 0;
+	var swapXY = terrylib.Gfx.fastAbs(y2 - y1) > terrylib.Gfx.fastAbs(x2 - x1);
+	var tmp;
+	if(swapXY) {
+		tmp = x1;
+		x1 = y1;
+		y1 = tmp;
+		tmp = x2;
+		x2 = y2;
+		y2 = tmp;
+	}
+	if(x1 > x2) {
+		tmp = x1;
+		x1 = x2;
+		x2 = tmp;
+		tmp = y1;
+		y1 = y2;
+		y2 = tmp;
+	}
+	var deltax = x2 - x1;
+	var deltay = terrylib.Gfx.fastFloor(terrylib.Gfx.fastAbs(y2 - y1));
+	var error = deltax / 2 | 0;
+	var y = y1;
+	var ystep;
+	if(y1 < y2) ystep = 1; else ystep = -1;
+	if(swapXY) {
+		var _g1 = x1;
+		var _g = x2 + 1;
+		while(_g1 < _g) {
+			var x = _g1++;
+			terrylib.Gfx.drawto.setPixel(y,x,col);
+			error -= deltay;
+			if(error < 0) {
+				y = y + ystep;
+				error = error + deltax;
+			}
+		}
+	} else {
+		var _g11 = x1;
+		var _g2 = x2 + 1;
+		while(_g11 < _g2) {
+			var x3 = _g11++;
+			terrylib.Gfx.drawto.setPixel(x3,y,col);
+			error -= deltay;
+			if(error < 0) {
+				y = y + ystep;
+				error = error + deltax;
+			}
+		}
+	}
 };
 terrylib.Gfx.drawhexagon = function(x,y,radius,angle,col,alpha) {
 	if(alpha == null) alpha = 1.0;
 	if(terrylib.Gfx.skiprender && terrylib.Gfx.drawingtoscreen) return;
-	terrylib.Gfx.tempshape.get_graphics().clear();
-	terrylib.Gfx.tempshape.get_graphics().lineStyle(terrylib.Gfx.linethickness,col,alpha);
 	terrylib.Gfx.temprotate = Math.PI * 2 / 6;
-	terrylib.Gfx.tx = Math.cos(angle) * radius;
-	terrylib.Gfx.ty = Math.sin(angle) * radius;
-	terrylib.Gfx.tempshape.get_graphics().moveTo(terrylib.Gfx.tx,terrylib.Gfx.ty);
+	terrylib.Gfx.tx = Math.cos(angle) * radius + x;
+	terrylib.Gfx.ty = Math.sin(angle) * radius + y;
+	var tx2;
+	var ty2;
 	var _g = 0;
 	while(_g < 7) {
 		var i = _g++;
-		terrylib.Gfx.tx = Math.cos(angle + terrylib.Gfx.temprotate * i) * radius;
-		terrylib.Gfx.ty = Math.sin(angle + terrylib.Gfx.temprotate * i) * radius;
-		terrylib.Gfx.tempshape.get_graphics().lineTo(terrylib.Gfx.tx,terrylib.Gfx.ty);
+		tx2 = Math.cos(angle + terrylib.Gfx.temprotate * i) * radius + x;
+		ty2 = Math.sin(angle + terrylib.Gfx.temprotate * i) * radius + y;
+		terrylib.Gfx.drawline(terrylib.Gfx.tx,terrylib.Gfx.ty,tx2,ty2,col);
+		terrylib.Gfx.tx = tx2;
+		terrylib.Gfx.ty = ty2;
 	}
-	terrylib.Gfx.shapematrix.translate(x,y);
-	terrylib.Gfx.drawto.draw(terrylib.Gfx.tempshape,terrylib.Gfx.shapematrix);
-	terrylib.Gfx.shapematrix.translate(-x,-y);
 };
 terrylib.Gfx.fillhexagon = function(x,y,radius,angle,col,alpha) {
 	if(alpha == null) alpha = 1.0;
@@ -40102,16 +40159,9 @@ terrylib.Gfx.fillcircle = function(x,y,radius,col,alpha) {
 terrylib.Gfx.drawtri = function(x1,y1,x2,y2,x3,y3,col,alpha) {
 	if(alpha == null) alpha = 1.0;
 	if(terrylib.Gfx.skiprender && terrylib.Gfx.drawingtoscreen) return;
-	terrylib.Gfx.tempshape.get_graphics().clear();
-	terrylib.Gfx.tempshape.get_graphics().lineStyle(terrylib.Gfx.linethickness,col,alpha);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(0,0);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(x2 - x1,y2 - y1);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(x3 - x1,y3 - y1);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(0,0);
-	terrylib.Gfx.tempshape.get_graphics().endFill();
-	terrylib.Gfx.shapematrix.translate(x1,y1);
-	terrylib.Gfx.drawto.draw(terrylib.Gfx.tempshape,terrylib.Gfx.shapematrix);
-	terrylib.Gfx.shapematrix.translate(-x1,-y1);
+	terrylib.Gfx.drawline(x1,y1,x2,y2,col);
+	terrylib.Gfx.drawline(x2,y2,x3,y3,col);
+	terrylib.Gfx.drawline(x3,y3,x1,y1,col);
 };
 terrylib.Gfx.filltri = function(x1,y1,x2,y2,x3,y3,col,alpha) {
 	if(alpha == null) alpha = 1.0;
@@ -40138,22 +40188,10 @@ terrylib.Gfx.drawbox = function(x,y,width,height,col,alpha) {
 		height = -height;
 		y = y - height;
 	}
-	if(terrylib.Gfx.linethickness < 2) {
-		terrylib.Gfx.drawline(x,y,x + width,y,col,alpha);
-		terrylib.Gfx.drawline(x,y + height,x + width,y + height,col,alpha);
-		terrylib.Gfx.drawline(x,y + 1,x,y + height,col,alpha);
-		terrylib.Gfx.drawline(x + width - 1,y + 1,x + width - 1,y + height,col,alpha);
-	} else {
-		terrylib.Gfx.tempshape.get_graphics().clear();
-		terrylib.Gfx.tempshape.get_graphics().lineStyle(terrylib.Gfx.linethickness,col,alpha);
-		terrylib.Gfx.tempshape.get_graphics().lineTo(width,0);
-		terrylib.Gfx.tempshape.get_graphics().lineTo(width,height);
-		terrylib.Gfx.tempshape.get_graphics().lineTo(0,height);
-		terrylib.Gfx.tempshape.get_graphics().lineTo(0,0);
-		terrylib.Gfx.shapematrix.translate(x,y);
-		terrylib.Gfx.drawto.draw(terrylib.Gfx.tempshape,terrylib.Gfx.shapematrix);
-		terrylib.Gfx.shapematrix.translate(-x,-y);
-	}
+	terrylib.Gfx.drawline(x,y,x + width,y,col,alpha);
+	terrylib.Gfx.drawline(x,y + height,x + width,y + height,col,alpha);
+	terrylib.Gfx.drawline(x,y + 1,x,y + height,col,alpha);
+	terrylib.Gfx.drawline(x + width - 1,y + 1,x + width - 1,y + height,col,alpha);
 };
 terrylib.Gfx.setlinethickness = function(size) {
 	terrylib.Gfx.linethickness = size;
@@ -40176,17 +40214,8 @@ terrylib.Gfx.setpixel = function(x,y,col,alpha) {
 terrylib.Gfx.fillbox = function(x,y,width,height,col,alpha) {
 	if(alpha == null) alpha = 1.0;
 	if(terrylib.Gfx.skiprender && terrylib.Gfx.drawingtoscreen) return;
-	terrylib.Gfx.tempshape.get_graphics().clear();
-	terrylib.Gfx.tempshape.get_graphics().beginFill(col,alpha);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(width,0);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(width,height);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(0,height);
-	terrylib.Gfx.tempshape.get_graphics().lineTo(0,0);
-	terrylib.Gfx.tempshape.get_graphics().endFill();
-	terrylib.Gfx.shapematrix.identity();
-	terrylib.Gfx.shapematrix.translate(x,y);
-	terrylib.Gfx.drawto.draw(terrylib.Gfx.tempshape,terrylib.Gfx.shapematrix);
-	terrylib.Gfx.shapematrix.translate(-x,-y);
+	terrylib.Gfx.settrect(x,y,width,height);
+	terrylib.Gfx.drawto.fillRect(terrylib.Gfx.trect,col);
 };
 terrylib.Gfx.getred = function(c) {
 	return c >> 16 & 255;
@@ -40280,6 +40309,17 @@ terrylib.Gfx.initgfx = function(width,height,scale) {
 	terrylib.Gfx.backbuffer = new openfl.display.BitmapData(terrylib.Gfx.screenwidth,terrylib.Gfx.screenheight,false,0);
 	terrylib.Gfx.drawto = terrylib.Gfx.backbuffer;
 	terrylib.Gfx.drawingtoscreen = true;
+	terrylib.Gfx.bresx = [];
+	terrylib.Gfx.bresy = [];
+	terrylib.Gfx.bresswap = [];
+	terrylib.Gfx.bressize = 0;
+	var _g = 0;
+	while(_g < 500) {
+		var i = _g++;
+		terrylib.Gfx.bresx.push(0);
+		terrylib.Gfx.bresy.push(0);
+		terrylib.Gfx.bresswap.push(0);
+	}
 	terrylib.Gfx.screen = new openfl.display.Bitmap(terrylib.Gfx.backbuffer);
 	terrylib.Gfx.screen.smoothing = false;
 	terrylib.Gfx.screen.set_width(terrylib.Gfx.screenwidth * scale);
@@ -44624,6 +44664,9 @@ terrylib.Gfx.RIGHT = -20001;
 terrylib.Gfx.TOP = -20002;
 terrylib.Gfx.BOTTOM = -20003;
 terrylib.Gfx.CENTER = -20004;
+terrylib.Gfx.bresx = new Array();
+terrylib.Gfx.bresy = new Array();
+terrylib.Gfx.bresswap = new Array();
 terrylib.Gfx.tiles = new Array();
 terrylib.Gfx.tilesetindex = new haxe.ds.StringMap();
 terrylib.Gfx.currenttileset = -1;
