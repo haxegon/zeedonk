@@ -686,8 +686,8 @@ class Gfx {
 		#if terrylibweb
 		bresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), 0);
 		
-		for(i in 0 ... bresx1.length){
-			drawto.setPixel(bresx1[i], bresy1[i], col);
+		for (i in 0 ... bresx1.length) {
+			setpixel(bresx1[i], bresy1[i], col, alpha);
 		}
     
 		#else
@@ -785,15 +785,15 @@ class Gfx {
     ty = 0;
     var decisionOver2:Float = 1 - tx;   // Decision criterion divided by 2 evaluated at x=r, y=0
 		
-		while(tx >= ty){
-			drawto.setPixel(Std.int(tx + x), Std.int(ty + y), col);
-			drawto.setPixel(Std.int(ty + x), Std.int(tx + y), col);
-			drawto.setPixel(Std.int(-tx + x), Std.int(ty + y), col);
-			drawto.setPixel(Std.int(-ty + x), Std.int(tx + y), col);
-			drawto.setPixel(Std.int(-tx + x), Std.int(-ty + y), col);
-			drawto.setPixel(Std.int(-ty + x), Std.int(-tx + y), col);
-			drawto.setPixel(Std.int(tx + x), Std.int(-ty + y), col);
-			drawto.setPixel(Std.int(ty + x), Std.int(-tx + y), col);
+		while (tx >= ty) {
+			setpixel(Std.int(tx + x), Std.int(ty + y), col);
+			setpixel(Std.int(ty + x), Std.int(tx + y), col);
+			setpixel(Std.int(-tx + x), Std.int(ty + y), col);
+			setpixel(Std.int(-ty + x), Std.int(tx + y), col);
+			setpixel(Std.int(-tx + x), Std.int(-ty + y), col);
+			setpixel(Std.int(-ty + x), Std.int(-tx + y), col);
+			setpixel(Std.int(tx + x), Std.int(-ty + y), col);
+			setpixel(Std.int(ty + x), Std.int(-tx + y), col);
 			ty++;
 			if (decisionOver2<=0){
 				decisionOver2 += 2 * ty + 1;   // Change in decision criterion for y -> y+1
@@ -891,7 +891,6 @@ class Gfx {
 	
 	#end
 	public static function filltri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
-		gfxstage.quality = StageQuality.LOW;
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
 		//Sort the points from y value highest to lowest
@@ -913,31 +912,48 @@ class Gfx {
 		bresenhamline(tri_x1, tri_y1, tri_x2, tri_y2, 0);
 		bresenhamline(tri_x1, tri_y1, tri_x3, tri_y3, 1);
 		var matchingpoint:Int = 0;
+		var lastypos:Int = -1;
 		
 		//1-2 is the shorter line, so run down it and fill that segment up
 		for (i in 0 ... bresx1.length) {
-			matchingpoint = getfilltrimatchpoint(bresy1[i]);
-			if (matchingpoint > -1) {	
-				if (bresx1[i] > bresx2[matchingpoint]) {
-					settrect(bresx2[matchingpoint], bresy1[i], bresx1[i]-bresx2[matchingpoint], 1);
-				}else {
-					settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
+			if (bresy1[i] != lastypos) {
+				lastypos = bresy1[i];
+				matchingpoint = getfilltrimatchpoint(bresy1[i]);
+				if (matchingpoint > -1) {	
+					if (bresx1[i] > bresx2[matchingpoint]) {
+						settrect(bresx2[matchingpoint], bresy1[i], bresx1[i]-bresx2[matchingpoint], 1);
+					}else {
+						settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
+					}
+					if (alpha == 1.0) {
+						drawto.fillRect(trect, col);	
+					}else {
+						fillbox(trect.x, trect.y, trect.width, 1, col, alpha);
+					}
 				}
-				drawto.fillRect(trect, col);
 			}
 		}
 		
 		//Now get 2 to 3
+		var secondlastypos:Int = -1;
 		bresenhamline(tri_x2, tri_y2, tri_x3, tri_y3, 0);
 		for (i in 0 ... bresx1.length) {
-			matchingpoint = getfilltrimatchpoint(bresy1[i]);
-			if (matchingpoint > -1) {	
-				if (bresx1[i] > bresx2[matchingpoint]) {
-					settrect(bresx2[matchingpoint], bresy1[i], bresx1[i]-bresx2[matchingpoint], 1);
-				}else {
-					settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
+			if (bresy1[i] != lastypos && bresy1[i] != secondlastypos) {
+				secondlastypos = bresy1[i];
+				matchingpoint = getfilltrimatchpoint(bresy1[i]);
+				if (matchingpoint > -1) {	
+					if (bresx1[i] > bresx2[matchingpoint]) {
+						settrect(bresx2[matchingpoint], bresy1[i], bresx1[i]-bresx2[matchingpoint], 1);
+					}else {
+						settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
+					}
+					
+					if (alpha == 1.0) {
+						drawto.fillRect(trect, col);	
+					}else {
+						fillbox(trect.x, trect.y, trect.width, 1, col, alpha);
+					}
 				}
-				drawto.fillRect(trect, col);
 			}
 		}
 		#else
@@ -1008,15 +1024,37 @@ class Gfx {
 	
 	public static function setpixel(x:Float, y:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
-		
+		#if terrylibweb
+		if (linethickness == 1) {
+		  drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);	
+		}else {
+			settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
+			drawto.fillRect(trect, col);
+		}
+		#else
 		drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
+		#end
 	}
 
 	public static function fillbox(x:Float, y:Float, width:Float, height:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
-		settrect(x, y, width, height);
-		drawto.fillRect(trect, col);
+		if(alpha == 1.0){
+			settrect(x, y, width, height);
+			drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+		}else {
+			tempshape.graphics.clear();
+			tempshape.graphics.beginFill(col, alpha);
+			tempshape.graphics.lineTo(fastFloor(width), 0);
+			tempshape.graphics.lineTo(fastFloor(width), fastFloor(height));
+			tempshape.graphics.lineTo(0, fastFloor(height));
+			tempshape.graphics.lineTo(0, 0);
+			tempshape.graphics.endFill();
+			
+			shapematrix.identity();
+			shapematrix.translate(fastFloor(x), fastFloor(y));
+			drawto.draw(tempshape, shapematrix);
+		}
 		#else
 		tempshape.graphics.clear();
 		tempshape.graphics.beginFill(col, alpha);
@@ -1029,9 +1067,6 @@ class Gfx {
 		shapematrix.identity();
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate(-x, -y);
-		settrect(x, y, width, height);
-		drawto.fillRect(trect, col);
 		#end
 	}
 	
