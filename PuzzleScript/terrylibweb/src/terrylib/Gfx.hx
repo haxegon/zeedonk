@@ -816,8 +816,8 @@ class Gfx {
 			y = y - height;
 		}
 		#if terrylibweb
-			drawline(x, y, x + width, y, col, alpha);
-			drawline(x, y + height, x + width, y + height, col, alpha);
+			drawline(x, y, x + width-1, y, col, alpha);
+			drawline(x, y + height, x + width-1, y + height, col, alpha);
 			drawline(x, y + 1, x, y + height, col, alpha);
 			drawline(x + width - 1, y + 1, x + width - 1, y + height, col, alpha);
 		#else
