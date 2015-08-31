@@ -952,13 +952,31 @@ function cacheNote(seed,frequency,length,volume){
 
   var params = generateFromSeed(seed);
 
-  var totLen=params.p_env_attack+params.p_env_sustain+params.p_env_punch+params.p_env_decay;
-  var scaleFactor=length/totLen;
+  var env_length = [
+    Math.floor(params.p_env_attack * params.p_env_attack * 100000.0),
+    Math.floor(params.p_env_sustain * params.p_env_sustain * 100000.0),
+    Math.floor(params.p_env_decay * params.p_env_decay * 100000.0)
+  ];
+
+  var totLen=env_length[0]+env_length[1]+env_length[2]; 
+  //i want totlen=length*samplerate
+
+  window.console.log("before "+totLen);
+  var scaleFactor=length*44100/totLen;
+  scaleFactor=Math.sqrt(scaleFactor);
   params.p_env_attack*=scaleFactor;
   params.p_env_sustain*=scaleFactor;
   params.p_env_punch*=scaleFactor;
   params.p_env_decay*=scaleFactor;
 
+  env_length = [
+    Math.floor(params.p_env_attack * params.p_env_attack * 100000.0),
+    Math.floor(params.p_env_sustain * params.p_env_sustain * 100000.0),
+    Math.floor(params.p_env_decay * params.p_env_decay * 100000.0)
+  ];
+
+  totLen=env_length[0]+env_length[1]+env_length[2];
+  window.console.log("after "+totLen);
   params.p_base_freq=0.4*frequency;
   if (volume>1){
     volume=1;
