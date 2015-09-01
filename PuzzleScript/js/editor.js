@@ -370,7 +370,7 @@ CodeMirror.registerHelper("hint", "haxe",
 		}
 		end++;
 		var token = line.substring(start,end);
-		token = token.trim();
+		token = token.trim().toLowerCase();
 
 		var matches=[];
 		for (var i=0;i<haxeHintArray.length;i++){
@@ -379,7 +379,7 @@ CodeMirror.registerHelper("hint", "haxe",
 			if (w.length<token.length){
 				continue;
 			} 
-			if (w.substring(0,token.length)==token){
+			if (w.substring(0,token.length).toLowerCase()==token){
 				var w2 = ar.length>1?ar[1]:"";
 				matches.push({text:w,displayText:w2,render:renderHint});
 			}
