@@ -73,8 +73,6 @@ function dateToReadable(title,time) {
 function saveClick() {
 	var text=editor.getValue();
 
-	stopClick();
-
 	var saveDat = {
 		title:getTitle(),
 		text:text,
@@ -102,7 +100,7 @@ function saveClick() {
 
 	setEditorClean();
 
-	consolePrint("saved file to local storage",true);
+	consolePrint("saved file to local storage:<br><b>"+dateToReadable(saveDat.title,new Date(saveDat.date))+"</b>",true);
 }
 
 

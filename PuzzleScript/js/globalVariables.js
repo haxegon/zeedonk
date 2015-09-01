@@ -48,6 +48,14 @@ document.onkeydown = function (e) {
     onBackspace(e,function(){
         e.preventDefault();
     });
+    
+    //ctrl/cmd+s to save
+  if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    saveClick();
+    e.preventDefault();        
+    // Process event...
+  }
+    
 };
 
 try {
