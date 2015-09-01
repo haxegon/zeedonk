@@ -21,7 +21,6 @@
    ></window>
    
 	<window
-      fps="30"
       background="0x000000"
       orientation="landscape"
       hardware="true"
@@ -40,6 +39,7 @@
 
 	
 	<haxedef name="terrylibweb" />
+	<haxedef name="terryhasntupgraded" />
 	<!-- haxedef name="terrylibwebhtml5debug" /-->
 	<haxedef name="hscriptPos" />
 	
