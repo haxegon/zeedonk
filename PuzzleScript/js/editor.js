@@ -334,6 +334,7 @@ function CompletionsPick( p_oCompletion ) {
  //  console.log( "==> Function entry: " + arguments.callee.name + "() <==" ) ; 
    //console.log( p_oCompletion ) ; 
    consolePrint(p_oCompletion.text+p_oCompletion.displayText,true);
+
 } 
 
 
@@ -369,6 +370,7 @@ CodeMirror.registerHelper("hint", "haxe",
 		}
 		end++;
 		var token = line.substring(start,end);
+		token = token.trim();
 
 		var matches=[];
 		for (var i=0;i<haxeHintArray.length;i++){
