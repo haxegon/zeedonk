@@ -21,7 +21,6 @@ function resize_widths(verticaldragbarX){
 
 function resize_heights(horizontaldragbarY){
 	document.getElementById("leftpanel").style.height = (window.innerHeight - upperbarheight) + "px";
-	document.getElementById("verticaldragbar").style.height = "100%";
 	
 	document.getElementById("righttophalf").style.height = horizontaldragbarY - upperbarheight + "px";
 	document.getElementById("rightbottomhalf").style.top = horizontaldragbarY + horizontaldragbarHeight + "px";

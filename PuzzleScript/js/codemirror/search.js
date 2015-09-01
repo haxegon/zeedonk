@@ -97,9 +97,14 @@
     return query;
   }
 
-  var queryDialog =
-    'Search: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
+  var queryDialog = dialogText("Search: ");
 
+  function dialogText(label){
+    return '<div style="width:100%; display:table">\
+    <label  style="display:table-cell; width:1px">'+label+'</label>\
+    <input type="text" class="CodeMirror-search-field" style="display:table-cell; width:100%"/>\
+    </div>';
+  }
   function startSearch(cm, state, query) {
     state.queryText = query;
     state.query = parseQuery(query);
@@ -155,9 +160,8 @@
     if (state.annotate) { state.annotate.clear(); state.annotate = null; }
   });}
 
-  var replaceQueryDialog =
-    'Replace: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
-  var replacementQueryDialog = 'With: <input type="text" style="width: 10em" class="CodeMirror-search-field"/>';
+  var replaceQueryDialog = dialogText("Replace: ");
+  var replacementQueryDialog = dialogText("With: ");
   var doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>Stop</button>";
 
   function replace(cm, all) {

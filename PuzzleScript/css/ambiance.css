@@ -71,7 +71,7 @@ div.CodeMirror span.CodeMirror-matchingbracket {
 .cm-s-ambiance .CodeMirror-cursor { border-left: 1px solid #7991E8; }
 
 .cm-s-ambiance .CodeMirror-activeline-background {
-  background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.031);
+  background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.1);
 }
 
 .cm-s-ambiance.CodeMirror,

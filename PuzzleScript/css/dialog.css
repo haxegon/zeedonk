@@ -35,3 +35,7 @@
 .CodeMirror-search-hint {
   display:none;
 }
+
+.searchdialog {
+  float:left;
+}

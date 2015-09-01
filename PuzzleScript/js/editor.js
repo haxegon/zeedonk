@@ -40,7 +40,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
     tabSize:2,
     indentUnit:2,
     extraKeys: {"Ctrl-Space": "autocomplete",
-		"Esc":"clearSearch"}
+		"Esc":"clearHighlight"}
    	});
 /*
 CodeMirror.registerHelper("hintWords", "haxe",
