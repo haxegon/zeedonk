@@ -719,13 +719,11 @@ class Gfx {
 		
 		tx = (Math.cos(angle) * radius) + x;
 		ty = (Math.sin(angle) * radius) + y;
-		var tx2:Float;
-		var ty2:Float;
-		for (i in 0 ... 7) {
-			tx2 = (Math.cos(angle + (temprotate * i)) * radius) + x;
-		  ty2 = (Math.sin(angle + (temprotate * i)) * radius) + y;
+		for (i in 0 ... 6) {
+			tx2 = (Math.cos(angle + (temprotate * (i+1))) * radius) + x;
+		  ty2 = (Math.sin(angle + (temprotate * (i+1))) * radius) + y;
 			
-			drawline(tx, ty, tx2, ty2, col);
+			drawline(tx, ty, tx2, ty2, col, alpha);
 			tx = tx2; ty = ty2;
 		}
 		#else
@@ -758,11 +756,9 @@ class Gfx {
 		
 		tx = (Math.cos(angle) * radius) + x;
 		ty = (Math.sin(angle) * radius) + y;
-		var tx2:Float;
-		var ty2:Float;
-		for (i in 0 ... 7) {
-			tx2 = (Math.cos(angle + (temprotate * i)) * radius) + x;
-		  ty2 = (Math.sin(angle + (temprotate * i)) * radius) + y;
+		for (i in 0 ... 6) {
+			tx2 = (Math.cos(angle + (temprotate * (i+1))) * radius) + x;
+		  ty2 = (Math.sin(angle + (temprotate * (i+1))) * radius) + y;
 			
 			filltri(tx, ty, tx2, ty2, x, y, col, alpha);
 			tx = tx2; ty = ty2;
@@ -1280,6 +1276,8 @@ class Gfx {
 	private static var oldtileset:String;
 	private static var tx:Float;
 	private static var ty:Float;
+	private static var tx2:Float;
+  private static var ty2:Float;
 	
 	private static var linethickness:Float;
 	
