@@ -35,13 +35,12 @@ class Webdebug {
 			if (msg6 != null) returnarray.push(msg6);
 			if (msg7 != null) returnarray.push(msg7);
 			if (msg8 != null) returnarray.push(msg8);
-
+			
 			#if terryhasntupgraded
 				ExternalInterface.call("consolePrintArray", returnarray, true);
 			#else
 				untyped __js__('consolePrintArray({0},true)', returnarray);
 			#end
-
 		}else{
 			returnarray.push(msg1);
 			if (msg2 != null) returnarray.push(msg2);

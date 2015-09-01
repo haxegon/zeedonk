@@ -47,8 +47,6 @@ class Gfx {
 	public static var backbuffer:BitmapData;
 	public static var drawto:BitmapData;
 	
-	private static var fpsobj:FPS;
-	
 	/** Create a screen with a given width, height and scale. Also inits Text. */
 	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
@@ -61,12 +59,15 @@ class Gfx {
 	}
 	
 	public static var showfps:Bool;
+	private static var render_fps:Int;
+	private static var render_fps_max:Int = -1;
+	private static var update_fps:Int;
+	private static var update_fps_max:Int = -1;
 	public static function fps():Int {
-		if (fpsobj == null) {
-			fpsobj = new FPS(0, 0, 0xffffff);	
-		  gfxstage.addChild(fpsobj);
-		}
-		return fpsobj.currentFPS;
+		return render_fps_max;
+	}
+	public static function updatefps():Int {
+		return update_fps_max;
 	}
 	
 	/** Change the tileset that the draw functions use. */
