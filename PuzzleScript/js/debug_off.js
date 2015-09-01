@@ -12,17 +12,16 @@ function stripTags(str) {
 }
 
 function consolePrint(str){
-/*	var errorText = document.getElementById("errormessage");
-	
-	str=stripTags(str);
-	errorText.innerHTML+=str+"<br>";*/
+	window.console.log(str);
 }
 function consolePrintWithLines(text,lineNumber,urgent) {
+	window.console.log(text+","+lineNumber);
 }
 function consolePrintWithLinesArray(text,lineNumber,urgent) {
+	window.console.log(text+","+lineNumber);
 }
 function consoleCacheDump(str){
-	
+	window.console.log(str);
 }
 
 
