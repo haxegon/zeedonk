@@ -261,7 +261,8 @@ var haxeHintArray = [
 ["Game.homepage","(url)"],
 ["Game.background","(color)"],
 ["Game.foreground","(color)"],
-["Game.editor","():Bool"]
+["Game.prompt","(description,defaultText):String"],
+["Game.editor","():Bool"],
 /*,
 ["break"],
 ["case"],

@@ -78,6 +78,7 @@ function loadDat(s){
   dat.instruments=[];
   for (j in 0...5){
     var n=0;
+    var p = 1;
     for (k in 0...5){
       i++;
       n = n + p*arr[i];      
@@ -666,7 +667,7 @@ for (k in 0 ... 5){
     dat.notes[selectedSequence]=[[],[],[],[],[]];
   }
     
-  if (drawButton("   new   ",152,100,textCol,mainButton,mainHighlight)){
+  if (drawButton("   new   ",152,90,textCol,mainButton,mainHighlight)){
     MakeBackupCopy();
     dat = {
       patternLength:16,
@@ -680,10 +681,22 @@ for (k in 0 ... 5){
   }
 
 
-  if (drawButton("  save   ",152,110,textCol,mainButton,mainHighlight)){
-    Debug.log(saveDat());
+  if (drawButton("  save   ",152,100,textCol,mainButton,mainHighlight)){
+    if (Game.editor())
+        {
+      Debug.log(saveDat());
+        } else {
+        Game.prompt("Music data string:",saveDat());
+        }
   }
     
+
+
+  if (drawButton("  load   ",152,110,textCol,mainButton,mainHighlight)){
+    var ld = Game.prompt("Enter music data string:","");
+        Debug.log(ld);
+        if (ld!=null&&ld.length>0){loadDat(ld);}
+  }
   //draw grid
   var gx=22;
   var gy=21;

@@ -35,4 +35,10 @@ class Game {
 		return untyped __js__('IDE');
 		#end
 	}
+
+	public static function prompt(description:String,defaultText:String):String{
+		#if !flash
+		return untyped __js__('prompt({0},{1})',description,defaultText);
+		#end
+	}
 }
