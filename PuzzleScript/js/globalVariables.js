@@ -180,3 +180,19 @@ function setbackgroundcolor(t){
         meta.style.backgroundColor=metaData.bgCol;   
     }
 }
+
+function setforegroundcolor(t){
+    metaData.fgCol="#"+decimalToHex(t);
+    if (canSetHTMLColors){
+        var meta;
+        meta = document.getElementById ("hacklink");
+        meta.style.color = metaData.fgCol;
+        meta = document.getElementById ("separator");
+        meta.style.color = metaData.fgCol;
+        meta = document.getElementById ("gametitle");
+        meta.style.color = metaData.fgCol;
+        meta = document.getElementById ("homepagelink");
+        meta.style.color = metaData.fgCol;
+    } else {  
+    }
+}
