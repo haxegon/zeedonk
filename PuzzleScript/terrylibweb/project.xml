@@ -41,6 +41,7 @@
 
 	
 	<haxedef name="terrylibweb" />
+	<haxedef name="terryhasntupgraded" />
 	<!-- haxedef name="terrylibwebhtml5debug" /-->
 	<haxedef name="hscriptPos" />
 	

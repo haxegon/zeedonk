@@ -15,6 +15,21 @@ document.oncontextmenu = function (e) {
     }
 };
 
+function isIDE(){
+    return IDE;
+}
+
+function bodyIsTargetted(){
+    return document.activeElement.nodeName=="BODY";
+}
+function saveKey_terryhasntupgraded(key,val){
+    localStorage.setItem(window.document.URL.toString()+key,val);
+}
+
+function loadKey_terryhasntupgraded(key){
+    return localStorage.getItem(window.document.URL.toString()+key);
+}
+
 //on backspace down + optional callback
 function onBackspace(e, callback){
     var key;

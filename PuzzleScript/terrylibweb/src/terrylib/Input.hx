@@ -3,6 +3,7 @@ package terrylib;
 import openfl.display.DisplayObject;
 import openfl.events.KeyboardEvent;
 import openfl.ui.Keyboard;
+import openfl.external.ExternalInterface;
 
 enum Keystate {
   justreleased;
@@ -88,9 +89,18 @@ class Input {
 		#if flash
 		return "";
 		#else
-		if (untyped __js__('document.activeElement.nodeName!="BODY"')){
-			return;
-		}
+
+		#if terryhasntupgraded
+			if (ExternalInterface.call("bodyIsTargetted")==false){
+				return;
+			}
+		#else
+			if (untyped __js__('document.activeElement.nodeName!="BODY"')){
+				return;
+			}
+
+		#end
+
 		if (event.charCode==91||event.charCode==93||event.charCode==224||event.charCode==17){			
 			for(keycode in 0...numletters){				
 				if (iskeycodeheld(current[keycode])) {
