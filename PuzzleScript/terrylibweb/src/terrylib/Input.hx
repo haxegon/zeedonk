@@ -54,6 +54,80 @@ class Input {
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, handlekeydown);
 		stage.addEventListener(KeyboardEvent.KEY_UP, handlekeyup);
 		
+		resetKeys();
+	}
+	
+	private static function update(){
+		for (i in 0 ... numletters) {
+			if (lookup.exists(i)) {
+				if ((last[i] == Keystate.justreleased) && (current[i] == Keystate.justreleased)) current[i] = Keystate.notpressed;
+				else if ((last[i] == Keystate.justpressed) && (current[i] == Keystate.justpressed)) current[i] = Keystate.pressed;
+				last[i] = current[i];
+			}
+		}
+	}
+	
+	private static function reset(){
+		for (i in 0...numletters) {
+			if (lookup.exists(i)) {
+				current[i] = Keystate.notpressed;
+				last[i] = Keystate.notpressed;
+				keyheld[i] = false;
+			}
+		}
+	}
+	
+	private static function iskeycodeheld(k:Keystate):Bool {
+		if (k == Keystate.justpressed || k == Keystate.pressed) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static function handlekeydown(event:KeyboardEvent) {
+		keycode = event.keyCode;
+		
+		if (lookup.exists(keycode)) {
+			if (iskeycodeheld(current[keycode])) {
+				current[keycode] = Keystate.pressed;
+			}else {
+				current[keycode] = Keystate.justpressed;
+				keydelay[keycode] = 0;
+			}
+			keyheld[keycode] = true;
+		}
+	}
+	
+	private static function handlekeyup(event:KeyboardEvent) {
+		keycode = event.keyCode;
+		if (lookup.exists(keycode)) {
+			if (iskeycodeheld(current[keycode])) {
+				current[keycode] = Keystate.justreleased;
+			}else {
+				current[keycode] = Keystate.notpressed;
+			}
+			keyheld[keycode] = false;
+		}
+	}
+	
+	private static function addkey(KeyName:Key, KeyCode:Int) {
+		keymap.set(KeyName, KeyCode);
+		lookup.set(KeyCode, KeyName);
+		current[KeyCode] = Keystate.notpressed;
+		last[KeyCode] = Keystate.notpressed;
+		keydelay[KeyCode] = 0;
+		keyheld[KeyCode] = false;
+	}
+
+	public static function resetKeys(){
+		keymap = new Map<Key, Int>();
+		lookup = new Map<Int, Key>();
+		current = new Array<Keystate>();
+		last = new Array<Keystate>();
+		keydelay = new Array<Int>();
+		keyheld = new Array<Bool>();
+
+
 		//BASIC STORAGE & TRACKING			
 		var i:Int = 0;
 		for(i in 0...numletters){
@@ -140,67 +214,6 @@ class Input {
 		addkey(Key.DOWN,Keyboard.DOWN);
 		addkey(Key.LEFT,Keyboard.LEFT);
 		addkey(Key.RIGHT, Keyboard.RIGHT);
-	}
-	
-	private static function update(){
-		for (i in 0 ... numletters) {
-			if (lookup.exists(i)) {
-				if ((last[i] == Keystate.justreleased) && (current[i] == Keystate.justreleased)) current[i] = Keystate.notpressed;
-				else if ((last[i] == Keystate.justpressed) && (current[i] == Keystate.justpressed)) current[i] = Keystate.pressed;
-				last[i] = current[i];
-			}
-		}
-	}
-	
-	private static function reset(){
-		for (i in 0...numletters) {
-			if (lookup.exists(i)) {
-				current[i] = Keystate.notpressed;
-				last[i] = Keystate.notpressed;
-				keyheld[i] = false;
-			}
-		}
-	}
-	
-	private static function iskeycodeheld(k:Keystate):Bool {
-		if (k == Keystate.justpressed || k == Keystate.pressed) {
-			return true;
-		}
-		return false;
-	}
-	
-	private static function handlekeydown(event:KeyboardEvent) {
-		keycode = event.keyCode;
-		
-		if (lookup.exists(keycode)) {
-			if (iskeycodeheld(current[keycode])) {
-				current[keycode] = Keystate.pressed;
-			}else {
-				current[keycode] = Keystate.justpressed;
-				keydelay[keycode] = 0;
-			}
-			keyheld[keycode] = true;
-		}
-	}
-	
-	private static function handlekeyup(event:KeyboardEvent) {
-		keycode = event.keyCode;
-		if (lookup.exists(keycode)) {
-			if (iskeycodeheld(current[keycode])) {
-				current[keycode] = Keystate.justreleased;
-			}else {
-				current[keycode] = Keystate.notpressed;
-			}
-			keyheld[keycode] = false;
-		}
-	}
-	
-	private static function addkey(KeyName:Key, KeyCode:Int) {
-		keymap.set(KeyName, KeyCode);
-		lookup.set(KeyCode, KeyName);
-		current[KeyCode] = Keystate.notpressed;
-		last[KeyCode] = Keystate.notpressed;
-		keyheld[KeyCode] = false;
 	}
 	
 	private static var keymap:Map<Key, Int> = new Map<Key, Int>();
