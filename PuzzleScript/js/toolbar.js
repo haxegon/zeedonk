@@ -9,6 +9,7 @@ function runClick() {
 	clearConsole();
 	setbackgroundcolor(0);
 	//compile(["restart"]);
+	stopClick();
 	terryRun();
 	consolePrint("Running Program",true)
 }

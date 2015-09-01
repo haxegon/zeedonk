@@ -961,7 +961,6 @@ function cacheNote(seed,frequency,length,volume){
   var totLen=env_length[0]+env_length[1]+env_length[2]; 
   //i want totlen=length*samplerate
 
-  window.console.log("before "+totLen);
   var scaleFactor=length*44100/totLen;
   scaleFactor=Math.sqrt(scaleFactor);
   params.p_env_attack*=scaleFactor;
@@ -976,7 +975,6 @@ function cacheNote(seed,frequency,length,volume){
   ];
 
   totLen=env_length[0]+env_length[1]+env_length[2];
-  window.console.log("after "+totLen);
   params.p_base_freq=0.4*frequency;
   if (volume>1){
     volume=1;

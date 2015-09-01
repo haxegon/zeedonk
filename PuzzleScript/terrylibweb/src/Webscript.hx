@@ -6,7 +6,6 @@ import openfl.external.ExternalInterface;
 import openfl.events.*;
 import openfl.net.*;
 
-@:keep
 class Webscript {
 	public static var myscript:String;
 	public static var loadedscript:Array<String>;
@@ -120,6 +119,7 @@ class Webscript {
 				}catch (e:Dynamic) {
 					Err.log(Err.RUNTIME_UPDATE, Err.process(e));
 				}
+				MusicEngine.update();
 			}	
 		}else {
 			counter+=10;
@@ -137,7 +137,6 @@ class Webscript {
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
-			/*
 			Gfx.clearscreen();
 			Gfx.showfps = true;
 			for (i in 0 ... 20) {
@@ -146,30 +145,9 @@ class Webscript {
 				//Gfx.drawtri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
 				//Gfx.drawcircle(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(10, 50), Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
 			}
-			*/
-			/*
-			if ((counter/10) % 200 > 100) {
-				Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, 200 - (counter/10) % 200, Col.WHITE);
-			}else{
-				Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, (counter/10) % 200, Col.WHITE);
-			}
-			*/
-			/*
-			Gfx.filltri(10, 10, 50, 90, 25, 100, Col.RED);
+			Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, (counter / 50) % 120, Col.WHITE);
+			Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, ((counter*2)/50)%120, Col.WHITE);
 			
-			Gfx.filltri(10, 10, 90, 60, 60, 110, Gfx.HSL(counter, 0.5, 0.5));
-			Gfx.filltri(10, 10, 50, 50, 20, 100, Gfx.HSL(counter, 0.5, 0.5));
-			Gfx.filltri(60, 40, 190, 50, 40, 80, Gfx.HSL(counter + 90, 0.5, 0.5));
-			
-			Gfx.filltri(5, 20, 40, 10 + counter/100, 30, 120, Gfx.HSL(counter+90, 0.5, 0.5));
-			*/
-			/*
-			if ((counter/10) % 200 > 100) {
-				Gfx.fillhexagon(Gfx.screenwidthmid, Gfx.screenheightmid, 200 - (counter/10) % 200, counter/500, Col.WHITE);
-			}else{
-				Gfx.fillhexagon(Gfx.screenwidthmid, Gfx.screenheightmid, (counter/10) % 200, counter/500,Col.WHITE);
-			}
-			*/
 		}
 		
 		if (Gfx.showfps) {
@@ -184,8 +162,15 @@ class Webscript {
 	private static var oldfont:String = "";
 	private static var oldfontsize:Int = 0;
 	
+
+	private static function resetGlobalVariables(){
+		MusicEngine.stopmusic();
+		MusicEngine.vol=1.0;
+	}
+
 	public static function loadscript(script:String) {
 		myscript = script;
+		resetGlobalVariables();
 		scriptfound();
 	}
 	

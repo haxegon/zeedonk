@@ -29,4 +29,10 @@ class Game {
 		ExternalInterface.call("setforegroundcolor", c);
 		#end
 	}
+
+	public static function editor():Bool{
+		#if !flash
+		return untyped __js__('IDE');
+		#end
+	}
 }

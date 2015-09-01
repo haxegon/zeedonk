@@ -1,7 +1,4 @@
 
-
-var initDat:String ="qdb4ac4aé5ab3a2b3ababfibabcbéaeb2dfbeacg2k4a";
-
 var charWidth:Int=3;
 var charHeight:Int=5;
 var charOffset:Int = -4;
@@ -30,6 +27,7 @@ var instCols = [
 
 var blackNotes = [false,true,false,true,false,false,true,false,true,false,true,false];
 
+var notenames=["c","c#","d","d#","e","f","f#","g","g#","a","a#","b"];
 /*
 FILE
   patternLength : [1-16]
@@ -44,18 +42,10 @@ var dat = {
   patternLength:16,
   cellDuration:3,
   instruments:[1,2,61,62,63],
-  sequences:[0],
   notes:[
-    [[[70,3,0,3],[62,3,2,3],[64,5,6,5],[61,1,10,4],[66,4,10,7]],[],[],[],[]],
-    [[],[],[],[],[]],
-    [[],[],[],[],[]],
-    [[],[],[],[],[]]
-  ],
+    [[[70,3,0,3],[62,3,2,3],[64,5,6,5],[61,1,10,4],[66,4,10,7]],[],[],[],[]]
+  ]
 };
-
-function stripUnnecessaryNotes(){
-  
-}
 
 var B62 = [ "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
 "à","á","â","ä","æ","ã","å","ā","è","é"        
@@ -72,7 +62,7 @@ var B62 = [ "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q",
 function loadDat(s){
 //  Debug.log(s);
   s = unmakeRLE(s);
-  var arr :Array = [];
+  var arr : Array<int> = [];
   for(ci in 0...s.length){
     var c = s[ci];
     arr.push(B62.indexOf(c));
@@ -90,19 +80,12 @@ function loadDat(s){
     var n=0;
     for (k in 0...5){
       i++;
-      n = n + Math.pow(62,k)*arr[i];      
+      n = n + p*arr[i];      
+      p=p*62;
     }
     dat.instruments.push(n);
   }
     
-  i++;
-  var sequenceSlotCount = arr[i];
-
-  dat.sequences=[];
-  for (j in 0...sequenceSlotCount){
-    i++;
-    dat.sequences.push(arr[i]);
-  }
        
   var outputAr=[];
 
@@ -111,12 +94,12 @@ function loadDat(s){
   outputAr.push(arr[i]);
   dat.notes=[];
   for (j in 0...sequenceCount){       
-    var sequence = [[],[],[],[],[]];
+    var sequence :Array<Array<Int> > = [[],[],[],[],[]];
     for (m in 0...5){
       i++;      
-      var noteCount=arr[i];
+      var noteCount:Int=arr[i];
   outputAr.push(arr[i]);
-      var noteSeq=sequence[m];
+      var noteSeq:Array<Int> =sequence[m];
       for(k in 0...noteCount){
         i++;
         var v1 = arr[i];
@@ -132,25 +115,16 @@ function loadDat(s){
         for(m in 0...noteCount){
             i++;
             noteSeq[m].push(arr[i]);
-  outputAr.push(arr[i]);
+            outputAr.push(arr[i]);
           }
       }
     }
     dat.notes.push(sequence);
   }
-  Debug.log("loadDat",outputAr);
-/*  Debug.log(dat.sequences);
-  Debug.log("patternlength "+dat.patternLength);
-  Debug.log("cellDuration "+dat.cellDuration);
-  Debug.log("instruments "+dat.instruments);
-  Debug.log("sequences "+dat.sequences);
-  Debug.log("notes "+dat.notes);*/
 }
     
-function saveDat():String{
-  stripUnnecessaryNotes();
-  
-  var intArray=[];
+function saveDat():String{  
+  var intArray: Array<Int> =[];
   intArray.push(dat.patternLength);
   intArray.push(dat.cellDuration);
   for ( i in 0...5){
@@ -161,134 +135,35 @@ function saveDat():String{
       intArray.push(v);
     }
   }
-  intArray.push(dat.sequences.length);
-  for(s in dat.sequences){
-      intArray.push(s);
-  }
 
-  var outputAr=[];
-//  Debug.log(["dat.notes:",dat.notes]);
+  var outputAr:Array<Int> =[];
   intArray.push(dat.notes.length);  
   outputAr.push(intArray[intArray.length-1]);
   for(r in dat.notes){
-//    Debug.log("R"+r+" "+r.length);
     for (i in 0...5){
       var instNotes = r[i];
-//      Debug.log("IN" +instNotes);
       intArray.push(instNotes.length);
-  outputAr.push(intArray[intArray.length-1]);
       for (n in instNotes){
         intArray.push(n[0]%62);
-  outputAr.push(intArray[intArray.length-1]);
         intArray.push(Std.int(n[0]/62)%62);    
-  outputAr.push(intArray[intArray.length-1]);
       }
       for (j in 1...4){
         for (n in instNotes){            
           intArray.push(n[j]);
-  outputAr.push(intArray[intArray.length-1]);
         }
       }
     }
   }
-  Debug.log("saveDat",outputAr);
 
   var result="";
   for( n in intArray){
     result = result+B62[n];    
   }
-//  Debug.log(result);
+      
   result = makeRLE(result);
-//  Debug.log(result);
-//  result = unmakeRLE(result);
-//  Debug.log(result);
   return result;
 }
 
-  /*   Base4K encoding for JavaScript
- *   Copyright (c) 2014 Secomba GmbH
- *   Licensed under the MIT license (https://raw.githubusercontent.com/secomba/base4k/master/LICENSE)
- *   Version: 1.0.0
- */
-
-//-----CLASS Base4K---------------------------------------------------------
-var BASE_FLAG_START = 0x04000;
-var BASE1_START     = 0x05000;
-var BASE_FLAG_SIZE  = 0x100;
-var BASE1_SIZE      = 0x01000;
-
-// raw=Uint8Array, ret=String
-function encode4K(raw)
-{
-        var offset = 0;
-        var result = "";
-        
-        var i=0;
-        while (i<raw.length*2-2){
-          if(i%2==0)
-            offset = ((raw[i/2]<<4)|((raw[i/2+1]>>>4)&0x0f))&0x0fff;
-          else
-            offset = ((raw[(i-1)/2]<<8)|(raw[(i+1)/2]&0xff))&0x0fff;
-
-          offset += Base4K_BASE1_START;
-
-          result += String.fromCharCode(offset);
-          i+=3;
-        }
-
-        if((raw.length*2) % 3 == 2) {
-                offset = (raw[raw.length-1]&0xff)+Base4K_BASE_FLAG_START;
-                result += String.fromCharCode(offset);
-        } else if((raw.length*2) % 3 == 1) {
-                offset = ((raw[raw.length-1]&0x0f))+Base4K_BASE_FLAG_START;
-                result += String.fromCharCode(offset);
-        }
-
-        return result;
-}
-
-// encoded=String, ret=Uint8Array
-function decode4k (encoded)
-{
-        var code = 0;
-
-        var buffer = new Array();
-        var intCollector = new Array();
-
-        for( i in 0...encoded.length) {
-
-                code = encoded.charCodeAt(i);
-
-                if(!(code>=Base4K_BASE1_START && code<Base4K_BASE1_START+Base4K_BASE1_SIZE)) {
-                   if(i<encoded.length-1 || !(code>=Base4K_BASE_FLAG_START && code<Base4K_BASE_FLAG_START+Base4K_BASE_FLAG_SIZE)) {
-                           throw "invalid Base4K encoding";
-                   }
-                }
-                intCollector.push(code);
-        }
-
-        for( i in 0...intCollector.length) {
-                if(intCollector[i]>=Base4K_BASE1_START) {
-                        intCollector[i] -= Base4K_BASE1_START;
-                } else {
-                        intCollector[i] -= Base4K_BASE_FLAG_START;
-                        if(i%2==0)
-                                buffer.push(intCollector[i]&0xff);
-                        else
-                                buffer.push(((intCollector[i-1]<<4)|((intCollector[i]&0x0f))&0xff));
-                        break;
-                }
-                if(i%2==0) {
-                        buffer.push((intCollector[i]>>>4)&0xff);
-                } else {
-                        buffer.push(((intCollector[i-1]<<4)|((intCollector[i]&0x0f00)>>>8))&0xff);
-                        buffer.push(intCollector[i]&0xff);
-                }
-        }
-
-        return new Uint8Array(buffer);
-}
-  
   function makeRLE(s):String{
     var result ="";
     var lastChar=s[0];
@@ -338,21 +213,42 @@ function decode4k (encoded)
       c=s[i];
       lastInt=0;
     }
-      
-    result = result;
     
     return result;
   }
     
+           
+
+      
 var channelOrder:Array = [0,1,2,3,4];
 
 var selectedInst:Int=0;
 var noteLength:Int=3;
 var maxVol:Int=7;
 var noteVol:Int=maxVol;
-var selectedSequenceSlot:Int=0;
+var selectedSequence:Int=0;
 var bottomNote=60;
 
+           
+  var backups=[];
+  function MakeBackupCopy(){
+    var oldDat = saveDat();
+    if (backups.length>0&&oldDat==backups[backups.length-1]){
+      return;
+    }
+    backups.push(oldDat);
+  }
+
+function DoUndo(){
+  if (backups.length==0){ return; }
+  playing=false;
+  var backup=backups.pop();
+  loadDat(backup);
+  if (selectedSequence>dat.notes.length){
+    selectedSequence=dat.notes.length-1;
+  }
+}
+      
 function drawButton(text,x,y,textcolor,color,colorhover):Bool {
   
   var width=text.length*(charWidth+1)+1;
@@ -374,19 +270,6 @@ function drawButton(text,x,y,textcolor,color,colorhover):Bool {
   return click;
 }
 
-function drawNumberEntry(tex,x,y,digits){
-  
-}
-
-function printMouseCoord(){
-  Gfx.fillbox(Mouse.x-2,Mouse.y,5,1,0xffffff);
-  Gfx.fillbox(Mouse.x,Mouse.y-2,1,5,0xffffff);
-  var y =Mouse.y-7+charOffset;
-  if (y<0){
-    y=Mouse.y+4+charOffset;
-  }
-  Text.display(Mouse.x+3,y,Mouse.x+","+Mouse.y,textCol);
-}
 
 function collideBox(x,y,w,h) : Int {
   var dx = Mouse.x-x;
@@ -455,40 +338,138 @@ function stopPlay(){
 }
 
 function PushNewSequence(){
+  MakeBackupCopy();
   var minNotFound=0;
   var changed=true;
-  while(changed){
-    changed=false;
-    for(i in dat.sequences){
-        if (i==minNotFound){
-        changed=true;
-        minNotFound++;
-        break;
-      }
-    }
-  }
-  if (dat.notes.length==minNotFound){
-    dat.notes.push([[],[],[],[],[]]);
-  }
-    dat.sequences.push(minNotFound);
-  }
+  dat.notes.push([[],[],[],[],[]]);
+}
 
 var plusCounter=0;
 var minusCounter=0;
 
+var copyBuffer=null;
+    
+      
+function DecreasePatternLength(){
+  dat.patternLength--;
+  Debug.log("boops");
+  
+  for (sequence in dat.notes){
+       for (channel in sequence){
+        for (i in 1-channel.length...1){
+          // a note is [note, length, onset, amplitude]
+          var n = channel[-i];
+          if (n[2]==dat.patternLength){
+            channel.splice(-i,1);
+          }
+            if (n[2]+n[1]-1==dat.patternLength){
+              n[1]--;
+            }
+        }
+       }
+  }
+}   
+      
+function DoCopy(){
+  var toCopy=dat.notes[selectedSequence];
+  copyBuffer=[];
+  for (a in toCopy){
+       r1=[];
+       for (b in a){
+          r2=[];
+          for (c in b){
+            r2.push(c);   
+          }
+          r1.push(r2);
+       }
+       copyBuffer.push(r1);
+  }
+}
+
+function DoPaste(){
+  if (copyBuffer==null){
+    return;
+  }
+  dat.notes[selectedSequence]=copyBuffer;
+  DoCopy();
+}
+    
+
+function GenerateRandom(){
+  dat = {
+    patternLength:Random.int(3,16),
+    cellDuration:Random.int(1,10),
+    instruments:[Random.int(0,99999999),Random.int(0,99999999),Random.int(0,99999999),Random.int(0,99999999),Random.int(0,99999999)],
+    notes:[],
+  };
+  var sequenceCount = 11;
+  var noteDensity=Random.float(0.1,0.5);
+  var preferredLengths=[];
+  for (i in 0...5){
+    preferredLengths.push(Random.int(1,dat.patternLength));
+  }
+  for (i in 0...sequenceCount){
+    var sequence=[];
+    for (j in 0...5){
+      var channel=[];
+      if (!Random.occasional()) {
+        var maxOnset = dat.patternLength-preferredLengths[j];
+        for (k in 0...(maxOnset)){
+          var r = Random.float(0,1);
+          if (k%4==0){
+            r=r*r;
+          }
+          if(r<noteDensity){
+           // a note is [note, length, onset, amplitude]
+            channel.push([132-12,preferredLengths[j],Random.int(1,maxOnset),Random.int(1,7)]);
+          }     
+        }
+      }
+      sequence.push(channel);
+    }
+    dat.notes.push(sequence);
+  }
+    for (i in 0...sequenceCount){
+         selectedSequence=i;
+         DoCopy();
+         selectedSequence=Random.int(0,dat.notes.length);
+        DoPaste();
+    }
+}
+
 function update() {
+  if (Input.justpressed(Key.Z)){
+    DoUndo();
+  }
+  if (Input.justpressed(Key.R)){
+    GenerateRandom();
+  }
+  if (Input.justpressed(Key.C)){
+    DoCopy();
+  }
+  if (Input.justpressed(Key.V)||Input.justpressed(Key.P)){
+    DoPaste();
+  }
+  if (Input.justpressed(Key.SPACE)){
+    if (playing){
+      playing=false;
+    } else {
+      startPlay();
+    }
+  }
   if ((Input.pressed(Key.DOWN)||Input.pressed(Key.S))&&bottomNote>0){
     bottomNote--;
   }
   
-  if ((Input.pressed(Key.UP)||Input.pressed(Key.W))&&bottomNote<132-12){
+  if ((Input.pressed(Key.UP)||Input.pressed(Key.W))&&bottomNote<132-24){
     bottomNote++;
   }
   if (Input.pressed(Key.LEFT)||Input.pressed(Key.A)){
     lCounter--;
     if (lCounter<=0){
-      if (noteLength>1){
-        noteLength--;
+      if (lastl>1){
+        noteLength=lastl-1;
+        lastl=noteLength;
         lCounter=5;
       } 
     }
@@ -509,7 +490,7 @@ function update() {
   }
     
     
-  if (Input.pressed(Key.PLUS)){
+  if (Input.pressed(Key.PLUS)||Input.pressed(Key.E)){
     plusCounter--;
     if (plusCounter<=0){
       if (noteVol<7){
@@ -522,7 +503,7 @@ function update() {
   }
     
     
-  if (Input.pressed(Key.MINUS)){
+  if (Input.pressed(Key.MINUS)||Input.pressed(Key.Q)){
     minusCounter--;
     if (minusCounter<=0){
       if (noteVol>1){
@@ -539,38 +520,40 @@ function update() {
 
   //draw sequence panel
   var cellCount=12;  
-  var colLength = Math.min(dat.sequences.length+1,12);
+  var colLength = Math.min(dat.notes.length+1,12);
   Gfx.fillbox(1,9,13,11+colLength*8,panelCol);
   Text.display(2,10+charOffset,"SEQ",darkText);
 
-  for (i in 0 ... dat.sequences.length) {
+  for (i in 0 ... dat.notes.length) {
     var tCol=darkText;
     var collide=collideBox(2,20+i*8,11,7);
-    var col:Int=i==selectedSequenceSlot?mainHighlighter:mainHighlight;
-    if (collide==1&&i!=selectedSequenceSlot){
+    var col:Int=i==selectedSequence?mainHighlighter:mainHighlight;
+    if (collide==1&&i!=selectedSequence){
       col=mainHighlightish;
       tCol=Col.GREY;
     } 
     if (collide==2){
-      selectedSequenceSlot=i;
+      selectedSequence=i;
     } 
     if (collide==3){
-      if (dat.sequences.length>1){
-        dat.sequences.splice(i,1);
-        if (selectedSequenceSlot==i){
-          selectedSequenceSlot--;
+      if (dat.notes.length>1){
+        dat.notes.splice(i,1);
+        if (selectedSequence==i){
+          selectedSequence--;
         }
         Debug.log("removed from sequence");
         break;
       }
     }
     Gfx.fillbox(2,20+i*8,11,7,col);   
-    var seqIndex=dat.sequences[i];
-    var s = seqIndex>=10? Convert.tostring(seqIndex):("0"+Convert.tostring(seqIndex));
+    var s = Convert.tostring(i);
+    if (i<10){
+      s="0"+s;
+    }
     Text.display(4,20 + i * 8+charOffset+1,s ,tCol);
   }
-  if (dat.sequences.length<12){
-    var i =dat.sequences.length;
+  if (dat.notes.length<12){
+    var i =dat.notes.length;
     var collide=collideBox(2,20+i*8,11,7);
     var col=Col.GREY;
     if (collide==1){
@@ -584,29 +567,44 @@ function update() {
 
   var xOffset=41;
   
-  if (drawButton("save",xOffset+1,1,textCol,mainButton,mainHighlight)){
-    Debug.log("click");
-  }
   
   Text.display(1,2+charOffset,"~~BUSKER~~",Col.DARKBROWN);
     
-  //bpm box
-  Gfx.fillbox(xOffset+19,1,13,7,panelCol);
-  Gfx.fillbox(xOffset+32,1,13,7,mainHighlight);
-  Text.display(xOffset+20,2+charOffset,"bpm",textCol);
-  Text.display(xOffset+33,2+charOffset,"120",textCol);
-
-  //swing box
-  Gfx.fillbox(xOffset+46,1,21,7,panelCol);
-  Gfx.fillbox(xOffset+67,1,5,7,mainHighlight);
-  Text.display(xOffset+47,2+charOffset,"swing",textCol);
-  Text.display(xOffset+68,2+charOffset,"9",textCol);
+  //bpm box 
+  var collide = collideBox(xOffset+46,1,26,7);
+  if (collide==2&&dat.cellDuration>1){
+    dat.cellDuration--;      
+  }
+  if (collide==3&&dat.cellDuration<10){
+    dat.cellDuration++;
+  } 
+  var col= collide==1?mainHighlighter:mainHighlight;
+  Gfx.fillbox(xOffset+46,1,13,7,panelCol);
+  Gfx.fillbox(xOffset+59,1,13,7,col);
+  Text.display(xOffset+47,2+charOffset,"bpm",textCol);
+  var bpmString=Convert.tostring(Convert.toint(450/dat.cellDuration));
+  Text.display(xOffset+60,2+charOffset,bpmString,textCol);
 
   //notes box
+  collide = collideBox(xOffset+73,1,30,7);
+  if (collide==2&&dat.patternLength<16){
+    dat.patternLength++;      
+  } 
+  if (collide==3&&dat.patternLength>0){
+    Debug.log(collide);
+    
+    DecreasePatternLength();
+  }
+    
+  var col= collide==1?mainHighlighter:mainHighlight;
   Gfx.fillbox(xOffset+73,1,21,7,panelCol);
-  Gfx.fillbox(xOffset+94,1,9,7,mainHighlight);
+  Gfx.fillbox(xOffset+94,1,9,7,col);
   Text.display(xOffset+74,2+charOffset,"notes",textCol);
-  Text.display(xOffset+95,2+charOffset,"16",textCol);
+  var noteStr = Convert.tostring(dat.patternLength);
+  if (dat.patternLength<10){
+    noteStr="0"+noteStr;
+  }
+  Text.display(xOffset+95,2+charOffset,noteStr,textCol);
   
   //instruments box
   Gfx.fillbox(145,2,45,7,panelCol);
@@ -615,7 +613,6 @@ function update() {
 
   //draw sequencer
   Gfx.fillbox(16+selectedInst*35-1,9,35,9,0xffffff);
-
 
 var k=0;
 for (k in 0 ... 5){
@@ -627,9 +624,11 @@ for (k in 0 ... 5){
     if (c==2){
       setInstrument(k,true);
     }
+   
   }
     
   if (c==3){
+    MakeBackupCopy();
     dat.instruments[k]=Random.int(0,99999999);
     Music.playnote(dat.instruments[k],1,1,1.0);
   }
@@ -663,10 +662,12 @@ for (k in 0 ... 5){
   
     
   if (drawButton("clear pat",152,61,textCol,mainButton,mainHighlight)){
-    dat.notes[dat.sequences[selectedSequenceSlot]]=[[],[],[],[],[]];
+    MakeBackupCopy();
+    dat.notes[selectedSequence]=[[],[],[],[],[]];
   }
     
   if (drawButton("   new   ",152,100,textCol,mainButton,mainHighlight)){
+    MakeBackupCopy();
     dat = {
       patternLength:16,
       cellDuration:3,
@@ -680,7 +681,7 @@ for (k in 0 ... 5){
 
 
   if (drawButton("  save   ",152,110,textCol,mainButton,mainHighlight)){
-    saveDat();
+    Debug.log(saveDat());
   }
     
   //draw grid
@@ -688,9 +689,9 @@ for (k in 0 ... 5){
   var gy=21;
   var cellWidth=8;
   var cellHeight=8;
-  var xCells=16;
+  var xCells=dat.patternLength;
   var yCells=12;
-
+  
   Gfx.fillbox(gx,gy,xCells*(cellWidth)+1,yCells*(cellHeight)+1,panelCol);
   
 
@@ -702,7 +703,9 @@ for (k in 0 ... 5){
   } else {
     Text.display(gx-3,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));    
   }
-
+        for (i in 0...12){
+          Text.display(gx-7,gy+cellHeight*(i)+2+charOffset,notenames[(bottomNote+11-i)%12],Col.GREY);
+        }
   Gfx.fillbox(gx-7,gy+cellHeight*(cNotePos+1),xCells*cellWidth+8,1,Col.GREY);
   
   for (i in 0 ... xCells){
@@ -718,7 +721,6 @@ for (k in 0 ... 5){
     }
   }
   
-  var selectedSequence = dat.sequences[selectedSequenceSlot];
   //draw notes
   for (c2 in 0...5){
     var c = channelOrder[c2];
@@ -793,13 +795,18 @@ for (k in 0 ... 5){
     //check if it's in range
     if (sx+l>=xCells){
       l=xCells-sx;
+      lastl=l;
     }
     Gfx.drawbox(gx+1+cellWidth*sx,gy+1+cellHeight*sy+maxVol-noteVol-1,cellWidth*l-1,noteVol+1,0xffffff); 
     if (Mouse.leftheld()&&pressedDownOnCanvas){
+      if (Mouse.leftclick()){
+        MakeBackupCopy();
+      }
       var clickX = sx;
       var clickY = bottomNote+12-sy;
       for (i in 0...l){
         if (Mouse.leftclick()){
+          MakeBackupCopy(); 
           blockNote(clickX+i,clickY);         
         } else {
           deleteNote(clickX+i,clickY); 
@@ -836,11 +843,11 @@ for (k in 0 ... 5){
     
   if (playing){
     playTick++;    
-    var pieceLengthInTicks = dat.sequences.length*dat.patternLength*dat.cellDuration;
+    var pieceLengthInTicks = dat.notes.length*dat.patternLength*dat.cellDuration;
     playTick = playTick%pieceLengthInTicks;
     var globalCell = Std.int(playTick/dat.cellDuration);
     var playPattern = Std.int(globalCell/dat.patternLength);
-    selectedSequenceSlot=playPattern;
+    selectedSequence=playPattern;
     var patternProgress = globalCell-dat.patternLength*playPattern;
     
     if (playTick%dat.cellDuration==0){
@@ -851,7 +858,6 @@ for (k in 0 ... 5){
     
   }
     
-  printMouseCoord();
 }
 
 function DoPlayNote(c,n){
@@ -862,12 +868,8 @@ function DoPlayNote(c,n){
 }
 
 function TryPlayNote(x){
-  var selectedSequence = dat.sequences[selectedSequenceSlot];
-  for (c2 in 0...5){
-    var c = channelOrder[c2];
+  for (c in 0...5){
     var channel = dat.notes[selectedSequence][c];  
-    var colIndex = c==selectedInst?1:0;
-    var col = instCols[c][colIndex];
     for (n in channel){
         // var n = channel[nIndex];
         // a note is [note, length, onset, amplitude]
@@ -890,12 +892,11 @@ function setInstrument(k,play){
 }
 
 function deleteNote(clickX,clickY){
-  var selectedSequence = dat.sequences[selectedSequenceSlot];
   for (n in dat.notes[selectedSequence][selectedInst]){
        var noteX=n[2];
        var noteL=n[1];
        var noteY=n[0];
-       if (clickY==noteY && clickX>=noteX && clickX<(noteX+noteL)){    
+       if (clickY==noteY && clickX>=noteX && clickX<(noteX+noteL)){   
       var arr = dat.notes[selectedSequence][selectedInst];
       var noteIndex = arr.indexOf(n);
       arr.splice(noteIndex,1);
@@ -906,12 +907,11 @@ function deleteNote(clickX,clickY){
   
 
 function blockNote(clickX,clickY){
-  var selectedSequence = dat.sequences[selectedSequenceSlot];
   for (n in dat.notes[selectedSequence][selectedInst]){
       var noteX=n[2];
       var noteL=n[1];
       var noteY=n[0];
-      if (clickY==noteY && clickX>=noteX && clickX<(noteX+noteL)){  
+      if (clickY==noteY && clickX>=noteX && clickX<(noteX+noteL)){ 
         if (clickX==noteX){
           //delete it
           var arr = dat.notes[selectedSequence][selectedInst];
@@ -929,10 +929,4 @@ function blockNote(clickX,clickY){
 function new(){
   // Music.playnote(4123,1,1,10);
   Text.setfont(Font.PIXEL,1);
-  //Debug.log(["notes ",dat.notes]);
-  var saved = saveDat();
-  loadDat(saved);
-  //Debug.log(["notes ",dat.notes]);
-  var saved2 = saveDat();
-  Debug.log(saved+"\n"+saved2);
 }
