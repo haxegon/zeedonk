@@ -39,6 +39,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
     matchBrackets:true,
     tabSize:2,
     indentUnit:2,
+    hintOptions: {"completeSingle": false},
     extraKeys: {"Ctrl-Space": "autocomplete",
 		"Esc":"clearHighlight"}
    	});
