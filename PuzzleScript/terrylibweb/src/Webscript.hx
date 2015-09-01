@@ -138,9 +138,15 @@ class Webscript {
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
+			
 			/*
 			Gfx.clearscreen();
 			Gfx.showfps = true;
+			
+			Gfx.drawhexagon(50,50,51,1,Col.WHITE);
+			Gfx.drawhexagon(50,50,51,1,Col.WHITE);
+			*/
+			/*
 			for (i in 0 ... 20) {
 				//Gfx.drawline(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Gfx.HSL(Random.int(0,360),0.5,0.5));
 				//Gfx.drawhexagon(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(10,50), Random.int(0,360), Gfx.HSL(Random.int(0,360),0.5,0.5));

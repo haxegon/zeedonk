@@ -725,7 +725,7 @@ class Gfx {
 			tx2 = (Math.cos(angle + (temprotate * i)) * radius) + x;
 		  ty2 = (Math.sin(angle + (temprotate * i)) * radius) + y;
 			
-			drawline(tx, ty, tx2, ty2, col);
+			drawline(tx, ty, tx2, ty2, col, alpha);
 			tx = tx2; ty = ty2;
 		}
 		#else
