@@ -1,5 +1,5 @@
 echo "compiling"
 openfl build html5
-mv -v bin/html5/bin/index.html ../embed.html
+#mv -v bin/html5/bin/index.html ../embed.html
 #rm -v bin/html5/bin/index.html
-cp -r -v bin/html5/bin/* ../
+#cp -r -v bin/html5/bin/* ../
