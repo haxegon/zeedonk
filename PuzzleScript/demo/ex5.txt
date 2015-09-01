@@ -225,6 +225,7 @@ var channelOrder:Array = [0,1,2,3,4];
 
 var selectedInst:Int=0;
 var noteLength:Int=3;
+var lastl:Int=noteLength;           
 var maxVol:Int=7;
 var noteVol:Int=maxVol;
 var selectedSequence:Int=0;
