@@ -71,13 +71,6 @@ function dateToReadable(title,time) {
 }
 
 function saveClick() {
-	try {
-		terryRun();
-	}
-	catch (e){
-		consoleError(e,true);
-	}
-
 	var text=editor.getValue();
 
 	stopClick();
