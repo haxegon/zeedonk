@@ -35,8 +35,13 @@ class Webdebug {
 			if (msg6 != null) returnarray.push(msg6);
 			if (msg7 != null) returnarray.push(msg7);
 			if (msg8 != null) returnarray.push(msg8);
-			untyped __js__('consolePrintArray({0},true)', returnarray);
-			//ExternalInterface.call("consolePrintArray", returnarray, true);
+
+			#if terryhasntupgraded
+				ExternalInterface.call("consolePrintArray", returnarray, true);
+			#else
+				untyped __js__('consolePrintArray({0},true)', returnarray);
+			#end
+
 		}else{
 			returnarray.push(msg1);
 			if (msg2 != null) returnarray.push(msg2);
@@ -46,8 +51,13 @@ class Webdebug {
 			if (msg6 != null) returnarray.push(msg6);
 			if (msg7 != null) returnarray.push(msg7);
 			if (msg8 != null) returnarray.push(msg8);
-			untyped __js__('consolePrintWithLinesArray({0},{1},true)', returnarray,linenum);
-			//ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);
+
+
+			#if terryhasntupgraded
+				ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);
+			#else
+				untyped __js__('consolePrintWithLinesArray({0},{1},true)', returnarray,linenum);
+			#end
 		}
 		#end
 	}

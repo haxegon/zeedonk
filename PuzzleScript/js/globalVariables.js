@@ -15,6 +15,21 @@ document.oncontextmenu = function (e) {
     }
 };
 
+function isIDE(){
+    return IDE;
+}
+
+function bodyIsTargetted(){
+    return document.activeElement.nodeName=="BODY";
+}
+function saveKey_terryhasntupgraded(key,val){
+    localStorage.setItem(window.document.URL.toString()+key,val);
+}
+
+function loadKey_terryhasntupgraded(key){
+    return localStorage.getItem(window.document.URL.toString()+key);
+}
+
 //on backspace down + optional callback
 function onBackspace(e, callback){
     var key;
@@ -53,6 +68,7 @@ document.onkeydown = function (e) {
   if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
     saveClick();
     e.preventDefault();        
+    return false;
     // Process event...
   }
     
@@ -143,7 +159,6 @@ var metaData = {
 }
 function settitle(t){
     metaData.title=t;
-    window.console.log("st " +t);
 
     if (canSetHTMLColors){        
         var link = document.getElementById ("gametitle");
@@ -166,7 +181,6 @@ function qualifyURL(url) {
 
 function sethomepage(t){
     metaData.homepage=t;
-    window.console.log("sh " +t);
     if (canSetHTMLColors){        
         var link = document.getElementById ("homepagelink");
         link.href=qualifyURL(metaData.homepage);

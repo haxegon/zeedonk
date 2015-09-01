@@ -3,6 +3,7 @@ package terrylib;
 import openfl.display.DisplayObject;
 import openfl.events.KeyboardEvent;
 import openfl.ui.Keyboard;
+import openfl.external.ExternalInterface;
 
 enum Keystate {
   justreleased;
@@ -85,6 +86,37 @@ class Input {
 	}
 	
 	private static function handlekeydown(event:KeyboardEvent) {
+		#if flash
+		return "";
+		#else
+
+		#if terryhasntupgraded
+			if (ExternalInterface.call("bodyIsTargetted")==false){
+				return;
+			}
+		#else
+			if (untyped __js__('document.activeElement.nodeName!="BODY"')){
+				return;
+			}
+
+		#end
+
+		if (event.charCode==91||event.charCode==93||event.charCode==224||event.charCode==17){			
+			for(keycode in 0...numletters){				
+				if (iskeycodeheld(current[keycode])) {
+					current[keycode] = Keystate.justreleased;
+				}else {
+					current[keycode] = Keystate.notpressed;
+				}
+				keyheld[keycode] = false;
+			}
+		} else {			
+			if (event.controlKey){
+				return;
+			}
+		}
+		#end
+
 		keycode = event.keyCode;
 		
 		if (lookup.exists(keycode)) {

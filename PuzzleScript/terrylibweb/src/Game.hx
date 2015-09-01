@@ -36,7 +36,11 @@ class Game {
 		#if flash
 		return false;
 		#else
-		return untyped __js__('IDE');
+		#if terryhasntupgraded
+			return ExternalInterface.call("isIDE");
+		#else
+			return untyped __js__('IDE');
+		#end
 		#end
 	}
 
@@ -44,14 +48,22 @@ class Game {
 		#if flash
 		return "";
 		#else
-		return untyped __js__('prompt({0},{1})',description,defaultText);
+		#if terryhasntupgraded
+			return ExternalInterface.call("prompt",description,defaultText);
+		#else
+			return untyped __js__('prompt({0},{1})',description,defaultText);
+		#end
 		#end
 	}
 
 	public static function save(key:String, value:String) {
 		#if flash
 		#else
-		untyped __js__('localStorage.setItem(window.document.URL.toString()+{0},{1})', key, value);
+		#if terryhasntupgraded
+			ExternalInterface.call('saveKey_terryhasntupgraded',key,value);
+		#else
+			untyped __js__('localStorage.setItem(window.document.URL.toString()+{0},{1})', key, value);
+		#end
 		#end
 	}
 
@@ -59,7 +71,13 @@ class Game {
 		#if flash
 		return "";
 		#else
-		return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})', key);
+
+		#if terryhasntupgraded
+			return  ExternalInterface.call('loadKey_terryhasntupgraded',key);
+		#else
+			return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})', key);
+		#end
+
 		#end
 	}
 }

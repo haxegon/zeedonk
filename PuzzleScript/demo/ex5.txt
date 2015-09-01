@@ -485,6 +485,7 @@ function update() {
     if (rCounter<=0){
       if (noteLength<16){
         noteLength++;
+        lastl=noteLength;
         rCounter=5;
       } 
     }

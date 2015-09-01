@@ -5,15 +5,24 @@ import openfl.external.ExternalInterface;
 class Webmusic{
 	public static function playsound(t:Int) {
 	  #if !flash	
-	  	untyped __js__('playSound({0})', t);
-		//ExternalInterface.call("playSound", t);
+
+			#if terryhasntupgraded
+				ExternalInterface.call("playSound", t);
+			#else
+	  			untyped __js__('playSound({0})', t);
+			#end
+
 	  #end
 	}
 	
 	public static function playnote(seed:Int, freq:Float, length:Float, volume:Float) {
 	  #if !flash	
-	  	untyped __js__('playNote({0},{1},{2},{3})', seed,freq,length,volume);
-		//ExternalInterface.call("playNote", seed, freq, length, volume);
+
+			#if terryhasntupgraded
+				ExternalInterface.call("playNote", seed, freq, length, volume);
+			#else
+	  			untyped __js__('playNote({0},{1},{2},{3})', seed,freq,length,volume);
+			#end
 	  #end
 	}
 
