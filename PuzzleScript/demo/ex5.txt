@@ -221,11 +221,12 @@ function saveDat():String{
            
 
       
-var channelOrder:Array = [0,1,2,3,4];
+var channelOrder:Array = [0,1,2,3,4];           
 
 var selectedInst:Int=0;
 var noteLength:Int=3;
-var lastl:Int=noteLength;           
+var lastl:Int = noteLength;           
+           
 var maxVol:Int=7;
 var noteVol:Int=maxVol;
 var selectedSequence:Int=0;
@@ -570,7 +571,7 @@ function update() {
   var xOffset=41;
   
   
-  Text.display(1,2+charOffset,"~~BUSKER~~",Col.DARKBROWN);
+  Text.display(10,2+charOffset,"~~tinybox~~",Col.DARKBROWN);
     
   //bpm box 
   var collide = collideBox(xOffset+46,1,26,7);
@@ -942,5 +943,6 @@ function blockNote(clickX,clickY){
   
 function new(){
   // Music.playnote(4123,1,1,10);
+  Game.title("tinybox");
   Text.setfont(Font.PIXEL,1);
 }
