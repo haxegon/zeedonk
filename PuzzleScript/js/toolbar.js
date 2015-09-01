@@ -193,8 +193,8 @@ function levelEditorClick_Fn() {
 
 function shareClick() {
 	consolePrint("Sending code to github...",true)
-	var title = "Untitled Terrylib Script";
-	compile();
+	var title = getTitle();//"Untitled Terrylib Script";
+//	compile();
 
 
 	var source=editor.getValue();

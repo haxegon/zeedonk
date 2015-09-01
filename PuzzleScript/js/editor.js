@@ -263,6 +263,8 @@ var haxeHintArray = [
 ["Game.background","(color)"],
 ["Game.foreground","(color)"],
 ["Game.prompt","(description,defaultText):String"],
+["Game.save","(key:String,value:String)"],
+["Game.load","(key:String):String"],
 ["Game.editor","():Bool"],
 /*,
 ["break"],
