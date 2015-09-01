@@ -36,7 +36,6 @@
 	<!-- haxeflag name="-D" value="webgl" / --> 
 	<!-- set name="webgl" / --> 
 	<haxelib name="openfl" />
-	<haxelib name="sion" />
 	<haxelib name="hscript" />
 
 	
