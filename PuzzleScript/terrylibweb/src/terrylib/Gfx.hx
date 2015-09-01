@@ -1050,11 +1050,24 @@ class Gfx {
 	public static function setpixel(x:Float, y:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
-		if (linethickness == 1) {
-		  drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);	
+		if (alpha < 1) {
+			if (linethickness == 1) {
+				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
+				settrect(Std.int(x), Std.int(y), 1, 1);
+				drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+			}else {
+				settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
+				drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+			}
 		}else {
-			settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
-			drawto.fillRect(trect, col);
+			if (linethickness == 1) {
+				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
+				settrect(Std.int(x), Std.int(y), 1, 1);
+				drawto.fillRect(trect, col);
+			}else {
+				settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
+				drawto.fillRect(trect, col);
+			}
 		}
 		#else
 		drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
