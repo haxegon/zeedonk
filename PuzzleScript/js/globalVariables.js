@@ -26,12 +26,16 @@ function onBackspace(e, callback){
     }
     if (key === 'U+0008' || 
         key === 'Backspace' || 
-        key === 8) {
-                    if(typeof callback === "function"){
-                callback();
-            }
-            return true;
+        key === 8) 
+    {
+        if (e.target.className.toLowerCase()=="codemirror-search-field"){
+            return false;
         }
+        if(typeof callback === "function"){
+            callback();
+        }
+        return true;
+    }
     return false;
 }
 
@@ -44,6 +48,14 @@ document.onkeydown = function (e) {
     onBackspace(e,function(){
         e.preventDefault();
     });
+    
+    //ctrl/cmd+s to save
+  if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    saveClick();
+    e.preventDefault();        
+    // Process event...
+  }
+    
 };
 
 try {
@@ -178,5 +190,21 @@ function setbackgroundcolor(t){
     } else {
         var meta = document.getElementById ("openfl-content");
         meta.style.backgroundColor=metaData.bgCol;   
+    }
+}
+
+function setforegroundcolor(t){
+    metaData.fgCol="#"+decimalToHex(t);
+    if (canSetHTMLColors){
+        var meta;
+        meta = document.getElementById ("hacklink");
+        meta.style.color = metaData.fgCol;
+        meta = document.getElementById ("separator");
+        meta.style.color = metaData.fgCol;
+        meta = document.getElementById ("gametitle");
+        meta.style.color = metaData.fgCol;
+        meta = document.getElementById ("homepagelink");
+        meta.style.color = metaData.fgCol;
+    } else {  
     }
 }

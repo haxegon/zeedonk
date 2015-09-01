@@ -98,7 +98,7 @@
   }
 
   var queryDialog =
-    'Search: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
+    '<label class="searchdialog">Search: </label><input type="text" style="" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
 
   function startSearch(cm, state, query) {
     state.queryText = query;
@@ -156,17 +156,17 @@
   });}
 
   var replaceQueryDialog =
-    'Replace: <input type="text" style="width: 10em" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
-  var replacementQueryDialog = 'With: <input type="text" style="width: 10em" class="CodeMirror-search-field"/>';
+    'Replace: <input type="text" style="" class="CodeMirror-search-field"/> <span style="color: #888" class="CodeMirror-search-hint">(Use /re/ syntax for regexp search)</span>';
+  var replacementQueryDialog = '<label class="searchdialog">With: </label><input type="text" style="" class="CodeMirror-search-field"/>';
   var doReplaceConfirm = "Replace? <button>Yes</button> <button>No</button> <button>Stop</button>";
 
   function replace(cm, all) {
     if (cm.getOption("readOnly")) return;
     var query = cm.getSelection() || getSearchState(cm).lastQuery;
-    dialog(cm, replaceQueryDialog, "Replace:", query, function(query) {
+    dialog(cm, replaceQueryDialog, "<label class='searchdialog'>Replace: </label>", query, function(query) {
       if (!query) return;
       query = parseQuery(query);
-      dialog(cm, replacementQueryDialog, "Replace with:", "", function(text) {
+      dialog(cm, replacementQueryDialog, "<label class='searchdialog'>Replace With: </label>", "", function(text) {
         text = parseString(text)
         if (all) {
           cm.operation(function() {

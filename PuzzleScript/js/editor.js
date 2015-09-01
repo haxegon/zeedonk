@@ -39,7 +39,9 @@ var editor = window.CodeMirror.fromTextArea(code, {
     matchBrackets:true,
     tabSize:2,
     indentUnit:2,
-    extraKeys: {"Ctrl-Space": "autocomplete"}
+    hintOptions: {"completeSingle": false},
+    extraKeys: {"Ctrl-Space": "autocomplete",
+		"Esc":"clearHighlight"}
    	});
 /*
 CodeMirror.registerHelper("hintWords", "haxe",
@@ -104,6 +106,7 @@ var haxeHintArray = [
 ["Gfx.drawtoimage","(imagename)"],
 ["Gfx.grabimagefromscreen","(imagename, screen x, screen y)"],
 ["Gfx.grabimagefromimage","(imagename, sourceimagename, image x, image y)"],
+["Gfx.showfps",":Bool"],
 ["Col.BLACK"],
 ["Col.GREY"],
 ["Col.WHITE"],
@@ -152,7 +155,10 @@ var haxeHintArray = [
 ["Text.TOP"],
 ["Text.BOTTOM"],
 ["Music.playsound","(seed)"],
-["Music.playnote","(seed,pitch,length (0-1),volume (0-1) )"],
+["Music.playnote","(seed,pitch,length,volume (0-1) )"],
+["Music.playmusic","(musicDat)"],
+["Music.stopmusic","()"],
+["Music.setmusicvol","(0-1)"],
 ["Key.A"],
 ["Key.B"],
 ["Key.C"],
@@ -257,6 +263,10 @@ var haxeHintArray = [
 ["Game.homepage","(url)"],
 ["Game.background","(color)"],
 ["Game.foreground","(color)"],
+["Game.prompt","(description,defaultText):String"],
+["Game.save","(key:String,value:String)"],
+["Game.load","(key:String):String"],
+["Game.editor","():Bool"],
 /*,
 ["break"],
 ["case"],
@@ -324,6 +334,7 @@ function CompletionsPick( p_oCompletion ) {
  //  console.log( "==> Function entry: " + arguments.callee.name + "() <==" ) ; 
    //console.log( p_oCompletion ) ; 
    consolePrint(p_oCompletion.text+p_oCompletion.displayText,true);
+
 } 
 
 
@@ -359,6 +370,7 @@ CodeMirror.registerHelper("hint", "haxe",
 		}
 		end++;
 		var token = line.substring(start,end);
+		token = token.trim().toLowerCase();
 
 		var matches=[];
 		for (var i=0;i<haxeHintArray.length;i++){
@@ -367,7 +379,7 @@ CodeMirror.registerHelper("hint", "haxe",
 			if (w.length<token.length){
 				continue;
 			} 
-			if (w.substring(0,token.length)==token){
+			if (w.substring(0,token.length).toLowerCase()==token){
 				var w2 = ar.length>1?ar[1]:"";
 				matches.push({text:w,displayText:w2,render:renderHint});
 			}

@@ -93,7 +93,7 @@ box-shadow: inset 0px 0px 53px -21px rgba(0,0,0,0.75);
 	top: 30px;
 	left: 50%;
 	background-color:#555555;
-	height: 100%;
+	bottom:0;
 	float: left;
 	width: 5px;
 	cursor: col-resize;

@@ -9,6 +9,7 @@ function runClick() {
 	clearConsole();
 	setbackgroundcolor(0);
 	//compile(["restart"]);
+	stopClick();
 	terryRun();
 	consolePrint("Running Program",true)
 }
@@ -70,16 +71,7 @@ function dateToReadable(title,time) {
 }
 
 function saveClick() {
-	try {
-		terryRun();
-	}
-	catch (e){
-		consoleError(e,true);
-	}
-
 	var text=editor.getValue();
-
-	stopClick();
 
 	var saveDat = {
 		title:getTitle(),
@@ -108,7 +100,7 @@ function saveClick() {
 
 	setEditorClean();
 
-	consolePrint("saved file to local storage",true);
+	consolePrint("saved file to local storage:<br><b>"+dateToReadable(saveDat.title,new Date(saveDat.date))+"</b>",true);
 }
 
 
@@ -199,8 +191,8 @@ function levelEditorClick_Fn() {
 
 function shareClick() {
 	consolePrint("Sending code to github...",true)
-	var title = "Untitled Terrylib Script";
-	compile();
+	var title = getTitle();//"Untitled Terrylib Script";
+//	compile();
 
 
 	var source=editor.getValue();
