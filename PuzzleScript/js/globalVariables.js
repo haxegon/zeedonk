@@ -26,12 +26,16 @@ function onBackspace(e, callback){
     }
     if (key === 'U+0008' || 
         key === 'Backspace' || 
-        key === 8) {
-                    if(typeof callback === "function"){
-                callback();
-            }
-            return true;
+        key === 8) 
+    {
+        if (e.target.className.toLowerCase()=="codemirror-search-field"){
+            return false;
         }
+        if(typeof callback === "function"){
+            callback();
+        }
+        return true;
+    }
     return false;
 }
 
