@@ -684,12 +684,25 @@ class Gfx {
 	public static function drawline(_x1:Float, _y1:Float, _x2:Float, _y2:Float, col:Int, alpha:Float = 1.0) {
     if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
-		bresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), 0);
-		
-		for (i in 0 ... bresx1.length) {
-			setpixel(bresx1[i], bresy1[i], col, alpha);
+		if (_x1 == _x2) {
+			if(_y2>_y1){
+				fillbox(_x1, _y1, 1, _y2 - _y1, col, alpha);
+			}else {
+				fillbox(_x1, _y2, 1, _y1 - _y2, col, alpha);
+			}
+		}else if (_y1 == _y2) {
+			if(_x2>_x1){
+				fillbox(_x1, _y1, _x2 - _x1, 1, col, alpha);
+			}else {
+				fillbox(_x2, _y1, _x1 - _x2, 1, col, alpha);
+			}
+		}else{
+			bresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), 0);
+			
+			for (i in 0 ... bresx1.length) {
+				setpixel(bresx1[i], bresy1[i], col, alpha);
+			}
 		}
-    
 		#else
     tempshape.graphics.clear();
 		tempshape.graphics.lineStyle(linethickness, col, alpha);
@@ -813,6 +826,9 @@ class Gfx {
 		#end
 	}
 	
+	#if terrylibweb
+	private static var fillcirclepoints:Array<Bool> = [];
+	#end
 	public static function fillcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
@@ -821,15 +837,27 @@ class Gfx {
     ty = 0;
     var decisionOver2:Float = 1 - tx;   // Decision criterion divided by 2 evaluated at x=r, y=0
 		
+		fillcirclepoints = [];
+		for (i in 0 ... Std.int(radius * 2)) fillcirclepoints.push(true);
 		while (tx >= ty) {
-			settrect(x - tx, y + ty, tx + tx, 1);
-			drawto.fillRect(trect, col);
-			settrect(x - ty, y + tx, ty + ty, 1);
-			drawto.fillRect(trect, col);
-			settrect(x - tx, y - ty, tx + tx, 1);
-			drawto.fillRect(trect, col);
-			settrect(x - ty, y - tx, ty + ty, 1);
-			drawto.fillRect(trect, col);
+			if(fillcirclepoints[Std.int(ty)]){
+				fillbox(x - tx, y + ty, tx + tx, 1, col, alpha);
+				fillcirclepoints[Std.int(ty)] = false;
+			}
+			if(fillcirclepoints[Std.int(tx)]){
+				fillbox(x - ty, y + tx, ty + ty, 1, col, alpha);
+				fillcirclepoints[Std.int(tx)] = false;
+			}
+			
+			if(fillcirclepoints[Std.int(radius + ty)]){
+				fillbox(x - tx, y - ty, tx + tx, 1, col, alpha);
+				fillcirclepoints[Std.int(radius + ty)] = false;
+			}
+			if(fillcirclepoints[Std.int(radius + tx)]){
+				fillbox(x - ty, y - tx, ty + ty, 1, col, alpha);
+				fillcirclepoints[Std.int(radius + tx)] = false;
+			}
+			
 			ty++;
 			if (decisionOver2<=0){
 				decisionOver2 += 2 * ty + 1;   // Change in decision criterion for y -> y+1
@@ -913,6 +941,7 @@ class Gfx {
 		bresenhamline(tri_x1, tri_y1, tri_x3, tri_y3, 1);
 		var matchingpoint:Int = 0;
 		var lastypos:Int = -1;
+		var firstypos:Int = bresy1[0];
 		
 		//1-2 is the shorter line, so run down it and fill that segment up
 		for (i in 0 ... bresx1.length) {
@@ -938,7 +967,7 @@ class Gfx {
 		var secondlastypos:Int = -1;
 		bresenhamline(tri_x2, tri_y2, tri_x3, tri_y3, 0);
 		for (i in 0 ... bresx1.length) {
-			if (bresy1[i] != lastypos && bresy1[i] != secondlastypos) {
+			if (bresy1[i] != lastypos && bresy1[i] != secondlastypos && bresy1[i] != firstypos) {
 				secondlastypos = bresy1[i];
 				matchingpoint = getfilltrimatchpoint(bresy1[i]);
 				if (matchingpoint > -1) {	
@@ -981,7 +1010,7 @@ class Gfx {
 			height = -height;
 			y = y - height;
 		}
-		#if terrylibweb
+		#if terrylibweb		  
 			drawline(x, y, x + width-1, y, col, alpha);
 			drawline(x, y + height, x + width-1, y + height, col, alpha);
 			drawline(x, y + 1, x, y + height, col, alpha);

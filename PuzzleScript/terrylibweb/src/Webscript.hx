@@ -120,6 +120,7 @@ class Webscript {
 					Err.log(Err.RUNTIME_UPDATE, Err.process(e));
 				}
 				MusicEngine.update();
+				Game.time++;
 			}	
 		}else {
 			counter+=10;
@@ -137,6 +138,7 @@ class Webscript {
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
+			/*
 			Gfx.clearscreen();
 			Gfx.showfps = true;
 			for (i in 0 ... 20) {
@@ -147,7 +149,7 @@ class Webscript {
 			}
 			Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, (counter / 50) % 120, Col.WHITE);
 			Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, ((counter*2)/50)%120, Col.WHITE);
-			
+			*/
 		}
 		
 		if (Gfx.showfps) {
@@ -182,6 +184,7 @@ class Webscript {
 		parser.allowTypes = true;
     interpreter = new hscript.Interp();
 		
+		Game.time = 0;
 		
 		loadedscript = myscript.split("\n");
 		//Preprocessor.loadscript(myscript);
