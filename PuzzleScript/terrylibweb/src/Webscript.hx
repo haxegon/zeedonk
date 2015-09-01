@@ -168,6 +168,7 @@ class Webscript {
 	private static function resetGlobalVariables(){
 		MusicEngine.stopmusic();
 		MusicEngine.vol=1.0;
+		Input.resetKeys();
 	}
 
 	public static function loadscript(script:String) {
