@@ -2,6 +2,8 @@ import openfl.external.ExternalInterface;
 
 @:keep
 class Game {
+	public static var time:Int;
+	
 	public static function title(t:String) {
 		Webscript.title = t;
 		#if !flash
@@ -31,22 +33,33 @@ class Game {
 	}
 
 	public static function editor():Bool{
-		#if !flash
+		#if flash
+		return false;
+		#else
 		return untyped __js__('IDE');
 		#end
 	}
 
 	public static function prompt(description:String,defaultText:String):String{
-		#if !flash
+		#if flash
+		return "";
+		#else
 		return untyped __js__('prompt({0},{1})',description,defaultText);
 		#end
 	}
 
-	public static function save(key:String,value:String){
-		untyped __js__('localStorage.setItem(window.document.URL.toString()+{0},{1})',key,value);
+	public static function save(key:String, value:String) {
+		#if flash
+		#else
+		untyped __js__('localStorage.setItem(window.document.URL.toString()+{0},{1})', key, value);
+		#end
 	}
 
-	public static function load(key:String):String{
-		return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})',key);
+	public static function load(key:String):String {
+		#if flash
+		return "";
+		#else
+		return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})', key);
+		#end
 	}
 }

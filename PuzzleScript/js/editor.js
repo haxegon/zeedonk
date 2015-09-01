@@ -267,6 +267,7 @@ var haxeHintArray = [
 ["Game.save","(key:String,value:String)"],
 ["Game.load","(key:String):String"],
 ["Game.editor","():Bool"],
+["Game.time",":Int"],
 /*,
 ["break"],
 ["case"],
