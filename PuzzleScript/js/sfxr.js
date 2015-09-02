@@ -998,9 +998,10 @@ function cacheNote(seed,frequency,length,volume){
   return sound;
 }
 
-function cacheSeed(seed){
-  if (seed in sfxCache) {
-    return sfxCache[seed];
+function cacheSeed(seed, vol){
+  var seedStr = seed+"_"+vol;
+  if (seedStr in sfxCache) {
+    return sfxCache[seedStr];
   }
 
   var params = generateFromSeed(seed);
@@ -1027,8 +1028,11 @@ function playNote(seed,frequency,length,volume){
   sound.play();
 }
 
-function playSound(seed) {
+function playSound(seed,vol) {
+  if (typeof vol === "undefined"){
+    vol=1;
+  }
   if (unitTesting) return;
-  var sound = cacheSeed(seed);
+  var sound = cacheSeed(seed,vol);
   sound.play();
 }
