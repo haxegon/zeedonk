@@ -80,4 +80,10 @@ class Game {
 
 		#end
 	}
+	
+	public static function restart() {
+		//Reload the stored script file
+		Webscript.resetengine();
+		Webscript.scriptfound();
+	}
 }

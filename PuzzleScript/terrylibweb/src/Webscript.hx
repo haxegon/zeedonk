@@ -94,6 +94,10 @@ class Webscript {
 	
 	public static var	reloaddelay:Int = 0;
 	
+	public static function resetengine() {
+		//to do
+	}
+	
 	public static function update() {
 		#if flash
 		  if (Input.justpressed(Key.R)) {
