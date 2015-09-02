@@ -1005,7 +1005,7 @@ function cacheSeed(seed, vol){
   }
 
   var params = generateFromSeed(seed);
-  params.sound_vol = SOUND_VOL;
+  params.sound_vol = SOUND_VOL*vol;
   params.sample_rate = SAMPLE_RATE;
   params.bit_depth = BIT_DEPTH;
 
@@ -1032,6 +1032,14 @@ function playSound(seed,vol) {
   if (typeof vol === "undefined"){
     vol=1;
   }
+
+  if (vol>1){
+    vol=1;
+  }
+  if (vol<0){
+    vol=0;
+  }
+
   if (unitTesting) return;
   var sound = cacheSeed(seed,vol);
   sound.play();
