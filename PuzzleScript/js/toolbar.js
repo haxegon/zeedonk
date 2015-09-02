@@ -11,7 +11,7 @@ function runClick() {
 	//compile(["restart"]);
 	stopClick();
 	terryRun();
-	consolePrint("Running Program",true)
+	consolePrint("Running Program",true);
 }
 
 function compile(args){
@@ -40,6 +40,7 @@ function terryRun(){
 
 	text = editor.getValue()+"\n";
 	interpreter.runScript(text);
+	document.body.focus();
 }
 
 function dateToReadable(title,time) {
