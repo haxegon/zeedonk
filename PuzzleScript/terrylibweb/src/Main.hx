@@ -4,7 +4,7 @@ import terrylib.*;
 @:expose
 class Webbridge {
 	public function runScript(s:String) {
-		Webscript.loadscript(s);
+		if(Webscript.readytogo) Webscript.loadscript(s);
   }
 	
 	public function get_background_colour():Int {

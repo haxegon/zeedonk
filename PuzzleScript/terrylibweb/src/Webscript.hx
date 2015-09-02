@@ -14,6 +14,7 @@ class Webscript {
 	public static var interpreter:Interp;
 	
 	public static var skipnextloadscript:Bool = false;
+	public static var readytogo:Bool = false;
 	
 	public static var scriptloaded:Bool;
 	public static var runscript:Bool;
@@ -60,8 +61,6 @@ class Webscript {
 			#if terrylibwebhtml5debug
 				loadfile("tests/invalidaccess.txt");
 			#else
-				ExternalInterface.addCallback("loadscript", loadscript);
-				
 				var loadstring:String = ExternalInterface.call("getScript");
 				if (loadstring != null) {
 					loadscript(loadstring);
@@ -74,6 +73,7 @@ class Webscript {
 			loadfile("script.txt");
 			#end
 		}
+		readytogo = true;
 	}
 	
 	public static var myLoader:URLLoader;
