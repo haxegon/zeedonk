@@ -189,17 +189,17 @@ class Text {
 	}
 	
 	private static function cachealignx(x:Float, c:Int):Float {
-		if (x == CENTER) return Math.floor(Gfx.screenwidthmid - (cachedtext[c].width / 2));
+		if (x == CENTER) return Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * typeface[currentindex].size / 2));
 		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return Math.floor(Gfx.screenwidth - cachedtext[c].width);
+		if (x == RIGHT || x == BOTTOM) return Math.floor(Gfx.screenwidth - (cachedtext[c].width * typeface[currentindex].size));
 		
 		return Math.floor(x);
 	}
 	
 	private static function cachealigny(y:Float, c:Int):Float {
-		if (y == CENTER) return Math.floor(Gfx.screenheightmid - cachedtext[c].height / 2);
+		if (y == CENTER) return Math.floor(Gfx.screenheightmid - cachedtext[c].height * typeface[currentindex].size / 2);
 		if (y == LEFT || y == TOP) return 0;
-		if (y == RIGHT || y == BOTTOM) return Math.floor(Gfx.screenheight - cachedtext[c].height);
+		if (y == RIGHT || y == BOTTOM) return Math.floor(Gfx.screenheight - (cachedtext[c].height * typeface[currentindex].size));
 		
 		return Math.floor(y);
 	}
@@ -255,6 +255,11 @@ class Text {
 	private static var cachelabel:String;
 	
 	#if terrylibweb
+	public static function cleartextcache() {
+		cachedtextindex = new Map<String, Int>();
+		cachedtext = [];
+	}
+	
 	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {
 	  var text:String = Convert.tostring(dytext);
 	#else
@@ -268,7 +273,7 @@ class Text {
 				//Cache the text
 				cacheindex = cachedtext.length;
 				cachedtextindex.set(cachelabel, cacheindex);
-				cachedtext.push(new BitmapData(Convert.toint(len(text)), Convert.toint(height()), true, 0));
+				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].tf_bitmap.textHeight), true, 0));
 			  
 				drawto = cachedtext[cacheindex];
 				cache_bitmap_text(text, col);
@@ -362,90 +367,6 @@ class Text {
 			}
 		}
 		return;
-		/*
-		// This was called "print" once. Maybe it was better that way? eh, stuck with display now
-		if (parameters == null && size == 1) {
-			typeface[currentindex].tf_bitmap.useTextColor = true;
-			typeface[currentindex].tf_bitmap.textColor = (0xFF << 24) + col;
-			typeface[currentindex].tf_bitmap.text = text;
-			
-			x = alignx(x); y = aligny(y);
-			
-			fontmatrix.identity();
-			fontmatrix.translate(x, y);
-			drawto.draw(typeface[currentindex].tf_bitmap, fontmatrix);
-		}else {
-			drawto = typeface[currentindex].tfbitmap;
-			typeface[currentindex].clearbitmap();
-			
-			tempxpivot = 0;
-			tempypivot = 0;
-			tempxscale = 1.0 * size;
-			tempyscale = 1.0 * size;
-			temprotate = 0;
-			tempalpha = 1.0;
-			tempred = 1.0; tempgreen = 1.0; tempblue = 1.0;
-			changecolours = false;
-			
-			display_bitmap(0, 0, text, col, 1);
-			
-			x = alignx(x); y = aligny(y);
-			if (parameters == null) {
-				parameters = { scale: 1 };
-			}
-			
-			if (parameters.align != null) {
-				if (parameters.align == CENTER) {
-					x = Math.floor(x - (len(text) / 2));
-				}else if (parameters.align == RIGHT || parameters.align == BOTTOM) {
-					x = Math.floor(x - len(text));
-				}
-			}
-			
-			if (parameters.xpivot != null) tempxpivot = aligntextx(text, parameters.xpivot);
-		  if (parameters.ypivot != null) tempypivot = aligntexty(parameters.ypivot);		
-			if (parameters.scale != null) {
-				tempxscale = parameters.scale * size;
-				tempyscale = parameters.scale * size;
-			}else{
-				if (parameters.xscale != null) tempxscale = parameters.xscale * size;
-				if (parameters.yscale != null) tempyscale = parameters.yscale * size;
-			}
-			if (parameters.rotation != null) temprotate = parameters.rotation;
-			if (parameters.alpha != null) {
-				tempalpha = parameters.alpha;
-				alphact.alphaMultiplier = tempalpha;
-				changecolours = true;
-			}
-			if (parameters.red != null) {
-				tempred = parameters.red;
-				alphact.redMultiplier = tempred;
-				changecolours = true;
-			}
-			if (parameters.green != null) {
-				tempgreen = parameters.green;
-				alphact.greenMultiplier = tempgreen;
-				changecolours = true;
-			}
-			if (parameters.blue != null) {
-				tempblue = parameters.blue;
-				alphact.blueMultiplier = tempblue;
-				changecolours = true;
-			}
-			
-			fontmatrix.identity();
-			fontmatrix.translate(-tempxpivot, -tempypivot);
-			fontmatrix.scale(tempxscale, tempyscale);
-			fontmatrix.rotate((temprotate * 3.1415) / 180);
-			fontmatrix.translate(x + tempxpivot, y + tempypivot);
-			drawto = Gfx.drawto;
-			if (changecolours) {
-				drawto.draw(typeface[currentindex].tfbitmap, fontmatrix, alphact);
-			}else {
-			  drawto.draw(typeface[currentindex].tfbitmap, fontmatrix);	
-			}
-		}
-		*/
 	}
 	
 	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {

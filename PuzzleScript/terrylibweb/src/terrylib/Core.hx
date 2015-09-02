@@ -166,6 +166,7 @@ class Core extends Sprite {
 		//Delete all the old event listeners, to be set them up again.
 		Input.unload(this.stage);
 		Mouse.unload(this.stage);
+		Text.cleartextcache();
 	}
 	
 	#if terrylibweb
