@@ -3,13 +3,13 @@ import openfl.external.ExternalInterface;
 
 @:keep
 class Webmusic{
-	public static function playsound(t:Int) {
+	public static function playsound(t:Int, vol:Float) {
 	  #if !flash	
 
 			#if terryhasntupgraded
-				ExternalInterface.call("playSound", t);
+				ExternalInterface.call("playSound", t, vol);
 			#else
-	  			untyped __js__('playSound({0})', t);
+	  			untyped __js__('playSound({0})', t, vol);
 			#end
 
 	  #end
