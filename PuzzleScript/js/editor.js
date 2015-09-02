@@ -158,7 +158,7 @@ var haxeHintArray = [
 ["Text.BOTTOM"],
 ["Text.height","():Int"],
 ["Text.len","():Int"],
-["Music.playsound","(seed)"],
+["Music.playsound","(seed, volume (0-1) )"],
 ["Music.playnote","(seed,pitch,length,volume (0-1) )"],
 ["Music.playmusic","(musicDat)"],
 ["Music.stopmusic","()"],
