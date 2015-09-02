@@ -9,7 +9,7 @@ class Webmusic{
 			#if terryhasntupgraded
 				ExternalInterface.call("playSound", t, vol);
 			#else
-	  			untyped __js__('playSound({0})', t, vol);
+	  			untyped __js__('playSound({0},{1})', t, vol);
 			#end
 
 	  #end
