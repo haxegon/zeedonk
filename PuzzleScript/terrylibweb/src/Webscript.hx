@@ -95,8 +95,15 @@ class Webscript {
 	public static var	reloaddelay:Int = 0;
 	
 	public static function resetengine() {
-		//to do
+		resetGlobalVariables();
+		
+		reset = true;
+		waitforreset = true;
 	}
+	
+	public static var reset:Bool = false;
+	public static var waitforreset:Bool = false;
+	public static var script_waitforreset:Bool = false;
 	
 	public static function update() {
 		#if flash
@@ -116,6 +123,11 @@ class Webscript {
 			Text.setfont("default", 1);
 			Gfx.clearscreen(Gfx.RGB(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
+		}else if (script_waitforreset) {
+			if (!waitforreset) {
+				scriptfound_enginereset();
+				script_waitforreset = false;
+			}
 		}else if (scriptloaded) {
 			if (runscript && !pausescript) {
 				try {
@@ -194,7 +206,12 @@ class Webscript {
 		scriptfound();
 	}
 	
-	public static function scriptfound(){
+	public static function scriptfound() {
+		resetengine();
+		script_waitforreset = true;
+	}
+		
+	public static function scriptfound_enginereset() {
 		scriptloaded = true;
 		errorinscript = false;
 		pausescript = false;

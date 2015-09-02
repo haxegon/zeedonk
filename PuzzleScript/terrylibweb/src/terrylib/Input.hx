@@ -58,6 +58,11 @@ class Input {
 		resetKeys();
 	}
 	
+	private static function unload(stage:DisplayObject){
+		stage.removeEventListener(KeyboardEvent.KEY_DOWN, handlekeydown);
+		stage.removeEventListener(KeyboardEvent.KEY_UP, handlekeyup);
+	}
+	
 	private static function update(){
 		for (i in 0 ... numletters) {
 			if (lookup.exists(i)) {

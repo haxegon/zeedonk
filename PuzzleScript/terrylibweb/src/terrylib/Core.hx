@@ -54,7 +54,7 @@ class Core extends Sprite {
 		#end
 		
 		#if terrylibweb
-		terrylibmain = new Main();
+		if (terrylibmain == null) terrylibmain = new Main();
 		#else
 		Scene.init();
 		#end
@@ -68,7 +68,11 @@ class Core extends Sprite {
     _timer.run = ontimer;
 		Gfx.update_fps = 0;
 		Gfx.render_fps = 0;
-		_framesthissecond_counter = -1;		
+		_framesthissecond_counter = -1;
+		
+		#if terrylibweb
+		Webscript.waitforreset = false;
+		#end
 	}
 	
 	private function ontimer(){
@@ -148,6 +152,20 @@ class Core extends Sprite {
 			
 			Gfx.drawto.unlock();
 		}
+		
+		#if terrylibweb
+		if (Webscript.reset) {
+			Webscript.reset = false;
+			reset();
+			init();
+		}
+		#end
+	}
+	
+	public function reset() {
+		//Delete all the old event listeners, to be set them up again.
+		Input.unload(this.stage);
+		Mouse.unload(this.stage);
 	}
 	
 	#if terrylibweb

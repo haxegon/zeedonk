@@ -35,10 +35,15 @@ class Webbridge {
 
 class Main {
 	public function new() {
-		Webscript.init();
+		if(firstrun){
+			Webscript.init();
+			firstrun = false;
+		}
 	}
 	
 	public function update() {
 		Webscript.update();
   }
+	
+	public var firstrun:Bool = true;
 }
