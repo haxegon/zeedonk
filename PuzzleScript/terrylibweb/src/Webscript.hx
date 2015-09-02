@@ -13,6 +13,8 @@ class Webscript {
 	public static var parser:Parser;
 	public static var interpreter:Interp;
 	
+	public static var skipnextloadscript:Bool = false;
+	
 	public static var scriptloaded:Bool;
 	public static var runscript:Bool;
 	public static var errorinscript:Bool;
@@ -59,6 +61,12 @@ class Webscript {
 				loadfile("tests/invalidaccess.txt");
 			#else
 				ExternalInterface.addCallback("loadscript", loadscript);
+				
+				var loadstring:String = ExternalInterface.call("getScript");
+				if (loadstring != null) {
+					loadscript(loadstring);
+					skipnextloadscript = true;
+				}
 			#end
 		}catch (e:Dynamic) {
 			//Ok, try loading this locally for testing
@@ -201,9 +209,13 @@ class Webscript {
 	}
 
 	public static function loadscript(script:String) {
-		myscript = script;
-		resetGlobalVariables();
-		scriptfound();
+		if (skipnextloadscript) {
+			skipnextloadscript = false;
+		}else{
+			myscript = script;
+			resetGlobalVariables();
+			scriptfound();
+		}
 	}
 	
 	public static function scriptfound() {
