@@ -1,15 +1,31 @@
-function new(){
-  Music.playsound(132);
+var x = Gfx.screenwidthmid;
+var y = Gfx.screenheightmid;
+var r = 10;
+var speed = 3;
+
+function new() {
 }
 
-var t:Int=0;
 
 function update() {
-  t+=2;
-  if (t%10==0){
-	  Music.playsound(Math.floor(t/30));
+  if (Input.pressed(Key.LEFT)){
+    x-=speed;
   }
-  Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheight,0xff0000);
-  Gfx.fillbox(10,10,100,100,0xff0000);
-  Text.display(Text.CENTER, Text.CENTER, "Hello World");
+  if (Input.pressed(Key.RIGHT)){
+    x+=speed;
+  }
+  if (Input.pressed(Key.UP)){
+    y-=speed;
+  }
+  if (Input.pressed(Key.DOWN)){
+    y+=speed;
+  }
+  
+ 	if ( x < r ) x = r;
+  if ( y < r ) y = r;
+  
+ 	if ( x > Gfx.screenwidth - r ) x = Gfx.screenwidth - r ;
+  if ( y > Gfx.screenheight - r ) y = Gfx.screenheight - r;
+  
+  Gfx.drawcircle(x,y,r,Col.RED);
 }
