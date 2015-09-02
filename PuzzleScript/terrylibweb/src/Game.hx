@@ -71,13 +71,13 @@ class Game {
 		#if flash
 		return "";
 		#else
-
+		
 		#if terryhasntupgraded
 			return  ExternalInterface.call('loadKey_terryhasntupgraded',key);
 		#else
 			return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})', key);
 		#end
-
+		
 		#end
 	}
 	
