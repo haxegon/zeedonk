@@ -5,9 +5,6 @@ import openfl.geom.*;
 import openfl.events.*;
 import openfl.net.*;
 
-
-import haxe.Timer;
-
 /*Adding assets to a preloader:
 After the imports add this line to your file:
 @:bitmap("assets/img/background.png") class BackgroundBD extends BitmapData {}
@@ -76,24 +73,13 @@ class Preloader extends NMEPreloader{
 		startgame = false;
 	}
 	
-	private var _timer:Timer;
-	
-	private function ontimer() {
-		if (contains(screen)) removeChild(screen);
-		_timer.stop();
-		dispatchEvent(new Event(Event.COMPLETE));
-	}
-	
 	public function RGB(red:Int, green:Int, blue:Int):Int {
 		return (blue | (green << 8) | (red << 16));
 	}
 	
 	override public function onLoaded() {
-		//if (contains(screen)) removeChild(screen);
-		
-		_timer = new Timer(10000);
-    _timer.run = ontimer;
-		//dispatchEvent(new Event(Event.COMPLETE));
+		if (contains(screen)) removeChild(screen);
+		dispatchEvent(new Event(Event.COMPLETE));
 	}
 
 	public function fillrect(x:Int, y:Int, w:Int, h:Int, col:Int):Void {
