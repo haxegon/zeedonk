@@ -8,7 +8,11 @@ var compiling = false;
 var errorStrings = [];
 var errorCount=0;
 
-var canv = 
+var gameScript=null;
+function getScript(){
+  return gameScript;
+}
+
 document.oncontextmenu = function (e) {
     if (e.target.tagName=="CANVAS"){
         e.preventDefault();

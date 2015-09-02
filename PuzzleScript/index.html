@@ -313,6 +313,7 @@ function getData(){
 		var result = JSON.parse(githubHTTPClient.responseText);
 		var code=result["files"]["script.txt"]["content"];
 		terryRun(code);
+    gameScript=code;
 /*
 		if (state.metadata.homepage!==undefined) {
 			var homepage=state.metadata.homepage;
