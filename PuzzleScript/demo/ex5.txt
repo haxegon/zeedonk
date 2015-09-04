@@ -681,6 +681,7 @@ for (k in 0 ... 5){
         [[],[],[],[],[]],
       ],
     };
+    selectedSequence=0;
   }
 
 
