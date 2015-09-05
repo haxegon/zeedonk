@@ -12,6 +12,7 @@ import openfl.system.Capabilities;
 
 class Debug {
 	/** Clear the debug buffer */
+	@:dox(hide)
 	public static function clearlog() {
 		debuglog = new Array<String>();
 	}
@@ -28,11 +29,13 @@ class Debug {
 	}
 	
 	/** Shows a single test string. */
+	@:dox(hide)	
 	public static function test(t:Dynamic) {
 		debuglog[0] = Convert.tostring(t);
 		showtest = true;
 	}
 	
+	@:dox(hide)
 	public static function showlog() {
 		if (showtest) {
 			for (k in 0 ... debuglog.length) {
@@ -46,6 +49,10 @@ class Debug {
 		}
 	}
 	
+	@:dox(hide)
 	public static var showtest:Bool;
+
+
+	@:dox(hide)
 	public static var debuglog:Array<String> = new Array<String>();
 }

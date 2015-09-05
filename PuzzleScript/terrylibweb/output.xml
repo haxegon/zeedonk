@@ -7892,8 +7892,8 @@
 		<parsedscript public="1" static="1"><t path="hscript.Expr"/></parsedscript>
 		<parser public="1" static="1"><c path="hscript.Parser"/></parser>
 		<interpreter public="1" static="1"><c path="hscript.Interp"/></interpreter>
-		<skipnextloadscript public="1" line="16" static="1"><x path="Bool"/></skipnextloadscript>
-		<readytogo public="1" line="17" static="1"><x path="Bool"/></readytogo>
+		<skipnextloadscript public="1" line="17" static="1"><x path="Bool"/></skipnextloadscript>
+		<readytogo public="1" line="18" static="1"><x path="Bool"/></readytogo>
 		<scriptloaded public="1" static="1"><x path="Bool"/></scriptloaded>
 		<runscript public="1" static="1"><x path="Bool"/></runscript>
 		<errorinscript public="1" static="1"><x path="Bool"/></errorinscript>
@@ -7904,36 +7904,37 @@
 		<homepage public="1" static="1"><c path="String"/></homepage>
 		<background_color public="1" static="1"><x path="Int"/></background_color>
 		<foreground_color public="1" static="1"><x path="Int"/></foreground_color>
-		<init public="1" set="method" line="32" static="1"><f a=""><x path="Void"/></f></init>
+		<init public="1" set="method" line="33" static="1"><f a=""><x path="Void"/></f></init>
 		<myLoader public="1" static="1"><c path="openfl.net.URLLoader"/></myLoader>
-		<loadfile public="1" set="method" line="80" static="1"><f a="filename">
+		<loadfile public="1" set="method" line="81" static="1"><f a="filename">
 	<c path="String"/>
 	<x path="Void"/>
 </f></loadfile>
-		<onIOError public="1" set="method" line="93" static="1"><f a="e">
+		<onIOError public="1" set="method" line="94" static="1"><f a="e">
 	<c path="openfl.events.Event"/>
 	<x path="Void"/>
 </f></onIOError>
-		<onLoadComplete public="1" set="method" line="97" static="1"><f a="e">
+		<onLoadComplete public="1" set="method" line="98" static="1"><f a="e">
 	<c path="openfl.events.Event"/>
 	<x path="Void"/>
 </f></onLoadComplete>
-		<reloaddelay public="1" line="103" static="1"><x path="Int"/></reloaddelay>
-		<resetengine public="1" set="method" line="105" static="1"><f a=""><x path="Void"/></f></resetengine>
-		<reset public="1" line="112" static="1"><x path="Bool"/></reset>
-		<waitforreset public="1" line="113" static="1"><x path="Bool"/></waitforreset>
-		<script_waitforreset public="1" line="114" static="1"><x path="Bool"/></script_waitforreset>
-		<update public="1" set="method" line="116" static="1"><f a=""><x path="Void"/></f></update>
-		<counter line="200" static="1"><x path="Int"/></counter>
-		<oldfont line="201" static="1"><c path="String"/></oldfont>
-		<oldfontsize line="202" static="1"><x path="Int"/></oldfontsize>
-		<resetGlobalVariables set="method" line="205" static="1"><f a=""><x path="Void"/></f></resetGlobalVariables>
-		<loadscript public="1" set="method" line="211" static="1"><f a="script">
+		<reloaddelay public="1" line="104" static="1"><x path="Int"/></reloaddelay>
+		<resetengine public="1" set="method" line="106" static="1"><f a=""><x path="Void"/></f></resetengine>
+		<reset public="1" line="113" static="1"><x path="Bool"/></reset>
+		<waitforreset public="1" line="114" static="1"><x path="Bool"/></waitforreset>
+		<script_waitforreset public="1" line="115" static="1"><x path="Bool"/></script_waitforreset>
+		<update public="1" set="method" line="117" static="1"><f a=""><x path="Void"/></f></update>
+		<counter line="201" static="1"><x path="Int"/></counter>
+		<oldfont line="202" static="1"><c path="String"/></oldfont>
+		<oldfontsize line="203" static="1"><x path="Int"/></oldfontsize>
+		<resetGlobalVariables set="method" line="206" static="1"><f a=""><x path="Void"/></f></resetGlobalVariables>
+		<loadscript public="1" set="method" line="212" static="1"><f a="script">
 	<c path="String"/>
 	<x path="Void"/>
 </f></loadscript>
-		<scriptfound public="1" set="method" line="221" static="1"><f a=""><x path="Void"/></f></scriptfound>
-		<scriptfound_enginereset public="1" set="method" line="226" static="1"><f a=""><x path="Void"/></f></scriptfound_enginereset>
+		<scriptfound public="1" set="method" line="222" static="1"><f a=""><x path="Void"/></f></scriptfound>
+		<scriptfound_enginereset public="1" set="method" line="227" static="1"><f a=""><x path="Void"/></f></scriptfound_enginereset>
+		<meta><m n=":access"><e>terrylib.Input</e></m></meta>
 	</class>
 	<abstract path="XmlType" params="" file="/usr/lib/haxe/std/Xml.hx" module="Xml">
 		<this><x path="Int"/></this>
@@ -67359,29 +67360,40 @@
 </f></tofloat>
 	</class>
 	<class path="terrylib.Debug" params="" file="src/terrylib/Debug.hx">
-		<clearlog public="1" set="method" line="15" static="1">
+		<clearlog public="1" set="method" line="16" static="1">
 			<f a=""><x path="Void"/></f>
+			<meta><m n=":dox"><e>hide</e></m></meta>
 			<haxe_doc>Clear the debug buffer</haxe_doc>
 		</clearlog>
-		<log public="1" set="method" line="20" static="1">
+		<log public="1" set="method" line="21" static="1">
 			<f a="t">
 				<d/>
 				<x path="Void"/>
 			</f>
 			<haxe_doc>Outputs a string to the screen for testing.</haxe_doc>
 		</log>
-		<test public="1" set="method" line="31" static="1">
+		<test public="1" set="method" line="33" static="1">
 			<f a="t">
 				<d/>
 				<x path="Void"/>
 			</f>
+			<meta><m n=":dox"><e>hide</e></m></meta>
 			<haxe_doc>Shows a single test string.</haxe_doc>
 		</test>
-		<showlog public="1" set="method" line="36" static="1"><f a=""><x path="Void"/></f></showlog>
-		<showtest public="1" static="1"><x path="Bool"/></showtest>
-		<debuglog public="1" line="50" static="1"><c path="Array"><c path="String"/></c></debuglog>
+		<showlog public="1" set="method" line="39" static="1">
+			<f a=""><x path="Void"/></f>
+			<meta><m n=":dox"><e>hide</e></m></meta>
+		</showlog>
+		<showtest public="1" static="1">
+			<x path="Bool"/>
+			<meta><m n=":dox"><e>hide</e></m></meta>
+		</showtest>
+		<debuglog public="1" line="57" static="1">
+			<c path="Array"><c path="String"/></c>
+			<meta><m n=":dox"><e>hide</e></m></meta>
+		</debuglog>
 	</class>
-	<typedef path="terrylib.Drawparams" params="" file="src/terrylib/Gfx.hx" module="terrylib.Gfx"><a>
+	<typedef path="terrylib.Gfxdrawparams" params="" file="src/terrylib/Gfx.hx" module="terrylib.Gfx"><a>
 	<yscale>
 		<t path="Null"><x path="Float"/></t>
 		<meta><m n=":optional"/></meta>
@@ -67555,7 +67567,7 @@
 				<x path="Float"/>
 				<x path="Float"/>
 				<c path="String"/>
-				<t path="terrylib.Drawparams"/>
+				<t path="terrylib.Gfxdrawparams"/>
 				<x path="Void"/>
 			</f>
 			<haxe_doc>Draws image by name. 
@@ -67894,7 +67906,7 @@
 	<x path="Int"/>
 	<x path="Void"/>
 </f></addkey>
-		<resetKeys public="1" set="method" line="159" static="1"><f a=""><x path="Void"/></f></resetKeys>
+		<resetKeys set="method" line="159" static="1"><f a=""><x path="Void"/></f></resetKeys>
 		<keymap line="256" static="1"><x path="Map">
 	<e path="terrylib.Key"/>
 	<x path="Int"/>
@@ -68161,7 +68173,7 @@
 		<temp static="1"><x path="Int"/></temp>
 		<seed public="1" line="173" static="1"><x path="Int"/></seed>
 	</class>
-	<typedef path="terrylib.Drawparamstext" params="" file="src/terrylib/Text.hx" module="terrylib.Text"><a>
+	<typedef path="terrylib.Textdrawparams" params="" file="src/terrylib/Text.hx" module="terrylib.Text"><a>
 	<yscale>
 		<t path="Null"><x path="Float"/></t>
 		<meta><m n=":optional"/></meta>
@@ -68304,7 +68316,7 @@
 	<x path="Float"/>
 	<d/>
 	<x path="Int"/>
-	<t path="terrylib.Drawparamstext"/>
+	<t path="terrylib.Textdrawparams"/>
 	<x path="Void"/>
 </f></display>
 		<cache_bitmap_text set="method" line="290" static="1"><f a="text:col">
@@ -68317,7 +68329,7 @@
 	<x path="Float"/>
 	<x path="Int"/>
 	<x path="Int"/>
-	<t path="terrylib.Drawparamstext"/>
+	<t path="terrylib.Textdrawparams"/>
 	<x path="Void"/>
 </f></display_bitmap>
 		<display_ttf set="method" line="372" static="1"><f a="x:y:text:?col:?parameters">
@@ -68325,7 +68337,7 @@
 	<x path="Float"/>
 	<c path="String"/>
 	<x path="Int"/>
-	<t path="terrylib.Drawparamstext"/>
+	<t path="terrylib.Textdrawparams"/>
 	<x path="Void"/>
 </f></display_ttf>
 		<setfont public="1" set="method" line="455" static="1"><f a="t:s">
@@ -68408,16 +68420,16 @@
 		<meta><m n=":access"><e>terrylib.Gfx</e></m></meta>
 	</class>
 	<class path="terrylib.bitmapFont.BitmapFont" params="" file="src/terrylib/bitmapFont/BitmapFont.hx">
-		<spaceCode public="1" get="inline" set="null" line="22" static="1"><x path="Int"/></spaceCode>
-		<tabCode public="1" get="inline" set="null" line="23" static="1"><x path="Int"/></tabCode>
-		<newLineCode public="1" get="inline" set="null" line="24" static="1"><x path="Int"/></newLineCode>
-		<defaultFontKey public="1" get="inline" set="null" line="26" static="1"><c path="String"/></defaultFontKey>
-		<defaultFontData get="inline" set="null" line="28" static="1"><c path="String"/></defaultFontData>
-		<fonts line="30" static="1"><x path="Map">
+		<spaceCode public="1" get="inline" set="null" line="23" static="1"><x path="Int"/></spaceCode>
+		<tabCode public="1" get="inline" set="null" line="24" static="1"><x path="Int"/></tabCode>
+		<newLineCode public="1" get="inline" set="null" line="25" static="1"><x path="Int"/></newLineCode>
+		<defaultFontKey public="1" get="inline" set="null" line="27" static="1"><c path="String"/></defaultFontKey>
+		<defaultFontData get="inline" set="null" line="29" static="1"><c path="String"/></defaultFontData>
+		<fonts line="31" static="1"><x path="Map">
 	<c path="String"/>
 	<c path="terrylib.bitmapFont.BitmapFont"/>
 </x></fonts>
-		<store public="1" set="method" line="37" static="1">
+		<store public="1" set="method" line="38" static="1">
 			<f a="fontKey:font">
 				<c path="String"/>
 				<c path="terrylib.bitmapFont.BitmapFont"/>
@@ -68427,7 +68439,7 @@
 	 * @param	fontKey		String identifer for the font.
 	 * @param	font		Font to store.</haxe_doc>
 		</store>
-		<get public="1" set="method" line="50" static="1">
+		<get public="1" set="method" line="51" static="1">
 			<f a="fontKey">
 				<c path="String"/>
 				<c path="terrylib.bitmapFont.BitmapFont"/>
@@ -68436,7 +68448,7 @@
 	 * @param	fontKey		Identifier of font to fetch.
 	 * @return	Stored font, or null if no font was found.</haxe_doc>
 		</get>
-		<remove public="1" set="method" line="59" static="1">
+		<remove public="1" set="method" line="60" static="1">
 			<f a="fontKey">
 				<c path="String"/>
 				<x path="Void"/>
@@ -68444,22 +68456,22 @@
 			<haxe_doc>* Removes font with provided fontKey and disposes it.
 	 * @param	fontKey		The name of font to remove.</haxe_doc>
 		</remove>
-		<clearFonts public="1" set="method" line="73" static="1">
+		<clearFonts public="1" set="method" line="74" static="1">
 			<f a=""><x path="Void"/></f>
 			<haxe_doc>* Clears fonts storage and disposes all fonts.</haxe_doc>
 		</clearFonts>
-		<getDefaultFont public="1" set="method" line="86" static="1">
+		<getDefaultFont public="1" set="method" line="87" static="1">
 			<f a=""><c path="terrylib.bitmapFont.BitmapFont"/></f>
 			<haxe_doc>* Retrieves default BitmapFont.</haxe_doc>
 		</getDefaultFont>
-		<DEFAULT_GLYPHS public="1" get="inline" set="null" line="135" static="1">
+		<DEFAULT_GLYPHS public="1" get="inline" set="null" line="136" static="1">
 			<c path="String"/>
 			<haxe_doc>* Default letters for XNA font.</haxe_doc>
 		</DEFAULT_GLYPHS>
-		<POINT line="137" static="1"><c path="openfl.geom.Point"/></POINT>
-		<MATRIX line="139" static="1"><c path="openfl.geom.Matrix"/></MATRIX>
-		<COLOR_TRANSFORM line="141" static="1"><c path="openfl.geom.ColorTransform"/></COLOR_TRANSFORM>
-		<fromAngelCode public="1" set="method" line="218" static="1">
+		<POINT line="138" static="1"><c path="openfl.geom.Point"/></POINT>
+		<MATRIX line="140" static="1"><c path="openfl.geom.Matrix"/></MATRIX>
+		<COLOR_TRANSFORM line="142" static="1"><c path="openfl.geom.ColorTransform"/></COLOR_TRANSFORM>
+		<fromAngelCode public="1" set="method" line="219" static="1">
 			<f a="Source:Data">
 				<c path="openfl.display.BitmapData"/>
 				<c path="Xml"/>
@@ -68471,7 +68483,7 @@
 	 * @param	Data		XML font data.
 	 * @return	Generated bitmap font object.</haxe_doc>
 		</fromAngelCode>
-		<fromXNA public="1" set="method" line="318" static="1">
+		<fromXNA public="1" set="method" line="319" static="1">
 			<f a="key:source:?letters:?glyphBGColor">
 				<c path="String"/>
 				<c path="openfl.display.BitmapData"/>
@@ -68488,13 +68500,13 @@
 	 * @param	glyphBGColor	An additional background color to remove. Defaults to 0xFF202020, often used for glyphs background.
 	 * @return	Generated bitmap font object.</haxe_doc>
 		</fromXNA>
-		<replaceColor public="1" set="method" line="413" static="1"><f a="bitmapData:color:newColor">
+		<replaceColor public="1" set="method" line="414" static="1"><f a="bitmapData:color:newColor">
 	<c path="openfl.display.BitmapData"/>
 	<x path="Int"/>
 	<x path="Int"/>
 	<c path="openfl.display.BitmapData"/>
 </f></replaceColor>
-		<fromMonospace public="1" set="method" line="449" static="1">
+		<fromMonospace public="1" set="method" line="450" static="1">
 			<f a="key:source:?letters:charSize:?region:?spacing">
 				<c path="String"/>
 				<c path="openfl.display.BitmapData"/>
@@ -68539,12 +68551,12 @@
 	<x path="Int"/>
 	<c path="terrylib.bitmapFont.BitmapGlyphFrame"/>
 </x></glyphs>
-		<dispose public="1" set="method" line="196">
+		<dispose public="1" set="method" line="197">
 			<f a=""><x path="Void"/></f>
 			<haxe_doc>* Destroys this font object.
 	 * WARNING: it disposes source image also.</haxe_doc>
 		</dispose>
-		<addGlyphFrame set="method" line="527">
+		<addGlyphFrame set="method" line="528">
 			<f a="charCode:frame:?offsetX:?offsetY:?xAdvance">
 				<x path="Int"/>
 				<c path="openfl.geom.Rectangle"/>
@@ -68561,7 +68573,7 @@
 	 * @param	offsetX			Y offset before rendering this glyph.
 	 * @param	xAdvance		How much cursor will jump after this glyph.</haxe_doc>
 		</addGlyphFrame>
-		<prepareGlyphs public="1" set="method" line="555">
+		<prepareGlyphs public="1" set="method" line="556">
 			<f a="scale:color:?useColor:?smoothing">
 				<x path="Float"/>
 				<x path="UInt"/>
@@ -68577,7 +68589,7 @@
 	 * @param	useColor	Whether to use color transformation for glyphs.
 	 * @return	Generated collection of BitmapGlyph objects. They are used for rendering text and borders in RENDER_BLIT mode.</haxe_doc>
 		</prepareGlyphs>
-		<new public="1" set="method" line="181">
+		<new public="1" set="method" line="182">
 			<f a="name:bitmap">
 				<c path="String"/>
 				<c path="openfl.display.BitmapData"/>
@@ -68586,6 +68598,7 @@
 			<haxe_doc>* Creates and stores new bitmap font using specified source image.</haxe_doc>
 		</new>
 		<haxe_doc>* Holds information and bitmap glyphs for a bitmap font.</haxe_doc>
+		<meta><m n=":dox"><e>hide</e></m></meta>
 	</class>
 	<class path="terrylib.bitmapFont.BitmapGlyphFrame" params="" file="src/terrylib/bitmapFont/BitmapFont.hx" module="terrylib.bitmapFont.BitmapFont">
 		<parent public="1">
@@ -68618,9 +68631,9 @@
 			<x path="Int"/>
 			<haxe_doc>* tile id in parent's tileSheet</haxe_doc>
 		</tileID>
-		<dispose public="1" set="method" line="611"><f a=""><x path="Void"/></f></dispose>
-		<get_bitmap public="1" set="method" line="623"><f a=""><c path="openfl.display.BitmapData"/></f></get_bitmap>
-		<new public="1" set="method" line="606"><f a="parent">
+		<dispose public="1" set="method" line="612"><f a=""><x path="Void"/></f></dispose>
+		<get_bitmap public="1" set="method" line="624"><f a=""><c path="openfl.display.BitmapData"/></f></get_bitmap>
+		<new public="1" set="method" line="607"><f a="parent">
 	<c path="terrylib.bitmapFont.BitmapFont"/>
 	<x path="Void"/>
 </f></new>
@@ -68637,12 +68650,12 @@
 		<scale public="1"><x path="Float"/></scale>
 		<spaceWidth public="1"><x path="Float"/></spaceWidth>
 		<font public="1"><c path="terrylib.bitmapFont.BitmapFont"/></font>
-		<prepareGlyphs set="method" line="667"><f a="?smoothing">
+		<prepareGlyphs set="method" line="668"><f a="?smoothing">
 	<x path="Bool"/>
 	<x path="Void"/>
 </f></prepareGlyphs>
-		<dispose public="1" set="method" line="717"><f a=""><x path="Void"/></f></dispose>
-		<new public="1" set="method" line="656"><f a="font:scale:color:?useColor:?smoothing">
+		<dispose public="1" set="method" line="718"><f a=""><x path="Void"/></f></dispose>
+		<new public="1" set="method" line="657"><f a="font:scale:color:?useColor:?smoothing">
 	<c path="terrylib.bitmapFont.BitmapFont"/>
 	<x path="Float"/>
 	<x path="UInt"/>
@@ -68660,8 +68673,8 @@
 		<offsetY public="1"><x path="Int"/></offsetY>
 		<xAdvance public="1"><x path="Int"/></xAdvance>
 		<rect public="1"><c path="openfl.geom.Rectangle"/></rect>
-		<dispose public="1" set="method" line="761"><f a=""><x path="Void"/></f></dispose>
-		<new public="1" set="method" line="751"><f a="charCode:bmd:?offsetX:?offsetY:?xAdvance">
+		<dispose public="1" set="method" line="762"><f a=""><x path="Void"/></f></dispose>
+		<new public="1" set="method" line="752"><f a="charCode:bmd:?offsetX:?offsetY:?xAdvance">
 	<x path="Int"/>
 	<c path="openfl.display.BitmapData"/>
 	<x path="Int"/>

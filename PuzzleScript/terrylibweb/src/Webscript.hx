@@ -6,6 +6,7 @@ import openfl.external.ExternalInterface;
 import openfl.events.*;
 import openfl.net.*;
 
+@:access(terrylib.Input)
 class Webscript {
 	public static var myscript:String;
 	public static var loadedscript:Array<String>;

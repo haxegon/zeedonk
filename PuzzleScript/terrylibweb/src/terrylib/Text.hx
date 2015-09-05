@@ -8,7 +8,7 @@ import openfl.events.*;
 import openfl.net.*;
 import openfl.text.*;
 
-typedef Drawparamstext = {
+typedef Textdrawparams = {
   @:optional var scale:Float;
   @:optional var xscale:Float;
   @:optional var yscale:Float;
@@ -260,10 +260,10 @@ class Text {
 		cachedtext = [];
 	}
 	
-	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {
+	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
 	  var text:String = Convert.tostring(dytext);
 	#else
-	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {
+	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
 	#end
 		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		
@@ -294,7 +294,7 @@ class Text {
 		drawto.draw(typeface[currentindex].tf_bitmap);
 	}
 	
-	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, ?parameters:Drawparamstext) {
+	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, ?parameters:Textdrawparams) {
 		if (parameters == null && size == 1) {
 			x = cachealignx(x, text); y = cachealigny(y, text);
 			
@@ -369,7 +369,7 @@ class Text {
 		return;
 	}
 	
-	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Drawparamstext) {
+	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
 		// This was called "print" once. Maybe it was better that way? eh, stuck with display now
 		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		if (parameters == null) {

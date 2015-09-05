@@ -156,7 +156,7 @@ class Input {
 		keyheld[KeyCode] = false;
 	}
 
-	public static function resetKeys(){
+	private static function resetKeys(){
 		keymap = new Map<Key, Int>();
 		lookup = new Map<Int, Key>();
 		current = new Array<Keystate>();

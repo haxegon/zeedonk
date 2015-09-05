@@ -10,7 +10,7 @@ import openfl.Assets;
 import openfl.Lib;
 import openfl.system.Capabilities;
 
-typedef Drawparams = {
+typedef Gfxdrawparams = {
   @:optional var scale:Float;
   @:optional var xscale:Float;
   @:optional var yscale:Float;
@@ -274,7 +274,7 @@ class Gfx {
 	 * Parameters can be: rotation, scale, xscale, yscale, xpivot, ypivoy, alpha
 	 * x and y can be: Gfx.CENTER, Gfx.TOP, Gfx.BOTTOM, Gfx.LEFT, Gfx.RIGHT. 
 	 * */
-	public static function drawimage(x:Float, y:Float, imagename:String, ?parameters:Drawparams) {
+	public static function drawimage(x:Float, y:Float, imagename:String, ?parameters:Gfxdrawparams) {
 		if (skiprender && drawingtoscreen) return;
 		if (!imageindex.exists(imagename)) {
 			throw("ERROR: In drawimage, cannot find image \"" + imagename + "\".");
@@ -441,7 +441,7 @@ class Gfx {
 	 * x and y can be: Gfx.CENTER, Gfx.TOP, Gfx.BOTTOM, Gfx.LEFT, Gfx.RIGHT. 
 	 * */
 	#if !terrylibweb
-	public static function drawtile(x:Float, y:Float, t:Int, ?parameters:Drawparams) {
+	public static function drawtile(x:Float, y:Float, t:Int, ?parameters:Gfxdrawparams) {
 		if (skiprender && drawingtoscreen) return;
 		if (currenttileset == -1) {
 			throw("ERROR: No tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.");
@@ -562,7 +562,7 @@ class Gfx {
 		animations.push(new AnimationContainer(animationname, tileset, startframe, endframe, delayperframe));
 	}
 	
-	public static function drawanimation(x:Float, y:Float, animationname:String, ?parameters:Drawparams) {
+	public static function drawanimation(x:Float, y:Float, animationname:String, ?parameters:Gfxdrawparams) {
 		if (skiprender && drawingtoscreen) return;
 		oldtileset = currenttilesetname;
 		if (!animationindex.exists(animationname)) {
