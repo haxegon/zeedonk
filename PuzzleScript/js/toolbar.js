@@ -71,6 +71,16 @@ function dateToReadable(title,time) {
 	return result;
 }
 
+function newClick() {
+	if (!_editorDirty || confirm("You haven't saved your game - are you sure you want to create a new one?")) {
+		editor.setValue("function new(){\n}\nfunction update(){\n}");
+    	// Save it!
+	} else {
+	    // Do nothing!
+	}
+
+}
+
 function saveClick() {
 	var text=editor.getValue();
 

@@ -20,6 +20,9 @@ runClickLink.addEventListener("click", stopClick, false);
 var saveClickLink = document.getElementById("saveClickLink");
 saveClickLink.addEventListener("click", saveClick, false);
 
+var newClickLink = document.getElementById("newClickLink");
+newClickLink.addEventListener("click", newClick, false);
+
 var shareClickLink = document.getElementById("shareClickLink");
 shareClickLink.addEventListener("click", shareClick, false);
 
