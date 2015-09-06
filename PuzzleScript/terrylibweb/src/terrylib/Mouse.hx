@@ -95,10 +95,8 @@ class Mouse{
 		x = X;
 		y = Y;
 		
-		if (mousewheel > 0) mousewheel--;
-		if (mousewheel < 0) mousewheel++;
-		if (mousewheel < 1) mousewheel = -1;
-		if (mousewheel > 1) mousewheel = 1;
+		//if (mousewheel < 1) mousewheel = -1;
+		//if (mousewheel > 1) mousewheel = 1;
 		
 		if((_last == -1) && (_current == -1))
 			_current = 0;

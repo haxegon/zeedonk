@@ -160,6 +160,8 @@ class Core extends Sprite {
 			init();
 		}
 		#end
+		
+		Mouse.mousewheel = 0;
 	}
 	
 	public function reset() {

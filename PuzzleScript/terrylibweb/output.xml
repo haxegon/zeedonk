@@ -3525,7 +3525,7 @@
 </f></addedtostage>
 		<ontimer set="method" line="78"><f a=""><x path="Void"/></f></ontimer>
 		<doupdate public="1" set="method" line="135"><f a=""><x path="Void"/></f></doupdate>
-		<reset public="1" set="method" line="165"><f a=""><x path="Void"/></f></reset>
+		<reset public="1" set="method" line="167"><f a=""><x path="Void"/></f></reset>
 		<terrylibmain public="1"><c path="Main"/></terrylibmain>
 		<maxelapsed><x path="Float"/></maxelapsed>
 		<maxframeskip><x path="Int"/></maxframeskip>
@@ -66021,28 +66021,28 @@ Documentation for this class was provided by <a href="https://developer.mozilla.
 	<x path="Int"/>
 	<x path="Void"/>
 </f></update>
-		<reset set="method" line="122" static="1"><f a=""><x path="Void"/></f></reset>
-		<handleRightMouseDown set="method" line="133" static="1"><f a="event">
+		<reset set="method" line="120" static="1"><f a=""><x path="Void"/></f></reset>
+		<handleRightMouseDown set="method" line="131" static="1"><f a="event">
 	<c path="openfl.events.MouseEvent"/>
 	<x path="Void"/>
 </f></handleRightMouseDown>
-		<handleRightMouseUp set="method" line="134" static="1"><f a="event">
+		<handleRightMouseUp set="method" line="132" static="1"><f a="event">
 	<c path="openfl.events.MouseEvent"/>
 	<x path="Void"/>
 </f></handleRightMouseUp>
-		<handleMiddleMouseDown set="method" line="137" static="1"><f a="event">
+		<handleMiddleMouseDown set="method" line="135" static="1"><f a="event">
 	<c path="openfl.events.MouseEvent"/>
 	<x path="Void"/>
 </f></handleMiddleMouseDown>
-		<handleMiddleMouseUp set="method" line="138" static="1"><f a="event">
+		<handleMiddleMouseUp set="method" line="136" static="1"><f a="event">
 	<c path="openfl.events.MouseEvent"/>
 	<x path="Void"/>
 </f></handleMiddleMouseUp>
-		<handleMouseDown set="method" line="140" static="1"><f a="event">
+		<handleMouseDown set="method" line="138" static="1"><f a="event">
 	<c path="openfl.events.MouseEvent"/>
 	<x path="Void"/>
 </f></handleMouseDown>
-		<handleMouseUp set="method" line="158" static="1"><f a="event">
+		<handleMouseUp set="method" line="156" static="1"><f a="event">
 	<c path="openfl.events.MouseEvent"/>
 	<x path="Void"/>
 </f></handleMouseUp>
@@ -66052,7 +66052,7 @@ Documentation for this class was provided by <a href="https://developer.mozilla.
 		<_middlelast static="1"><x path="Int"/></_middlelast>
 		<_rightcurrent static="1"><x path="Int"/></_rightcurrent>
 		<_rightlast static="1"><x path="Int"/></_rightlast>
-		<gotosite line="173" static="1"><c path="String"/></gotosite>
+		<gotosite line="171" static="1"><c path="String"/></gotosite>
 	</class>
 	<class path="terrylib.Random" params="" file="src/terrylib/Random.hx">
 		<bool public="1" set="method" line="6" static="1">
