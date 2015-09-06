@@ -27,7 +27,7 @@ if (fileToOpen!==null&&fileToOpen.length>0) {
 	}
 }
 
-
+var cls = "CodeMirror-TerryLib-";
 
 var editor = window.CodeMirror.fromTextArea(code, {
 //	viewportMargin: Infinity,
@@ -140,15 +140,15 @@ var haxeHintArray = [
 ["Gfx.setlinethickness","(linethickness)","F"],
 ["Gfx.getpixel","(x, y)","F"],
 ["Gfx.setpixel","(x, y, col):Int","F"],
-["Gfx.RGB","(red (0-255), green (0-255), blue (0-255)):Int","F"],
-["Gfx.HSL","(hue (0-360), saturation (0-1.0), lightness (0-1.0)):Int","F"],
-["Gfx.getred","(col):Int","F"],
-["Gfx.getgreen","(col):Int","F"],
-["Gfx.getblue","(col):Int","F"],
+["Gfx.RGB","(red (0-255), green (0-255), blue (0-255)):Int","F","Converts a color with given red, green, and blue values (between 0-255 each) to a single hex number."],
+["Gfx.HSL","(hue (0-360), saturation (0-1.0), lightness (0-1.0)):Int","F","Converts a color with given hue (0-360), saturation (0-1), and lightness (0-1) values to a single hex number."],
+["Gfx.getred","(col):Int","F","Returns the red component of a hex color (Between 0-255 inclusive)."],
+["Gfx.getgreen","(col):Int","F","Returns the green component of a hex color (Between 0-255 inclusive)."],
+["Gfx.getblue","(col):Int","F","Returns the blue component of a hex color (Between 0-255 inclusive)."],
 ["Gfx.screenwidth",":Int","P"],
 ["Gfx.screenheight",":Int","P"],
-["Gfx.screenwidthmid",":Int","P"],
-["Gfx.screenheightmid",":Int","P"],
+["Gfx.screenwidthmid",":Int","P","Returns screen width divided by two."],
+["Gfx.screenheightmid",":Int","P","Returns screen height divided by two."],
 ["Gfx.drawimage","(x, y, imagename, optional parameters)","F"],
 ["Gfx.imagewidth","(imagename):Int","P"],
 ["Gfx.imageheight","(imagename):Int","P"],
@@ -157,7 +157,7 @@ var haxeHintArray = [
 ["Gfx.drawtoimage","(imagename)","F"],
 ["Gfx.grabimagefromscreen","(imagename, screen x, screen y)","F"],
 ["Gfx.grabimagefromimage","(imagename, sourceimagename, image x, image y)","F"],
-["Gfx.showfps",":Bool","P"],
+["Gfx.showfps",":Bool","P","Whether or not to show the fps counter."],
 ["Col.BLACK","","E"],
 ["Col.GREY","","E"],
 ["Col.WHITE","","E"],
@@ -197,7 +197,7 @@ var haxeHintArray = [
 ["Font.YOSTER","","E"],
 ["Text.setfont","(fontname, size)","F"],
 ["Text.changesize","(fontsize)","F"],
-["Text.display","(x, y, text, col, optional parameters)","F"],
+["Text.display","(x, y, text, col, optional parameters)","F","Draws text on the screen at a given coordinate."],
 ["Text.input",'(x, y, "Question: ", Q colour, A colour):Bool',"F"],
 ["Text.getinput","():String","F"],
 ["Text.CENTER","","P"],
@@ -432,6 +432,30 @@ function CompletionsPick( p_oCompletion ) {
    }
 } 
 
+function makeTooltip(x, y, content) {
+	var node = elt("div", cls + "tooltip", content);
+	node.style.left = x + "px";
+	node.style.top = y + "px";
+	document.body.appendChild(node);
+	return node;
+}
+
+function remove(node) {
+	var p = node && node.parentNode;
+	if (p) p.removeChild(node);
+}
+
+
+function elt(tagname, cls /*, ... elts*/) {
+	var e = document.createElement(tagname);
+	if (cls) e.className = cls;
+	for (var i = 2; i < arguments.length; ++i) {
+	var elt = arguments[i];
+	if (typeof elt == "string") elt = document.createTextNode(elt);
+	e.appendChild(elt);
+	}
+	return e;
+}
 
 CodeMirror.registerHelper("hint", "haxe", 
 	function(editor, options) {
@@ -483,7 +507,8 @@ CodeMirror.registerHelper("hint", "haxe",
 			if (w.substring(0,token.length).toLowerCase()==token){
 				var w2 = ar.length>1?ar[1]:"";
 				var t = ar.length>2?ar[2]:"";
-				matches.push({text:w,displayText:w2,render:renderHint,tag:t});
+				var d = ar.length>3?ar[3]:"";
+				matches.push({text:w,displayText:w2,render:renderHint,tag:t,doc:d});
 			}
 		}
 
@@ -501,6 +526,20 @@ CodeMirror.registerHelper("hint", "haxe",
 		for (var v = tok.state.globalVars; v; v = v.next) maybeAdd(v.name,v.tag);
 
 		var result={list: matches, from: CodeMirror.Pos(cur.line, start), to: CodeMirror.Pos(cur.line, end)};
+
+      var tooltip = null;
+      CodeMirror.on(result, "close", function() { remove(tooltip); });
+      CodeMirror.on(result, "update", function() { remove(tooltip); });
+      CodeMirror.on(result, "select", function(cur, node) {
+        remove(tooltip);
+        var content = cur.doc;
+        if (content) {
+          tooltip = makeTooltip(node.parentNode.getBoundingClientRect().right + window.pageXOffset,
+                                node.getBoundingClientRect().top + window.pageYOffset, content);
+          tooltip.className += " " + cls + "hint-doc";
+        }
+      });
+
   		CodeMirror.on( result, "pick",   CompletionsPick ) ; 
 		return result;
 	}
