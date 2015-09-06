@@ -14,11 +14,12 @@ var pageHeader = "<!DOCTYPE html>"+
 "	<title>Terrylib_Online Reference</title>"+
 "	<style type='text/css'>"+
 "	table{"+
-"		border-collapse: collapse;"+
+//"		border-collapse: collapse;"+
 "	}"+
 "	tr, td{"+
 "		padding :10px;"+
-"		border: 1px solid black;"+
+"		border: 1px solid lightgrey;"+
+"		border-radius: 10px;"+
 ""+
 "	}"+
 "	</style>"+
@@ -26,6 +27,7 @@ var pageHeader = "<!DOCTYPE html>"+
 "<body>"+
 "<h1>Reference</h1>"+
 "<table>	"+
+"<thead style='border:0;' ><tr ><td style='border:0;' >Name</td><td style='border:0;' >Description</td><td style='border:0;' ></td></tr></thead>"+
 "	<tbody>";
 
 var pageFooter = 	"</tbody>"+
