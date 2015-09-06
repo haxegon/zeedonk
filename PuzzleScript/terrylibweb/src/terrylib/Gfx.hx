@@ -1080,7 +1080,7 @@ class Gfx {
 		#if terrylibweb
 		if(alpha == 1.0){
 			settrect(x, y, width, height);
-			drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+			drawto.fillRect(trect, (0xFF << 24) + col);
 		}else {
 			tempshape.graphics.clear();
 			tempshape.graphics.beginFill(col, alpha);
