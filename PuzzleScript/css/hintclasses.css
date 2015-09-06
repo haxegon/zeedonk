@@ -1,0 +1,56 @@
+.TerryLib-completion {
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.5;
+}
+.TerryLib-completion:before {
+  position: absolute;
+  top:0px;
+  left: 0px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  height: 14px;
+  width: 14px;
+  line-height: 15px;
+  text-align: center;
+  color: white;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.F-TerryLib-completion:before {
+  content: "F";
+  background: #0a0;
+}
+
+.P-TerryLib-completion:before {
+  content: "P";
+  background: #f55;
+}
+
+.M-TerryLib-completion:before {
+  content: "M";
+  background: #55f;
+}
+
+.V-TerryLib-completion:before {
+  content: "v";
+  background: #099;
+}
+
+.E-TerryLib-completion:before {
+  content: "E";
+  background: #833;
+}
+
+.T-TerryLib-completion:before {
+  content: "T";
+  background: #00f;
+}
+
+.C-TerryLib-completion:before {
+  content: "C";
+  background: #fff;
+  color: #000;
+}

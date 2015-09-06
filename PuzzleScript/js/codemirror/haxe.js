@@ -191,7 +191,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     pass.apply(null, arguments);
     return true;
   }
-  function register(varname) {
+  function register(varname,t) {
     function inList(list) {
       for (var v = list; v; v = v.next)
         if (v.name == varname) return true;
@@ -205,7 +205,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     } else {
       if (inList(state.globalVars)) return;
       if (parserConfig.globalVars)
-        state.globalVars = {name: varname, next: state.globalVars};      
+        state.globalVars = {name: varname, tag: t, next: state.globalVars};     
     }
   }
 
@@ -347,7 +347,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     return pass(statement, block);
   }
   function vardef1(type, value) {
-    if (type == "variable"){register(value); return cont(typeuse, vardef2);}
+    if (type == "variable"){register(value,"V"); return cont(typeuse, vardef2);}
     return cont();
   }
   function vardef2(type, value) {
@@ -356,7 +356,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
   function forspec1(type, value) {
     if (type == "variable") {
-      register(value);
+      register(value,"V");
       return cont(forin, expression)
     } else {
       return pass()
@@ -367,7 +367,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
   }
   function functiondef(type, value) {
     //function names starting with upper-case letters are recognised as types, so cludging them together here.
-    if (type == "variable" || type == "type") {register(value); return cont(functiondef);}
+    if (type == "variable" || type == "type") {register(value,"F"); return cont(functiondef);}
     if (value == "new") return cont(functiondef);
     if (type == "(") return cont(pushlex(")"), pushcontext, commasep(funarg, ")"), poplex, typeuse, statement, popcontext);
   }
@@ -383,7 +383,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     if(type == "variable") return cont(typeuse);
   }
   function funarg(type, value) {
-    if (type == "variable") {register(value); return cont(typeuse);}
+    if (type == "variable") {register(value,"V"); return cont(typeuse);}
   }
 
   // Interface
