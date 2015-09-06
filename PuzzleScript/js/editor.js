@@ -58,22 +58,60 @@ function isalnum (code){
 }
 
 function renderHint(elt,data,cur){
+	var t1=cur.text;
+	var t2=cur.displayText;
+	if (t1.length==0){
+		t1=cur.displayText;
+		t2=cur.text;
+	}
 	var h = document.createElement("span")                // Create a <h1> element
 	h.style.color="white";
-	var t = document.createTextNode(cur.text);     // Create a text node
+	var t = document.createTextNode(t1);     // Create a text node
 	h.appendChild(t);   
- 
 
 
 	elt.appendChild(h);//document.createTextNode(cur.displayText || getText(cur)));
 
 	var h2 = document.createElement("span")                // Create a <h1> element
 	h2.style.color="grey";
-	var t2 = document.createTextNode(cur.displayText);     // Create a text node
+	var t2 = document.createTextNode(t2);     // Create a text node
 	h2.appendChild(t2);  
 	h2.style.color="#ff0000";
 	elt.appendChild(t2);
 }
+
+var haxeLibraryArray = [
+["Gfx","."],
+["Debug","."],
+["Col","."],
+["Font","."],
+["Text","."],
+["Music","."],
+["Key","."],
+["Input","."],
+["Mouse","."],
+["Convert","."],
+["Random","."],
+["Game","."],
+["update","()"],
+["new"],
+["function "],
+["break"],
+["case "],
+["continue"],
+["default"],
+["do"],
+["else"],
+["false"],
+["true"],
+["for"],
+["if"],
+["in"],
+["null"],
+["switch"],
+["var "],
+["while"]
+];
 
 var haxeHintArray = [
 ["Gfx.resizescreen","(width, height, scale)"],
@@ -340,7 +378,16 @@ function CompletionsPick( p_oCompletion ) {
  //  console.log( "==> Function entry: " + arguments.callee.name + "() <==" ) ; 
    //console.log( p_oCompletion ) ; 
    consolePrint(p_oCompletion.text+p_oCompletion.displayText,true);
-
+   var dt = p_oCompletion.displayText;
+   if (dt.indexOf("()")===0){
+   	editor.replaceSelection("()",null);
+   } else if (dt.indexOf("(")==0){
+   	editor.replaceSelection("()",null);
+   	editor.execCommand("goCharLeft");
+   } else if (dt.indexOf(".")===0){
+   	editor.replaceSelection(".",null);   	
+   	CodeMirror.commands.autocomplete(editor);
+   }
 } 
 
 
@@ -384,14 +431,24 @@ CodeMirror.registerHelper("hint", "haxe",
 
 		var matches=[];
 
-		function maybeAdd(str) {
-			if (str.toLowerCase().indexOf(token) == 0) matches.push(str);
+		var searchArray = token.indexOf(".")>=0?haxeHintArray:haxeLibraryArray;
+		for (var i=0;i<searchArray.length;i++){
+			var ar = searchArray[i];
+			var w = ar[0];
+			if (w.length<token.length){
+				continue;
+			} 
+			if (w.substring(0,token.length).toLowerCase()==token){
+				var w2 = ar.length>1?ar[1]:"";
+				matches.push({text:w,displayText:w2,render:renderHint});
+			}
 		}
 
-		for (var i=0;i<haxeHintArray.length;i++){
-			var ar = haxeHintArray[i];
-			var w = ar[0];
-			maybeAdd(w);
+		function maybeAdd(str) {
+			if (str.toLowerCase().indexOf(token) == 0) {
+				matches.push({text:str,displayText:"",render:renderHint});
+			}
+				//matches.push(str);
 		}
 
 		for (var v = tok.state.localVars; v; v = v.next) maybeAdd(v.name);
