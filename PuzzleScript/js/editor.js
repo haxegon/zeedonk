@@ -346,7 +346,11 @@ function CompletionsPick( p_oCompletion ) {
 
 CodeMirror.registerHelper("hint", "haxe", 
 	function(editor, options) {
+		
 		var cur = editor.getCursor();
+		var tok = editor.getTokenAt(cur);
+		var tokStart = tok.string.toLowerCase();
+
 		var line = editor.getLine(cur.line);
 		var start = cur.ch;
 		while (start>0){
@@ -379,17 +383,20 @@ CodeMirror.registerHelper("hint", "haxe",
 		token = token.trim().toLowerCase();
 
 		var matches=[];
+
+		function maybeAdd(str) {
+			if (str.toLowerCase().indexOf(token) == 0) matches.push(str);
+		}
+
 		for (var i=0;i<haxeHintArray.length;i++){
 			var ar = haxeHintArray[i];
 			var w = ar[0];
-			if (w.length<token.length){
-				continue;
-			} 
-			if (w.substring(0,token.length).toLowerCase()==token){
-				var w2 = ar.length>1?ar[1]:"";
-				matches.push({text:w,displayText:w2,render:renderHint});
-			}
+			maybeAdd(w);
 		}
+
+		for (var v = tok.state.localVars; v; v = v.next) maybeAdd(v.name);
+		for (var v = tok.state.globalVars; v; v = v.next) maybeAdd(v.name);
+
 		var result={list: matches, from: CodeMirror.Pos(cur.line, start), to: CodeMirror.Pos(cur.line, end)};
   		CodeMirror.on( result, "pick",   CompletionsPick ) ; 
 		return result;
