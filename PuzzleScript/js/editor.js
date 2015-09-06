@@ -34,7 +34,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
 	lineWrapping: true,
 	lineNumbers: true,
     styleActiveLine: true,
-    mode: "haxe",
+    mode: {name:"haxe",globalVars: true},
     autoCloseBrackets: true,
     matchBrackets:true,
     tabSize:2,
