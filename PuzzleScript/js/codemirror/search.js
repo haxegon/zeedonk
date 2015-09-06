@@ -49,7 +49,8 @@
   }
 
   function queryCaseInsensitive(query) {
-    return typeof query == "string" && query == query.toLowerCase();
+    return true;
+   // return typeof query == "string" && query == query.toLowerCase();
   }
 
   function getSearchCursor(cm, query, pos) {
