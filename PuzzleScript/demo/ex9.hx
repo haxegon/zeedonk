@@ -474,7 +474,11 @@ function update() {
     Text.display(Text.CENTER, Gfx.screenheightmid - 14, "TO DO: IMPLEMENT THIS");
   }else	if (currentstate == "editor") {
     drawbackground();
-
+    
+    if(Input.justpressed(Key.R)){
+      dobuttonaction("random", false);
+    }
+    
     if (inbox_w(Mouse.x, Mouse.y, canvasx, canvasy, canvaswidth, canvasheight)) {
       cursorx = Math.floor((Mouse.x - canvasx) / boxsize);
       cursory = Math.floor((Mouse.y - canvasy) / boxsize);
