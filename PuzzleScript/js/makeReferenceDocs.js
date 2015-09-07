@@ -33,6 +33,7 @@ function genReferencePage(moduleName){
 	var pageHeader = "<!DOCTYPE html>"+
 	"<html>"+
 	"<head>"+
+	' <meta charset="utf-8">'+
 	"	<title>Terrylib_Online Reference " +moduleName+"</title>"+
 	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
 	'<link rel="stylesheet" type="text/css" href="style.css">'+
@@ -42,7 +43,7 @@ function genReferencePage(moduleName){
 	"<h1>Library Reference</h1>";
 
 	var tableStart = "<table>	"+
-	"<thead><tr class='header'><td  >Name</td><td  >Description</td><td  ></td></tr></thead>"+
+	"<thead><tr class='header'><td  >Name</td><td  >Description</td><td>Example</td></tr></thead>"+
 	"	<tbody>";
 
 	var tableEnd = 	"</tbody>"+
@@ -70,6 +71,7 @@ function genReferencePage(moduleName){
 
 	var enumContents ="<b>"+ moduleName+"</b><p><div id='enumFrame'>";
 	var enumAdded=false;
+	var counter=0;
 	for (var i=0;i<haxeHintArray.length;i++){
 		var r = haxeHintArray[i];
 		if (r.length<3){
@@ -84,13 +86,25 @@ function genReferencePage(moduleName){
 		if (fn.indexOf(moduleName)!==0){
 			continue;
 		}
-		var row = '<tr class="' +  ((i%2==0)?"even":"odd")+'">';
+		counter++;
+		var row = '<tr class="' +  ((counter%2==0)?"even":"odd")+'">';
 		if (preface!=oldPreface&&pageContents.length>0){
 			//console.log(preface+"-"+oldPreface);
 			row = "<tr style='border-top:5px solid black;'>";
 		}
+		var docString="";
+		for (var j=0;j<codeSamples.length;j++){
+			var cs = codeSamples[j];
+			if (cs.indexOf(r[0])>=0){
+				docString="<pre>"+cs+"</pre><a class=\"editLink\" href=\"../editor.html?demo=doc/"+r[0]+"\">✎</a>";
+
+				fs.writeFileSync("../demo/doc/"+r[0]+".hx",cs);		
+				break;
+			}
+		}
+
 		//row+=<td>"+tag+"</td>;
-		row+="<td>"+fn+"</td><td>"+doc+"</td><td><a href=''>example</a></td></tr>";
+		row+="<td>"+fn+"</td><td>"+doc+"</td><td><div>"+docString+"</div></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
 		if (enumAdded){

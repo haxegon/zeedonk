@@ -13,11 +13,25 @@ body {
     word-spacing: 10px;
 }
 
+pre {
+	margin-top: 0em;
+	margin-bottom: 0em;
+	padding: 1em 0em;
+}
 h2 {
 	color:black;
 	text-decoration: none;
 }
 
+div{
+	margin:0;
+	padding:0;	
+	position:relative; padding-right:0em; border:0;
+}
+
+div .editLink {
+	position:absolute; right:0; top:3px; text-align:right;text-decoration: none;
+}
 table {
     background-color: #f8f8fa;
     border: solid 1px #ccc;
@@ -34,7 +48,7 @@ table th {
 }
 
 td {
-    padding: 0.4em;
+    padding: 0 0.4em;
 }
 
 th, td {

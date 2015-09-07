@@ -35,6 +35,11 @@ var haxeLibraryArray = [
 ["return "],
 ];
 
+var codeSamples = [
+"update(){\n    Debug.log(\"Hello, sailor!\");\n}",
+"function update(){\n  //make the screen red\n  Gfx.clearscreen(0xff0000);\n}",
+];
+
 var haxeHintArray = [
 ["..."],
 ["Gfx.resizescreen","(width, height, scale)","F"],

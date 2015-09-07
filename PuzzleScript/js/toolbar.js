@@ -215,7 +215,7 @@ function shareClick() {
 			"readme.txt" : {
 				"content": "Play this game by pasting the script in http://www.puzzlescript.net/editor.html"
 			},
-			"script.txt" : {
+			"script.hx" : {
 				"content": source
 			}
 		}
