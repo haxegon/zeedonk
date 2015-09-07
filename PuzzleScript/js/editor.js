@@ -42,7 +42,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
 //	smartIndent:false,
     hintOptions: {"completeSingle": false},
     extraKeys: {"Ctrl-Space": "autocomplete",
-		"Esc":"clearHighlight"}
+		"Esc":"clearSearch"}
    	});
 /*
 CodeMirror.registerHelper("hintWords", "haxe",
@@ -323,10 +323,12 @@ function tryLoadGist(id) {
 		} else if (githubHTTPClient.status!==200&&githubHTTPClient.status!==201) {
 			consoleError("HTTP Error "+ githubHTTPClient.status + ' - ' + githubHTTPClient.statusText);
 		} else {
-			var code=result["files"]["script.txt"]["content"];
+
+			var code=result["files"]["script.hx"]==null?result["files"]["script.txt"]["content"] : result["files"]["script.hx"]["content"];
 			editor.setValue(code);
 			setEditorClean();
-			unloadGame();
+			unfocus();
+			stopClick();
 			compile(["restart"],code);
 		}
 	}
@@ -336,7 +338,7 @@ function tryLoadGist(id) {
 
 function tryLoadFile(fileName) {
 	var fileOpenClient = new XMLHttpRequest();
-	fileOpenClient.open('GET', 'demo/'+fileName+".txt");
+	fileOpenClient.open('GET', 'demo/'+fileName+".hx");
 	fileOpenClient.onreadystatechange = function() {
 		
   		if(fileOpenClient.readyState!=4) {
@@ -345,8 +347,8 @@ function tryLoadFile(fileName) {
   		
 		editor.setValue(fileOpenClient.responseText);
 		setEditorClean();
-		unloadGame();
-		compile(["restart"]);
+		unfocus();
+		stopClick();
 	}
 	fileOpenClient.send();
 }

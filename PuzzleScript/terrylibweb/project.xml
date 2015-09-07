@@ -32,7 +32,7 @@
 	
 	<haxeflag name="--macro keep('IntIterator')"/>
 	<haxeflag name="-dce no"/>
-	<haxeflag name="-xml output.xml"/>
+	<!--<haxeflag name="-xml output.xml"/>-->
 	<!-- haxeflag name="-D" value="webgl" / --> 
 	<!-- set name="webgl" / --> 
 	<haxelib name="openfl" />

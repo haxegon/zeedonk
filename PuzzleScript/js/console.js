@@ -12,6 +12,7 @@ function jumpToLine(i,cpos) {
     editor.scrollIntoView(Math.min(i - 1 + 10,editor.doc.size-1));
     editor.scrollIntoView(Math.max(i - 1,0));
     editor.setCursor(Math.max(i - 1,0), cpos);
+    editor.focus();
 }
 
 var consolecache = [];

@@ -64,6 +64,9 @@ document.onkeydown = function (e) {
             e.preventDefault();
             break;
     }        
+    if (!IDE){
+        return;
+    }
     onBackspace(e,function(){
         e.preventDefault();
     });
@@ -76,6 +79,13 @@ document.onkeydown = function (e) {
     // Process event...
   }
     
+    //ctrl/cmd+enter
+  if (e.keyCode == 13 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    runClick();
+    e.preventDefault();        
+    return false;
+    // Process event...
+  }
 };
 
 try {

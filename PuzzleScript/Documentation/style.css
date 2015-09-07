@@ -1,0 +1,79 @@
+body {
+	font-family: 'Lora', serif;
+}
+#enumFrame {
+    background-color: #f8f8fa;
+    border: solid 1px #ccc;
+    border-spacing: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    max-width:640px;
+    padding: 10px 30px;
+    word-spacing: 10px;
+}
+
+pre {
+	margin-top: 0em;
+	margin-bottom: 0em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+h2 {
+	color:black;
+	text-decoration: none;
+}
+
+div{
+	margin:0;
+	padding:0;	
+	position:relative; padding-right:0em; border:0;
+}
+
+div .editLink {
+	position:absolute; right:0; top:3px; text-align:right;text-decoration: none;
+}
+table {
+    background-color: #f8f8fa;
+    border: solid 1px #ccc;
+    border-spacing: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+table th {
+    font-weight: bold;
+    background-color: #fff6b0;
+    padding: 0.3em;
+}
+
+td {
+    padding: 0 0.4em;
+}
+
+th, td {
+    border-right: solid 1px #ccc;
+}
+
+tr.odd {
+    background-color: #e8e8e8;
+}
+
+/* Header - need to undo some of the table properties because I couldn't
+ * figure out how to lay out the title with only CSS :(
+ */
+table#header {
+    background-color: #f4f4f4;
+    border: none;
+    border-bottom: solid 1px #ddd;
+    margin-bottom: 0.5em;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+table#header td {
+    border: none;
+}
