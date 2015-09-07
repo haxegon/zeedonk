@@ -36,7 +36,7 @@ function genReferencePage(moduleName){
 	"	<title>Terrylib_Online Reference</title>"+
 	"	<style type='text/css'>"+
 	"	table{"+
-	"		width:640px;"+
+	//"		width:640px;"+
 	//"		border-collapse: collapse;"+
 	"	}"+
 	"	tr, td{"+
@@ -51,7 +51,7 @@ function genReferencePage(moduleName){
 	"	</style>"+
 	"</head>"+
 	"<body>"+
-	'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p>Library Reference - <a href="shortcuts.html">Keyboard Shortcuts</a><p>'+
+	'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a href="Tutorials.html">Tutorials</a> - <b>Library Reference</b> - <a href="Shortcuts.html">Keyboard Shortcuts</a><p>'+
 	"<h1>Library Reference</h1>";
 
 	var tableStart = "<table>	"+
@@ -103,7 +103,7 @@ function genReferencePage(moduleName){
 			row = "<tr style='border-top:5px solid black;'>";
 		}
 		//row+=<td>"+tag+"</td>;
-		row+="<td>"+fn+"</td><td width='500px'>"+doc+"</td><td><a href=''>example</a></td></tr>";
+		row+="<td>"+fn+"</td><td>"+doc+"</td><td><a href=''>example</a></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
 		if (enumAdded){
@@ -120,10 +120,10 @@ function genReferencePage(moduleName){
 		if (enums.indexOf(moduleName)>=0){
 			wholePage = pageHeader+moduleHeader+enumContents+pageFooter;
 		} 
-		fs.writeFileSync("../newdocs/"+moduleName+".html",wholePage);
+		fs.writeFileSync("../Documentation/"+moduleName+".html",wholePage);
 	} else {
 		var wholePage = pageHeader+moduleHeader+pageFooter;
-		fs.writeFileSync("../newdocs/index.html",wholePage);		
+		fs.writeFileSync("../Documentation/index.html",wholePage);		
 	}
 }
 
