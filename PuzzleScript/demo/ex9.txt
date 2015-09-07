@@ -262,7 +262,7 @@ function randompalette(){
   palettesaturation[0] = randsaturation;
   palettelightness[0] = randlightness;
 
-  randhue = (randhue + Random.int(0, 90)) % 360;
+  randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
   randlightness = 0.4;
   palette[1] = Gfx.HSL(randhue, randsaturation, randlightness);
@@ -270,7 +270,7 @@ function randompalette(){
   palettesaturation[1] = randsaturation;
   palettelightness[1] = randlightness;
 
-  randhue = (randhue + Random.int(0, 90)) % 360;
+  randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
   randlightness = 0.5;
   palette[2] = Gfx.HSL(randhue, randsaturation, randlightness);
@@ -278,7 +278,7 @@ function randompalette(){
   palettesaturation[2] = randsaturation;
   palettelightness[2] = randlightness;
 
-  randhue = (randhue + Random.int(0, 90)) % 360;
+  randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
   randlightness = 0.7;
   palette[3] = Gfx.HSL(randhue, randsaturation, randlightness);
@@ -334,7 +334,7 @@ function drawbackground() {
   }
 }
 
-function dobuttonaction(t:String) {
+function dobuttonaction(t:String, rclick:Bool) {
   if (t == "back") {
     Music.playsound(sound_select, 0.5);
     currentstate = "editor";
@@ -352,8 +352,13 @@ function dobuttonaction(t:String) {
     currentstate = "clear";
   }else	if (t == "resizex") {
     Music.playsound(sound_click, 0.2);
-    imgwidth = imgwidth + 1;
-    if (imgwidth == 17) imgwidth = 4;
+    if(rclick){
+      imgwidth = imgwidth - 1;
+      if (imgwidth == 3) imgwidth = 16;
+    }else{
+      imgwidth = imgwidth + 1;
+      if (imgwidth == 17) imgwidth = 4;
+    }
     for (i in 0 ... button.length) {
       if (button[i].action == "resizex") {
         button[i].text = Convert.tostring(imgwidth);
@@ -362,8 +367,13 @@ function dobuttonaction(t:String) {
     resize();
   }else	if (t == "resizey") {
     Music.playsound(sound_click, 0.2);
-    imgheight = imgheight + 1;
-    if (imgheight == 17) imgheight = 4;
+    if(rclick){
+      imgheight = imgheight - 1;
+      if (imgheight == 3) imgheight = 16;
+    }else{
+      imgheight = imgheight + 1;
+      if (imgheight == 17) imgheight = 4;
+    }
     for (i in 0 ... button.length) {
       if (button[i].action == "resizey") {
         button[i].text = Convert.tostring(imgheight);
@@ -398,7 +408,9 @@ function drawgui() {
 
       if (button[i].mouseover) {
         if (Mouse.leftclick()) {
-          dobuttonaction(button[i].action);
+          dobuttonaction(button[i].action, false);
+        }else if (Mouse.rightclick()) {
+          dobuttonaction(button[i].action, true);
         }
       }
     }
@@ -568,7 +580,8 @@ function update() {
       for (i in 0 ... 9) {
         if (inbox_w(Mouse.x, Mouse.y, 116 + 1 + i * 8, 38, 7, 7)) {
           Gfx.drawbox(116 + 1 + i * 8, 38, 7, 6, Col.WHITE);
-          if (Mouse.leftclick()) {
+          if (Mouse.leftclick()) {        
+    				Music.playsound(sound_click, 0.2);
             palette[currentcol] = arnepalette[i];
             palettehue[currentcol] = arnehue[i];
             palettesaturation[currentcol] = arnesaturation[i];
@@ -582,6 +595,7 @@ function update() {
         }else if (inbox_w(Mouse.x, Mouse.y, 116 + 1 + i * 8, 38 + 8, 7, 7)) {
           Gfx.drawbox(116 + 1 + i * 8, 38 + 8, 7, 6, Col.WHITE);
           if (Mouse.leftclick()) {
+    				Music.playsound(sound_click, 0.2);
             palette[currentcol] = arnepalette[i + 9];
             palettehue[currentcol] = arnehue[i + 9];
             palettesaturation[currentcol] = arnesaturation[i + 9];
