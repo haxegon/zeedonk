@@ -223,7 +223,7 @@ var haxeHintArray = [
 ["Random.pickstring",'("this one", "or this one?", "maybe this one?"):String',"F"],
 ["Random.pickint","(5, 14, 72, 92, 1, -723, 8):Int","F"],
 ["Random.pickfloat","(5.1, 14.2, 72.3, 92.4, 1.5, -723.6, 8.7):Float","F"],
-["Debug.log","(message)","F"],
+["trace","(message)","F"],
 ["Game.title","(title)","F"],
 ["Game.homepage","(url)","F"],
 ["Game.background","(color)","F"],

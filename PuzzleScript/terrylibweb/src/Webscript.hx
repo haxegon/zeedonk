@@ -256,6 +256,7 @@ class Webscript {
 		interpreter.variables.set("Std", Std);
 		interpreter.variables.set("Random", Random);
 		interpreter.variables.set("String", String);
+		interpreter.variables.set("trace", Webdebug.log);
 		
 		runscript = true;
 		try{
