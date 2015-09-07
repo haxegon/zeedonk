@@ -33,29 +33,16 @@ function genReferencePage(moduleName){
 	var pageHeader = "<!DOCTYPE html>"+
 	"<html>"+
 	"<head>"+
-	"	<title>Terrylib_Online Reference</title>"+
-	"	<style type='text/css'>"+
-	"	table{"+
-	//"		width:640px;"+
-	//"		border-collapse: collapse;"+
-	"	}"+
-	"	tr, td{"+
-	"		padding :0px;"+
-	"		padding-left :5px;"+
-	"		padding-right :5px;"+
-	"		border: 1px solid lightgrey;"+
-	"		border-radius: 10px;"+
-	"		vertical-align: top;"+
-	""+
-	"	}"+
-	"	</style>"+
+	"	<title>Terrylib_Online Reference " +moduleName+"</title>"+
+	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
+	'<link rel="stylesheet" type="text/css" href="style.css">'+
 	"</head>"+
 	"<body>"+
 	'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a href="Tutorials.html">Tutorials</a> - <b>Library Reference</b> - <a href="Shortcuts.html">Keyboard Shortcuts</a><p>'+
 	"<h1>Library Reference</h1>";
 
 	var tableStart = "<table>	"+
-	"<thead style='border:0;' ><tr ><td style='border:0;' >Name</td><td style='border:0;' >Description</td><td style='border:0;' ></td></tr></thead>"+
+	"<thead><tr class='header'><td  >Name</td><td  >Description</td><td  ></td></tr></thead>"+
 	"	<tbody>";
 
 	var tableEnd = 	"</tbody>"+
@@ -81,7 +68,7 @@ function genReferencePage(moduleName){
 	}
 	moduleHeader+="<p>";
 
-	var enumContents ="<b>"+ moduleName+"</b><p>";
+	var enumContents ="<b>"+ moduleName+"</b><p><div id='enumFrame'>";
 	var enumAdded=false;
 	for (var i=0;i<haxeHintArray.length;i++){
 		var r = haxeHintArray[i];
@@ -97,7 +84,7 @@ function genReferencePage(moduleName){
 		if (fn.indexOf(moduleName)!==0){
 			continue;
 		}
-		var row = "<tr>"
+		var row = '<tr class="' +  ((i%2==0)?"even":"odd")+'">';
 		if (preface!=oldPreface&&pageContents.length>0){
 			//console.log(preface+"-"+oldPreface);
 			row = "<tr style='border-top:5px solid black;'>";
@@ -112,7 +99,7 @@ function genReferencePage(moduleName){
 		enumContents+=postface;
 		enumAdded=true;
 	}
-
+	enumContents+="</div>";
 	pageContents ="<b>"+ moduleName+"</b><p>"+pageContents;
 
 	if (moduleName.length>0){		
