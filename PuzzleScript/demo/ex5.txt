@@ -565,6 +565,7 @@ function update() {
     } 
     if (collide==2){
       selectedSequence=i;
+      playTick=selectedSequence*dat.patternLength*dat.cellDuration -1;
     } 
     if (collide==3){
       if (dat.notes.length>1){
