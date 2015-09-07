@@ -38,6 +38,7 @@ function unfocus(){
 
 var interpreter;
 function terryRun(){
+	setbackgroundcolor(0x000000);
 	//playSound(1232);
 	if (interpreter==null){
 		interpreter = new Webbridge();
