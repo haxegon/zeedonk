@@ -662,6 +662,7 @@ for (k in 0 ... 5){
   if (c==3){
     MakeBackupCopy();
     dat.instruments[k]=Random.int(0,99999999);
+    Debug.log(dat.instruments[k]);
     Music.playnote(dat.instruments[k],1,1,1.0);
   }
   {
