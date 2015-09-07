@@ -42,7 +42,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
 //	smartIndent:false,
     hintOptions: {"completeSingle": false},
     extraKeys: {"Ctrl-Space": "autocomplete",
-		"Esc":"clearHighlight"}
+		"Esc":"clearSearch"}
    	});
 /*
 CodeMirror.registerHelper("hintWords", "haxe",
