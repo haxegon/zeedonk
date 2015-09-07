@@ -440,7 +440,35 @@ function GenerateRandom(){
     }
 }
 
+var helpmode=false;
+
+function doHelp(){
+  Gfx.clearscreen(backgroundCol);
+  if (Input.justpressed(Key.SPACE)||Input.justpressed(Key.H)||Input.justpressed(Key.ESCAPE)||Mouse.leftclick()){
+    helpmode=false;
+  }
+  Text.changesize(2.5);
+  Text.display(Text.CENTER,0,"tinybox");
+  Text.changesize(1);
+  var i=0;
+  Text.display(3,24+10*(i++),"Shortcuts:");
+  Text.display(3,24+10*(i++),"~ Arrow keys or wsad,to scroll/set note length.");
+  Text.display(3,24+10*(i++),"~ +/- or q and e to control volume.");
+  Text.display(3,24+10*(i++),"~ Right click on instruments to randomize,");
+  Text.display(3,24+10*(i++),"~ Or press numbers when hovering to enter.");
+  Text.display(3,24+10*(i++),"~ You can press c/v to copy/paste sequences.");
+  Text.display(3,24+10*(i++),"~ Right click notes/sequences to remove.");
+  Text.display(3,24+10*(i++),"~ Z to undo.");
+}
+
 function update() {
+  if (helpmode){
+    doHelp();
+    return;
+  }
+  if (Input.justpressed(Key.H)){
+    helpmode=true;
+  }
   if (Input.justpressed(Key.Z)){
     DoUndo();
   }
@@ -665,12 +693,12 @@ for (k in 0 ... 5){
   }
   
     
-  if (drawButton("clear pat",152,61,textCol,mainButton,mainHighlight)){
+  if (drawButton("clear pat",152,51,textCol,mainButton,mainHighlight)){
     MakeBackupCopy();
     dat.notes[selectedSequence]=[[],[],[],[],[]];
   }
     
-  if (drawButton("   new   ",152,90,textCol,mainButton,mainHighlight)){
+  if (drawButton("   new   ",152,71,textCol,mainButton,mainHighlight)){
     MakeBackupCopy();
     dat = {
       patternLength:16,
@@ -685,7 +713,7 @@ for (k in 0 ... 5){
   }
 
 
-  if (drawButton("  save   ",152,100,textCol,mainButton,mainHighlight)){
+  if (drawButton("  save   ",152,81,textCol,mainButton,mainHighlight)){
     if (Game.editor())
         {
       Debug.log(saveDat());
@@ -696,10 +724,14 @@ for (k in 0 ... 5){
     
 
 
-  if (drawButton("  load   ",152,110,textCol,mainButton,mainHighlight)){
+  if (drawButton("  load   ",152,91,textCol,mainButton,mainHighlight)){
     var ld = Game.prompt("Enter music data string:","");
         Debug.log(ld);
         if (ld!=null&&ld.length>0){loadDat(ld);}
+  }
+  
+  if (drawButton("  help   ",152,111,textCol,mainButton,mainHighlight)){
+    helpmode=true;
   }
   //draw grid
   var gx=22;
