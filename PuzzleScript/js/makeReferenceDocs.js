@@ -28,7 +28,19 @@ for (var i=0;i<haxeHintArray.length;i++){
 		}
 	}
 }
-console.log(enums);
+/*
+enums.sort();
+modules.sort();
+for (var i = 0;i<modules.length;i++){
+	if (enums.indexOf(modules[i])>=0){
+		modules.splice(i,1);
+		i--;
+	}
+}
+for(var i=0;i<enums.length;i++){
+	modules.push(enums[i]);
+}*/
+
 
 function genReferencePage(moduleName){
 	var pageHeader = "<!DOCTYPE html>"+
@@ -95,12 +107,10 @@ function genReferencePage(moduleName){
 		}
 		var docString="";
 		var cs = "";
-		console.log(preface+","+enums.indexOf(preface)+","+(enums.indexOf(preface)===-1));
 		if (enums.indexOf(preface)===-1){
 			var samplePath = "../demo/doc/"+r[0]+".hx";
 			if (!fs.existsSync(samplePath)){
 				fs.writeFileSync(samplePath,"");		
-				console.log("writing "+samplePath);			
 			}
 			cs = fs.readFileSync(samplePath);
 			if (cs.length>0){
