@@ -5,13 +5,15 @@ function stopClick(){
 	setbackgroundcolor(0);
 	interpreter.stop();
 }
-function runClick() {
+function runClick(evt) {
 	clearConsole();
 	setbackgroundcolor(0);
 	//compile(["restart"]);
 	stopClick();
 	terryRun();
 	consolePrint("Running Program",true);
+	evt.preventDefault();
+	return false;
 }
 
 function compile(args){
@@ -28,6 +30,12 @@ function referenceClick(){
 	consolePrint(s,true);
 }
 
+function unfocus(){	
+	document.body.focus();
+	document.getElementsByTagName("CANVAS")[0].focus();
+	if (document.activeElement!=null) { document.activeElement.blur(); }
+}
+
 var interpreter;
 function terryRun(){
 	//playSound(1232);
@@ -40,7 +48,7 @@ function terryRun(){
 
 	text = editor.getValue()+"\n";
 	interpreter.runScript(text);
-	document.body.focus();
+	unfocus();
 }
 
 function dateToReadable(title,time) {
@@ -134,13 +142,7 @@ function loadDropDownChange() {
 			setEditorClean();
 			var loadDropdown = document.getElementById('loadDropDown');
 			loadDropdown.selectedIndex=0;
-			unloadGame();
-			try{
-				compile(["restart"]);
-			}
-			catch (e){
-				consoleError(e,true);
-			}
+			unfocus();
 			stopClick();
 			return;
 	    }
@@ -149,9 +151,6 @@ function loadDropDownChange() {
 	consoleError("Eek, trying to load a save, but couldn't find it. :(",true);
 }
 
-function unloadGame(){
-
-}
 
 function repopulateSaveDropdown(saves) {
 	var loadDropdown = document.getElementById('loadDropDown');

@@ -326,7 +326,8 @@ function tryLoadGist(id) {
 			var code=result["files"]["script.txt"]["content"];
 			editor.setValue(code);
 			setEditorClean();
-			unloadGame();
+			unfocus();
+			stopClick();
 			compile(["restart"],code);
 		}
 	}
@@ -345,8 +346,8 @@ function tryLoadFile(fileName) {
   		
 		editor.setValue(fileOpenClient.responseText);
 		setEditorClean();
-		unloadGame();
-		compile(["restart"]);
+		unfocus();
+		stopClick();
 	}
 	fileOpenClient.send();
 }
