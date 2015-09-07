@@ -1,3 +1,1 @@
-update(){
-    Debug.log("Hello, sailor!");
-}
+Debug.log("Hello, sailor!");

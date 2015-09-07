@@ -28,6 +28,7 @@ for (var i=0;i<haxeHintArray.length;i++){
 		}
 	}
 }
+console.log(enums);
 
 function genReferencePage(moduleName){
 	var pageHeader = "<!DOCTYPE html>"+
@@ -93,16 +94,19 @@ function genReferencePage(moduleName){
 			row = "<tr style='border-top:5px solid black;'>";
 		}
 		var docString="";
-		for (var j=0;j<codeSamples.length;j++){
-			var cs = codeSamples[j];
-			if (cs.indexOf(r[0])>=0){
+		var cs = "";
+		console.log(preface+","+enums.indexOf(preface)+","+(enums.indexOf(preface)===-1));
+		if (enums.indexOf(preface)===-1){
+			var samplePath = "../demo/doc/"+r[0]+".hx";
+			if (!fs.existsSync(samplePath)){
+				fs.writeFileSync(samplePath,"");		
+				console.log("writing "+samplePath);			
+			}
+			cs = fs.readFileSync(samplePath);
+			if (cs.length>0){
 				docString="<pre>"+cs+"</pre><a class=\"editLink\" href=\"../editor.html?demo=doc/"+r[0]+"\">✎</a>";
-
-				fs.writeFileSync("../demo/doc/"+r[0]+".hx",cs);		
-				break;
 			}
 		}
-
 		//row+=<td>"+tag+"</td>;
 		row+="<td>"+fn+"</td><td>"+doc+"</td><td><div>"+docString+"</div></td></tr>";
 		pageContents+=row;

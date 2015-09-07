@@ -16,7 +16,10 @@ body {
 pre {
 	margin-top: 0em;
 	margin-bottom: 0em;
-	padding: 1em 0em;
+	padding-top: 0.5em;
+	padding-bottom: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 h2 {
 	color:black;
