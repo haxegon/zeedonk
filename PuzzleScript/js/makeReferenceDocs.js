@@ -17,7 +17,9 @@ var pageHeader = "<!DOCTYPE html>"+
 //"		border-collapse: collapse;"+
 "	}"+
 "	tr, td{"+
-"		padding :10px;"+
+"		padding :0px;"+
+"		padding-left :5px;"+
+"		padding-right :5px;"+
 "		border: 1px solid lightgrey;"+
 "		border-radius: 10px;"+
 ""+
@@ -25,7 +27,8 @@ var pageHeader = "<!DOCTYPE html>"+
 "	</style>"+
 "</head>"+
 "<body>"+
-"<h1>Reference</h1>"+
+'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p>Library Reference - <a href="shortcuts.html">Keyboard Shortcuts</a><p>'+
+"<h1>Library Reference</h1>"+
 "<table>	"+
 "<thead style='border:0;' ><tr ><td style='border:0;' >Name</td><td style='border:0;' >Description</td><td style='border:0;' ></td></tr></thead>"+
 "	<tbody>";

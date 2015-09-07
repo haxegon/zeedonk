@@ -1,0 +1,3 @@
+cd js
+node makeReferenceDocs	
+cd ..
