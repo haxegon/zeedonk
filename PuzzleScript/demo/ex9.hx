@@ -1,5 +1,4 @@
 Game.title("Sprite Editor");
-Game.background(Col.NIGHTBLUE);
 
 var sound_select:Int = 84923106;
 var sound_click:Int = 25271106;
@@ -43,6 +42,11 @@ var currenthue:Int;
 var currentsaturation:Float;
 var currentlightness:Float;
 
+var backgroundcol:Int;
+var backgroundhue:Int;
+var buttoncol:Int;
+var buttonhighlightcol:Int;
+
 var currentstate:String;
 
 var mouseheld:Bool = false;
@@ -82,7 +86,6 @@ function new() {
 
   Gfx.createimage("preset", 72, 16);
   Gfx.drawtoimage("preset");
-  Gfx.fillbox(0, 0, 72, 16, Col.NIGHTBLUE);
   for (i in 0 ... 9) {
     Gfx.fillbox(1 + i * 8, 0, 7, 7, Col.BLACK);
     Gfx.fillbox(1 + i * 8, 8, 7, 7, Col.BLACK);
@@ -97,6 +100,8 @@ function new() {
   currentsaturation = palettesaturation[3];
   currentlightness = palettelightness[3];
   updatehueposition();
+  
+  setbackgroundcolour();
 
   imgcanvas = [];
   for (j in 0 ... 16) {
@@ -250,6 +255,16 @@ function saveimagestring(image:String) {
 function updatehueposition() {
   huex = Std.int(116 + (currenthue * 72) / 360);
   huey = Std.int(5 + ((1-currentsaturation) * 20));
+  setbackgroundcolour();
+}
+
+function setbackgroundcolour(){
+  backgroundhue = (palettehue[0] + 180) % 360;
+  backgroundcol = Gfx.HSL(backgroundhue, 0.3, 0.15);
+  
+  buttoncol = Gfx.HSL(backgroundhue, 0.5, 0.6);
+  buttonhighlightcol = Gfx.HSL(backgroundhue, 0.5, 0.8);
+	Game.background(backgroundcol);
 }
 
 function randompalette(){
@@ -261,6 +276,7 @@ function randompalette(){
   palettehue[0] = randhue;
   palettesaturation[0] = randsaturation;
   palettelightness[0] = randlightness;
+  setbackgroundcolour();
 
   randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
@@ -313,7 +329,7 @@ function resize() {
 }
 
 function drawbackground() {
-  Gfx.fillbox(0, 0, 192, 120, Col.NIGHTBLUE);
+  Gfx.fillbox(0, 0, 192, 120, backgroundcol);
 
   Gfx.fillbox(canvasx - 1, canvasy - 1, canvaswidth + 2, canvasheight + 2, Col.LIGHTBLUE);
   Gfx.fillbox(canvasx, canvasy, canvaswidth, canvasheight, Col.BLACK);
@@ -397,10 +413,10 @@ function drawgui() {
     button[i].mouseover = false;
     if(currentstate == button[i].state){
       if (inbox_w(Mouse.x, Mouse.y, button[i].x, button[i].y, button[i].width, 7)) {
-        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, Col.BLUE);
+        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, buttonhighlightcol);
         button[i].mouseover = true;
       }else{
-        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, Col.DARKBLUE);
+        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, buttoncol);
       }
       if (button[i].text != "") {
         Text.display(button[i].x + fontxoff + ((button[i].width-Text.len(button[i].text))/2), button[i].y + fontyoff, button[i].text, Col.WHITE);
@@ -476,11 +492,11 @@ function update() {
   if (!Mouse.leftheld() && mouseheld) mouseheld = false;
 
   if (currentstate == "clear") {
-    Gfx.fillbox(0, 0, 192, 120, Col.NIGHTBLUE);
+    Gfx.fillbox(0, 0, 192, 120, backgroundcol);
     Text.display(Text.CENTER, Gfx.screenheightmid - 14, "ARE YOU SURE YOU WANT");
     Text.display(Text.CENTER, Gfx.screenheightmid - 7, "TO DELETE THIS SPRITE?");
   }else	if (currentstate == "todo") {
-    Gfx.fillbox(0, 0, 192, 120, Col.NIGHTBLUE);
+    Gfx.fillbox(0, 0, 192, 120, backgroundcol);
     Text.display(Text.CENTER, Gfx.screenheightmid - 14, "TO DO: IMPLEMENT THIS");
   }else	if (currentstate == "editor") {
     drawbackground();
