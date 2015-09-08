@@ -311,7 +311,7 @@ function getData(){
 			displayError("HTTP Error "+ githubHTTPClient.status + ' - ' + githubHTTPClient.statusText);
 		}
 		var result = JSON.parse(githubHTTPClient.responseText);
-		var code=result["files"]["script.txt"]["content"];
+    var code=result["files"]["script.hx"]==null?result["files"]["script.txt"]["content"] : result["files"]["script.hx"]["content"];
 		terryRun(code);
     gameScript=code;
 /*
