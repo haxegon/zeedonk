@@ -1,4 +1,7 @@
-var r = Gfx.getred(0x112233);
-var g = Gfx.getgreen(0x112233);
-var b = Gfx.getblue(0x112233);
-Debug.log(r,g,b);
+var c = 0x112233;
+var r = Gfx.getred(c);
+var g = Gfx.getgreen(c);
+var b = Gfx.getblue(c);
+trace(r,g,b);
+//.toString(16) converts integers to strings, base 16
+trace(r.toString(16),g.toString(16),b.toString(16));

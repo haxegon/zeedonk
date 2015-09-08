@@ -1,1 +1,1 @@
-Debug.log(Game.prompt("enter a string","default value"));
+trace(Game.prompt("enter a string","default value"));

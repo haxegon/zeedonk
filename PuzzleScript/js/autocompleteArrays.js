@@ -33,6 +33,7 @@ var haxeLibraryArray = [
 ["var "],
 ["while"],
 ["return "],
+["trace","(String):String","F"]
 ];
 
 var haxeHintArray = [
@@ -87,7 +88,7 @@ var haxeHintArray = [
 ["Col.BLUE","","E"],
 ["Col.LIGHTBLUE","","E"],
 ["Col.MAGENTA","","E"],
-["Font.ZERO","","E"],
+["Font.ZERO4B11","","E"],
 ["Font.APPLE","","E"],
 ["Font.BOLD","","E"],
 ["Font.C64","","E"],
@@ -234,10 +235,7 @@ var haxeHintArray = [
 ["Game.time",":Int","F","Counter. Incremented by one each frame (30 per second)."],
 ["Game.restart","()","F","Restarts the game, resetting all variables."],
 ["String.fromCharCode","(code:Int):String","F"],
-["Math.NEGATIVE_INFINITY",":Float","C"],
-["Math.NaN",":Float","C"],
 ["Math.PI",":Float","C"],
-["Math.POSITIVE_INFINITY",":Float","C"],
 ["Math.PI",":Float","C"],
 ["Math.abs","(v:Float):Float","F"],
 ["Math.acos","(v:Float):Float","F"],
@@ -247,12 +245,8 @@ var haxeHintArray = [
 ["Math.ceil","(v:Float):Int","F"],
 ["Math.cos","(v:Float):Float","F"],
 ["Math.exp","(v:Float):Float","F"],
-["Math.fceil","(v:Float):Float","F"],
-["Math.ffloor","(v:Float):Float","F"],
 ["Math.floor","(v:Float):Int","F"],
 ["Math.fround","(v:Float):Float","F"],
-["Math.isFinite","(v:Float):Bool","F"],
-["Math.isNaN","(v:Float):Bool","F"],
 ["Math.log","(v:Float):Float","F"],
 ["Math.max","(a:Float,b:Float):Float","F"],
 ["Math.min","(a:Float,b:Float):Float","F"],
