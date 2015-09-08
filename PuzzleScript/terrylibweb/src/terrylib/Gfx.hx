@@ -1049,7 +1049,7 @@ class Gfx {
 	}
 	
 	public static function getpixel(x:Float, y:Float):Int {
-		return drawto.getPixel32(Std.int(x), Std.int(y));
+		return drawto.getPixel(Std.int(x), Std.int(y));
 	}
 	
 	public static function setpixel(x:Float, y:Float, col:Int, alpha:Float = 1.0) {
