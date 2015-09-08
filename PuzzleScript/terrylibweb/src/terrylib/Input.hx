@@ -38,7 +38,7 @@ class Input {
 	public static function delaypressed(k:Key, delay:Int):Bool {
 		keycode = keymap.get(k);
 		if (keyheld[keycode]) {
-			if (keydelay[keycode] <= 0) {
+			if (keydelay[keycode] <= 1) {
 				keydelay[keycode] = delay;
 				return true;
 			}else {
