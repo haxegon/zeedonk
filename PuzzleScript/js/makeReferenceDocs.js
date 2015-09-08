@@ -84,7 +84,7 @@ function genReferencePage(moduleName){
 	"<h1>Library Reference</h1>";
 
 	var tableStart = "<table>	"+
-	"<thead><tr class='header'><td  >Name</td><td  >Description</td></tr></thead>"+
+	//"<thead><tr class='header'><td  >Name</td><td  >Description</td></tr></thead>"+
 	"	<tbody>";
 
 	var tableEnd = 	"</tbody>"+
@@ -147,7 +147,7 @@ function genReferencePage(moduleName){
 			}
 		}
 		//row+=<td>"+tag+"</td>;
-		row+="<td><div class=\"funcdec\">"+highlight(fn+"")+"</div></td><td>"+doc+" <div>"+docString+"</div></td></tr>";
+		row+="<td><div class=\"funcdec\">"+highlight(fn+"")+"</div>"+doc+" <div>"+docString+"</div></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
 		if (enumAdded){

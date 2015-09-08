@@ -112,6 +112,8 @@ table#header td {
 
 
 .funcdec {    
+    font-weight: bold;
+    font-size: 150%;
   font-family: monospace; 
 }
 
