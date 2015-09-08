@@ -1,2 +1,2 @@
 Game.save("myVariable","32");
-Debug.log(Game.load("myVariable"));
+trace(Game.load("myVariable"));

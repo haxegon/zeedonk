@@ -1,6 +1,5 @@
 var haxeLibraryArray = [
 ["Gfx",".","M"],
-["Debug",".","M"],
 ["Col",".","E"],
 ["Font",".","E"],
 ["Text",".","M"],
@@ -33,6 +32,7 @@ var haxeLibraryArray = [
 ["var "],
 ["while"],
 ["return "],
+["trace","(String):String","F"]
 ];
 
 var haxeHintArray = [
@@ -248,8 +248,6 @@ var haxeHintArray = [
 ["Math.ceil","(v:Float):Int","F"],
 ["Math.cos","(v:Float):Float","F"],
 ["Math.exp","(v:Float):Float","F"],
-["Math.fceil","(v:Float):Float","F"],
-["Math.ffloor","(v:Float):Float","F"],
 ["Math.floor","(v:Float):Int","F"],
 ["Math.fround","(v:Float):Float","F"],
 ["Math.isFinite","(v:Float):Bool","F"],
