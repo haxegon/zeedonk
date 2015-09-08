@@ -86,6 +86,22 @@ document.onkeydown = function (e) {
     return false;
     // Process event...
   }
+
+    //ctrl/cmd+f
+  if (e.keyCode == 70 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    if (e.target.nodeName==="INPUT"){
+        e.target.blur();
+        editor.execCommand("find");   
+        e.preventDefault();                  
+        return false;        
+    }
+    if (e.target.nodeName==="BODY"){
+        editor.execCommand("find");   
+        e.preventDefault();          
+        return false;
+        // Process event...
+    }
+  }
 };
 
 try {

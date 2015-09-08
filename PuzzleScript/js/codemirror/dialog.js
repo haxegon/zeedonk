@@ -70,7 +70,7 @@
 
       CodeMirror.on(inp, "keydown", function(e) {
         if (options && options.onKeyDown && options.onKeyDown(e, inp.value, close)) { return; }
-        if (e.keyCode == 27 || (options.closeOnEnter !== false && e.keyCode == 13)) {
+        if (e.keyCode == 27 || (options.closeOnEnter !== false && e.keyCode == 13) || ( (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)&&e.keyCode==70 )) {
           inp.blur();
           CodeMirror.e_stop(e);
           close();
