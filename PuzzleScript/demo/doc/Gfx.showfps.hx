@@ -1,0 +1,1 @@
+Gfx.showfps=true;

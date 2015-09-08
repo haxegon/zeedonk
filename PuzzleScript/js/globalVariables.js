@@ -81,7 +81,7 @@ document.onkeydown = function (e) {
     
     //ctrl/cmd+enter
   if (e.keyCode == 13 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
-    runClick();
+    runClick(e);
     e.preventDefault();        
     return false;
     // Process event...

@@ -1,4 +1,13 @@
-<!DOCTYPE html><html><head> <meta charset="utf-8">	<title>Terrylib_Online Reference Gfx</title><link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'><link rel="stylesheet" type="text/css" href="style.css"></head><body><a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a href="Tutorials.html">Tutorials</a> - <b>Library Reference</b> - <a href="Shortcuts.html">Keyboard Shortcuts</a><p><h1>Library Reference</h1>Gfx - <a href="Col.html">Col</a> - <a href="Font.html">Font</a> - <a href="Text.html">Text</a> - <a href="Music.html">Music</a> - <a href="Key.html">Key</a> - <a href="Input.html">Input</a> - <a href="Mouse.html">Mouse</a> - <a href="Convert.html">Convert</a> - <a href="Random.html">Random</a> - <a href="Game.html">Game</a> - <a href="String.html">String</a> - <a href="Math.html">Math</a><p><table>	<thead><tr class='header'><td  >Name</td><td  >Description</td><td>Example</td></tr></thead>	<tbody><b>Gfx</b><p><tr class="odd"><td>Gfx.resizescreen(width, height, scale)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.clearscreen(color)</td><td></td><td><div><pre>function update(){
+<!DOCTYPE html><html><head> <meta charset="utf-8">	<title>Terrylib_Online Reference Gfx</title><link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'><link rel="stylesheet" type="text/css" href="style.css"></head><body><a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a href="Tutorials.html">Tutorials</a> - <b>Library Reference</b> - <a href="Shortcuts.html">Keyboard Shortcuts</a><p><h1>Library Reference</h1>Gfx - <a href="Col.html">Col</a> - <a href="Font.html">Font</a> - <a href="Text.html">Text</a> - <a href="Music.html">Music</a> - <a href="Key.html">Key</a> - <a href="Input.html">Input</a> - <a href="Mouse.html">Mouse</a> - <a href="Convert.html">Convert</a> - <a href="Random.html">Random</a> - <a href="Game.html">Game</a> - <a href="String.html">String</a> - <a href="Math.html">Math</a><p><table>	<thead><tr class='header'><td  >Name</td><td  >Description</td><td>Example</td></tr></thead>	<tbody><b>Gfx</b><p><tr class="odd"><td>Gfx.resizescreen(width, height, scale)</td><td></td><td><div><pre>//broken at time of writing
+Game.background(Col.RED);
+var w = 100+50;
+var h = 100-50;
+Gfx.resizescreen(w,h);
+function update(){
+  Gfx.clearscreen(Col.BLUE);
+  var t = Game.time/30;
+  Gfx.drawcircle(Gfx.screenwidthmid,Gfx.screenheightmid,10,Col.WHITE);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.resizescreen">✎</a></div></td></tr><tr class="even"><td>Gfx.clearscreen(color)</td><td></td><td><div><pre>function update(){
 	var t = (5*Game.time)%256;
 	Gfx.clearscreen(t+t*256+t*256*256);
 }</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.clearscreen">✎</a></div></td></tr><tr class="odd"><td>Gfx.clearscreeneachframe(true or false)</td><td></td><td><div><pre>Gfx.clearscreeneachframe(false);
@@ -7,4 +16,218 @@ function update(){
 	var ry = Random.int(0,Gfx.screenheight);
   var rr = Random.int(1,20);
   Gfx.drawcircle(rx,ry,rr,Col.WHITE);
-}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.clearscreeneachframe">✎</a></div></td></tr><tr class="even"><td>Gfx.drawbox(x, y, width, height, col)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.fillbox(x, y, width, height, col, alpha)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.drawtri(x1, y1, x2, y2, x3, y3, col)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.filltri(x1, y1, x2, y2, x3, y3, col)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.drawcircle(x, y, radius, col)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.fillcircle(x, y, radius, col)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.drawhexagon(x, y, radius, angle, col)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.fillhexagon(x, y, radius, angle, col)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.drawline(x1, y1, x2, y2, col)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.setlinethickness(linethickness)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.getpixel(x, y)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.setpixel(x, y, col):Int</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.RGB(red (0-255), green (0-255), blue (0-255)):Int</td><td>Converts a color with given red, green, and blue values (between 0-255 each) to a single hex number.</td><td><div></div></td></tr><tr class="odd"><td>Gfx.HSL(hue (0-360), saturation (0-1.0), lightness (0-1.0)):Int</td><td>Converts a color with given hue (0-360), saturation (0-1), and lightness (0-1) values to a single hex number.</td><td><div></div></td></tr><tr class="even"><td>Gfx.getred(col):Int</td><td>Returns the red component of a hex color (Between 0-255 inclusive).</td><td><div></div></td></tr><tr class="odd"><td>Gfx.getgreen(col):Int</td><td>Returns the green component of a hex color (Between 0-255 inclusive).</td><td><div></div></td></tr><tr class="even"><td>Gfx.getblue(col):Int</td><td>Returns the blue component of a hex color (Between 0-255 inclusive).</td><td><div></div></td></tr><tr class="odd"><td>Gfx.screenwidth:Int</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.screenheight:Int</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.screenwidthmid:Int</td><td>Returns screen width divided by two.</td><td><div></div></td></tr><tr class="even"><td>Gfx.screenheightmid:Int</td><td>Returns screen height divided by two.</td><td><div></div></td></tr><tr class="odd"><td>Gfx.drawimage(x, y, imagename, optional parameters)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.imagewidth(imagename):Int</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.imageheight(imagename):Int</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.createimage(imagename, width, height) </td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.drawtoscreen()</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.drawtoimage(imagename)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.grabimagefromscreen(imagename, screen x, screen y)</td><td></td><td><div></div></td></tr><tr class="even"><td>Gfx.grabimagefromimage(imagename, sourceimagename, image x, image y)</td><td></td><td><div></div></td></tr><tr class="odd"><td>Gfx.showfps:Bool</td><td>Whether or not to show the fps counter.</td><td><div></div></td></tr></tbody></table></body></html>
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.clearscreeneachframe">✎</a></div></td></tr><tr class="even"><td>Gfx.drawbox(x, y, width, height, col)</td><td></td><td><div><pre>function update(){
+  for (i in 1...10){
+    var t = (Game.time+10*i)/30;
+    var w = Gfx.screenwidthmid+Gfx.screenwidthmid*Math.sin(t);
+    var h = Gfx.screenheightmid+Gfx.screenheightmid*Math.cos(t);
+    var x = (Gfx.screenwidth-w)/2;
+    var y = (Gfx.screenheight-h)/2;  
+    Gfx.drawbox(x,y,w,h,Col.BLUE);
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawbox">✎</a></div></td></tr><tr class="odd"><td>Gfx.fillbox(x, y, width, height, col, alpha)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30;
+
+  for (i in 0...20){
+    var x = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(-t+i)/7);
+    var y = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(-t+i)/7);
+    var w = 50 + Math.sin(t+i)*50;
+    var h = 50 + Math.cos(t+i)*50;
+        
+    Gfx.fillbox(x-w/2,y-h/2,w,h,Gfx.HSL((t+i)*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.fillbox">✎</a></div></td></tr><tr class="even"><td>Gfx.drawtri(x1, y1, x2, y2, x3, y3, col)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30;
+
+  var x2 = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(-t/5));
+  var y2 = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(-t/5));
+
+  for (i in 0...7){
+    var x = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(-t+i)/7);
+    var y = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(-t+i)/7);
+    var x3 = x + Math.sin(t+i)*50;
+    var y3 = y + Math.cos(t+i)*50;
+        
+    Gfx.drawtri(x,y,x2,y2,x3,y3,Gfx.HSL((t+i)*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawtri">✎</a></div></td></tr><tr class="odd"><td>Gfx.filltri(x1, y1, x2, y2, x3, y3, col)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30+10;
+  var big_r=40;
+  
+  var x = Gfx.screenwidthmid;
+  var y = Gfx.screenheightmid;
+
+  for (i in 0...6){
+		var r = 10+(Math.sin(Game.time/10+i)+1)*5;
+    var a1 = 2*Math.PI*(i+0.5)/6-t;
+    var a2 = 2*Math.PI*(i+1+0.5)/6-t;
+    var a3 = 2*Math.PI*(i+2+0.5)/6-t;
+    var m1 = 1*(Math.cos(t)+1);    
+    var m2 = 1*(Math.sin(t*1.1+1)+1);
+    var m3 = 1*(Math.sin(t*1.2+2)+1);
+    var x1 = Gfx.screenwidthmid+big_r*Math.sin(a1)*m1;
+    var y1 = Gfx.screenheightmid+big_r*Math.cos(a1)*m1;
+    var x2 = Gfx.screenwidthmid+big_r*Math.sin(a2)*m2;
+    var y2 = Gfx.screenheightmid+big_r*Math.cos(a2)*m2;
+    var x3 = Gfx.screenwidthmid+big_r*Math.sin(a3)*m3;
+    var y3 = Gfx.screenheightmid+big_r*Math.cos(a3)*m3;
+	  Gfx.filltri(x1,y1,x2,y2,x3,y3,Gfx.HSL((t+i+130)*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.filltri">✎</a></div></td></tr><tr class="even"><td>Gfx.drawcircle(x, y, radius, col)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30;
+
+  for (i in 0...20){
+    var x = Gfx.screenwidthmid;
+    var y = Gfx.screenheightmid;
+    var w = 50 + Math.sin(t+i)*50;
+    var h = 50 + Math.cos(t+i)*50;    
+    w*=i/20;
+    h*=i/20;
+    Gfx.drawcircle(x,y,w,Gfx.HSL((t+i)*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawcircle">✎</a></div></td></tr><tr class="odd"><td>Gfx.fillcircle(x, y, radius, col)</td><td></td><td><div><pre>function update(){
+  for (i in 1...10){
+    var t = (Game.time+10*i)/30;
+    var r = Gfx.screenwidthmid+Gfx.screenwidthmid*Math.sin(t);
+    var x = Gfx.screenwidthmid+Gfx.screenwidthmid*Math.sin(t+1);
+    var y = Gfx.screenheightmid+Gfx.screenheightmid*Math.sin(t+2);
+    Gfx.fillcircle(x,y,r,Gfx.HSL(t*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.fillcircle">✎</a></div></td></tr><tr class="even"><td>Gfx.drawhexagon(x, y, radius, angle, col)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30;
+  for (i in 0...7){
+    var r = 10;
+    var angle = 2*(t+i);
+    var x = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(t+i)/7);
+    var y = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(t+i)/7);
+    Gfx.drawhexagon(x,y,r,angle,Gfx.HSL((t+i)*100,1,.5));
+  }
+  var x = Gfx.screenwidthmid;
+  var y = Gfx.screenheightmid;
+  var r = (Gfx.screenwidthmid-20)/3;
+  Gfx.drawhexagon(x,y,r,-t,Gfx.HSL((t-1)*100,1,.5));
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawhexagon">✎</a></div></td></tr><tr class="odd"><td>Gfx.fillhexagon(x, y, radius, angle, col)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30;
+  var big_r=40;
+  
+  var x = Gfx.screenwidthmid;
+  var y = Gfx.screenheightmid;
+  Gfx.fillhexagon(x,y,big_r,t,Gfx.HSL(t*100,1,.5));
+
+  for (i in 0...6){
+		var r = 10+(Math.sin(Game.time/10+i)+1)*5;
+    var a = 2*Math.PI*(i+0.5)/6-t;
+    var x = Gfx.screenwidthmid+big_r*Math.sin(a);
+    var y = Gfx.screenheightmid+big_r*Math.cos(a);
+	  Gfx.fillhexagon(x,y,r,-a,Gfx.HSL((t+i+130)*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.fillhexagon">✎</a></div></td></tr><tr class="even"><td>Gfx.drawline(x1, y1, x2, y2, col)</td><td></td><td><div><pre>function update(){
+  var t = (Game.time)/30;
+
+  var x2 = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(-t/5));
+  var y2 = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(-t/5));
+
+  for (i in 0...7){
+    var x = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(t+i)/7);
+    var y = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(t+i)/7);
+    Gfx.drawline(x,y,x2,y2,Gfx.HSL((t+i)*100,1,.2));
+    Gfx.drawline(x,y,Gfx.screenwidthmid,Gfx.screenheightmid,Gfx.HSL((t+i)*100,1,.5));
+  }
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawline">✎</a></div></td></tr><tr class="odd"><td>Gfx.setlinethickness(linethickness)</td><td></td><td><div><pre>function update(){
+  var t = Game.time;
+  var a = t/10;
+  
+  var cx = Gfx.screenwidthmid;
+  var cy = Gfx.screenheightmid;
+  var mx = Mouse.x;
+  var my = Mouse.y;
+  var dx = mx-cx;
+  var dy = my-cy;
+  var r = Math.sqrt(dx*dx+dy*dy);
+  //r goes from 20 to 60
+  //thickness goes from 1 to 10
+  var p = 1-(r-20)/40;
+  if (p<0){
+    p=0;
+  }
+  if (p>1){
+    p=1;
+  }
+  Gfx.setlinethickness(1+p*9);
+  Gfx.drawline(mx,my,cx,cy,Col.WHITE);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.setlinethickness">✎</a></div></td></tr><tr class="even"><td>Gfx.getpixel(x, y)</td><td></td><td><div><pre>//broken :(
+function update(){
+	Gfx.fillbox(0,0,10,10,Col.RED);
+	var c = Gfx.getpixel(5,5);
+//Debug.log(c); //returns -16777216
+  Gfx.fillbox(10,10,10,10,c);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.getpixel">✎</a></div></td></tr><tr class="odd"><td>Gfx.setpixel(x, y, col):Int</td><td></td><td><div><pre>Gfx.clearscreeneachframe(false);
+function update(){
+  c=Random.int(0,0xffffff);
+  Gfx.setpixel(Mouse.x,Mouse.y,c);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.setpixel">✎</a></div></td></tr><tr class="even"><td>Gfx.RGB(red (0-255), green (0-255), blue (0-255)):Int</td><td>Converts a color with given red, green, and blue values (between 0-255 each) to a single hex number.</td><td><div><pre>function update(){
+  var t = Game.time/10;
+	var r = 255*(Math.sin(1.0*t+2)+1)/2;
+	var g = 255*(Math.sin(1.2*t+5)+1)/2;
+	var b = 255*(Math.sin(1.3*t+4)+1)/2;
+  var c = Gfx.RGB(r,g,b);
+  Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheightmid,c);
+  Gfx.fillbox(0*Gfx.screenwidth/3,Gfx.screenheightmid,Gfx.screenwidth/3,Gfx.screenheightmid,Gfx.RGB(r,0,0));
+  Gfx.fillbox(1*Gfx.screenwidth/3,Gfx.screenheightmid,Gfx.screenwidth/3,Gfx.screenheightmid,Gfx.RGB(0,g,0));
+  Gfx.fillbox(2*Gfx.screenwidth/3,Gfx.screenheightmid,Gfx.screenwidth/3,Gfx.screenheightmid,Gfx.RGB(0,0,b));
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.RGB">✎</a></div></td></tr><tr class="odd"><td>Gfx.HSL(hue (0-360), saturation (0-1.0), lightness (0-1.0)):Int</td><td>Converts a color with given hue (0-360), saturation (0-1), and lightness (0-1) values to a single hex number.</td><td><div><pre>function update(){
+  var c = Gfx.HSL(Game.time*10,1,0.5);
+  Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheight,c);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.HSL">✎</a></div></td></tr><tr class="even"><td>Gfx.getred(col):Int</td><td>Returns the red component of a hex color (Between 0-255 inclusive).</td><td><div><pre>var r = Gfx.getred(0x112233);
+var g = Gfx.getgreen(0x112233);
+var b = Gfx.getblue(0x112233);
+Debug.log(r,g,b);</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.getred">✎</a></div></td></tr><tr class="odd"><td>Gfx.getgreen(col):Int</td><td>Returns the green component of a hex color (Between 0-255 inclusive).</td><td><div><pre>var r = Gfx.getred(0x112233);
+var g = Gfx.getgreen(0x112233);
+var b = Gfx.getblue(0x112233);
+Debug.log(r,g,b);</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.getgreen">✎</a></div></td></tr><tr class="even"><td>Gfx.getblue(col):Int</td><td>Returns the blue component of a hex color (Between 0-255 inclusive).</td><td><div><pre>var r = Gfx.getred(0x112233);
+var g = Gfx.getgreen(0x112233);
+var b = Gfx.getblue(0x112233);
+Debug.log(r,g,b);</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.getblue">✎</a></div></td></tr><tr class="odd"><td>Gfx.screenwidth:Int</td><td></td><td><div><pre>function update(){
+  Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheightmid,Col.RED);
+  Gfx.fillbox(0,Gfx.screenheightmid,Gfx.screenwidth,Gfx.screenheightmid,Col.BLUE);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.screenwidth">✎</a></div></td></tr><tr class="even"><td>Gfx.screenheight:Int</td><td></td><td><div><pre>function update(){
+  Gfx.fillbox(Mouse.x,0,1,Gfx.screenheight,Col.WHITE);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.screenheight">✎</a></div></td></tr><tr class="odd"><td>Gfx.screenwidthmid:Int</td><td>Returns screen width divided by two.</td><td><div><pre>function update(){
+  Gfx.fillbox(0,0,Gfx.screenwidthmid,Gfx.screenheight,Col.YELLOW);
+  Gfx.fillbox(Gfx.screenwidthmid,0,Gfx.screenwidthmid,Gfx.screenheight,Col.GREEN);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.screenwidthmid">✎</a></div></td></tr><tr class="even"><td>Gfx.screenheightmid:Int</td><td>Returns screen height divided by two.</td><td><div><pre>function update(){
+  Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheightmid,Col.RED);
+  Gfx.fillbox(0,Gfx.screenheightmid,Gfx.screenwidth,Gfx.screenheightmid,Col.BLUE);
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.screenheightmid">✎</a></div></td></tr><tr class="odd"><td>Gfx.drawimage(x, y, imagename, optional parameters)</td><td></td><td><div><pre>//this is broken. i don't know why
+Gfx.createimage("pic",30,30);
+Gfx.drawtoimage("pic");
+Gfx.fillbox(10,10,10,10,Col.RED);
+Gfx.drawtoscreen();
+
+function update(){
+  Gfx.drawimage(0,0,"pic");
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawimage">✎</a></div></td></tr><tr class="even"><td>Gfx.imagewidth(imagename):Int</td><td></td><td><div><pre>//image stuff broken at time of writing</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.imagewidth">✎</a></div></td></tr><tr class="odd"><td>Gfx.imageheight(imagename):Int</td><td></td><td><div><pre>//image stuff broken at time of writing</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.imageheight">✎</a></div></td></tr><tr class="even"><td>Gfx.createimage(imagename, width, height) </td><td></td><td><div><pre>//this is broken. i don't know why
+Gfx.createimage("pic",30,30);
+Gfx.drawtoimage("pic");
+Gfx.fillbox(10,10,10,10,Col.RED);
+Gfx.drawtoscreen();
+
+function update(){
+  Gfx.drawimage(0,0,"pic");
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.createimage">✎</a></div></td></tr><tr class="odd"><td>Gfx.drawtoscreen()</td><td></td><td><div><pre>//this is broken. i don't know why
+Gfx.createimage("pic",30,30);
+Gfx.drawtoimage("pic");
+Gfx.fillbox(10,10,10,10,Col.RED);
+Gfx.drawtoscreen();
+
+function update(){
+  Gfx.drawimage(0,0,"pic");
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawtoscreen">✎</a></div></td></tr><tr class="even"><td>Gfx.drawtoimage(imagename)</td><td></td><td><div><pre>//this is broken. i don't know why
+Gfx.createimage("pic",30,30);
+Gfx.drawtoimage("pic");
+Gfx.fillbox(10,10,10,10,Col.RED);
+Gfx.drawtoscreen();
+
+function update(){
+  Gfx.drawimage(0,0,"pic");
+}</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.drawtoimage">✎</a></div></td></tr><tr class="odd"><td>Gfx.grabimagefromscreen(imagename, screen x, screen y)</td><td></td><td><div><pre>//image stuff broken at time of writing</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.grabimagefromscreen">✎</a></div></td></tr><tr class="even"><td>Gfx.grabimagefromimage(imagename, sourceimagename, image x, image y)</td><td></td><td><div><pre>//image stuff broken at time of writing</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.grabimagefromimage">✎</a></div></td></tr><tr class="odd"><td>Gfx.showfps:Bool</td><td>Whether or not to show the fps counter.</td><td><div><pre>Gfx.showfps=true;</pre><a class="editLink" href="../editor.html?demo=doc/Gfx.showfps">✎</a></div></td></tr></tbody></table></body></html>
