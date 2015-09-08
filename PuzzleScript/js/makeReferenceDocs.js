@@ -78,7 +78,9 @@ function genReferencePage(moduleName){
 	'<script src="../js/codemirror/haxe.js"></script>'+
 	"</head>"+
 	"<body>"+
-	'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a href="Tutorials.html">Tutorials</a> - <b>Library Reference</b> - <a href="Shortcuts.html">Keyboard Shortcuts</a><p>'+
+	'<div class="navBar">'+
+	'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a class="moduleButton" href="Tutorials.html">Tutorials</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
+	"</div><p>"+
 	"<h1>Library Reference</h1>";
 
 	var tableStart = "<table>	"+
@@ -94,21 +96,21 @@ function genReferencePage(moduleName){
 	var pageContents = "";
 	var oldPreface="";
 
-	var moduleHeader="";
+	var moduleHeader="<div class='navBar'>";
 	for (var i=0;i<modules.length;i++){
 		var m = modules[i];
 		if (moduleHeader.length>0){
-			moduleHeader+=" - ";
+			//moduleHeader+=" - ";
 		}
 		if (m===moduleName){
-			moduleHeader+=m;			
+			moduleHeader+='<span class="moduleSelected">'+m+"</span>";			
 		} else {
-			moduleHeader+='<a href="'+m+'.html">'+m+'</a>';
+			moduleHeader+='<a class="moduleButton" href="'+m+'.html">'+m+'</a>';
 		}
 	}
-	moduleHeader+="<p>";
+	moduleHeader+="</div><p>";
 
-	var enumContents ="<b>"+ moduleName+"</b><p><div id='enumFrame'>";
+	var enumContents ="<h3>"+ moduleName+"</h3><p><div id='enumFrame'>";
 	var enumAdded=false;
 	var counter=0;
 	for (var i=0;i<haxeHintArray.length;i++){
@@ -145,7 +147,7 @@ function genReferencePage(moduleName){
 			}
 		}
 		//row+=<td>"+tag+"</td>;
-		row+="<td>"+fn+"</td><td>"+doc+" <div>"+docString+"</div></td></tr>";
+		row+="<td><div class=\"funcdec\">"+highlight(fn+"")+"</div></td><td>"+doc+" <div>"+docString+"</div></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
 		if (enumAdded){
@@ -155,7 +157,7 @@ function genReferencePage(moduleName){
 		enumAdded=true;
 	}
 	enumContents+="</div>";
-	pageContents ="<b>"+ moduleName+"</b><p>"+pageContents;
+	pageContents ="<h3>"+ moduleName+"</h3><p>"+pageContents;
 
 	if (moduleName.length>0){		
 		var wholePage = pageHeader+moduleHeader+tableStart+pageContents+tableEnd+pageFooter;

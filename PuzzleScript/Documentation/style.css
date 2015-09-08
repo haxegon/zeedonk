@@ -1,6 +1,11 @@
+a {
+    text-decoration: none;
+}
+
 body {
 	font-family: 'Lora', serif;
 }
+
 #enumFrame {
     background-color: #f8f8fa;
     border: solid 1px #ccc;
@@ -20,6 +25,11 @@ pre {
 	padding-bottom: 1em;
 	padding-left: 1em;
 	padding-right: 1em;
+}
+
+h2 {
+    color:black;
+    text-decoration: none;
 }
 h2 {
 	color:black;
@@ -51,26 +61,36 @@ table th {
     padding: 0.3em;
 }
 
+
 td {
     padding: 0.4em;
 }
 
 th, td {
-    border-right: solid 1px #ccc;
+    /*border-right: solid 1px #ccc;*/
 }
 
 tr.odd {
     background-color: #e8e8e8;
 }
 
+table {
+/*    box-shadow: 10px 10px 5px #888888; */
+}
+
+#enumFrame {
+  font-family: monospace; 
+    /*box-shadow: 0 0 5px #888888;    */
+}
 .codeInsert {
-    border: 1px solid grey;
+    border: 1px solid #cccccc;
     background-color: white;
     border-radius: 5px;
     margin: 3px;
     padding:5px;
     font-family: monospace;
     min-height: 30px;
+    max-width:800px;
 }
 
 /* Header - need to undo some of the table properties because I couldn't
@@ -87,4 +107,40 @@ table#header {
 
 table#header td {
     border: none;
+}
+
+
+.funcdec {    
+  font-family: monospace; 
+}
+
+.moduleButton {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding:3px 3px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: black;
+}
+
+.moduleButton:hover{
+    background-color: #eee;
+}
+.moduleSelected {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding:3px 3px;
+    text-decoration: none;
+    background-color: #ccc;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.navBar {
+}
+
+.titleText{
+    
 }
