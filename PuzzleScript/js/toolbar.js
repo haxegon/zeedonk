@@ -116,7 +116,7 @@ function saveClick() {
 	var savesDatStr = JSON.stringify(curSaveArray);
 	localStorage['saves']=savesDatStr;
 
-	repopulateSaveDropdown(curSaveArray);
+	repopulateSaveDropdown(JSON.parse(savesDatStr));
 
 	var loadDropdown = document.getElementById('loadDropDown');
 	loadDropdown.selectedIndex=0;
