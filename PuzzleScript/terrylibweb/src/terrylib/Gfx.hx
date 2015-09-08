@@ -955,11 +955,8 @@ class Gfx {
 					}else {
 						settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
 					}
-					if (alpha == 1.0) {
-						drawto.fillRect(trect, col);	
-					}else {
-						fillbox(trect.x, trect.y, trect.width, 1, col, alpha);
-					}
+					
+					fillbox(trect.x, trect.y, trect.width, 1, col, alpha);
 				}
 			}
 		}
@@ -978,11 +975,7 @@ class Gfx {
 						settrect(bresx1[i], bresy1[i], bresx2[matchingpoint]-bresx1[i], 1);
 					}
 					
-					if (alpha == 1.0) {
-						drawto.fillRect(trect, col);	
-					}else {
-						fillbox(trect.x, trect.y, trect.width, 1, col, alpha);
-					}
+					fillbox(trect.x, trect.y, trect.width, 1, col, alpha);
 				}
 			}
 		}
