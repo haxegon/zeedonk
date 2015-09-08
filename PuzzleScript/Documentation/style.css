@@ -91,6 +91,7 @@ table {
     font-family: monospace;
     min-height: 30px;
     max-width:800px;
+    /*box-shadow:         inset 0 0 10px #000000;*/
 }
 
 /* Header - need to undo some of the table properties because I couldn't
