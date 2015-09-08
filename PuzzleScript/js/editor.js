@@ -170,11 +170,14 @@ CodeMirror.registerHelper("hint", "haxe",
 			if (line[pos]!=="."){
 				return false;
 			}
-			if (pos>0 && line[pos-1]==="."){
+			if (pos>1 && line[pos-1]==="."&&line[pos-2]==="."){
 				return false;
 			}
 			return true;
 		}
+
+
+
 		while (start>0){
 			start--;
 			if (isalnum(line.charCodeAt(start))||validStop(start))  {
@@ -187,16 +190,26 @@ CodeMirror.registerHelper("hint", "haxe",
 			start++;
 		}
 			
+		function validStopPost(pos){
+			if (line[pos]!=="."){
+				return false;
+			}
+			if (pos+2<line.length && line[pos+1]==="."&&line[pos+2]==="."){
+				return false;
+			}
+			return true;
+		}
+
 		var end=cur.ch-1;
 		while (end<line.length-1){
 			end++;
-			if (isalnum(line.charCodeAt(end))||line[end]===".")  {
+			if (isalnum(line.charCodeAt(end))||validStopPost(end)===".")  {
 			} else {
 				break;
 			}
 		}
 
-		if (isalnum(line.charCodeAt(end))||line[end]===".")  {
+		if (isalnum(line.charCodeAt(end))||validStopPost(end)===".")  {
 		} else {
 			end--;
 		}
