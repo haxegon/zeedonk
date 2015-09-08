@@ -104,7 +104,6 @@ private static function stripWhitespace(s:String):String{
 }
 
 private static function loadDat(s:String){
-//  Debug.log(s);
   s = stripWhitespace(s);
   s = unmakeRLE(s);
   var arr : Array<Int> = [];

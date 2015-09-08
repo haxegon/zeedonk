@@ -33,7 +33,6 @@ var haxeLibraryArray = [
 ["var "],
 ["while"],
 ["return "],
-["trace","(String):String","F"]
 ];
 
 var haxeHintArray = [

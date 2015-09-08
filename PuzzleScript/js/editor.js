@@ -92,11 +92,20 @@ function CompletionsPick( p_oCompletion ) {
    //console.log( p_oCompletion ) ; 
    consolePrint(p_oCompletion.text+p_oCompletion.displayText,true);
    var dt = p_oCompletion.displayText;
-   if (dt.indexOf("()")===0){
+   dt=dt.toLowerCase();
+   if (dt.indexOf("():void")===0||(dt.indexOf("()")===0&&dt[dt.length-1]==")")) {
+   	editor.replaceSelection("();",null);
+   } else if (dt.indexOf("()")===0){
    	editor.replaceSelection("()",null);
    } else if (dt.indexOf("(")==0){
-   	editor.replaceSelection("()",null);
-   	editor.execCommand("goCharLeft");
+   	if (dt.indexOf(":void")>=0 || dt[dt.length-1]==")"){
+   		editor.replaceSelection("();",null);
+   		editor.execCommand("goCharLeft");
+   		editor.execCommand("goCharLeft");
+   	} else {
+   		editor.replaceSelection("()",null);
+   		editor.execCommand("goCharLeft");
+   	}
    } else if (dt.indexOf(".")===0){
    	editor.replaceSelection(".",null);   	
    	CodeMirror.commands.autocomplete(editor);
