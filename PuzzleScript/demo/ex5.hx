@@ -59,7 +59,19 @@ var B62 = [ "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q",
   sequences:[0],
   notes:[]};*/
   
+function stripWhitespace(s){
+  var result="";
+  for(i in 0...s.length){
+    var c = s[i];
+    if (c==" "||c=="\t"||c=="\n"){
+      continue;
+    }
+    result+=c;
+  }
+  return result;
+}
 function loadDat(s){
+  s = stripWhitespace(s);
   s = unmakeRLE(s);
   var arr : Array<int> = [];
   for(ci in 0...s.length){

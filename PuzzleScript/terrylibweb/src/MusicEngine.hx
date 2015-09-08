@@ -91,8 +91,21 @@ private static var B62 = [ "a","b","c","d","e","f","g","h","i","j","k","l","m","
 "à","á","â","ä","æ","ã","å","ā","è","é"        
 ];
 
+private static function stripWhitespace(s:String):String{
+  var result="";
+  for(i in 0...s.length){
+    var c = s.charAt(i);
+    if (c==" "||c=="\t"||c=="\n"){
+      continue;
+    }
+    result+=c;
+  }
+  return result;
+}
+
 private static function loadDat(s:String){
 //  Debug.log(s);
+  s = stripWhitespace(s);
   s = unmakeRLE(s);
   var arr : Array<Int> = [];
   for(ci in 0...s.length){
