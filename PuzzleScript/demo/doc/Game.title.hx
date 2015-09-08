@@ -1,0 +1,1 @@
+Game.title("my game");

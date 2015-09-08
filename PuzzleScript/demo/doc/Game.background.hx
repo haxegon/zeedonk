@@ -1,0 +1,1 @@
+Game.background(0xff0000);
