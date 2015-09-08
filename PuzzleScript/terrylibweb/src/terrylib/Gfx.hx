@@ -1045,7 +1045,7 @@ class Gfx {
 	
 	public static function clearscreen(col:Int = 0x000000) {
 		if (skiprender && drawingtoscreen) return;
-		backbuffer.fillRect(backbuffer.rect, col);
+		drawto.fillRect(drawto.rect, col);
 	}
 	
 	public static function getpixel(x:Float, y:Float):Int {
