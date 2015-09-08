@@ -244,7 +244,6 @@ class Webscript {
 		interpreter.variables.set("Math", Math);
 		interpreter.variables.set("Col", Col);
 		interpreter.variables.set("Convert", Convert);
-		interpreter.variables.set("Debug", Webdebug);
 		interpreter.variables.set("Gfx", Gfx);
 		interpreter.variables.set("Input", Input);
 		interpreter.variables.set("Key", Key);

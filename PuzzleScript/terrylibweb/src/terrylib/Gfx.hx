@@ -790,6 +790,8 @@ class Gfx {
 	public static function drawcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
+		x = fastFloor(x);
+		y = fastFloor(y);
 		radius = fastFloor(radius);
 		tx = radius;
     ty = 0;
@@ -829,6 +831,8 @@ class Gfx {
 	public static function fillcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
+		x = fastFloor(x);
+		y = fastFloor(y);
 		radius = fastFloor(radius);
 		tx = radius;
     ty = 0;
