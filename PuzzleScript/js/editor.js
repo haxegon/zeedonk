@@ -157,16 +157,32 @@ CodeMirror.registerHelper("hint", "haxe",
 		var tok = editor.getTokenAt(cur);
 		var tokStart = tok.string.toLowerCase();
 
+
 		var line = editor.getLine(cur.line);
 		var start = cur.ch;
+
+		var ellipses=false;
+		if (start>=3 && line[start]!=="." && line[start-1]==="."&&line[start-2]==="."&&line[start-3]==="."){
+			ellipses=true;
+		}
+
+		function validStop(pos){
+			if (line[pos]!=="."){
+				return false;
+			}
+			if (pos>0 && line[pos-1]==="."){
+				return false;
+			}
+			return true;
+		}
 		while (start>0){
 			start--;
-			if (isalnum(line.charCodeAt(start))||line[start]===".")  {
+			if (isalnum(line.charCodeAt(start))||validStop(start))  {
 			} else {
 				break;
 			}
 		}
-		if (isalnum(line.charCodeAt(start))||line[start]===".")  {
+		if (isalnum(line.charCodeAt(start))||validStop(start))  {
 		} else {
 			start++;
 		}
