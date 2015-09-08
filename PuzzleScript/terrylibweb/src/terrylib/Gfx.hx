@@ -182,7 +182,7 @@ class Gfx {
 	public static function createimage(imagename:String, width:Float, height:Float) {
 		imageindex.set(imagename, images.length);
 		
-		var t:BitmapData = new BitmapData(Math.floor(width), Math.floor(height), true, 0x000000);
+		var t:BitmapData = new BitmapData(Math.floor(width), Math.floor(height), true, 0);
 		images.push(t);
 	}
 	
@@ -1045,6 +1045,26 @@ class Gfx {
 		return drawto.getPixel(Std.int(x), Std.int(y));
 	}
 	
+	public static function ispixeltransparent(x:Float, y:Float):Int {
+		Webdebug.log("Checking pixel transparency at point " + x + ", " + y);
+		var pixel:Int = drawto.getPixel32(Std.int(x), Std.int(y));
+		Webdebug.log(Convert.tostring(pixel));
+		
+		var a:Int = pixel >> 24 & 0xFF;
+		var r:Int = pixel >> 16 & 0xFF;
+		var g:Int = pixel >> 8  & 0xFF;
+		var b:Int = pixel       & 0xFF;
+		
+		Webdebug.log(Convert.tostring(a), Convert.tostring(r), Convert.tostring(g), Convert.tostring(b));
+		//return (drawto.getPixel32(Std.int(x), Std.int(y))	>> 24 & 0xFF) > 0?false:true;
+		return a;
+	}
+	
+	public static function setpixeltransparent(x:Float, y:Float) {
+		settrect(Std.int(x)-1, Std.int(y)-1, 3, 3);
+		drawto.fillRect(trect, 0);
+	}
+	
 	public static function setpixel(x:Float, y:Float, col:Int, alpha:Float = 1.0) {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
@@ -1061,10 +1081,10 @@ class Gfx {
 			if (linethickness == 1) {
 				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
 				settrect(Std.int(x), Std.int(y), 1, 1);
-				drawto.fillRect(trect, col);
+				drawto.fillRect(trect, (0xFF << 24) + col);
 			}else {
 				settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
-				drawto.fillRect(trect, col);
+				drawto.fillRect(trect, (0xFF << 24) + col);
 			}
 		}
 		#else
