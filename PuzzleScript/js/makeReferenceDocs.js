@@ -8,6 +8,9 @@
 var fs = require('fs');
 eval(fs.readFileSync('autocompleteArrays.js')+'');
 
+CodeMirror = require('./addon/runmode/runmode.node.js');
+haxe = require('./codemirror/haxe.js');
+
 var modules = [];
 var enums = [];
 for (var i=0;i<haxeHintArray.length;i++){
@@ -42,6 +45,26 @@ for(var i=0;i<enums.length;i++){
 }*/
 
 
+function highlight(text){
+	var result="<div class='Codemirror cm-s-default'>";
+	function f(token,style,c,d,e){
+	        if (token=="\n"){
+	                result+="<br>";
+	        } else if (token.trim().length==0){
+	                for (var i=0;i<token.length;i++){
+	                        //replace whitespace with explicit spaces
+	                        result+="&nbsp;";
+	                }
+	        } else {
+	                result+="<span class='cm-"+style+"'>"+token+"</span>";
+	        }
+	}
+ 	//text='function update(){\n  trace("Hello, sailor!");\n}';
+	CodeMirror.runMode(text, "haxe",f);
+	result+="</div>";
+	return result;
+}
+
 function genReferencePage(moduleName){
 	var pageHeader = "<!DOCTYPE html>"+
 	"<html>"+
@@ -50,13 +73,16 @@ function genReferencePage(moduleName){
 	"	<title>Terrylib_Online Reference " +moduleName+"</title>"+
 	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
 	'<link rel="stylesheet" type="text/css" href="style.css">'+
+	'<link rel="stylesheet" type="text/css" href="../css/codemirror.css">'+
+	'<script src="../js/codemirror/codemirror.js"></script>'+
+	'<script src="../js/codemirror/haxe.js"></script>'+
 	"</head>"+
 	"<body>"+
 	'<a href="/editor.html"><h2>Terrylib Online</h2></a> <p><a href="Tutorials.html">Tutorials</a> - <b>Library Reference</b> - <a href="Shortcuts.html">Keyboard Shortcuts</a><p>'+
 	"<h1>Library Reference</h1>";
 
 	var tableStart = "<table>	"+
-	"<thead><tr class='header'><td  >Name</td><td  >Description</td><td>Example</td></tr></thead>"+
+	"<thead><tr class='header'><td  >Name</td><td  >Description</td></tr></thead>"+
 	"	<tbody>";
 
 	var tableEnd = 	"</tbody>"+
@@ -114,11 +140,12 @@ function genReferencePage(moduleName){
 			}
 			cs = fs.readFileSync(samplePath);
 			if (cs.length>0){
-				docString="<pre>"+cs+"</pre><a class=\"editLink\" href=\"../editor.html?demo=doc/"+r[0]+"\">✎</a>";
+				var formatted = highlight(cs+"");
+				docString="<div class=\"codeInsert\">"+formatted+"<a class=\"editLink\" href=\"../editor.html?demo=doc/"+r[0]+"\">✎</a></div>";
 			}
 		}
 		//row+=<td>"+tag+"</td>;
-		row+="<td>"+fn+"</td><td>"+doc+"</td><td><div>"+docString+"</div></td></tr>";
+		row+="<td>"+fn+"</td><td>"+doc+" <div>"+docString+"</div></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
 		if (enumAdded){
