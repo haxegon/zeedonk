@@ -461,6 +461,16 @@ function setstaticcol(t:Int, c:Int) {
   currentlightness = palettelightness[t];
 }
 
+function selectcolour(t:Int){
+  Music.playsound(sound_click, 0.2);
+  currentcol = t;
+
+  currenthue = palettehue[t];
+  currentsaturation = palettesaturation[t];
+  currentlightness = palettelightness[t];
+  updatehueposition();
+}
+
 function update() {		
   //Prevent stray clicks on scene changes
   if (!Mouse.leftheld() && mouseheld) mouseheld = false;
@@ -515,11 +525,7 @@ function update() {
         var oldcol:Int = currentcol;
         currentcol = pget(cursorx, cursory);
         if(oldcol != currentcol){
-          Music.playsound(sound_click, 0.2);
-          currenthue = palettehue[currentcol];
-          currentsaturation = palettesaturation[currentcol];
-          currentlightness = palettelightness[currentcol];
-          updatehueposition();
+          selectcolour(currentcol);
         }
       }
     }
@@ -528,16 +534,8 @@ function update() {
       for (i in 0 ... 4) {
         if (inbox_w(Mouse.x, Mouse.y, 108 - 52 + (i * 14), 102 + 4, 10, 10)) {
           if (Mouse.leftclick()) {
-            if (i == currentcol) {
-            }else {
-              //Select the colour
-    					Music.playsound(sound_click, 0.2);
-              currentcol = i;
-
-              currenthue = palettehue[i];
-              currentsaturation = palettesaturation[i];
-              currentlightness = palettelightness[i];
-              updatehueposition();
+            if (i != currentcol) {
+    					selectcolour(i);
             }
           }
 
@@ -548,6 +546,16 @@ function update() {
           }
         }
       }
+    }
+    
+    if(Input.justpressed(Key.ONE)){
+    	selectcolour(0);
+    }else if(Input.justpressed(Key.TWO)){
+    	selectcolour(1);
+    }else if(Input.justpressed(Key.THREE)){
+    	selectcolour(2);
+    }else if(Input.justpressed(Key.FOUR)){
+    	selectcolour(3);
     }
 
     Gfx.drawimage(116, 5, "hue");
