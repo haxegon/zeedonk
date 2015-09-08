@@ -90,6 +90,16 @@ function renderHint(elt,data,cur){
 function CompletionsPick( p_oCompletion ) { 
  //  console.log( "==> Function entry: " + arguments.callee.name + "() <==" ) ; 
    //console.log( p_oCompletion ) ; 
+   var c = editor.getCursor();
+   var l = editor.getLine(c.line);
+
+   if (c.ch<l.length){
+   	var next = l[c.ch];
+   	if (next=="("){
+   		return;
+   	}
+   }
+
    consolePrint(p_oCompletion.text+p_oCompletion.displayText,true);
    var dt = p_oCompletion.displayText;
    dt=dt.toLowerCase();
