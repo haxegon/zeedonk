@@ -158,7 +158,7 @@ function drawTitle(){
   if (Input.justpressed(Key.SPACE))
   {    
     Music.playsound(80298709);
-    Debug.log("boop");
+    trace("boop");
       restart();
       title=false;
     Music.stopmusic();

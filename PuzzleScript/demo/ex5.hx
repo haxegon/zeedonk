@@ -60,7 +60,6 @@ var B62 = [ "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q",
   notes:[]};*/
   
 function loadDat(s){
-//  Debug.log(s);
   s = unmakeRLE(s);
   var arr : Array<int> = [];
   for(ci in 0...s.length){
@@ -354,7 +353,7 @@ var copyBuffer=null;
       
 function DecreasePatternLength(){
   dat.patternLength--;
-  Debug.log("boops");
+  trace("boops");
   
   for (sequence in dat.notes){
        for (channel in sequence){
@@ -573,7 +572,7 @@ function update() {
         if (selectedSequence==i){
           selectedSequence--;
         }
-        Debug.log("removed from sequence");
+        trace("removed from sequence");
         break;
       }
     }
@@ -623,7 +622,7 @@ function update() {
     dat.patternLength++;      
   } 
   if (collide==3&&dat.patternLength>0){
-    Debug.log(collide);
+    trace(collide);
     
     DecreasePatternLength();
   }
@@ -662,20 +661,19 @@ for (k in 0 ... 5){
   if (c==3){
     MakeBackupCopy();
     dat.instruments[k]=Random.int(0,99999999);
-    Debug.log(dat.instruments[k]);
+    trace(dat.instruments[k]);
     Music.playnote(dat.instruments[k],1,1,1.0);
   }
   {
     Gfx.fillbox(16+k*35,10,33,7,instCols[k][0]);
   }
   var n=dat.instruments[k];
-//  Debug.log(k+","+s);
   Text.display(17+k*35,11+charOffset,Convert.tostring(n),instCols[k][1]);
   if (c>0){
     var n = getNum();
     if (n>=0){
       dat.instruments[k]=((dat.instruments[k]*10) % 100000000)+n;
-      Debug.log(dat.instruments[k]);
+      trace(dat.instruments[k]);
     }
     if (Input.justpressed(Key.BACKSPACE)){
       dat.instruments[k]=0;
@@ -717,7 +715,7 @@ for (k in 0 ... 5){
   if (drawButton("  save   ",152,81,textCol,mainButton,mainHighlight)){
     if (Game.editor())
         {
-      Debug.log(saveDat());
+      trace(saveDat());
         } else {
         Game.prompt("Music data string:",saveDat());
         }
@@ -727,7 +725,7 @@ for (k in 0 ... 5){
 
   if (drawButton("  load   ",152,91,textCol,mainButton,mainHighlight)){
     var ld = Game.prompt("Enter music data string:","");
-        Debug.log(ld);
+        trace(ld);
         if (ld!=null&&ld.length>0){loadDat(ld);}
   }
   
@@ -747,7 +745,7 @@ for (k in 0 ... 5){
 
   var octaveDisplay:Int = Math.floor((bottomNote+11)/12);
   var cNotePos = ((bottomNote+11)%12);
-//  Debug.log((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
+//  trace((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
   if (octaveDisplay>9){
     Text.display(gx-7,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));
   } else {
@@ -774,11 +772,11 @@ for (k in 0 ... 5){
   //draw notes
   for (c2 in 0...5){
     var c = channelOrder[c2];
-//    Debug.log(c,c2);
+//    trace(c,c2);
     var channel = dat.notes[selectedSequence][c];  
     var colIndex = c==selectedInst?1:0;
     var col = instCols[c][colIndex];
-//    Debug.log(c+","+selectedInst+","+col);
+//    trace(c+","+selectedInst+","+col);
     for (n in channel){
         // var n = channel[nIndex];
          // a note is [note, length, onset, amplitude]

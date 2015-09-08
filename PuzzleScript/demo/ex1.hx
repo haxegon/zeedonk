@@ -1,5 +1,3 @@
-/* Currently broken for interesting reasons. To do: Figure out why */
-
 Game.title("Shapes Demo");
 Game.homepage("http://www.distractionware.com");
 Game.background(Col.BLACK);

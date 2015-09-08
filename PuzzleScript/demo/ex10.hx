@@ -184,11 +184,11 @@ var inputthisframe:Bool;
 
 function moveentity(t:Int, xchange:Int, ychange:Int){
   updatescreen = true;
-  Debug.log(entity[t].x, entity[t].y);
+  trace(entity[t].x, entity[t].y);
   placechar(entity[t].x,entity[t].y," ",7,0);
   entity[t].x+=xchange;
   entity[t].y+=ychange;
-  Debug.log(entity[t].x, entity[t].y);
+  trace(entity[t].x, entity[t].y);
 }
 
 function render(){
@@ -202,7 +202,7 @@ function render(){
     }
     Gfx.clearscreen(DOSpalette[0]);
   	drawscreen();
-  Debug.log("Drawing screen this frame");
+  trace("Drawing screen this frame");
     updatescreen = false;
   }
     
@@ -213,16 +213,16 @@ function update() {
   player = getplayer();
   if(player > -1){
     if(Input.pressed(Key.UP)){
-      Debug.log("Move up");
+      trace("Move up");
       moveentity(player, 0, -1);
     }else if(Input.pressed(Key.DOWN)){
-      Debug.log("Move down");
+      trace("Move down");
       moveentity(player, 0, 1);
     }else if(Input.pressed(Key.LEFT)){
-      Debug.log("Move left");
+      trace("Move left");
       moveentity(player, -1, 0);
     }else if(Input.pressed(Key.RIGHT)){
-      Debug.log("Move right");
+      trace("Move right");
       moveentity(player, 1, 0);
     }
   }
