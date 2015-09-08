@@ -452,7 +452,7 @@ class Text {
 		}
 	}
 	
-	public static function setfont(t:String, s:Int) {
+	public static function setfont(t:String, s:Int = 1) {
 		if (!fontfileindex.exists(t)) {
 			addfont(t, s);
 		}
