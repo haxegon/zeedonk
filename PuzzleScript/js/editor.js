@@ -348,7 +348,6 @@ function tryLoadFile(fileName) {
 		editor.setValue(fileOpenClient.responseText);
 		setEditorClean();
 		unfocus();
-		stopClick();
 	}
 	fileOpenClient.send();
 }

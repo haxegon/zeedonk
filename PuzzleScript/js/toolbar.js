@@ -32,7 +32,10 @@ function referenceClick(){
 
 function unfocus(){	
 	document.body.focus();
-	document.getElementsByTagName("CANVAS")[0].focus();
+	var els = document.getElementsByTagName("CANVAS");
+	if (els.length>0){
+		els[0].focus();
+	}
 	if (document.activeElement!=null) { document.activeElement.blur(); }
 }
 
