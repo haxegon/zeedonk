@@ -21,4 +21,6 @@ class Col {
 	public static var BLUE:Int = 0x31A2F2;
 	public static var LIGHTBLUE:Int = 0xB2DCEF;
 	public static var MAGENTA:Int = 0xFF00FF;
+	
+	public static var TRANSPARENT:Int = 0x000001;
 }
