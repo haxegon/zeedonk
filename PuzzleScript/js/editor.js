@@ -48,6 +48,39 @@ var editor = window.CodeMirror.fromTextArea(code, {
 CodeMirror.registerHelper("hintWords", "haxe",
 */
 
+
+function editor_handler(ch) {
+return function(cm) { return editor_handleChar(cm, ch); };
+}
+
+function editor_handleChar(cm,ch){
+    var ranges = cm.listSelections();
+
+	var Pos = CodeMirror.Pos;
+
+    var type;
+    for (var i = 0; i < ranges.length; i++) {
+      var range = ranges[i], cur = range.head, curType;
+      var next = cm.getRange(cur, Pos(cur.line, cur.ch + 1));
+      if (next == ch){
+      	curType="skip";
+      } else {
+      	return CodeMirror.Pass;
+      } 
+      if (!type) type = curType;
+      else if (type != curType) return CodeMirror.Pass;
+  	}
+  	cm.operation(function(){
+	 if (type == "skip") {
+	    cm.execCommand("goCharRight");
+	 }
+	});
+}
+
+var semiColonMap=[];
+semiColonMap["';'"]=editor_handler(';');
+editor.addKeyMap(semiColonMap);
+
 function isalnum (code){   
 	if (!(code > 47 && code < 58) && // numeric (0-9)
 		!(code > 64 && code < 91) && // upper alpha (A-Z)
@@ -117,8 +150,13 @@ function CompletionsPick( p_oCompletion ) {
    	editor.replaceSelection("()",null);
    } else if (dt.indexOf("(")==0){
    	if (dt.indexOf(":void")>=0 || dt[dt.length-1]==")"){
-   		editor.replaceSelection("();",null);
-   		editor.execCommand("goCharLeft");
+   		editor.replaceSelection("()",null);
+   		var c2 = editor.getCursor();
+		var next = editor.getRange(c2, CodeMirror.Pos(c2.line, c2.ch + 1));
+      	if (next!==";"){
+   			editor.replaceSelection(";",null); 
+   			editor.execCommand("goCharLeft");     		
+      	}
    		editor.execCommand("goCharLeft");
    		editor.replaceSelection(paramStr,"around");
    	} else {
@@ -311,23 +349,17 @@ editor.on("inputRead", function(editor, change) {
   	var c = editor.getCursor();
   	if (c.ch>1){
   		var l = editor.getLine(c.line);
-  		window.console.log(l[c.ch-2]);
   		if (l[c.ch-2]=="."){
   			shouldHint=false;
   		} else if (c.ch>2){
-  			window.console.log(l[c.ch-3]);
 			if (l[c.ch-3]=="."){
     			shouldHint=false;		
 			}
   		}
   	}
-  	window.console.log(shouldHint);
   	if (shouldHint){
   		editor.execCommand("autocomplete");	
-  	} else {
-  		window.console.log("nope");
-  		//editor.completion.close();
-  	}
+  	} 
 });
 
 
