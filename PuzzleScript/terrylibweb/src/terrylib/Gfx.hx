@@ -1138,6 +1138,63 @@ class Gfx {
 		return ( c & 0xFF );
 	}
 	
+	/** Get the Hue value (0-360) of a hex code colour. **/
+	public static function gethue(c:Int):Int {
+		var r:Float = getred(c) / 255;
+		var g:Float = getgreen(c) / 255;
+		var b:Float = getblue(c) / 255;
+    var max:Float = Math.max(Math.max(r, g), b); 
+		var min:Float = Math.min(Math.min(r, g), b); 
+    
+		var h:Float = (max + min) / 2;
+		
+    if (max != min) {
+			var d:Float = max - min;
+			if(max == r){
+				h = (g - b) / d + (g < b ? 6 : 0);
+			}else if (max == g) {
+				h = (b - r) / d + 2;
+			}else if (max == b) {
+				h = (r - g) / d + 4;
+			}
+			h /= 6;
+    }
+		
+    return Std.int(h * 360);
+	}
+	
+	/** Get the Saturation value (0.0-1.0) of a hex code colour. **/
+	public static function getsaturation(c:Int):Float {
+		var r:Float = getred(c) / 255;
+		var g:Float = getgreen(c) / 255;
+		var b:Float = getblue(c) / 255;
+    var max:Float = Math.max(Math.max(r, g), b); 
+		var min:Float = Math.min(Math.min(r, g), b); 
+    
+		var s:Float = (max + min) / 2;
+		var l:Float = s;
+		
+    if (max == min) {
+			s = 0;
+    }else {
+			var d:Float = max - min;
+			s = l > 0.5?d / (2 - max - min):d / (max + min);
+    }
+		
+    return s;
+	}
+	
+	/** Get the Lightness value (0.0-1.0) of a hex code colour. **/
+	public static function getlightness(c:Int):Float {
+		var r:Float = getred(c) / 255;
+		var g:Float = getgreen(c) / 255;
+		var b:Float = getblue(c) / 255;
+    var max:Float = Math.max(Math.max(r, g), b); 
+		var min:Float = Math.min(Math.min(r, g), b); 
+		
+    return (max + min) / 2;
+	}
+	
 	public static function RGB(red:Int, green:Int, blue:Int):Int {
 		return (blue | (green << 8) | (red << 16));
 	}

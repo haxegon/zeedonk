@@ -181,7 +181,6 @@ class Webscript {
 			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, (counter / 50) % 120, Col.WHITE);
 			//Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, ((counter%(150)) * 55)/150, Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
 			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, 55, Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
-			
 		}
 		
 		if (Gfx.showfps) {
