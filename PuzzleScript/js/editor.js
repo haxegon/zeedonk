@@ -217,6 +217,13 @@ CodeMirror.registerHelper("hint", "haxe",
 		
 		var cur = editor.getCursor();
 		var tok = editor.getTokenAt(cur);
+		if (tok.string.length>0){
+			if (isalnum(tok.string.charCodeAt(0))||tok.string[0]=="."){
+
+			} else {
+
+			}
+		}
 		var tokStart = tok.string.toLowerCase();
 
 
@@ -288,6 +295,9 @@ CodeMirror.registerHelper("hint", "haxe",
 			end--;
 		}
 		end++;
+		if (end<start){
+			end=start;
+		}
 		var token = line.substring(start,end);
 		token = token.trim().toLowerCase();
 
