@@ -158,7 +158,7 @@ class Gfx {
 	
 	/** Loads an image into the game. */
 	#if terrylibweb
-	private static var BASE64:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789áé";
+	private static var BASE64:String = "abcdefghijklmnopqrstuvwxyz0123456789$=ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static var KEEPCOL:Int = -1;
 	
 	private static function convertobinary(t:Int, len:Int):String {

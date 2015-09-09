@@ -194,7 +194,7 @@ function new() {
   });
 }
 
-var BASE64:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789áé"; 
+var BASE64:String = "abcdefghijklmnopqrstuvwxyz0123456789$=ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
 
 function convertobinary(t:Int, len:Int):String {
   var endstring:String = "";
