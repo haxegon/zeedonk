@@ -4,6 +4,8 @@ var sound_select:Int = 84923106;
 var sound_click:Int = 25271106;
 var sound_random:Int = 44531703;
 var sound_clear:Int = 27481303;
+var sound_export:Int = 57854303;
+var sound_import:Int = 41433503;
 
 var imgwidth:Int = 16;
 var imgheight:Int = 16;
@@ -16,7 +18,7 @@ var button:Array<Dynamic> = [];
 var arnepalette:Array<Int> = [
   Col.BLACK, Col.GRAY, Col.WHITE, Col.RED, Col.PINK, Col.DARKBROWN, 
   Col.BROWN, Col.ORANGE, Col.YELLOW, Col.DARKGREEN, Col.GREEN, Col.LIGHTGREEN,
-  Col.NIGHTBLUE, Col.DARKBLUE, Col.BLUE, Col.LIGHTBLUE, Col.MAGENTA, Col.MAGENTA];
+  Col.NIGHTBLUE, Col.DARKBLUE, Col.BLUE, Col.LIGHTBLUE, Col.MAGENTA, Col.TRANSPARENT];
 
 var arnehue:Array<Int> = [0, 0, 0, 355, 345, 34, 30, 28, 51, 192, 97, 75, 211, 200, 205, 199, 300, 0];
 var arnesaturation:Array<Float> = [0, 0, 0, 0.67, 0.65, 0.26, 0.66, 0.82, 0.9, 0.25, 0.68, 0.68, 0.3, 1, 0.88, 0.66, 1, 0];
@@ -81,7 +83,7 @@ function new() {
   Gfx.drawtoimage("lightness");
   Gfx.fillbox(0, 0, 72, 8, Col.BLACK);
   for (i in 1 ... 71) {
-    Gfx.fillbox(i, 1, 1, 6, Gfx.RGB(Std.int(i * 255 / 72), Std.int(i * 255 / 72), Std.int(i * 255 / 72)));
+    Gfx.fillbox(i, 1, 1, 6, Gfx.RGB(Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72)));
   }
 
   Gfx.createimage("preset", 72, 16);
@@ -100,7 +102,7 @@ function new() {
   currentsaturation = palettesaturation[3];
   currentlightness = palettelightness[3];
   updatehueposition();
-  
+
   setbackgroundcolour();
 
   imgcanvas = [];
@@ -192,7 +194,7 @@ function new() {
   });
 }
 
-var BASE1024:String = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ????????????AaAaAa????CcCcCcDd?d?????????EeEeGgGgGgHh????????iJjKkLlLlLlLl??NnNn??????????Oo????RrRr??SsSsSs????TtTt????????????UuUuUuUuWw????YyZz?Zz??|~????????????????????????????!#$%&*+?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????h?????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????-?++++++++++++??????------+++?G???T??a???de??????????????S?F?O???p?st??f???????";
+var BASE128:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ƒ‰¿‡¡·¬‚√„≈Âú«Á–»Ë…È ÍÀÎÃÏÕÌŒÓœÔ—Ò÷ˆ“Ú”Û‘Ù’ıÿ¯ﬂäöﬁ˛‹¸Ÿ˘⁄˙€˚›˝üˇûé";
 
 function convertobinary(t:Int, len:Int):String {
   var endstring:String = "";
@@ -202,27 +204,38 @@ function convertobinary(t:Int, len:Int):String {
     currentbit = t % 2;
     endstring = Convert.tostring(currentbit) + endstring;
     t = t - currentbit;
-    t = Std.int(t / 2);
+    t = Convert.toint(t / 2);
   }
 
   while (endstring.length < len) endstring = "0" + endstring;
-  return endstring;
+  return ""+endstring;
 }
 
-function convertbinarytobase1024(t:String):String {
+function convertbase128tobinary(t:String):String {
+  var returnstr:String = "";
+  var currentval:Int = 0;
+
+  for (i in 0 ... t.length) {
+    currentval = BASE128.indexOf(t.substr(i, 1));
+    returnstr = returnstr+""+convertobinary(currentval, 7);
+  }
+  return returnstr;
+}
+
+function convertbinarytobase128(t:String):String {
   var endstring:String = "";
   var currentval:Int = 0;
 
-  while (t.length % 10 != 0) t += "0";
+  while (t.length % 7 != 0) t += "0";
 
   var i:Int = 0;
   while (i < t.length) {
     if (t.substr(i, 1) == "1") {
-      currentval += Std.int(Math.pow(2, 9 - (i % 10)));
+      currentval += Convert.toint(Math.pow(2, 6 - (i % 7)));
     }
     i++;
-    if (i % 10 == 0) {
-      endstring += BASE1024.substr(currentval, 1);
+    if (i % 7 == 0) {
+      endstring += BASE128.substr(currentval, 1);
       currentval = 0;
     }
   }
@@ -230,41 +243,97 @@ function convertbinarytobase1024(t:String):String {
   return endstring;
 }
 
-function saveimagestring(image:String) {
-  var bitplane:String = "";
-  bitplane += convertobinary(imgwidth - 1, 4);
-  bitplane += convertobinary(imgheight - 1, 4);
-
-  Gfx.drawtoimage(image);
-  for (j in 0 ... imgheight) {
-    for (i in 0 ... imgwidth) {
-      if (Gfx.getpixel(i, j) == 0xFFFFFFFF) {
-        bitplane += "1";
-      }else {
-        bitplane += "0";
-      }
+function convertbinarytoint(binarystring:String):Int {
+  var returnval:Int = 0;
+  for (i in -binarystring.length ... 0) {
+    if (binarystring.substr( -i - 1, 1) == "1"){
+      returnval += Convert.toint(Math.pow(2, binarystring.length + i));
     }
   }
-  Gfx.drawtoscreen();
+  return returnval;
+}
 
-  trace(bitplane);
-  var convertedstring:String = convertbinarytobase1024(bitplane);
-  trace("Base 1024: \"" + convertedstring + "\", " + convertedstring.length + " characters");
+function loadimagestring(inputstring:String) {
+  if(inputstring == "" || inputstring == null) return;
+  var currentchunk:String = "";
+  function getnextchunk(size:Int) {
+    currentchunk = inputstring.substr(0, size);
+    inputstring = inputstring.substr(size);
+  }
+
+  inputstring = convertbase128tobinary(inputstring);
+
+  //Get image width:
+  getnextchunk(4);
+  imgwidth = convertbinarytoint(currentchunk) + 1;
+
+  //Get image height:
+  getnextchunk(4);
+  imgheight = convertbinarytoint(currentchunk) + 1;
+  resize();
+
+  //Load the palette
+  var r:Int; var g:Int; var b:Int;
+  for (i in 0 ... 4) {
+    getnextchunk(8);
+    r = convertbinarytoint(currentchunk);
+    getnextchunk(8);
+    g = convertbinarytoint(currentchunk);
+    getnextchunk(8);
+    b = convertbinarytoint(currentchunk);
+    palette[i] = Gfx.RGB(r, g, b);
+    palettehue[i] = Gfx.gethue(palette[i]);
+    palettesaturation[i] = Gfx.getsaturation(palette[i]);
+    palettelightness[i] = Gfx.getlightness(palette[i]);
+  }
+
+  //Clear the image before starting
+  for (j in 0 ... 16) for (i in 0 ... 16) imgcanvas[i + j * 16] = 0;
+
+  for (j in 0 ... imgheight) {
+    for (i in 0 ... imgwidth) {
+      getnextchunk(2);
+      imgcanvas[i + j * 16] = convertbinarytoint(currentchunk);
+    }
+  }
+}
+
+function saveimagestring() {
+  var outputstring:String = "";
+  //Format: Width (0-15), H (0-15), Colours 1 to 4, raw image data
+  outputstring += convertobinary(imgwidth - 1, 4);
+  outputstring += convertobinary(imgheight - 1, 4);
+
+  for (i in 0 ... 4) {
+    outputstring += convertobinary(Gfx.getred(palette[i]), 8);
+    outputstring += convertobinary(Gfx.getgreen(palette[i]), 8);
+    outputstring += convertobinary(Gfx.getblue(palette[i]), 8);
+  }
+
+  for (j in 0 ... imgheight) {
+    for (i in 0 ... imgwidth) {
+      outputstring += convertobinary(imgcanvas[i + j * 16], 2);
+    }
+  }
+
+  var convertedstring:String = convertbinarytobase128(outputstring);
+  trace(convertedstring);
+  Game.prompt("Exported image string:",convertedstring);
 }
 
 function updatehueposition() {
-  huex = Std.int(116 + (currenthue * 72) / 360);
-  huey = Std.int(5 + ((1-currentsaturation) * 20));
+  huex = Convert.toint(116 + (currenthue * 72) / 360);
+  huey = Convert.toint(5 + ((1-currentsaturation) * 20));
   setbackgroundcolour();
 }
 
 function setbackgroundcolour(){
   backgroundhue = (palettehue[0] + 180) % 360;
   backgroundcol = Gfx.HSL(backgroundhue, 0.3, 0.15);
-  
+
   buttoncol = Gfx.HSL(backgroundhue, 0.5, 0.6);
   buttonhighlightcol = Gfx.HSL(backgroundhue, 0.5, 0.8);
-	Game.background(backgroundcol);
+  Game.background(backgroundcol);
 }
 
 function randompalette(){
@@ -312,7 +381,7 @@ function resize() {
   //Call when width or height have changed
   if(imgheight > imgwidth){
     if (imgheight >= 10) { boxsize = 6;
-		}else if (imgheight >= 8) {	boxsize = 10;
+    }else if (imgheight >= 8) {	boxsize = 10;
     }else if (imgheight >= 6) {	boxsize = 12;
     }else {	boxsize = 16;	}
   }else {
@@ -324,8 +393,16 @@ function resize() {
 
   canvaswidth = boxsize * imgwidth;
   canvasheight = boxsize * imgheight;
-  canvasx = Std.int((120 - canvaswidth) / 2);
-  canvasy = Std.int((120 - canvasheight) / 2) - 6;
+  canvasx = Convert.toint((120 - canvaswidth) / 2);
+  canvasy = Convert.toint((120 - canvasheight) / 2) - 6;
+
+  for (i in 0 ... button.length) {
+    if (button[i].action == "resizex") {
+      button[i].text = Convert.tostring(imgwidth);
+    }else if (button[i].action == "resizey") {
+      button[i].text = Convert.tostring(imgheight);
+    }
+  }
 }
 
 function drawbackground() {
@@ -336,16 +413,35 @@ function drawbackground() {
 
   for (j in 0 ... imgheight) {
     for (i in 0 ... imgwidth) {
-      Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, palette[imgcanvas[i + j * 16]]);
+      var pixel:Int = palette[imgcanvas[i + j * 16]];
+      if (pixel == Col.TRANSPARENT) {
+        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, Gfx.RGB(64, 64, 64));
+        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize/2, boxsize/2, Gfx.RGB(32, 32, 32));
+        Gfx.fillbox(canvasx + i * boxsize + boxsize/2, canvasy + j * boxsize  + boxsize/2, boxsize/2, boxsize/2, Gfx.RGB(32, 32, 32));
+      }else{
+        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, palette[imgcanvas[i + j * 16]]);
+      }
     }
   }
 
   for (i in 0 ... 4) {
     if (currentcol == i) {
-      Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, palette[i]);
+      if (palette[i] == Col.TRANSPARENT) {
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Gfx.RGB(64, 64, 64));
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 5, 5, Gfx.RGB(32, 32, 32));
+        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 6 + 5, 5, 5, Gfx.RGB(32, 32, 32));
+      }else{
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, palette[i]);
+      }
     }else {
       Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Col.BLACK);
-      Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, palette[i]);
+      if (palette[i] == Col.TRANSPARENT) {
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, Gfx.RGB(64, 64, 64));
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 5, 5, Gfx.RGB(32, 32, 32));
+        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 4 + 5, 5, 5, Gfx.RGB(32, 32, 32));
+      }else{
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, palette[i]);
+      }
     }
   }
 }
@@ -375,11 +471,6 @@ function dobuttonaction(t:String, rclick:Bool) {
       imgwidth = imgwidth + 1;
       if (imgwidth == 17) imgwidth = 4;
     }
-    for (i in 0 ... button.length) {
-      if (button[i].action == "resizex") {
-        button[i].text = Convert.tostring(imgwidth);
-      }
-    }
     resize();
   }else	if (t == "resizey") {
     Music.playsound(sound_click, 0.2);
@@ -390,21 +481,16 @@ function dobuttonaction(t:String, rclick:Bool) {
       imgheight = imgheight + 1;
       if (imgheight == 17) imgheight = 4;
     }
-    for (i in 0 ... button.length) {
-      if (button[i].action == "resizey") {
-        button[i].text = Convert.tostring(imgheight);
-      }
-    }
     resize();
   }else if (t == "random") {
     Music.playsound(sound_random, 0.5);
     randompalette();
   }else if (t == "export") {
-    Music.playsound(sound_select, 0.5);
-    currentstate = "todo";
+    Music.playsound(sound_export, 0.5);
+    saveimagestring();
   }else if (t == "import") {
-    Music.playsound(sound_select, 0.5);
-    currentstate = "todo";
+    Music.playsound(sound_import, 0.5);
+    loadimagestring(Game.prompt("Enter an imagestring to import:",""));
   }
 }
 
@@ -500,11 +586,11 @@ function update() {
     Text.display(Text.CENTER, Gfx.screenheightmid - 14, "TO DO: IMPLEMENT THIS");
   }else	if (currentstate == "editor") {
     drawbackground();
-    
+
     if(Input.justpressed(Key.R)){
       dobuttonaction("random", false);
     }
-    
+
     if (inbox_w(Mouse.x, Mouse.y, canvasx, canvasy, canvaswidth, canvasheight)) {
       cursorx = Math.floor((Mouse.x - canvasx) / boxsize);
       cursory = Math.floor((Mouse.y - canvasy) / boxsize);
@@ -553,7 +639,7 @@ function update() {
         if (inbox_w(Mouse.x, Mouse.y, 108 - 52 + (i * 14), 102 + 4, 10, 10)) {
           if (Mouse.leftclick()) {
             if (i != currentcol) {
-    					selectcolour(i);
+              selectcolour(i);
             }
           }
 
@@ -565,15 +651,15 @@ function update() {
         }
       }
     }
-    
+
     if(Input.justpressed(Key.ONE)){
-    	selectcolour(0);
+      selectcolour(0);
     }else if(Input.justpressed(Key.TWO)){
-    	selectcolour(1);
+      selectcolour(1);
     }else if(Input.justpressed(Key.THREE)){
-    	selectcolour(2);
+      selectcolour(2);
     }else if(Input.justpressed(Key.FOUR)){
-    	selectcolour(3);
+      selectcolour(3);
     }
 
     Gfx.drawimage(116, 5, "hue");
@@ -582,10 +668,10 @@ function update() {
 
     if (inbox_w(Mouse.x, Mouse.y, 116, 5, 72, 20)) {
       if (Mouse.leftheld() && !mouseheld) {
-        currenthue = Std.int((Mouse.x - 116) * 360 / 72);
+        currenthue = Convert.toint((Mouse.x - 116) * 360 / 72);
         currentsaturation = 1 - ((Mouse.y - 5) / 20);
 
-        palettehue[currentcol] = Std.int(currenthue);
+        palettehue[currentcol] = Convert.toint(currenthue);
         palettesaturation[currentcol] = currentsaturation;
 
         updatehueposition();
@@ -603,7 +689,7 @@ function update() {
         palette[currentcol] = Gfx.HSL(currenthue, currentsaturation, currentlightness);
       }
     }
-    Gfx.drawbox(116 + Std.int(72 * currentlightness) - 2, 27, 4, 7, Col.WHITE);
+    Gfx.drawbox(116 + Convert.toint(72 * currentlightness) - 2, 27, 4, 7, Col.WHITE);
 
 
     if (inbox_w(Mouse.x, Mouse.y, 116, 38, 72, 16)) {
@@ -611,7 +697,7 @@ function update() {
         if (inbox_w(Mouse.x, Mouse.y, 116 + 1 + i * 8, 38, 7, 7)) {
           Gfx.drawbox(116 + 1 + i * 8, 38, 7, 6, Col.WHITE);
           if (Mouse.leftclick()) {        
-    				Music.playsound(sound_click, 0.2);
+            Music.playsound(sound_click, 0.2);
             palette[currentcol] = arnepalette[i];
             palettehue[currentcol] = arnehue[i];
             palettesaturation[currentcol] = arnesaturation[i];
@@ -625,7 +711,7 @@ function update() {
         }else if (inbox_w(Mouse.x, Mouse.y, 116 + 1 + i * 8, 38 + 8, 7, 7)) {
           Gfx.drawbox(116 + 1 + i * 8, 38 + 8, 7, 6, Col.WHITE);
           if (Mouse.leftclick()) {
-    				Music.playsound(sound_click, 0.2);
+            Music.playsound(sound_click, 0.2);
             palette[currentcol] = arnepalette[i + 9];
             palettehue[currentcol] = arnehue[i + 9];
             palettesaturation[currentcol] = arnesaturation[i + 9];
