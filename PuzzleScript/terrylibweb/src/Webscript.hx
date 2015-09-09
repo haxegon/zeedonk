@@ -252,7 +252,6 @@ class Webscript {
 		interpreter.variables.set("Music", Webmusic);
 		interpreter.variables.set("Text", Text);
 		interpreter.variables.set("Font", Webfont);
-		interpreter.variables.set("Std", Std);
 		interpreter.variables.set("Random", Random);
 		interpreter.variables.set("String", String);
 		interpreter.variables.set("trace", Webdebug.log);
