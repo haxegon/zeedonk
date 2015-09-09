@@ -40,7 +40,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
     tabSize:2,
     indentUnit:2,
 //	smartIndent:false,
-    hintOptions: {"completeSingle": false},
+    hintOptions: {"completeSingle": true},
     extraKeys: {"Ctrl-Space": "autocomplete",
 		"Esc":"clearSearch"}
    	});
@@ -126,6 +126,9 @@ function CompletionsPick( p_oCompletion ) {
    		editor.execCommand("goCharLeft");
    		editor.replaceSelection(paramStr,"around");
    	}
+   } else if (p_oCompletion.tag==="F"){
+		editor.replaceSelection("()",null);
+		editor.execCommand("goCharLeft");
    } else if (dt.indexOf(".")===0){
    	editor.replaceSelection(".",null);   	
    	CodeMirror.commands.autocomplete(editor);
@@ -133,6 +136,17 @@ function CompletionsPick( p_oCompletion ) {
    	editor.replaceSelection(";",null);   	
    	CodeMirror.commands.autocomplete(editor);   	
    }
+   /*
+   if (paramStr.length>0){
+   	var fromCur = editor.getCursor("from");
+   	var toCur = editor.getCursor("to");
+   	editor.markText(fromCur,toCur,{
+   		className:"ghost",
+   		clearWhenEmpty:true,
+   		clearOnEnter:true
+   		});
+   }
+   */
 } 
 
 function makeTooltip(x, y, content) {

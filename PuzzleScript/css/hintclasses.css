@@ -60,12 +60,14 @@
 .CodeMirror-TerryLib-tooltip {
   border: 1px solid silver;
   border-radius: 3px;
-  color: #444;
+  color: #E6E1DC;
   padding: 2px 5px;
   font-size: 90%;
   font-family: monospace;
-  background-color: white;
+  background-color: #404040;
   white-space: pre-wrap;
+
+  margin-left: 3px;
 
   max-width: 40em;
   position: absolute;

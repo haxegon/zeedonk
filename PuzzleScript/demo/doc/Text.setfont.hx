@@ -4,7 +4,8 @@ var colors = [];
 function genString(){
   var s="";
   var wordcount =Random.int(3,6);
-  for (i in 0...wordcount){    s+=Random.pickstring("a","rose","by","any","other","name","would","smell","as","sweet")+" ";
+  for (i in 0...wordcount){    
+    s+=Random.pickstring("a","rose","by","any","other","name","would","smell","as","sweet")+" ";
   }
   return s;
 }
