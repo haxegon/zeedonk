@@ -50,7 +50,6 @@ var haxeLibraryArray = [
 ];
 
 var haxeHintArray = [
-["..."],
 ["Gfx.clearscreen","(color)","F"],
 ["Gfx.clearscreeneachframe","(true or false)","F"],
 ["Gfx.drawbox","(x, y, width, height, col, alpha)","F"],
