@@ -158,7 +158,7 @@ class Gfx {
 	
 	/** Loads an image into the game. */
 	#if terrylibweb
-	private static var BASE512:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÄäÀàÁáÂâÃãÅåǍǎĄąĂăÆæÇçĆćĈĉČčĎđĐďðÈèÉéÊêËëĚěĘęĜĝĢģĞğĤĥÌìÍíÎîÏïıĴĵĶķĹĺĻļŁłĽľÑñŃńŇňÖöÒòÓóÔôÕõŐőØøŒœŔŕŘřẞßŚśŜŝŞşŠšȘșŤťŢţÞþȚțÜüÙùÚúÛûŰűŨũŲųŮůŴŵÝýŸÿŶŷŹźžŻż¡¿|~€¾ƒ„…†‡ˆ‰ψ‹¢£¥¦§¨ª«¬ξ¯°±²³´µ–—!#$%&*+,-½ŽЀЁЂЃЄЅІЇЈЉЊЋЌЍЎЏАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяѐёђѓєѕіїјљњћќѝўџѠѡѢѣѤѥѦѧѨѩѪѫѬѭѮѯѰѱѲѳѴѵѶѷѸѹѺѻѼѽѾѿҐґҒғҔҕҖҗҘҙҚқҜҝҞҟҠҡҢңҤҥҦҧҨҩҪҫҬҭҮүҰұҲҳҴҵҶҷҸҹҺһҼҽҾҿӀӁӂӃӄӅӆӇӈӉӊӋӌӍӎӏӐӑӒӓӔӕӖӗӘәӚӛӜӝӞӟӠӡӢӣӤӥӦӧӨөӪӫӬӭӮӯӰӱӲӳӴӵӶӷӸӹӺӻӼӽӾӿɀɁɂɃɄɅɆɇɈɉɊɋɌɍɎɏ";
+	private static var BASE128:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÄäÀàÁáÂâÃãÅåœÇçÐðÈèÉéÊêËëÌìÍíÎîÏïÑñÖöÒòÓóÔôÕõØøßŠšÞþÜüÙùÚúÛûÝýŸÿžŽ";
 	public static var KEEPCOL:Int = -1;
 	
 	private static function convertobinary(t:Int, len:Int):String {
@@ -176,13 +176,13 @@ class Gfx {
 		return endstring;
 	}
 	
-	private static function convertbase512tobinary(t:String):String {
+	private static function convertbase128tobinary(t:String):String {
 		var endstring:String = "";
 		var currentval:Int = 0;
 		
 		for (i in 0 ... t.length) {
-			currentval = BASE512.indexOf(t.substr(i, 1));
-			endstring += convertobinary(currentval, 9);
+			currentval = BASE128.indexOf(t.substr(i, 1));
+			endstring += convertobinary(currentval, 7);
 		}
 		return endstring;
 	}
@@ -204,7 +204,7 @@ class Gfx {
 			inputstring = inputstring.substr(size);
 		}
 		
-		inputstring = convertbase512tobinary(inputstring);
+		inputstring = convertbase128tobinary(inputstring);
 		
 		//Get image width:
 		getnextchunk(4);
