@@ -110,7 +110,7 @@ function genReferencePage(moduleName){
 	}
 	moduleHeader+="</div><p>";
 
-	var enumContents ="<h3>"+ moduleName+"</h3><p><div id='enumFrame'>";
+	var enumContents ="<div id='enumFrame'>";
 	var enumAdded=false;
 	var counter=0;
 	for (var i=0;i<haxeHintArray.length;i++){
@@ -147,7 +147,11 @@ function genReferencePage(moduleName){
 			}
 		}
 		//row+=<td>"+tag+"</td>;
-		row+="<td><div class=\"funcdec\">"+highlight(fn+"")+"</div>"+doc+" <div>"+docString+"</div></td></tr>";
+		row+="<td><div class=\"funcdec\">"+highlight(fn+"")+"</div>";
+		if (doc.length>0){
+			row+="<div class='docLine'>"+doc+"</div>";
+		}
+		row+="<div>"+docString+"</div></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
 		if (enumAdded){
@@ -157,12 +161,18 @@ function genReferencePage(moduleName){
 		enumAdded=true;
 	}
 	enumContents+="</div>";
-	pageContents ="<h3>"+ moduleName+"</h3><p>"+pageContents;
+	var tableHeader = "<h3 class='moduleHeader'>"+ moduleName+"</h3><p>";
+	pageContents = pageContents;
 
+	var moduleDescription="";
+	if (moduleDescriptions.hasOwnProperty(moduleName) && moduleDescriptions[moduleName].length>0){
+		moduleDescription = '<div class="moduleDescription">'+moduleDescriptions[moduleName]+'</div>'
+	}
+	
 	if (moduleName.length>0){		
-		var wholePage = pageHeader+moduleHeader+tableStart+pageContents+tableEnd+pageFooter;
+		var wholePage = pageHeader+moduleHeader+tableHeader+moduleDescription+tableStart+pageContents+tableEnd+pageFooter;
 		if (enums.indexOf(moduleName)>=0){
-			wholePage = pageHeader+moduleHeader+enumContents+pageFooter;
+			wholePage = pageHeader+moduleHeader+tableHeader+moduleDescription+enumContents+pageFooter;
 		} 
 		fs.writeFileSync("../Documentation/"+moduleName+".html",wholePage);
 	} else {
