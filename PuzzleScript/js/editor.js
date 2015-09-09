@@ -126,6 +126,9 @@ function CompletionsPick( p_oCompletion ) {
    		editor.execCommand("goCharLeft");
    		editor.replaceSelection(paramStr,"around");
    	}
+   } else if (p_oCompletion.tag==="F"){
+		editor.replaceSelection("()",null);
+		editor.execCommand("goCharLeft");
    } else if (dt.indexOf(".")===0){
    	editor.replaceSelection(".",null);   	
    	CodeMirror.commands.autocomplete(editor);
