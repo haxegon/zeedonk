@@ -200,7 +200,19 @@ CodeMirror.registerHelper("hint", "haxe",
 			return true;
 		}
 
+		function doubleStop(pos){
+			if (line[pos]!=="."){
+				return false;
+			}
+			if (pos>0&&line[pos-1]==="."){
+				return true;
+			}
+			return false;
+		}
 
+		if (doubleStop(start)){
+			return null;
+		}
 
 		while (start>0){
 			start--;
@@ -297,19 +309,24 @@ editor.on("inputRead", function(editor, change) {
   	var shouldHint=true;
   
   	var c = editor.getCursor();
-  	if (c.ch>0){
+  	if (c.ch>1){
   		var l = editor.getLine(c.line);
-  		if (l[c.ch-1]!="."){
-  			shouldHint==false;
-  		} else if (l.length>2){
-  			var code = l.charCodeAt(c.ch-2);
-			if (!isalnum(code)){
+  		window.console.log(l[c.ch-2]);
+  		if (l[c.ch-2]=="."){
+  			shouldHint=false;
+  		} else if (c.ch>2){
+  			window.console.log(l[c.ch-3]);
+			if (l[c.ch-3]=="."){
     			shouldHint=false;		
 			}
   		}
   	}
+  	window.console.log(shouldHint);
   	if (shouldHint){
-  		editor.showHint();		
+  		editor.execCommand("autocomplete");	
+  	} else {
+  		window.console.log("nope");
+  		//editor.completion.close();
   	}
 });
 

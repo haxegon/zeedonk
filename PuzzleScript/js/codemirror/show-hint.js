@@ -110,6 +110,10 @@
     },
 
     finishUpdate: function(data, first) {
+      if (data==null){
+        this.close();
+        return;
+      }
       if (this.data) CodeMirror.signal(this.data, "update");
       if (data && this.data && CodeMirror.cmpPos(data.from, this.data.from)) data = null;
       this.data = data;
@@ -341,7 +345,7 @@
     if (helpers.length) {
       for (var i = 0; i < helpers.length; i++) {
         var cur = helpers[i](cm, options);
-        if (cur && cur.list.length) return cur;
+        if (cur) return cur;
       }
     } else if (words = cm.getHelper(cm.getCursor(), "hintWords")) {
       if (words) return CodeMirror.hint.fromList(cm, {words: words});
