@@ -158,7 +158,7 @@ class Gfx {
 	
 	/** Loads an image into the game. */
 	#if terrylibweb
-	private static var BASE128:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÄäÀàÁáÂâÃãÅåœÇçÐðÈèÉéÊêËëÌìÍíÎîÏïÑñÖöÒòÓóÔôÕõØøßŠšÞþÜüÙùÚúÛûÝýŸÿžŽ";
+	private static var BASE64:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789áé";
 	public static var KEEPCOL:Int = -1;
 	
 	private static function convertobinary(t:Int, len:Int):String {
@@ -176,13 +176,13 @@ class Gfx {
 		return endstring;
 	}
 	
-	private static function convertbase128tobinary(t:String):String {
+	private static function convertbase64tobinary(t:String):String {
 		var endstring:String = "";
 		var currentval:Int = 0;
 		
 		for (i in 0 ... t.length) {
-			currentval = BASE128.indexOf(t.substr(i, 1));
-			endstring += convertobinary(currentval, 7);
+			currentval = BASE64.indexOf(t.substr(i, 1));
+			endstring += convertobinary(currentval, 6);
 		}
 		return endstring;
 	}
@@ -196,15 +196,36 @@ class Gfx {
 		}
 		return returnval;
 	}
-
+	
+	/** Return characters from the middle of a string. */
+	private static function mid(currentstring:String, start:Int = 0, length:Int = 1):String {
+		if (start < 0) return "";
+		return currentstring.substr(start,length);
+	}
+	
+	private static function replacechar(currentstring:String, ch:String = "|", ch2:String = ""):String {
+		var fixedstring:String = "";
+		for (i in 0 ... currentstring.length) {
+			if (mid(currentstring, i) == ch) {
+				fixedstring += ch2;
+			}else {
+				fixedstring += mid(currentstring, i);
+			}
+		}
+		return fixedstring;
+	}
+	
 	public static function loadimagestring(imagename:String, inputstring:String, col1:Int = -1, col2:Int = -1, col3:Int = -1, col4:Int = -1) {
+		inputstring = replacechar(inputstring, " ", "");
+		inputstring = replacechar(inputstring, "\n", "");
+		inputstring = replacechar(inputstring, "\t", "");
 		var currentchunk:String = "";
 		function getnextchunk(size:Int) {
 			currentchunk = inputstring.substr(0, size);
 			inputstring = inputstring.substr(size);
 		}
 		
-		inputstring = convertbase128tobinary(inputstring);
+		inputstring = convertbase64tobinary(inputstring);
 		
 		//Get image width:
 		getnextchunk(4);

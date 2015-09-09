@@ -194,7 +194,7 @@ function new() {
   });
 }
 
-var BASE128:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÄäÀàÁáÂâÃãÅåœÇçĞğÈèÉéÊêËëÌìÍíÎîÏïÑñÖöÒòÓóÔôÕõØøßŠšŞşÜüÙùÚúÛûİıŸÿ";
+var BASE64:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789áé"; 
 
 function convertobinary(t:Int, len:Int):String {
   var endstring:String = "";
@@ -211,31 +211,31 @@ function convertobinary(t:Int, len:Int):String {
   return ""+endstring;
 }
 
-function convertbase128tobinary(t:String):String {
+function convertbase64tobinary(t:String):String {
   var returnstr:String = "";
   var currentval:Int = 0;
 
   for (i in 0 ... t.length) {
-    currentval = BASE128.indexOf(t.substr(i, 1));
-    returnstr = returnstr+""+convertobinary(currentval, 7);
+    currentval = BASE64.indexOf(t.substr(i, 1));
+    returnstr = returnstr+""+convertobinary(currentval, 6);
   }
   return returnstr;
 }
 
-function convertbinarytobase128(t:String):String {
+function convertbinarytobase64(t:String):String {
   var endstring:String = "";
   var currentval:Int = 0;
 
-  while (t.length % 7 != 0) t += "0";
+  while (t.length % 6 != 0) t += "0";
 
   var i:Int = 0;
   while (i < t.length) {
     if (t.substr(i, 1) == "1") {
-      currentval += Convert.toint(Math.pow(2, 6 - (i % 7)));
+      currentval += Convert.toint(Math.pow(2, 5 - (i % 6)));
     }
     i++;
-    if (i % 7 == 0) {
-      endstring += BASE128.substr(currentval, 1);
+    if (i % 6 == 0) {
+      endstring += BASE64.substr(currentval, 1);
       currentval = 0;
     }
   }
@@ -261,7 +261,7 @@ function loadimagestring(inputstring:String) {
     inputstring = inputstring.substr(size);
   }
 
-  inputstring = convertbase128tobinary(inputstring);
+  inputstring = convertbase64tobinary(inputstring);
 
   //Get image width:
   getnextchunk(4);
@@ -316,7 +316,7 @@ function saveimagestring() {
     }
   }
 
-  var convertedstring:String = convertbinarytobase128(outputstring);
+  var convertedstring:String = convertbinarytobase64(outputstring);
   trace(convertedstring);
   Game.prompt("Exported image string:",convertedstring);
 }
