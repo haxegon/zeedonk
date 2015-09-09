@@ -280,17 +280,22 @@ CodeMirror.registerHelper("hint", "haxe",
 // When an @ is typed, activate completion
 editor.on("inputRead", function(editor, change) {	
   if (change.text[0] == ".")
-  	var canHint=true;
+  	var shouldHint=true;
+  
   	var c = editor.getCursor();
-  	if (c.ch>1){
+  	if (c.ch>0){
   		var l = editor.getLine(c.line);
-  		if (l[c.ch-2]=="."){
-  		} else {
-  			var code = l.charCodeAt(l.ch-2);
-			if (isalnum(code)){
-    			editor.showHint();				
+  		if (l[c.ch-1]!="."){
+  			shouldHint==false;
+  		} else if (l.length>2){
+  			var code = l.charCodeAt(c.ch-2);
+			if (!isalnum(code)){
+    			shouldHint=false;		
 			}
   		}
+  	}
+  	if (shouldHint){
+  		editor.showHint();		
   	}
 });
 
