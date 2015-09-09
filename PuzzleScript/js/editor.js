@@ -99,8 +99,16 @@ function CompletionsPick( p_oCompletion ) {
    		return;
    	}
    }
+   
+   var dt = p_oCompletion.displayText;
 
-   consolePrint(p_oCompletion.text+p_oCompletion.displayText,true);
+   var startBr = dt.indexOf("(");
+   var endBr = dt.indexOf(")");
+   var paramStr = "";
+   if (startBr>=0){
+   	paramStr=dt.substring(startBr+1,endBr);
+   }
+
    var dt = p_oCompletion.displayText;
    dt=dt.toLowerCase();
    if (dt.indexOf("():void")===0||(dt.indexOf("()")===0&&dt[dt.length-1]==")")) {
@@ -112,9 +120,11 @@ function CompletionsPick( p_oCompletion ) {
    		editor.replaceSelection("();",null);
    		editor.execCommand("goCharLeft");
    		editor.execCommand("goCharLeft");
+   		editor.replaceSelection(paramStr,"around");
    	} else {
    		editor.replaceSelection("()",null);
    		editor.execCommand("goCharLeft");
+   		editor.replaceSelection(paramStr,"around");
    	}
    } else if (dt.indexOf(".")===0){
    	editor.replaceSelection(".",null);   	
@@ -203,13 +213,13 @@ CodeMirror.registerHelper("hint", "haxe",
 		var end=cur.ch-1;
 		while (end<line.length-1){
 			end++;
-			if (isalnum(line.charCodeAt(end))||validStopPost(end)===".")  {
+			if (isalnum(line.charCodeAt(end))||validStopPost(end))  {
 			} else {
 				break;
 			}
 		}
 
-		if (isalnum(line.charCodeAt(end))||validStopPost(end)===".")  {
+		if (isalnum(line.charCodeAt(end))||validStopPost(end))  {
 		} else {
 			end--;
 		}
@@ -268,9 +278,20 @@ CodeMirror.registerHelper("hint", "haxe",
 );
 
 // When an @ is typed, activate completion
-editor.on("inputRead", function(editor, change) {
+editor.on("inputRead", function(editor, change) {	
   if (change.text[0] == ".")
-    editor.showHint();
+  	var canHint=true;
+  	var c = editor.getCursor();
+  	if (c.ch>1){
+  		var l = editor.getLine(c.line);
+  		if (l[c.ch-2]=="."){
+  		} else {
+  			var code = l.charCodeAt(l.ch-2);
+			if (isalnum(code)){
+    			editor.showHint();				
+			}
+  		}
+  	}
 });
 
 
