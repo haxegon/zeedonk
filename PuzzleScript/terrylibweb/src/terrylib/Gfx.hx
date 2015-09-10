@@ -237,6 +237,7 @@ class Gfx {
 		
 		getnextchunk(1);
 		var imgformat:Int = Convert.toint(currentchunk);
+		if (imgformat == 0) imgformat = 2;
 		
 		var t:BitmapData = new BitmapData(imgwidth, imgheight, true, 0x000000);
 		
@@ -244,56 +245,28 @@ class Gfx {
 		var r:Int; var g:Int; var b:Int;
 		var imgpal:Array<Int> = [col1, col2, col3, col4];
 		
-		if(imgformat == 0){
-		  //Four colour format
-			for (i in 0 ... 4) {
-				getnextchunk(8);
-				r = convertbinarytoint(currentchunk);
-				getnextchunk(8);
-				g = convertbinarytoint(currentchunk);
-				getnextchunk(8);
-				b = convertbinarytoint(currentchunk);
-				if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.RGB(r, g, b);
-			}
-			
-			//Clear the image before starting
-			var pixel:Int = 0;
-			for (j in 0 ... imgheight) {
-				for (i in 0 ... imgwidth) {
-					getnextchunk(2);
-					pixel = convertbinarytoint(currentchunk);
-					pixel = imgpal[pixel];
-					
-					if(pixel != Col.TRANSPARENT){
-						settrect(i, j, 1, 1);
-						t.fillRect(trect, (0xFF << 24) + pixel);
-					}
-				}
-			}
-		}else {
-			//Two colour format
-			for (i in 0 ... 2) {
-				getnextchunk(8);
-				r = convertbinarytoint(currentchunk);
-				getnextchunk(8);
-				g = convertbinarytoint(currentchunk);
-				getnextchunk(8);
-				b = convertbinarytoint(currentchunk);
-				if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.RGB(r, g, b);
-			}
-			
-			//Clear the image before starting
-			var pixel:Int = 0;
-			for (j in 0 ... imgheight) {
-				for (i in 0 ... imgwidth) {
-					getnextchunk(1);
-					pixel = Convert.toint(currentchunk);
-					pixel = imgpal[pixel];
-					
-					if(pixel != Col.TRANSPARENT){
-						settrect(i, j, 1, 1);
-						t.fillRect(trect, (0xFF << 24) + pixel);
-					}
+		//Four colour format
+		for (i in 0 ... (imgformat * 2)) {
+			getnextchunk(8);
+			r = convertbinarytoint(currentchunk);
+			getnextchunk(8);
+			g = convertbinarytoint(currentchunk);
+			getnextchunk(8);
+			b = convertbinarytoint(currentchunk);
+			if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.RGB(r, g, b);
+		}
+		
+		//Clear the image before starting
+		var pixel:Int = 0;
+		for (j in 0 ... imgheight) {
+			for (i in 0 ... imgwidth) {
+				getnextchunk(imgformat);
+				pixel = convertbinarytoint(currentchunk);
+				pixel = imgpal[pixel];
+				
+				if(pixel != Col.TRANSPARENT){
+					settrect(i, j, 1, 1);
+					t.fillRect(trect, (0xFF << 24) + pixel);
 				}
 			}
 		}
