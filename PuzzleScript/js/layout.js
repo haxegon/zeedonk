@@ -20,7 +20,6 @@ function resize_widths(verticaldragbarX){
 }
 
 function resize_heights(horizontaldragbarY){
-	document.getElementById("leftpanel").style.height = (window.innerHeight - upperbarheight) + "px";
 	
 	document.getElementById("righttophalf").style.height = horizontaldragbarY - upperbarheight -5 + "px";
 	document.getElementById("rightbottomhalf").style.top = horizontaldragbarY + horizontaldragbarHeight + "px";
