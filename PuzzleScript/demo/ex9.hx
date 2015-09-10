@@ -271,48 +271,136 @@ function loadimagestring(inputstring:String) {
   getnextchunk(4);
   imgheight = convertbinarytoint(currentchunk) + 1;
   resize();
+  
+  getnextchunk(1);
+  var imgformat:Int = Convert.toint(currentchunk);
+  
+  if(imgformat == 0){
+    //Load the palette
+    var r:Int; var g:Int; var b:Int;
+    for (i in 0 ... 4) {
+      getnextchunk(8);
+      r = convertbinarytoint(currentchunk);
+      getnextchunk(8);
+      g = convertbinarytoint(currentchunk);
+      getnextchunk(8);
+      b = convertbinarytoint(currentchunk);
+      palette[i] = Gfx.RGB(r, g, b);
+      palettehue[i] = Gfx.gethue(palette[i]);
+      palettesaturation[i] = Gfx.getsaturation(palette[i]);
+      palettelightness[i] = Gfx.getlightness(palette[i]);
+    }
 
-  //Load the palette
-  var r:Int; var g:Int; var b:Int;
-  for (i in 0 ... 4) {
-    getnextchunk(8);
-    r = convertbinarytoint(currentchunk);
-    getnextchunk(8);
-    g = convertbinarytoint(currentchunk);
-    getnextchunk(8);
-    b = convertbinarytoint(currentchunk);
-    palette[i] = Gfx.RGB(r, g, b);
-    palettehue[i] = Gfx.gethue(palette[i]);
-    palettesaturation[i] = Gfx.getsaturation(palette[i]);
-    palettelightness[i] = Gfx.getlightness(palette[i]);
-  }
+    //Clear the image before starting
+    for (j in 0 ... 16) for (i in 0 ... 16) imgcanvas[i + j * 16] = 0;
 
-  //Clear the image before starting
-  for (j in 0 ... 16) for (i in 0 ... 16) imgcanvas[i + j * 16] = 0;
+    for (j in 0 ... imgheight) {
+      for (i in 0 ... imgwidth) {
+        getnextchunk(2);
+        imgcanvas[i + j * 16] = convertbinarytoint(currentchunk);
+      }
+    }
+  }else{
+    //Load the palette
+    randompalette();
+    var r:Int; var g:Int; var b:Int;
+    for (i in 0 ... 2) {
+      getnextchunk(8);
+      r = convertbinarytoint(currentchunk);
+      getnextchunk(8);
+      g = convertbinarytoint(currentchunk);
+      getnextchunk(8);
+      b = convertbinarytoint(currentchunk);
+      palette[i] = Gfx.RGB(r, g, b);
+      palettehue[i] = Gfx.gethue(palette[i]);
+      palettesaturation[i] = Gfx.getsaturation(palette[i]);
+      palettelightness[i] = Gfx.getlightness(palette[i]);
+    }
 
-  for (j in 0 ... imgheight) {
-    for (i in 0 ... imgwidth) {
-      getnextchunk(2);
-      imgcanvas[i + j * 16] = convertbinarytoint(currentchunk);
+    //Clear the image before starting
+    for (j in 0 ... 16) for (i in 0 ... 16) imgcanvas[i + j * 16] = 0;
+
+    for (j in 0 ... imgheight) {
+      for (i in 0 ... imgwidth) {
+        getnextchunk(1);
+        imgcanvas[i + j * 16] = Convert.toint(currentchunk);
+      }
     }
   }
 }
 
 function saveimagestring() {
   var outputstring:String = "";
-  //Format: Width (0-15), H (0-15), Colours 1 to 4, raw image data
+  //Format: Width (0-15), H (0-15), Type, Colours 1 to 4, raw image data
   outputstring += convertobinary(imgwidth - 1, 4);
   outputstring += convertobinary(imgheight - 1, 4);
-
-  for (i in 0 ... 4) {
-    outputstring += convertobinary(Gfx.getred(palette[i]), 8);
-    outputstring += convertobinary(Gfx.getgreen(palette[i]), 8);
-    outputstring += convertobinary(Gfx.getblue(palette[i]), 8);
-  }
-
+  
+  //If we use four colours, then we output as type "0". If we use only two,
+  //then we output as type "1", which uses half the space!
+  
+  var colourcount:Array = [0, 0, 0, 0];
   for (j in 0 ... imgheight) {
     for (i in 0 ... imgwidth) {
-      outputstring += convertobinary(imgcanvas[i + j * 16], 2);
+      colourcount[imgcanvas[i + j * 16]] = 1;
+    }
+  }
+  
+  var imageformat:Int = 0;
+  if(colourcount[0] + colourcount[1] + colourcount[2] + colourcount[3] == 2){
+    //There's a weird edge case here where you just make a NxN solid block:
+    //In that case, for simplicity, just use the four colour format.
+    imageformat = 1;
+  }
+  
+  outputstring += Convert.tostring(imageformat);
+  
+  if(imageformat == 0){
+    //Four colour format
+    for (i in 0 ... 4) {
+      outputstring += convertobinary(Gfx.getred(palette[i]), 8);
+      outputstring += convertobinary(Gfx.getgreen(palette[i]), 8);
+      outputstring += convertobinary(Gfx.getblue(palette[i]), 8);
+    }
+
+    for (j in 0 ... imgheight) {
+      for (i in 0 ... imgwidth) {
+        outputstring += convertobinary(imgcanvas[i + j * 16], 2);
+      }
+    }
+  }else{
+    //Two colour format
+    var colour1:Int;
+    var colour2:Int;
+    
+    if(colourcount[0] == 1) {
+      colour1 = 0;
+      if(colourcount[1] == 1) { colour2 = 1;
+      }else if(colourcount[2] == 1) { colour2 = 2;
+      }else{ colour2 = 3; }
+    }else if(colourcount[1] == 1) {
+      colour1 = 1;
+      if(colourcount[2] == 1) { colour2 = 2;
+      }else{ colour2 = 3; }
+    }else if(colourcount[2] == 1) {
+      colour1 = 2; colour2 = 3;
+    }
+    
+    outputstring += convertobinary(Gfx.getred(palette[colour1]), 8);
+    outputstring += convertobinary(Gfx.getgreen(palette[colour1]), 8);
+    outputstring += convertobinary(Gfx.getblue(palette[colour1]), 8);
+    
+    outputstring += convertobinary(Gfx.getred(palette[colour2]), 8);
+    outputstring += convertobinary(Gfx.getgreen(palette[colour2]), 8);
+    outputstring += convertobinary(Gfx.getblue(palette[colour2]), 8);
+    
+    for (j in 0 ... imgheight) {
+      for (i in 0 ... imgwidth) {
+        if(imgcanvas[i + j * 16] == colour1){
+          outputstring += "0";
+        }else{
+          outputstring += "1";
+        }
+      }
     }
   }
 
