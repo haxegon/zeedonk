@@ -81,11 +81,9 @@ function new(){
   Text.setfont("pixel", 1);
   
   //Load in some 8x8 sprite strings for icons
-  Gfx.loadimagestring("plus", "3Kaaaz$MyaaaapZZZKE6cYcFUFZYJZUFU6J6cEa");
-  Gfx.loadimagestring("minus", "3Kaaaz$MyaaaapZZZKaaaacEEFZYJZUEE6aaaaa");
-  Gfx.loadimagestring("smiley", "ZKaaatkvAqaaap580KcEE6akJZU6kZZZUcZZZZ8
-																 JZZZUJUZUZFYJYJUZFZFYJZZZZFZZZZUZEEFYFU
-																 EEY8ZEEZ6FZZZCcFZYCacEE6a");
+  Gfx.loadimagestring("plus", "3KaaamMzmaaaahZZZSvqb5bvXvZZxZXvXqxKbva");
+  Gfx.loadimagestring("minus", "3KaaamMzmaaaahZZZSaaaabvvvZZxZXvvqaaaaa");
+  Gfx.loadimagestring("smiley", "ZKaaaj=kNiaaahJLnybvvqafxZXqf5ZZXb5ZZZLxZZZXxX5X5PZxZxX5PZPZxZZZZPZZZZX5PvvZvXvv5r5Pv5KvZZZObvZZuabvvqa");
   
   gui_setup();
 }
