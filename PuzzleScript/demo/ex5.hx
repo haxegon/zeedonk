@@ -143,7 +143,7 @@ function saveDat():String{
     var n = dat.instruments[i];
     for ( j in 0...5){
       var p1 = Math.pow(62,j);
-      var v = Std.int(n/p1)%62;
+      var v = Convert.toint(n/p1)%62;
       intArray.push(v);
     }
   }
@@ -157,7 +157,7 @@ function saveDat():String{
       intArray.push(instNotes.length);
       for (n in instNotes){
         intArray.push(n[0]%62);
-        intArray.push(Std.int(n[0]/62)%62);    
+        intArray.push(Convert.toint(n[0]/62)%62);    
       }
       for (j in 1...4){
         for (n in instNotes){            
@@ -210,7 +210,7 @@ function saveDat():String{
     while(i<s.length){
       var c = s[i];
       while (c=="0"||c=="1"||c=="2"||c=="3"||c=="4"||c=="5"||c=="6"||c=="7"||c=="8"||c=="9"){
-        lastInt=lastInt*10+Std.int(c);
+        lastInt=lastInt*10+Convert.toint(c);
         i++;
         c=s[i];
       }
@@ -905,8 +905,8 @@ for (k in 0 ... 5){
     playTick++;    
     var pieceLengthInTicks = dat.notes.length*dat.patternLength*dat.cellDuration;
     playTick = playTick%pieceLengthInTicks;
-    var globalCell = Std.int(playTick/dat.cellDuration);
-    var playPattern = Std.int(globalCell/dat.patternLength);
+    var globalCell = Convert.toint(playTick/dat.cellDuration);
+    var playPattern = Convert.toint(globalCell/dat.patternLength);
     selectedSequence=playPattern;
     var patternProgress = globalCell-dat.patternLength*playPattern;
     

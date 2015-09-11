@@ -8,7 +8,9 @@ Game.title("Simple GUI System");
 
 // After that, there are two functions that you can modify to control everything:
 // gui_changescene(), which says what buttons to put on the screen, and
-// gui_buttonaction(), which says what to do when you click on a button.
+// 
+
+action(), which says what to do when you click on a button.
 
 var examplenumber = 100; //Just used as an example of modifying a variable
 
@@ -230,10 +232,8 @@ function gui_setid(id){
 }
 
 function gui_setup(){
+	gui_id = "none";
   gui_button = [];
   
   gui_changescene("init");
 }
-
-gui_id = "none";
-var gui_button:Array = [];
