@@ -57,24 +57,19 @@ function update(){
 }
 
 function loadfontinfo(){
-  fontlist = [Font.ZERO4B11, Font.APPLE, Font.BOLD, Font.C64, Font.CASUAL, 
-              Font.COMIC, Font.CRYPT, Font.DEFAULT, Font.DOS, Font.GANON, 
-              Font.HANDY, Font.NOKIA, Font.OLDENGLISH, Font.PIXEL,
+  fontlist = [Font.ZERO4B11, Font.C64, Font.COMIC, Font.CRYPT, Font.DEFAULT,
+              Font.DOS, Font.GANON, Font.NOKIA, Font.OLDENGLISH, Font.PIXEL,
               Font.PRESSSTART, Font.RETROFUTURE, Font.ROMAN, Font.SPECIAL,
-              Font.VISITOR, Font.YOSTER];
+              Font.YOSTER];
   
   fontcredits = [];
   fontcredits.push("04B11 by Yuji Oshimoto, 04.jp.org");
-  fontcredits.push("80-Column Apple II Font, PR Number 3, by KreativeKorp, kreativekorp.com");
-  fontcredits.push("\"Bold\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
   fontcredits.push("Standard C64 font. Converted by ck! of Freaky Fonts as \"Adore64\".");
-  fontcredits.push("Casual Encounter by Anna Antrophy, auntiepixelante.com");
   fontcredits.push("DeluxePaint II's Comic font. Converted by codeman38, zone38.net");
   fontcredits.push("Crypt of Tomorrow by Anna Antrophy, auntiepixelante.com");
   fontcredits.push("\"Normal\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
   fontcredits.push("Standard DOS VGA font. From Zeh Fernando's Perfect DOS VGA font, zehfernando.com");
   fontcredits.push("Inspired by the font from Zelda: A Link to the Past. Converted by codeman38, zone38.net");
-  fontcredits.push("Handy by Cal Henderson. iamcal.com");
   fontcredits.push("As seen in Flixel! Nokia Cellphone font by Zeh Fernando, zehfernando.com");
   fontcredits.push("\"Old English\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
   fontcredits.push("Slightly modified version of PixelZim by Zeh Fernando, zehfernando.com");
@@ -82,7 +77,6 @@ function loadfontinfo(){
   fontcredits.push("Retro Future Heavy, by Cyclone Graphics.");
   fontcredits.push("\"Roman\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
   fontcredits.push("\"Special\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("Visitor by Brian Kent.");
   fontcredits.push("Inspired by the font from Yoshi's Island. Converted by codeman38, zone38.net");
 
   //Load in all the fonts now
