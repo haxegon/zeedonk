@@ -22,7 +22,7 @@ class Core extends Sprite {
 	public function init() {
 		maxelapsed = 0.0333;
 		maxframeskip = 5;
-		tickrate = 4;
+		tickrate = 20;
 		_delta = 0;
 		
 		// on-stage event listener
