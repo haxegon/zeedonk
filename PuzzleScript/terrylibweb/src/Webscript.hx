@@ -195,7 +195,6 @@ class Webscript {
 	private static var counter:Int = 0;
 	private static var oldfont:String = "";
 	private static var oldfontsize:Int = 0;
-	
 
 	private static function resetGlobalVariables(){
 		MusicEngine.stopmusic();
@@ -233,7 +232,6 @@ class Webscript {
 		//if (Preprocessor.sortbyscope()) {
 		//Preprocessor.checkforerrors();
 		//myscript = Preprocessor.getfinalscript();
-			
 		//Preprocessor.debug();
 		interpreter.variables.set("Math", Math);
 		interpreter.variables.set("Col", Col);

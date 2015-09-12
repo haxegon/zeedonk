@@ -52,7 +52,6 @@ class Gfx {
 		initgfx(Std.int(width), Std.int(height), scale);
 		Text.init(gfxstage);
 		showfps = false;
-		fps();
 		gfxstage.addChild(screen);
 		
 		updategraphicsmode();
@@ -1395,7 +1394,7 @@ class Gfx {
 	
 	/** Just gives Gfx access to the stage. */
 	private static function init(stage:Stage) {
-		gfxstage = stage;
+		if (initrun) gfxstage = stage;
 		doclearscreeneachframe = true;
 		setlinethickness(1);
 	}
@@ -1420,6 +1419,7 @@ class Gfx {
 		alphact = new ColorTransform();
 		hslval.push(0.0); hslval.push(0.0); hslval.push(0.0);
 		
+		if (backbuffer != null) backbuffer.dispose();
 		backbuffer = new BitmapData(screenwidth, screenheight, false, 0x000000);
 		drawto = backbuffer;
 		drawingtoscreen = true;
@@ -1502,6 +1502,7 @@ class Gfx {
 	//HSL conversion variables 
 	private static var hslval:Array<Float> = new Array<Float>();
 	
+	public static var initrun:Bool;
 	public static var skiprender:Bool;
 	private static var drawingtoscreen:Bool;
 }

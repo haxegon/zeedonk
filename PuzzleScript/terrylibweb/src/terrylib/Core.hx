@@ -15,6 +15,7 @@ class Core extends Sprite {
 	public function new() {
 		super();
 		
+		Gfx.initrun = true;
 		init();
 	}
 	
@@ -25,18 +26,28 @@ class Core extends Sprite {
 		_delta = 0;
 		
 		// on-stage event listener
-		addEventListener(Event.ADDED_TO_STAGE, addedtostage);
-		Lib.current.addChild(this);
+		if (Gfx.initrun) {
+			addEventListener(Event.ADDED_TO_STAGE, addedtostage);
+			Lib.current.addChild(this);
+		}else {
+			loaded();
+		}
 	}
 	
-	private function addedtostage(e:Event = null){
-		// remove event listener
+	private function addedtostage(e:Event = null) {
 		removeEventListener(Event.ADDED_TO_STAGE, addedtostage);
-		
+		loaded();
+	}
+	
+	private function loaded() {
 		//Init library classes
 		Random.setseed(Std.int(Math.random() * 233280));
-		Input.init(this.stage);
-		Mouse.init(this.stage);
+		
+		if (Gfx.initrun) {
+			Input.init(this.stage);
+			Mouse.init(this.stage);
+		}
+		
 		Gfx.init(this.stage);
 		
 		#if terrylibweb
@@ -54,7 +65,9 @@ class Core extends Sprite {
 		#end
 		
 		#if terrylibweb
-		if (terrylibmain == null) terrylibmain = new Main();
+		if (Gfx.initrun) {
+			if (terrylibmain == null) terrylibmain = new Main();
+		}
 		#else
 		Scene.init();
 		#end
@@ -64,6 +77,7 @@ class Core extends Sprite {
     // fixed framerate
     _skip = _rate * (maxframeskip + 1);
     _last = _prev = Lib.getTimer();
+		if(_timer != null) _timer.stop();
     _timer = new Timer(tickrate);
     _timer.run = ontimer;
 		Gfx.update_fps = 0;
@@ -73,6 +87,7 @@ class Core extends Sprite {
 		#if terrylibweb
 		Webscript.waitforreset = false;
 		#end
+		Gfx.initrun = false;
 	}
 	
 	private function ontimer(){
@@ -156,19 +171,11 @@ class Core extends Sprite {
 		#if terrylibweb
 		if (Webscript.reset) {
 			Webscript.reset = false;
-			reset();
 			init();
 		}
 		#end
 		
 		Mouse.mousewheel = 0;
-	}
-	
-	public function reset() {
-		//Delete all the old event listeners, to be set them up again.
-		Input.unload(this.stage);
-		Mouse.unload(this.stage);
-		Text.cleartextcache();
 	}
 	
 	#if terrylibweb
