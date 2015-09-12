@@ -37,15 +37,11 @@ class Webscript {
 		errorinscript = false;
 		
 		Text.setfont(Webfont.ZERO4B11, 1);
-		Text.setfont(Webfont.APPLE, 1);
-		Text.setfont(Webfont.BOLD, 1);
 		Text.setfont(Webfont.C64, 1);
-		Text.setfont(Webfont.CASUAL, 1);
 		Text.setfont(Webfont.COMIC, 1);
 		Text.setfont(Webfont.CRYPT, 1);
 		Text.setfont(Webfont.DOS, 1);
 		Text.setfont(Webfont.GANON, 1);
-		Text.setfont(Webfont.HANDY, 1);
 		Text.setfont(Webfont.NOKIA, 1);
 		Text.setfont(Webfont.OLDENGLISH, 1);
 		Text.setfont(Webfont.PIXEL, 1);
@@ -53,7 +49,6 @@ class Webscript {
 		Text.setfont(Webfont.RETROFUTURE, 1);
 		Text.setfont(Webfont.ROMAN, 1);
 		Text.setfont(Webfont.SPECIAL, 1);
-		Text.setfont(Webfont.VISITOR, 1);
 		Text.setfont(Webfont.YOSTER, 1);
 		
 		Text.setfont(Webfont.DEFAULT, 1);
