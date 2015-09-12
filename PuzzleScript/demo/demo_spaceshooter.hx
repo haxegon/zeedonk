@@ -4,6 +4,7 @@ var deathsequence:Int = 0;
 var gamestate:String = "title";
 var playerdestroyed:Bool;
 var screenflash:Int = 0;
+var score:Int = 0;
   
 //Entity functions
 var entity:Array;
@@ -170,6 +171,8 @@ function updateentity(t:Int){
           if(entity[i].rule == "enemy"){
             if(checkcollision(t, i)){
               entity[t].active = false;
+              entity[i].active = false;
+              score++;
               
               Music.playsound(31054702);
             }
@@ -237,20 +240,26 @@ function gameupdate() {
     screenflash--;
   }
   
+  //Create new enemies
   if(Game.time % 5 == 0){
     create(220, Game.time%120,"badguy");
+    create(300, 120-Game.time%120,"badguy");
   }
+  
+  //Show score
+  Text.display(2,0,"SCORE: " + score, Col.WHITE);
 }
 
 function titleupdate(){
   
   Text.display(Text.CENTER, Gfx.screenheightmid-20,"SIMPLE EXAMPLE SPACE SHOOTER");
-  Text.display(Text.CENTER, Gfx.screenheightmid,"SEE \"SUPER SHOT\" FOR");
-  Text.display(Text.CENTER, Gfx.screenheightmid+8,"A MORE COMPLEX EXAMPLE");
+  Text.display(Text.CENTER, Gfx.screenheightmid,"SEE \"SUPER SHOT\" FOR", Col.GRAY);
+  Text.display(Text.CENTER, Gfx.screenheightmid+8,"A MORE COMPLEX EXAMPLE", Col.GRAY);
   
   if(Input.justpressed(Key.Z) || Input.justpressed(Key.SPACE)){
     gamestate = "game";
     
+    score = 0;
     numentity = 0;
     create(5,56,"player");
     player = getplayer();
