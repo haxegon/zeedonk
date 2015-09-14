@@ -119,7 +119,7 @@ class Core extends Sprite {
 			_prev = _time;
 			
 			// update loop
-			if (Gfx.doclearscreeneachframe) Gfx.skiprender = true;
+			if (Gfx.clearscreeneachframe) Gfx.skiprender = true;
 			_skipedupdate++; //Skip one update now; we catch it later at render
 			if (_skipedupdate > 1) doupdate();
 			
@@ -154,7 +154,7 @@ class Core extends Sprite {
 		
 		if (!Gfx.skiprender) {
 			Gfx.drawto.lock();			
-			if (Gfx.doclearscreeneachframe) Gfx.clearscreen();
+			if (Gfx.clearscreeneachframe) Gfx.clearscreen();
 		}
 		#if terrylibweb
 		terrylibmain.update();

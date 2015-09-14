@@ -36,7 +36,7 @@ class Gfx {
 	public static var screenheight:Int;
 	public static var screenwidthmid:Int;
 	public static var screenheightmid:Int;
-	public static var doclearscreeneachframe:Bool;
+	public static var clearscreeneachframe:Bool;
 	
 	public static var screenscale:Int;
 	public static var devicexres:Int;
@@ -1403,13 +1403,9 @@ class Gfx {
 	/** Just gives Gfx access to the stage. */
 	private static function init(stage:Stage) {
 		if (initrun) gfxstage = stage;
-		doclearscreeneachframe = true;
+		clearscreeneachframe = true;
 		linethickness=1;
-	}
-	
-	public static function clearscreeneachframe(b:Bool) {
-		doclearscreeneachframe = b;
- 	}
+	}	
 	
 	/** Called from resizescreen(). Sets up all our graphics buffers. */
 	private static function initgfx(width:Int, height:Int, scale:Int) {

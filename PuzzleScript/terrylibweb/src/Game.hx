@@ -21,27 +21,41 @@ class Game {
 	}
 	
 	private static var _homepage:String="http://www.puzzlescript.net";
-	public static function homepage(p:String) {
+	public static var homepage(get,set):String;
+
+	public static function get_homepage():String {
+		return _homepage;		
+	}
+
+	public static function set_homepage(p:String):String {
+		_homepage=p;
 		Webscript.homepage = p;
 		#if !flash
 		ExternalInterface.call("sethomepage", p);
 		#end
+		return p;
 	}
 	
 	private static var _background:Int=0x000000;
-	public static function background(c:Int) {
+	public static function set_background(c:Int):Int {
 		Webscript.background_color = c;
 		#if !flash
 		ExternalInterface.call("setbackgroundcolor", c);
 		#end
+		return c;
 	}
 	
 	private static var _foreground:Int=0xffffff;
-	public static function foreground(c:Int) {
+	public static function get_foreground():Int {
+		return _foreground;
+	}
+	
+	public static function set_foreground(c:Int):Int {
 		Webscript.foreground_color = c;
 		#if !flash
 		ExternalInterface.call("setforegroundcolor", c);
 		#end
+		return c;
 	}
 
 	public static function editor():Bool{
