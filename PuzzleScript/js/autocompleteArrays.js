@@ -134,6 +134,7 @@ var haxeHintArray = [
 ["Music.playmusic","(musicDat)","F"],
 ["Music.stopmusic","()","F"],
 ["Music.setmusicvol","(0.0-1.0)","F"],
+["Music.setmusicloop","(shouldLoop:Bool)","Should the music loop or not? (defaults to true)"],
 ["Key.A","","E"],
 ["Key.B","","E"],
 ["Key.C","","E"],

@@ -70,6 +70,7 @@ class Webscript {
 			#end
 		}
 		readytogo = true;
+
 	}
 	
 	public static var myLoader:URLLoader;
@@ -198,7 +199,8 @@ class Webscript {
 
 	private static function resetGlobalVariables(){
 		MusicEngine.stopmusic();
-		MusicEngine.vol=1.0;
+		MusicEngine.vol=1.0;		
+		MusicEngine.musicLoop=true;
 		Input.resetKeys();
 	}
 
