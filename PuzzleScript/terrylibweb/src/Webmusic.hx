@@ -39,4 +39,9 @@ class Webmusic{
 		vol = Math.min(vol,1);
 		MusicEngine.vol=vol;
 	}
+
+
+	public static function setmusicloop(shouldLoop:Bool){
+		MusicEngine.musicLoop=shouldLoop;
+	}
 }

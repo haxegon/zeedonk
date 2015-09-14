@@ -16,15 +16,24 @@ class MusicDat {
 
 class MusicEngine {
 
-	public static var vol:Float=1.0;
+	public static var vol:Float=1.0;  
+  public static var musicLoop:Bool=true;
 
 	public static function update():Void{
 		if (!playing) return;
 	    
 	    var pieceLengthInTicks : Int = dat.notes.length*dat.patternLength*dat.cellDuration;
 
-	    playTick++;    
-	    playTick = playTick%pieceLengthInTicks;
+	    playTick++;   
+      if (musicLoop) {
+        playTick = playTick%pieceLengthInTicks;
+      } else {
+        if (playTick==pieceLengthInTicks){
+          playing=false;
+          return;
+        }
+      }
+
 	    
 	    var globalCell = Std.int(playTick/dat.cellDuration);
 	    var playPattern = Std.int(globalCell/dat.patternLength);
@@ -57,7 +66,6 @@ private static function TryPlayNote(x){
     }    
   }
 }  
-  
 
 	public static function stopmusic(){
 		stopPlay();
