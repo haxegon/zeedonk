@@ -18,6 +18,6 @@ function update(){
   if (p>1){
     p=1;
   }
-  Gfx.setlinethickness(1+p*9);
+  Gfx.linethickness=1+p*9;
   Gfx.drawline(mx,my,cx,cy,Col.WHITE);
 }

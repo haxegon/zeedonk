@@ -1,1 +1,1 @@
-Game.title("my game");
+Game.title = "my game";

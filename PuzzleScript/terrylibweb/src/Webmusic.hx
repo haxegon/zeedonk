@@ -48,7 +48,12 @@ class Webmusic{
 		return MusicEngine.vol;
 	}
 
-	public static function setmusicloop(shouldLoop:Bool){
+	public static var musicloop(get,set):Bool;
+	public static function get_musicloop():Bool {
+		return MusicEngine.musicLoop;
+	}
+	public static function set_musicloop(shouldLoop:Bool):Bool{
 		MusicEngine.musicLoop=shouldLoop;
+		return shouldLoop;
 	}
 }

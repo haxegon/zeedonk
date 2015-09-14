@@ -37,7 +37,10 @@ class Game {
 	}
 	
 	private static var _background:Int=0x000000;
+	public static var background(get,set):Int;
+
 	public static function set_background(c:Int):Int {
+		_background=c;
 		Webscript.background_color = c;
 		#if !flash
 		ExternalInterface.call("setbackgroundcolor", c);
@@ -45,12 +48,18 @@ class Game {
 		return c;
 	}
 	
+	public static function get_background():Int{
+		return _background;
+	}
+
 	private static var _foreground:Int=0xffffff;
+	public static var foreground(get,set):Int;
 	public static function get_foreground():Int {
 		return _foreground;
 	}
-	
+
 	public static function set_foreground(c:Int):Int {
+		_foreground=c;
 		Webscript.foreground_color = c;
 		#if !flash
 		ExternalInterface.call("setforegroundcolor", c);

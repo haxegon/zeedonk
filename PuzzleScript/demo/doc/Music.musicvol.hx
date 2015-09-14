@@ -14,6 +14,6 @@ function update(){
   var d = Math.sqrt(dx*dx+dy*dy);
   //gets smaller the further away you are
   var pc = Math.pow(1/(1+d),1/2);
-  Music.setmusicvol(pc);
+  Music.musicvol = pc;
   Gfx.drawline(cx,cy,mx,my,Col.RED);
 }
