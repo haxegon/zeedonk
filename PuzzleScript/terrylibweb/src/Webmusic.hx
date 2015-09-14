@@ -34,12 +34,19 @@ class Webmusic{
 		MusicEngine.stopmusic();
 	}
 
-	public static function setmusicvol(vol:Float){
+
+	public static var musicvol(get,set):Float;
+
+	public static function set_musicvol(vol:Float){
 		vol = Math.max(vol,0);
 		vol = Math.min(vol,1);
 		MusicEngine.vol=vol;
+		return vol;
 	}
 
+	public static function get_musicvol():Float{
+		return MusicEngine.vol;
+	}
 
 	public static function setmusicloop(shouldLoop:Bool){
 		MusicEngine.musicLoop=shouldLoop;
