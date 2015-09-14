@@ -33,10 +33,10 @@ function update(){
   Text.display(Text.CENTER,Gfx.screenheight - Text.height(), "Click to change font");
   
   Text.setfont(fontlist[currentfont], 2);
-  Text.display(Text.CENTER,Gfx.screenheightmid - Text.height(), "\"" + fontlist[currentfont] + "\"", Gfx.HSL((currentfont * coloroffset), 0.5, 0.5));
+  Text.display(Text.CENTER,Gfx.screenheightmid - Text.height(), "\"" + fontlist[currentfont] + "\"", Gfx.hsl((currentfont * coloroffset), 0.5, 0.5));
   
   Text.setfont(fontlist[currentfont], 1);
-  Text.display(10 - scrollposition,Gfx.screenheightmid + 2, fontcredits[currentfont], Gfx.HSL((currentfont * coloroffset), 0.15, 0.4));
+  Text.display(10 - scrollposition,Gfx.screenheightmid + 2, fontcredits[currentfont], Gfx.hsl((currentfont * coloroffset), 0.15, 0.4));
   
   //Update scroller position
   counter++;
@@ -116,6 +116,6 @@ var starcol:Int;
 function drawstars(){
   for(i in 0 ... numstars){
     starcol = 255 - (6 - starspeed[i]) * 60;
-    Gfx.setpixel(starx[i], stary[i], Gfx.RGB(starcol, starcol, starcol));
+    Gfx.setpixel(starx[i], stary[i], Gfx.rgb(starcol, starcol, starcol));
   }
 }

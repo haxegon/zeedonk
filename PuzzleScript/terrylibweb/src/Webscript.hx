@@ -169,14 +169,14 @@ class Webscript {
 			*/
 			
 			//for (i in 0 ... 30) {
-				//Gfx.drawline(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Gfx.HSL(Random.int(0,360),0.5,0.5));
-				//Gfx.drawhexagon(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(10,50), Random.int(0,360), Gfx.HSL(Random.int(0,360),0.5,0.5));
-				//Gfx.drawtri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
-				//Gfx.drawcircle(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(10, 50), Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
+				//Gfx.drawline(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Gfx.hsl(Random.int(0,360),0.5,0.5));
+				//Gfx.drawhexagon(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(10,50), Random.int(0,360), Gfx.hsl(Random.int(0,360),0.5,0.5));
+				//Gfx.drawtri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
+				//Gfx.drawcircle(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(10, 50), Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
 			//}
 			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, (counter / 50) % 120, Col.WHITE);
-			//Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, ((counter%(150)) * 55)/150, Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
-			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, 55, Gfx.HSL(Random.int(0, 360), 0.5, 0.5));
+			//Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, ((counter%(150)) * 55)/150, Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
+			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, 55, Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
 		}
 		
 		if (Gfx.showfps) {

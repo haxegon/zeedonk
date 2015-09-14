@@ -75,7 +75,7 @@ function new() {
   Gfx.fillbox(0, 0, 72, 20, Col.BLACK);
   for (j in 1 ... 19) {
     for (i in 1 ... 71) {
-      Gfx.fillbox(i, j, 1, 1, Gfx.HSL(i * 360 / 72, 1 - ((j*j)/400), 0.5));
+      Gfx.fillbox(i, j, 1, 1, Gfx.hsl(i * 360 / 72, 1 - ((j*j)/400), 0.5));
     }
   }
 
@@ -83,7 +83,7 @@ function new() {
   Gfx.drawtoimage("lightness");
   Gfx.fillbox(0, 0, 72, 8, Col.BLACK);
   for (i in 1 ... 71) {
-    Gfx.fillbox(i, 1, 1, 6, Gfx.RGB(Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72)));
+    Gfx.fillbox(i, 1, 1, 6, Gfx.rgb(Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72)));
   }
 
   Gfx.createimage("preset", 72, 16);
@@ -285,7 +285,7 @@ function loadimagestring(inputstring:String) {
       g = convertbinarytoint(currentchunk);
       getnextchunk(8);
       b = convertbinarytoint(currentchunk);
-      palette[i] = Gfx.RGB(r, g, b);
+      palette[i] = Gfx.rgb(r, g, b);
       palettehue[i] = Gfx.gethue(palette[i]);
       palettesaturation[i] = Gfx.getsaturation(palette[i]);
       palettelightness[i] = Gfx.getlightness(palette[i]);
@@ -311,7 +311,7 @@ function loadimagestring(inputstring:String) {
       g = convertbinarytoint(currentchunk);
       getnextchunk(8);
       b = convertbinarytoint(currentchunk);
-      palette[i] = Gfx.RGB(r, g, b);
+      palette[i] = Gfx.rgb(r, g, b);
       palettehue[i] = Gfx.gethue(palette[i]);
       palettesaturation[i] = Gfx.getsaturation(palette[i]);
       palettelightness[i] = Gfx.getlightness(palette[i]);
@@ -417,10 +417,10 @@ function updatehueposition() {
 
 function setbackgroundcolour(){
   backgroundhue = (palettehue[0] + 180) % 360;
-  backgroundcol = Gfx.HSL(backgroundhue, 0.3, 0.15);
+  backgroundcol = Gfx.hsl(backgroundhue, 0.3, 0.15);
 
-  buttoncol = Gfx.HSL(backgroundhue, 0.5, 0.6);
-  buttonhighlightcol = Gfx.HSL(backgroundhue, 0.5, 0.8);
+  buttoncol = Gfx.hsl(backgroundhue, 0.5, 0.6);
+  buttonhighlightcol = Gfx.hsl(backgroundhue, 0.5, 0.8);
   Game.background(backgroundcol);
 }
 
@@ -428,7 +428,7 @@ function randompalette(){
   var randhue:Int = Random.int(0, 360);
   var randsaturation:Float = 0.3;
   var randlightness:Float = 0.2;
-  palette[0] = Gfx.HSL(randhue, randsaturation, randlightness);
+  palette[0] = Gfx.hsl(randhue, randsaturation, randlightness);
 
   palettehue[0] = randhue;
   palettesaturation[0] = randsaturation;
@@ -438,7 +438,7 @@ function randompalette(){
   randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
   randlightness = 0.4;
-  palette[1] = Gfx.HSL(randhue, randsaturation, randlightness);
+  palette[1] = Gfx.hsl(randhue, randsaturation, randlightness);
   palettehue[1] = randhue;
   palettesaturation[1] = randsaturation;
   palettelightness[1] = randlightness;
@@ -446,7 +446,7 @@ function randompalette(){
   randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
   randlightness = 0.5;
-  palette[2] = Gfx.HSL(randhue, randsaturation, randlightness);
+  palette[2] = Gfx.hsl(randhue, randsaturation, randlightness);
   palettehue[2] = randhue;
   palettesaturation[2] = randsaturation;
   palettelightness[2] = randlightness;
@@ -454,7 +454,7 @@ function randompalette(){
   randhue = (randhue + Random.int(20, 90)) % 360;
   randsaturation = 0.5;
   randlightness = 0.7;
-  palette[3] = Gfx.HSL(randhue, randsaturation, randlightness);
+  palette[3] = Gfx.hsl(randhue, randsaturation, randlightness);
   palettehue[3] = randhue;
   palettesaturation[3] = randsaturation;
   palettelightness[3] = randlightness;
@@ -503,9 +503,9 @@ function drawbackground() {
     for (i in 0 ... imgwidth) {
       var pixel:Int = palette[imgcanvas[i + j * 16]];
       if (pixel == Col.TRANSPARENT) {
-        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, Gfx.RGB(64, 64, 64));
-        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize/2, boxsize/2, Gfx.RGB(32, 32, 32));
-        Gfx.fillbox(canvasx + i * boxsize + boxsize/2, canvasy + j * boxsize  + boxsize/2, boxsize/2, boxsize/2, Gfx.RGB(32, 32, 32));
+        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, Gfx.rgb(64, 64, 64));
+        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize/2, boxsize/2, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(canvasx + i * boxsize + boxsize/2, canvasy + j * boxsize  + boxsize/2, boxsize/2, boxsize/2, Gfx.rgb(32, 32, 32));
       }else{
         Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, palette[imgcanvas[i + j * 16]]);
       }
@@ -515,18 +515,18 @@ function drawbackground() {
   for (i in 0 ... 4) {
     if (currentcol == i) {
       if (palette[i] == Col.TRANSPARENT) {
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Gfx.RGB(64, 64, 64));
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 5, 5, Gfx.RGB(32, 32, 32));
-        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 6 + 5, 5, 5, Gfx.RGB(32, 32, 32));
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Gfx.rgb(64, 64, 64));
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 5, 5, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 6 + 5, 5, 5, Gfx.rgb(32, 32, 32));
       }else{
         Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, palette[i]);
       }
     }else {
       Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Col.BLACK);
       if (palette[i] == Col.TRANSPARENT) {
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, Gfx.RGB(64, 64, 64));
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 5, 5, Gfx.RGB(32, 32, 32));
-        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 4 + 5, 5, 5, Gfx.RGB(32, 32, 32));
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, Gfx.rgb(64, 64, 64));
+        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 5, 5, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 4 + 5, 5, 5, Gfx.rgb(32, 32, 32));
       }else{
         Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, palette[i]);
       }
@@ -763,7 +763,7 @@ function update() {
         palettesaturation[currentcol] = currentsaturation;
 
         updatehueposition();
-        palette[currentcol] = Gfx.HSL(currenthue, currentsaturation, currentlightness);
+        palette[currentcol] = Gfx.hsl(currenthue, currentsaturation, currentlightness);
       }
     }
 
@@ -774,7 +774,7 @@ function update() {
       if (Mouse.leftheld() && !mouseheld) {
         currentlightness = ((Mouse.x - 116) / 72);
         palettelightness[currentcol] = currentlightness;
-        palette[currentcol] = Gfx.HSL(currenthue, currentsaturation, currentlightness);
+        palette[currentcol] = Gfx.hsl(currenthue, currentsaturation, currentlightness);
       }
     }
     Gfx.drawbox(116 + Convert.toint(72 * currentlightness) - 2, 27, 4, 7, Col.WHITE);

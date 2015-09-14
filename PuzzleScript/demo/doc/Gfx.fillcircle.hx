@@ -4,6 +4,6 @@ function update(){
     var r = Gfx.screenwidthmid+Gfx.screenwidthmid*Math.sin(t);
     var x = Gfx.screenwidthmid+Gfx.screenwidthmid*Math.sin(t+1);
     var y = Gfx.screenheightmid+Gfx.screenheightmid*Math.sin(t+2);
-    Gfx.fillcircle(x,y,r,Gfx.HSL(t*100,1,.5));
+    Gfx.fillcircle(x,y,r,Gfx.hsl(t*100,1,.5));
   }
 }

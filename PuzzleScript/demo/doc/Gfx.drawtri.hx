@@ -10,6 +10,6 @@ function update(){
     var x3 = x + Math.sin(t+i)*50;
     var y3 = y + Math.cos(t+i)*50;
         
-    Gfx.drawtri(x,y,x2,y2,x3,y3,Gfx.HSL((t+i)*100,1,.5));
+    Gfx.drawtri(x,y,x2,y2,x3,y3,Gfx.hsl((t+i)*100,1,.5));
   }
 }

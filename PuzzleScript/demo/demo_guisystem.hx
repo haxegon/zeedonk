@@ -38,7 +38,7 @@ function gui_changescene(s){
     gui_addbutton(66, 65, "COOL", "cool");
   }else if(s == "examples"){
     for(i in 0 ... 10){
-      gui_addbox(i*(Gfx.screenwidth/10), 0, Gfx.screenwidth/10, Gfx.screenheight, Gfx.HSL(i*36, 0.5, 0.3));
+      gui_addbox(i*(Gfx.screenwidth/10), 0, Gfx.screenwidth/10, Gfx.screenheight, Gfx.hsl(i*36, 0.5, 0.3));
     }
     
     gui_addbutton(Gfx.screenwidth - 10 - gui_buttonwidth, 10, "BACK", "back");

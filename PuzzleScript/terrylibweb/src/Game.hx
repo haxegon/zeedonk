@@ -4,13 +4,23 @@ import openfl.external.ExternalInterface;
 class Game {
 	public static var time:Int;
 	
-	public static function title(t:String) {
+	private static var _title:String="terrylib game";
+	public static var title(get,set):String;
+
+	public static function get_title():String {
+		return _title;		
+	}
+
+	public static function set_title(t:String) {
+		_title=t;
 		Webscript.title = t;
 		#if !flash
 		ExternalInterface.call("settitle", t);
 		#end
+		return t;
 	}
 	
+	private static var _homepage:String="http://www.puzzlescript.net";
 	public static function homepage(p:String) {
 		Webscript.homepage = p;
 		#if !flash
@@ -18,6 +28,7 @@ class Game {
 		#end
 	}
 	
+	private static var _background:Int=0x000000;
 	public static function background(c:Int) {
 		Webscript.background_color = c;
 		#if !flash
@@ -25,6 +36,7 @@ class Game {
 		#end
 	}
 	
+	private static var _foreground:Int=0xffffff;
 	public static function foreground(c:Int) {
 		Webscript.foreground_color = c;
 		#if !flash

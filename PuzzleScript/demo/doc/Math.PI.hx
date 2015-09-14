@@ -13,7 +13,7 @@ function update(){
   for (i in 0...12){
     var dx = -l*Math.cos(a);
     var dy = l*Math.sin(a);
-    var c = Gfx.HSL(i*360/12+Game.time*10,1.0,0.5);
+    var c = Gfx.hsl(i*360/12+Game.time*10,1.0,0.5);
     Gfx.drawline(px,py,px+dx,py+dy,c);
     px+=dx;
     py+=dy;

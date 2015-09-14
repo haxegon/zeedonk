@@ -19,6 +19,6 @@ function update(){
     var y2 = Gfx.screenheightmid+big_r*Math.cos(a2)*m2;
     var x3 = Gfx.screenwidthmid+big_r*Math.sin(a3)*m3;
     var y3 = Gfx.screenheightmid+big_r*Math.cos(a3)*m3;
-	  Gfx.filltri(x1,y1,x2,y2,x3,y3,Gfx.HSL((t+i+130)*100,1,.5));
+	  Gfx.filltri(x1,y1,x2,y2,x3,y3,Gfx.hsl((t+i+130)*100,1,.5));
   }
 }

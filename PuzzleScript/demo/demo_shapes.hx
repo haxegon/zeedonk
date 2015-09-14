@@ -67,7 +67,7 @@ function drawtriangles(effectnum:Int) {
   }
   
   //Draw a triangle with random vertices, random colour and alpha of 0.6.
-  Gfx.filltri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.HSL(Random.int(0, 360), 0.5, 0.5), 0.6);
+  Gfx.filltri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.hsl(Random.int(0, 360), 0.5, 0.5), 0.6);
   
   //Draw that buffer to the screen
   Gfx.drawtoscreen();
@@ -101,7 +101,7 @@ function drawhexagon(effectnum:Int) {
   for (i in 0 ... 13) {
     shade = 255-(27*i);
   	if(shade<0) shade=0;
-    Gfx.drawhexagon(Gfx.screenwidthmid, Gfx.screenheightmid, 10 + (i*10) + (pulse / 2), counter / 50, Gfx.RGB(shade, shade, shade));
+    Gfx.drawhexagon(Gfx.screenwidthmid, Gfx.screenheightmid, 10 + (i*10) + (pulse / 2), counter / 50, Gfx.rgb(shade, shade, shade));
   }
 }
 

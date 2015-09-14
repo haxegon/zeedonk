@@ -7,7 +7,7 @@ function update(){
   for (i in 0...7){
     var x = Gfx.screenwidthmid+(Gfx.screenheightmid-15)*Math.sin(2*Math.PI*(t+i)/7);
     var y = Gfx.screenheightmid+(Gfx.screenheightmid-15)*Math.cos(2*Math.PI*(t+i)/7);
-    Gfx.drawline(x,y,x2,y2,Gfx.HSL((t+i)*100,1,.2));
-    Gfx.drawline(x,y,Gfx.screenwidthmid,Gfx.screenheightmid,Gfx.HSL((t+i)*100,1,.5));
+    Gfx.drawline(x,y,x2,y2,Gfx.hsl((t+i)*100,1,.2));
+    Gfx.drawline(x,y,Gfx.screenwidthmid,Gfx.screenheightmid,Gfx.hsl((t+i)*100,1,.5));
   }
 }

@@ -21,7 +21,7 @@ function update(){
     }
     strings.push(genString());
     curfonts.push(Random.int(0,fonts.length-1));
-    colors.push(Gfx.HSL(Random.int(0,359),1.0,0.5));
+    colors.push(Gfx.hsl(Random.int(0,359),1.0,0.5));
   }
   for (i in 0...strings.length){
     Text.setfont(fonts[curfonts[i]],1);

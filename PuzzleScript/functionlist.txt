@@ -11,8 +11,8 @@ Gfx.fillhexagon
 Gfx.drawline
 Gfx.setlinethickness
 Gfx.getpixel
-Gfx.RGB
-Gfx.HSL
+Gfx.rgb
+Gfx.hsl
 Gfx.getred
 Gfx.getgreen
 Gfx.getblue

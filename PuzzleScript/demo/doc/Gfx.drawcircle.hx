@@ -8,6 +8,6 @@ function update(){
     var h = 50 + Math.cos(t+i)*50;    
     w*=i/20;
     h*=i/20;
-    Gfx.drawcircle(x,y,w,Gfx.HSL((t+i)*100,1,.5));
+    Gfx.drawcircle(x,y,w,Gfx.hsl((t+i)*100,1,.5));
   }
 }

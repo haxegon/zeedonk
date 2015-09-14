@@ -7,6 +7,6 @@ function update(){
     var w = 50 + Math.sin(t+i)*50;
     var h = 50 + Math.cos(t+i)*50;
         
-    Gfx.fillbox(x-w/2,y-h/2,w,h,Gfx.HSL((t+i)*100,1,.5));
+    Gfx.fillbox(x-w/2,y-h/2,w,h,Gfx.hsl((t+i)*100,1,.5));
   }
 }
