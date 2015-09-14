@@ -122,7 +122,7 @@ function renderHint(elt,data,cur){
 
 function CompletionsPick( p_oCompletion ) { 
  //  console.log( "==> Function entry: " + arguments.callee.name + "() <==" ) ; 
-   //console.log( p_oCompletion ) ; 
+   consolePrint( p_oCompletion.text+p_oCompletion.displayText ) ; 
    var c = editor.getCursor();
    var l = editor.getLine(c.line);
 
