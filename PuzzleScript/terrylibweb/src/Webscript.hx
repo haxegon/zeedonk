@@ -126,7 +126,7 @@ class Webscript {
 		if (errorinscript) {
 		#end
 			Text.setfont("default", 1);
-			Gfx.clearscreen(Gfx.RGB(32, 0, 0));
+			Gfx.clearscreen(Gfx.rgb(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
 		}else if (script_waitforreset) {
 			if (!waitforreset) {

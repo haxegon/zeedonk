@@ -252,7 +252,7 @@ class Gfx {
 			g = convertbinarytoint(currentchunk);
 			getnextchunk(8);
 			b = convertbinarytoint(currentchunk);
-			if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.RGB(r, g, b);
+			if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.rgb(r, g, b);
 		}
 		
 		//Clear the image before starting
@@ -1313,13 +1313,13 @@ class Gfx {
     return (max + min) / 2;
 	}
 	
-	public static function RGB(red:Int, green:Int, blue:Int):Int {
+	public static function rgb(red:Int, green:Int, blue:Int):Int {
 		return (blue | (green << 8) | (red << 16));
 	}
 	
 	/** Picks a colour given Hue, Saturation and Lightness values. 
 	 *  Hue is between 0-359, Saturation and Lightness between 0.0 and 1.0. */
-	public static function HSL(hue:Float, saturation:Float, lightness:Float):Int{
+	public static function hsl(hue:Float, saturation:Float, lightness:Float):Int{
 		var q:Float = if (lightness < 1 / 2) {
 			lightness * (1 + saturation);
 		}else {
@@ -1347,7 +1347,7 @@ class Gfx {
 			}
 		}
 		
-		return RGB(Std.int(hslval[0] * 255), Std.int(hslval[1] * 255), Std.int(hslval[2] * 255));
+		return rgb(Std.int(hslval[0] * 255), Std.int(hslval[1] * 255), Std.int(hslval[2] * 255));
 	}
 	
 	private static function setzoom(t:Int) {
