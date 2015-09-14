@@ -225,7 +225,7 @@ class Webscript {
 		pausescript = false;
    	parser = new hscript.Parser();
 		parser.allowTypes = true;
-    interpreter = new hscript.Interp();
+    interpreter = new InterpExtended();
 		
 		Game.time = 0;
 		

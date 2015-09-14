@@ -824,7 +824,7 @@ class Gfx {
 		}
 		#else
     tempshape.graphics.clear();
-		tempshape.graphics.lineStyle(linethickness, col, alpha);
+		tempshape.graphics.lineStyle(_linethickness, col, alpha);
 		tempshape.graphics.moveTo(_x1, _y1);
     tempshape.graphics.lineTo(_x2, _y2);
     drawto.draw(tempshape, shapematrix);
@@ -847,7 +847,7 @@ class Gfx {
 		}
 		#else
 		tempshape.graphics.clear();
-		tempshape.graphics.lineStyle(linethickness, col, alpha);
+		tempshape.graphics.lineStyle(_linethickness, col, alpha);
 		
 		temprotate = ((Math.PI * 2) / 6);
 		
@@ -934,7 +934,7 @@ class Gfx {
 		}
 		#else
 		tempshape.graphics.clear();
-		tempshape.graphics.lineStyle(linethickness, col, alpha);
+		tempshape.graphics.lineStyle(_linethickness, col, alpha);
 		tempshape.graphics.drawCircle(0, 0, radius);
 		
 		shapematrix.identity();
@@ -1005,7 +1005,7 @@ class Gfx {
 		drawline(x3, y3, x1, y1, col);
 		#else
 		tempshape.graphics.clear();
-		tempshape.graphics.lineStyle(linethickness, col, alpha);
+		tempshape.graphics.lineStyle(_linethickness, col, alpha);
 		tempshape.graphics.lineTo(0, 0);
 		tempshape.graphics.lineTo(x2 - x1, y2 - y1);
 		tempshape.graphics.lineTo(x3 - x1, y3 - y1);
@@ -1128,14 +1128,14 @@ class Gfx {
 			fillbox(x, y + 1, 1, height, col, alpha);
 			fillbox(x + width - 1, y + 1, 1, height, col, alpha);
 		#else
-		if (linethickness < 2) {				
+		if (_linethickness < 2) {				
 			drawline(x, y, x + width, y, col, alpha);
 			drawline(x, y + height, x + width, y + height, col, alpha);
 			drawline(x, y + 1, x, y + height, col, alpha);
 			drawline(x + width - 1, y + 1, x + width - 1, y + height, col, alpha);
 		}else{
 			tempshape.graphics.clear();
-			tempshape.graphics.lineStyle(linethickness, col, alpha);
+			tempshape.graphics.lineStyle(_linethickness, col, alpha);
 			tempshape.graphics.lineTo(width, 0);
 			tempshape.graphics.lineTo(width, height);
 			tempshape.graphics.lineTo(0, height);
@@ -1148,10 +1148,18 @@ class Gfx {
 		#end
 	}
 
-	public static function setlinethickness(size:Float) {
-		linethickness = size;
-		if (linethickness < 1) linethickness = 1;
-		if (linethickness > 255) linethickness = 255;
+	public static var linethickness(get,set):Float;
+
+	static function get_linethickness():Float {
+		return _linethickness;
+	}
+
+	static function set_linethickness(size:Float) {
+		trace("setting thickness to "+size);
+		_linethickness = size;
+		if (_linethickness < 1) _linethickness = 1;
+		if (_linethickness > 255) _linethickness = 255;
+		return _linethickness;
 	}
 	
 	public static function clearscreen(col:Int = 0x000000) {
@@ -1187,21 +1195,21 @@ class Gfx {
 		if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
 		if (alpha < 1) {
-			if (linethickness == 1) {
+			if (_linethickness == 1) {
 				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
 				settrect(Std.int(x), Std.int(y), 1, 1);
 				drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
 			}else {
-				settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
+				settrect(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2);
 				drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
 			}
 		}else {
-			if (linethickness == 1) {
+			if (_linethickness == 1) {
 				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
 				settrect(Std.int(x), Std.int(y), 1, 1);
 				drawto.fillRect(trect, (0xFF << 24) + col);
 			}else {
-				settrect(x - linethickness + 1, y - linethickness + 1, linethickness + linethickness - 2, linethickness + linethickness - 2);
+				settrect(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2);
 				drawto.fillRect(trect, (0xFF << 24) + col);
 			}
 		}
@@ -1396,7 +1404,7 @@ class Gfx {
 	private static function init(stage:Stage) {
 		if (initrun) gfxstage = stage;
 		doclearscreeneachframe = true;
-		setlinethickness(1);
+		linethickness=1;
 	}
 	
 	public static function clearscreeneachframe(b:Bool) {
@@ -1486,7 +1494,7 @@ class Gfx {
 	private static var tx2:Float;
   private static var ty2:Float;
 	
-	private static var linethickness:Float;
+	private static var _linethickness:Float;
 	
 	private static var buffer:BitmapData;
 	
