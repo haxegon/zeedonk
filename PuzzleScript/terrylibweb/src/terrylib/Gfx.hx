@@ -804,16 +804,16 @@ class Gfx {
     if (skiprender && drawingtoscreen) return;
 		#if terrylibweb
 		if (_x1 == _x2) {
-			if(_y2>_y1){
-				fillbox(_x1, _y1, 1, _y2 - _y1, col, alpha);
+			if (_y2 > _y1) {
+				fillbox(_x1 - linethickness + 1, _y1, 1 + linethickness - 1, _y2 - _y1, col, alpha);
 			}else {
-				fillbox(_x1, _y2, 1, _y1 - _y2, col, alpha);
+				fillbox(_x1 - linethickness + 1, _y2, 1 + linethickness - 1, _y1 - _y2, col, alpha);
 			}
 		}else if (_y1 == _y2) {
 			if(_x2>_x1){
-				fillbox(_x1, _y1, _x2 - _x1, 1, col, alpha);
+				fillbox(_x1, _y1 - linethickness + 1, _x2 - _x1, 1 + linethickness - 1, col, alpha);
 			}else {
-				fillbox(_x2, _y1, _x1 - _x2, 1, col, alpha);
+				fillbox(_x2, _y1 - linethickness + 1, _x1 - _x2, 1 + linethickness - 1, col, alpha);
 			}
 		}else{
 			bresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), 0);
