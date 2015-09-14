@@ -1,6 +1,6 @@
-Game.title("Shapes Demo");
-Game.homepage("http://www.distractionware.com");
-Game.background(Col.BLACK);
+Game.title="Shapes Demo";
+Game.homepage="http://www.distractionware.com";
+Game.background=Col.BLACK;
 
 var currenteffect:Int;    // Current effect we're drawing on the screen
 var totaleffects:Int;     // Total number of effects
@@ -76,7 +76,7 @@ function drawtriangles(effectnum:Int) {
 
 function drawcircles(effectnum:Int) {
   currenteffectname = "2: CIRCLES";
-  Gfx.setlinethickness(3);
+  Gfx.linethickness=3;
   var radius:Int = 0;
   
   radius = (counter % 120);
@@ -95,7 +95,7 @@ function drawcircles(effectnum:Int) {
 
 function drawhexagon(effectnum:Int) {
   currenteffectname = "3: HEXAGON";
-  Gfx.setlinethickness(1);
+  Gfx.linethickness=1;
   
   var shade:Int;
   for (i in 0 ... 13) {

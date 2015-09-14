@@ -30,10 +30,10 @@ function new() {
 //  Gfx.showfps=true;
   newLevel();
   repositionCollectable();
-  Game.background(0x333333);
-  Game.foreground(Col.GREY);
-  Game.title("CLONE AVOID");
-  Game.homepage("http://www.increpare.com");
+  Game.background=0x333333;
+  Game.foreground=Col.GREY;
+  Game.title="CLONE AVOID";
+  Game.homepage="http://www.increpare.com";
 }
 
 function newLevel(){

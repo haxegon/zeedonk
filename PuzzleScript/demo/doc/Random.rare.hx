@@ -1,4 +1,4 @@
-Gfx.clearscreeneachframe(false);
+Gfx.clearscreeneachframe=false;
 function update(){
   Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheight,Col.BLACK,0.1);
   if (Game.time%5==0){

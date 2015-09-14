@@ -1,1 +1,1 @@
-Game.foreground(0x00ff00);
+Game.foreground=0x00ff00;

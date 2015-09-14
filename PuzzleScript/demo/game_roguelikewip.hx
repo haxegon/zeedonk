@@ -1,4 +1,4 @@
-Game.title("Roguelike Example");
+Game.title="Roguelike Example";
 
 //Palette stuff
 var DOSpalette:Array<Int> = [
@@ -37,7 +37,7 @@ function setupscreen(){
   Text.setfont(Font.DOS, 1);
   Gfx.showfps = true;
   updatescreen = true;
-  Gfx.clearscreeneachframe(false);
+  Gfx.clearscreeneachframe=false;
   
   for(j in 0 ... mapheight){
     vmult.push(j * mapwidth);

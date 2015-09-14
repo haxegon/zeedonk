@@ -1,4 +1,4 @@
-Game.title("Shooter Example");
+Game.title="Shooter Example";
 
 var deathsequence:Int = 0;
 var gamestate:String = "title";

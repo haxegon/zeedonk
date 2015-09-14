@@ -1,5 +1,5 @@
-Gfx.clearscreeneachframe(false);
-Gfx.setlinethickness(2);
+Gfx.clearscreeneachframe=false;
+Gfx.linethickness=2;
 var l = 30;
 function update(){
   Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheight,Col.WHITE,0.1);

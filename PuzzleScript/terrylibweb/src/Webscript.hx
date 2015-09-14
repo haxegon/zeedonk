@@ -6,6 +6,8 @@ import openfl.external.ExternalInterface;
 import openfl.events.*;
 import openfl.net.*;
 
+@:access(terrylib.Game)
+@:access(terrylib.Gfx)
 @:access(terrylib.Input)
 class Webscript {
 	public static var myscript:String;
@@ -202,6 +204,11 @@ class Webscript {
 		MusicEngine.vol=1.0;		
 		MusicEngine.musicLoop=true;
 		Input.resetKeys();
+		Gfx._linethickness=1;
+		Game._title="terrylib game";
+		Game._homepage="http://www.puzzlescript.net";
+		Game._background=0x000000;
+		Game._foreground=0xffffff;
 	}
 
 	public static function loadscript(script:String) {

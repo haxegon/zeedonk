@@ -4,7 +4,7 @@ import openfl.external.ExternalInterface;
 class Game {
 	public static var time:Int;
 	
-	private static var _title:String="terrylib game";
+	public static var _title:String="terrylib game";
 	public static var title(get,set):String;
 
 	public static function get_title():String {
@@ -20,7 +20,7 @@ class Game {
 		return t;
 	}
 	
-	private static var _homepage:String="http://www.puzzlescript.net";
+	public static var _homepage:String="http://www.puzzlescript.net";
 	public static var homepage(get,set):String;
 
 	public static function get_homepage():String {
@@ -36,7 +36,7 @@ class Game {
 		return p;
 	}
 	
-	private static var _background:Int=0x000000;
+	public static var _background:Int=0x000000;
 	public static var background(get,set):Int;
 
 	public static function set_background(c:Int):Int {
@@ -52,7 +52,7 @@ class Game {
 		return _background;
 	}
 
-	private static var _foreground:Int=0xffffff;
+	public static var _foreground:Int=0xffffff;
 	public static var foreground(get,set):Int;
 	public static function get_foreground():Int {
 		return _foreground;

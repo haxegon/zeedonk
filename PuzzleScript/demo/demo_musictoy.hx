@@ -1,5 +1,5 @@
-Game.title("Music Toy");
-Game.background(0x301C5A);
+Game.title="Music Toy";
+Game.background=0x301C5A;
 
 //Example inspired by the Matheson Marcault logo.
 //http://mathesonmarcault.com

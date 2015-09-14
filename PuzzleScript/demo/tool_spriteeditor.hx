@@ -1,4 +1,4 @@
-Game.title("Sprite Editor");
+Game.title="Sprite Editor";
 
 var sound_select:Int = 84923106;
 var sound_click:Int = 25271106;
@@ -56,7 +56,7 @@ var mouseheld:Bool = false;
 function new() {
   Gfx.resizescreen(192, 120, 4);
   Text.setfont("pixel", 1);
-  Gfx.clearscreeneachframe(false);
+  Gfx.clearscreeneachframe=false;
   Gfx.showfps = true;
 
   brushsize = 0;
@@ -421,7 +421,7 @@ function setbackgroundcolour(){
 
   buttoncol = Gfx.hsl(backgroundhue, 0.5, 0.6);
   buttonhighlightcol = Gfx.hsl(backgroundhue, 0.5, 0.8);
-  Game.background(backgroundcol);
+  Game.background=backgroundcol;
 }
 
 function randompalette(){

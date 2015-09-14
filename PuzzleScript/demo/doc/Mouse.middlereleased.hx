@@ -1,4 +1,4 @@
-Gfx.clearscreeneachframe(false);
+Gfx.clearscreeneachframe=false;
 function update(){
   if (Mouse.middleclick()){
     Gfx.fillcircle(Mouse.x,Mouse.y,20,Col.WHITE);

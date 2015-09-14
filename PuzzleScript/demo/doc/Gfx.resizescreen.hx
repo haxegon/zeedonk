@@ -1,4 +1,4 @@
-Game.background(Col.RED);
+Game.background=Col.RED;
 var w = 100+50;
 var h = 100-50;
 Gfx.resizescreen(w,h,5);

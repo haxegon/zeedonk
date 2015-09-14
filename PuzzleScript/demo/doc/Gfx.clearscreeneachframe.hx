@@ -1,4 +1,4 @@
-Gfx.clearscreeneachframe(false);
+Gfx.clearscreeneachframe = false;
 function update(){
 	var rx = Random.int(0,Gfx.screenwidth);
 	var ry = Random.int(0,Gfx.screenheight);

@@ -1,4 +1,4 @@
-Game.title("Simple GUI System");
+Game.title="Simple GUI System";
 // This is a simple GUI system that you can copy and paste to use in your own games!
 
 // HOW TO USE:
