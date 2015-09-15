@@ -7,13 +7,13 @@
 -D hscript=2.0.5
 -cp src
 -D openfl-next
--D terrylibweb
 -D hscriptPos
 -D tools=2.6.2
 -D no-compilation
 -D lime-opengl
 -D openfl-html5
 -D canvas
+-D haxegonweb
 -D RENDER_BLIT
 -D lime-html5
 -D terryhasntupgraded

@@ -210,7 +210,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "876",
+			build: "878",
 			company: "Stephen and Terry",
 			file: "webthing",
 			fps: 60,
@@ -264,7 +264,7 @@ class ApplicationMain {
 	public static function start ():Void {
 		
 		var hasMain = false;
-		var entryPoint = Type.resolveClass ("terrylib.Load");
+		var entryPoint = Type.resolveClass ("haxegon.Load");
 		
 		for (methodName in Type.getClassFields (entryPoint)) {
 			
@@ -316,7 +316,7 @@ class ApplicationMain {
 
 
 @:build(DocumentClass.build())
-@:keep class DocumentClass extends terrylib.Load {}
+@:keep class DocumentClass extends haxegon.Load {}
 
 
 #else

@@ -8,7 +8,7 @@
   />
 
 	<app 
-      main="terrylib.Load"
+      main="haxegon.Load"
       path="bin" 
       file="webthing" 
       preloader="Preloader"
@@ -39,9 +39,9 @@
 	<haxelib name="hscript" />
 
 	
-	<haxedef name="terrylibweb" />
+	<haxedef name="haxegonweb" />
 	<haxedef name="terryhasntupgraded" />
-	<!-- haxedef name="terrylibwebhtml5debug" /-->
+	<!-- haxedef name="haxegonhtml5debug" /-->
 	<haxedef name="hscriptPos" />
 	
 	<!-- Using Beeblerox's BitmapFont implemention -->

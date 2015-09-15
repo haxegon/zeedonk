@@ -1,4 +1,4 @@
-#if terrylibweb
+#if haxegonweb
 
 import openfl.display.*;          
 import openfl.media.*; 

@@ -1,4 +1,4 @@
-import terrylib.*;
+import haxegon.*;
 
 @:keep
 @:expose

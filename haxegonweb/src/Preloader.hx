@@ -129,7 +129,7 @@ class Preloader extends NMEPreloader{
 		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)), Std.int((screenheight / 2) - 11)-10, loadingbarwidth, 28, backcol);
 		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)) + 1, Std.int((screenheight / 2) - 11)+1-10, Std.int(p * (loadingbarwidth))-2, 28-2, loadercol);
 		
-		glyphprint(Std.int((screenwidth / 2)) - 7 * 4, Std.int((screenheight / 2) + 12), "LOADING TERRYLIB");
+		glyphprint(Std.int((screenwidth / 2)) - 7 * 4, Std.int((screenheight / 2) + 12), "LOADING HAXEGON");
 		
 		//Render
 		screenbuffer.lock();

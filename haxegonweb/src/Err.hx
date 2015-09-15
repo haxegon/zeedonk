@@ -1,4 +1,4 @@
-import terrylib.*;
+import haxegon.*;
 import hscript.*;
 import hscript.Expr.Error;
 

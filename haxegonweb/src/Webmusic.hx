@@ -1,4 +1,4 @@
-import terrylib.*;
+import haxegon.*;
 import openfl.external.ExternalInterface;
 
 @:keep
