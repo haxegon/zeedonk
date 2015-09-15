@@ -271,9 +271,13 @@ class Text {
 			cachelabel = text + "_" + currentfont + Convert.tostring(col);
 			if (!cachedtextindex.exists(cachelabel)) {
 				//Cache the text
+				var numlines:Int = 1;
+				for (i in 0 ... text.length) {
+					if (text.substr(i, 1) == "\n") numlines++;
+				}
 				cacheindex = cachedtext.length;
 				cachedtextindex.set(cachelabel, cacheindex);
-				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].tf_bitmap.textHeight), true, 0));
+				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].tf_bitmap.textHeight) * numlines, true, 0));
 			  
 				drawto = cachedtext[cacheindex];
 				cache_bitmap_text(text, col);
