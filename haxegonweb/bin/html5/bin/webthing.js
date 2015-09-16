@@ -105,7 +105,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "875", company : "Stephen and Terry", file : "webthing", fps : 60, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
+	ApplicationMain.config = { build : "876", company : "Stephen and Terry", file : "webthing", fps : 60, name : "Webthing", orientation : "landscape", packageName : "com.stephenandterry.webthing", version : "1.0.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 480, parameters : "{}", resizable : true, stencilBuffer : true, title : "Webthing", vsync : true, width : 768, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -4452,7 +4452,7 @@ Webscript.resetGlobalVariables = function() {
 	terrylib_Input.resetKeys();
 	terrylib_Gfx._linethickness = 1;
 	Game._title = "terrylib game";
-	Game._homepage = "http://www.puzzlescript.net";
+	Game._homepage = "http://www.zeedonk.net";
 	Game._background = 0;
 	Game._foreground = 16777215;
 };
@@ -44841,7 +44841,7 @@ Err.RUNTIME_INIT = 4;
 Err.RUNTIME_UPDATE = 5;
 Err.dumpstack = false;
 Game._title = "terrylib game";
-Game._homepage = "http://www.puzzlescript.net";
+Game._homepage = "http://www.zeedonk.net";
 Game._background = 0;
 Game._foreground = 16777215;
 MusicEngine.vol = 1.0;

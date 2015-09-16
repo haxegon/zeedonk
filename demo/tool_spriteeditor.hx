@@ -1,57 +1,57 @@
 Game.title="Sprite Editor";
 
-var sound_select:Int = 84923106;
-var sound_click:Int = 25271106;
-var sound_random:Int = 44531703;
-var sound_clear:Int = 27481303;
-var sound_export:Int = 57854303;
-var sound_import:Int = 41433503;
+var sound_select = 84923106;
+var sound_click = 25271106;
+var sound_random = 44531703;
+var sound_clear = 27481303;
+var sound_export = 57854303;
+var sound_import = 41433503;
 
-var imgwidth:Int = 16;
-var imgheight:Int = 16;
-var boxsize:Int;
-var palette:Array<Int> = [0, 0, 0, 0];
-var palettehue:Array<Int> = [0, 0, 0, 0];
-var palettesaturation:Array<Float> = [0, 0, 0, 0];
-var palettelightness:Array<Float> = [0, 0, 0, 0];
-var button:Array<Dynamic> = [];
-var arnepalette:Array<Int> = [
+var imgwidth = 16;
+var imgheight = 16;
+var boxsize;
+var palette = [0, 0, 0, 0];
+var palettehue = [0, 0, 0, 0];
+var palettesaturation = [0, 0, 0, 0];
+var palettelightness = [0, 0, 0, 0];
+var button = [];
+var arnepalette = [
   Col.BLACK, Col.GRAY, Col.WHITE, Col.RED, Col.PINK, Col.DARKBROWN, 
   Col.BROWN, Col.ORANGE, Col.YELLOW, Col.DARKGREEN, Col.GREEN, Col.LIGHTGREEN,
   Col.NIGHTBLUE, Col.DARKBLUE, Col.BLUE, Col.LIGHTBLUE, Col.MAGENTA, Col.TRANSPARENT];
 
-var arnehue:Array<Int> = [0, 0, 0, 355, 345, 34, 30, 28, 51, 192, 97, 75, 211, 200, 205, 199, 300, 0];
-var arnesaturation:Array<Float> = [0, 0, 0, 0.67, 0.65, 0.26, 0.66, 0.82, 0.9, 0.25, 0.68, 0.68, 0.3, 1, 0.88, 0.66, 1, 0];
-var arnelightness:Array<Float> = [0, 0.62, 1, 0.45, 0.66, 0.23, 0.39, 0.56, 0.69, 0.25, 0.32, 0.48, 0.15, 0.26, 0.57, 0.82, 0.5, 0];
+var arnehue = [0, 0, 0, 355, 345, 34, 30, 28, 51, 192, 97, 75, 211, 200, 205, 199, 300, 0];
+var arnesaturation = [0, 0, 0, 0.67, 0.65, 0.26, 0.66, 0.82, 0.9, 0.25, 0.68, 0.68, 0.3, 1, 0.88, 0.66, 1, 0];
+var arnelightness = [0, 0.62, 1, 0.45, 0.66, 0.23, 0.39, 0.56, 0.69, 0.25, 0.32, 0.48, 0.15, 0.26, 0.57, 0.82, 0.5, 0];
 
-var fontxoff:Int = 0;
-var fontyoff:Int = -3;
+var fontxoff = 0;
+var fontyoff = -3;
 
-var imgcanvas:Array<Int>;
-var canvasx:Int;
-var canvasy:Int;
-var canvaswidth:Int;
-var canvasheight:Int;
+var imgcanvas;
+var canvasx;
+var canvasy;
+var canvaswidth;
+var canvasheight;
 
-var cursorx:Int;
-var cursory:Int;
-var huex:Int;
-var huey:Int;
+var cursorx;
+var cursory;
+var huex;
+var huey;
 
-var currentcol:Int;
-var brushsize:Int;
-var currenthue:Int;
-var currentsaturation:Float;
-var currentlightness:Float;
+var currentcol;
+var brushsize;
+var currenthue;
+var currentsaturation;
+var currentlightness;
 
-var backgroundcol:Int;
-var backgroundhue:Int;
-var buttoncol:Int;
-var buttonhighlightcol:Int;
+var backgroundcol;
+var backgroundhue;
+var buttoncol;
+var buttonhighlightcol;
 
-var currentstate:String;
+var currentstate;
 
-var mouseheld:Bool = false;
+var mouseheld = false;
 
 function new() {
   Gfx.resizescreen(192, 120, 4);
@@ -194,11 +194,11 @@ function new() {
   });
 }
 
-var BASE64:String = "abcdefghijklmnopqrstuvwxyz0123456789$=ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+var BASE64 = "abcdefghijklmnopqrstuvwxyz0123456789$=ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
 
 function convertobinary(t:Int, len:Int):String {
-  var endstring:String = "";
-  var currentbit:Int;
+  var endstring = "";
+  var currentbit;
 
   while (t > 0) {
     currentbit = t % 2;
@@ -212,8 +212,8 @@ function convertobinary(t:Int, len:Int):String {
 }
 
 function convertbase64tobinary(t:String):String {
-  var returnstr:String = "";
-  var currentval:Int = 0;
+  var returnstr = "";
+  var currentval = 0;
 
   for (i in 0 ... t.length) {
     currentval = BASE64.indexOf(t.substr(i, 1));
@@ -223,12 +223,12 @@ function convertbase64tobinary(t:String):String {
 }
 
 function convertbinarytobase64(t:String):String {
-  var endstring:String = "";
-  var currentval:Int = 0;
+  var endstring = "";
+  var currentval = 0;
 
   while (t.length % 6 != 0) t += "0";
 
-  var i:Int = 0;
+  var i = 0;
   while (i < t.length) {
     if (t.substr(i, 1) == "1") {
       currentval += Convert.toint(Math.pow(2, 5 - (i % 6)));
@@ -244,7 +244,7 @@ function convertbinarytobase64(t:String):String {
 }
 
 function convertbinarytoint(binarystring:String):Int {
-  var returnval:Int = 0;
+  var returnval = 0;
   for (i in -binarystring.length ... 0) {
     if (binarystring.substr( -i - 1, 1) == "1"){
       returnval += Convert.toint(Math.pow(2, binarystring.length + i));
@@ -255,7 +255,7 @@ function convertbinarytoint(binarystring:String):Int {
 
 function loadimagestring(inputstring:String) {
   if(inputstring == "" || inputstring == null) return;
-  var currentchunk:String = "";
+  var currentchunk = "";
   function getnextchunk(size:Int) {
     currentchunk = inputstring.substr(0, size);
     inputstring = inputstring.substr(size);
@@ -273,11 +273,11 @@ function loadimagestring(inputstring:String) {
   resize();
   
   getnextchunk(1);
-  var imgformat:Int = Convert.toint(currentchunk);
+  var imgformat = Convert.toint(currentchunk);
   
   if(imgformat == 0){
     //Load the palette
-    var r:Int; var g:Int; var b:Int;
+    var r; var g:Int; var b:Int;
     for (i in 0 ... 4) {
       getnextchunk(8);
       r = convertbinarytoint(currentchunk);
@@ -303,7 +303,7 @@ function loadimagestring(inputstring:String) {
   }else{
     //Load the palette
     randompalette();
-    var r:Int; var g:Int; var b:Int;
+    var r; var g:Int; var b:Int;
     for (i in 0 ... 2) {
       getnextchunk(8);
       r = convertbinarytoint(currentchunk);
@@ -330,7 +330,7 @@ function loadimagestring(inputstring:String) {
 }
 
 function saveimagestring() {
-  var outputstring:String = "";
+  var outputstring = "";
   //Format: Width (0-15), H (0-15), Type, Colours 1 to 4, raw image data
   outputstring += convertobinary(imgwidth - 1, 4);
   outputstring += convertobinary(imgheight - 1, 4);
@@ -338,14 +338,14 @@ function saveimagestring() {
   //If we use four colours, then we output as type "0". If we use only two,
   //then we output as type "1", which uses half the space!
   
-  var colourcount:Array = [0, 0, 0, 0];
+  var colourcount = [0, 0, 0, 0];
   for (j in 0 ... imgheight) {
     for (i in 0 ... imgwidth) {
       colourcount[imgcanvas[i + j * 16]] = 1;
     }
   }
   
-  var imageformat:Int = 0;
+  var imageformat = 0;
   if(colourcount[0] + colourcount[1] + colourcount[2] + colourcount[3] == 2){
     //There's a weird edge case here where you just make a NxN solid block:
     //In that case, for simplicity, just use the four colour format.
@@ -369,8 +369,8 @@ function saveimagestring() {
     }
   }else{
     //Two colour format
-    var colour1:Int;
-    var colour2:Int;
+    var colour1;
+    var colour2;
     
     if(colourcount[0] == 1) {
       colour1 = 0;
@@ -404,7 +404,7 @@ function saveimagestring() {
     }
   }
 
-  var convertedstring:String = convertbinarytobase64(outputstring);
+  var convertedstring = convertbinarytobase64(outputstring);
   trace(convertedstring);
   Game.prompt("Exported image string:",convertedstring);
 }
@@ -425,9 +425,9 @@ function setbackgroundcolour(){
 }
 
 function randompalette(){
-  var randhue:Int = Random.int(0, 360);
-  var randsaturation:Float = 0.3;
-  var randlightness:Float = 0.2;
+  var randhue = Random.int(0, 360);
+  var randsaturation = 0.3;
+  var randlightness = 0.2;
   palette[0] = Gfx.hsl(randhue, randsaturation, randlightness);
 
   palettehue[0] = randhue;
@@ -501,7 +501,7 @@ function drawbackground() {
 
   for (j in 0 ... imgheight) {
     for (i in 0 ... imgwidth) {
-      var pixel:Int = palette[imgcanvas[i + j * 16]];
+      var pixel = palette[imgcanvas[i + j * 16]];
       if (pixel == Col.TRANSPARENT) {
         Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, Gfx.rgb(64, 64, 64));
         Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize/2, boxsize/2, Gfx.rgb(32, 32, 32));

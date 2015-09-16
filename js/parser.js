@@ -1,22 +1,13 @@
 /*
 credits
 
-brunt of the work by stephen lavelle (www.increpare.com)
+by terry cavanagh (www.terrycavanaghgames.com) and stephen lavelle (www.increpare.com)
 
 all open source mit license blah blah
 
-testers:
-none, yet
+the editor is a slight modification of codemirror (codemirror.net), which is crazy awesome.
 
-code used
-
-colors used
-color values for named colours from arne, mostly (and a couple from a 32-colour palette attributed to him)
-http://androidarts.com/palette/16pal.htm
-
-the editor is a slight modification of codemirro (codemirror.net), which is crazy awesome.
-
-for post-launch credits, check out activty on github.com/increpare/PuzzleScript
+for post-launch credits, check out activty on github.com/increpare/zeedonk
 
 */
 

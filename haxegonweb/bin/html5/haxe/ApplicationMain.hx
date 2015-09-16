@@ -210,7 +210,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "875",
+			build: "876",
 			company: "Stephen and Terry",
 			file: "webthing",
 			fps: 60,

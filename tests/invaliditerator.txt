@@ -1,9 +1,0 @@
-function new(){
-
-}
-
-function update(){
-  for(x in 5){
-    Text.display(Text.CENTER, Text.CENTER, "Test Successful " + testarray[i], Col.WHITE);
-  }
-}

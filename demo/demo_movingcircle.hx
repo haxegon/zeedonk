@@ -24,7 +24,7 @@ function update() {
  	if ( x < r ) x = r;
   if ( y < r ) y = r;
   
- 	if ( x > Gfx.screenwidth - r ) x = Gfx.screenwidth - r ;
+ 	if ( x > Gfx.screenwidth - r ) x = Gfx.screenwidth - r;
   if ( y > Gfx.screenheight - r ) y = Gfx.screenheight - r;
   
   Gfx.drawcircle(x,y,r,Col.RED);

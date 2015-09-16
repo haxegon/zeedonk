@@ -1,21 +1,21 @@
 Game.title="Shooter Example";
 
-var deathsequence:Int = 0;
-var gamestate:String = "title";
-var playerdestroyed:Bool;
-var screenflash:Int = 0;
-var score:Int = 0;
+var deathsequence = 0;
+var gamestate = "title";
+var playerdestroyed;
+var screenflash = 0;
+var score = 0;
   
 //Entity functions
-var entity:Array;
-var numentity:Int;
+var entity;
+var numentity;
 
-var player:Int;
+var player;
 
 function getfreeentityindex():Int{
   //Finds the first entity in the array that's not being used.
-  var i:Int = 0;
-  var z:Int = -1;
+  var i = 0;
+  var z = -1;
   if(numentity == 0) {
     z = 0; 
   }else {
@@ -124,7 +124,7 @@ function resetentity(t:Int){
 }
 
 function create(_x:Int, _y:Int, t:String){
-  var i:Int = getfreeentityindex();
+  var i = getfreeentityindex();
   resetentity(i);
   
   entity[i].x = _x;
@@ -233,7 +233,7 @@ function gameupdate() {
   }
 
   //Cleanup
-  var i:Int = numentity - 1; while (i >= 0 && !entity[i].active) { numentity--; i--; }
+  var i = numentity - 1; while (i >= 0 && !entity[i].active) { numentity--; i--; }
 
   if(screenflash > 0){
     Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheight,Col.WHITE);

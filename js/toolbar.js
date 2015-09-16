@@ -216,7 +216,7 @@ function shareClick() {
 		"public" : true,
 		"files": {
 			"readme.txt" : {
-				"content": "Play this game by pasting the script in http://www.puzzlescript.net/editor.html"
+				"content": "Play this game by pasting the script in http://www.zeedonk.net/editor.html"
 			},
 			"script.hx" : {
 				"content": source

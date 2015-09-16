@@ -1,6 +1,0 @@
-function new(){
-}
-
-function update(){
-  Text.display(Text.CENTER, Text.CENTER, "Test Successful"yess, Col.WHITE);
-}

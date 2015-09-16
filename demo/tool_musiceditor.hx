@@ -1,7 +1,7 @@
 
-var charWidth:Int=3;
-var charHeight:Int=5;
-var charOffset:Int = -4;
+var charWidth =3;
+var charHeight =5;
+var charOffset = -4;
 
 var mainButton = 0x0000ff;
 var mainHighlight = 0x5555ff;
@@ -109,9 +109,9 @@ function loadDat(s){
     var sequence :Array<Array<Int> > = [[],[],[],[],[]];
     for (m in 0...5){
       i++;      
-      var noteCount:Int=arr[i];
+      var noteCount =arr[i];
   outputAr.push(arr[i]);
-      var noteSeq:Array<Int> =sequence[m];
+      var noteSeq =sequence[m];
       for(k in 0...noteCount){
         i++;
         var v1 = arr[i];
@@ -136,7 +136,7 @@ function loadDat(s){
 }
     
 function saveDat():String{  
-  var intArray: Array<Int> =[];
+  var intArray =[];
   intArray.push(dat.patternLength);
   intArray.push(dat.cellDuration);
   for ( i in 0...5){
@@ -148,7 +148,7 @@ function saveDat():String{
     }
   }
 
-  var outputAr:Array<Int> =[];
+  var outputAr =[];
   intArray.push(dat.notes.length);  
   outputAr.push(intArray[intArray.length-1]);
   for(r in dat.notes){
@@ -232,15 +232,15 @@ function saveDat():String{
            
 
       
-var channelOrder:Array = [0,1,2,3,4];           
+var channelOrder = [0,1,2,3,4];           
 
-var selectedInst:Int=0;
-var noteLength:Int=3;
-var lastl:Int = noteLength;           
+var selectedInst =0;
+var noteLength =3;
+var lastl = noteLength;           
            
-var maxVol:Int=7;
-var noteVol:Int=maxVol;
-var selectedSequence:Int=0;
+var maxVol =7;
+var noteVol =maxVol;
+var selectedSequence =0;
 var bottomNote=60;
 
            
@@ -569,7 +569,7 @@ function update() {
   for (i in 0 ... dat.notes.length) {
     var tCol=darkText;
     var collide=collideBox(2,20+i*8,11,7);
-    var col:Int=i==selectedSequence?mainHighlighter:mainHighlight;
+    var col =i==selectedSequence?mainHighlighter:mainHighlight;
     if (collide==1&&i!=selectedSequence){
       col=mainHighlightish;
       tCol=Col.GREY;
@@ -755,7 +755,7 @@ for (k in 0 ... 5){
   Gfx.fillbox(gx,gy,xCells*(cellWidth)+1,yCells*(cellHeight)+1,panelCol);
   
 
-  var octaveDisplay:Int = Math.floor((bottomNote+11)/12);
+  var octaveDisplay = Math.floor((bottomNote+11)/12);
   var cNotePos = ((bottomNote+11)%12);
 //  trace((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
   if (octaveDisplay>9){

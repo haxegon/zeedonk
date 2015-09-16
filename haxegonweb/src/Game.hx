@@ -20,7 +20,7 @@ class Game {
 		return t;
 	}
 	
-	public static var _homepage:String="http://www.puzzlescript.net";
+	public static var _homepage:String="http://www.zeedonk.net";
 	public static var homepage(get,set):String;
 
 	public static function get_homepage():String {

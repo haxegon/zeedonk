@@ -3,23 +3,23 @@ Game.background=0x301C5A;
 
 //Example inspired by the Matheson Marcault logo.
 //http://mathesonmarcault.com
-var BACKGROUND:Int = 0x301C5A;
-var ACCENT1:Int = 0x4F318C;
-var ACCENT2:Int = 0x6640B5;
-var ACCENT3:Int = 0x8E7BB5;
+var BACKGROUND = 0x301C5A;
+var ACCENT1 = 0x4F318C;
+var ACCENT2 = 0x6640B5;
+var ACCENT3 = 0x8E7BB5;
 
-var xstart:Int;   					// How many pixels from the left to start from.
-var ystart:Int;   					// How many pixels from the top to start from.
-var yend:Int;     					// The lowest point that the bars should fall.
-var gapsize:Int; 		   		  // Gap between each bar.
-var barwidth:Int;						// Width of each bar.
+var xstart;   					// How many pixels from the left to start from.
+var ystart;   					// How many pixels from the top to start from.
+var yend;     					// The lowest point that the bars should fall.
+var gapsize; 		   		  // Gap between each bar.
+var barwidth;						// Width of each bar.
 
-var currentbar:Int;     		// Bar that we're currently moused over.
+var currentbar;     		// Bar that we're currently moused over.
 
-var barheight:Array<Int>;   // Current height of each bar.
-var baractive:Array<Bool>;  // True when the bar is actively repeating.
-var barhammer:Array<Bool>;  // True when we've clicked on a bar: hammers it down.
-var barrestore:Array<Bool>; // True when we've clicked on a repeating bar: restores it.
+var barheight;   // Current height of each bar.
+var baractive;  // True when the bar is actively repeating.
+var barhammer;  // True when we've clicked on a bar: hammers it down.
+var barrestore; // True when we've clicked on a repeating bar: restores it.
 
 function new() {
   //To get the rounded edges on the bars, we create images for the tops.
@@ -173,8 +173,8 @@ function dorender() {
 }
 
 var scale = [45, 48, 57, 60, 64, 69];
-var notecount:Int = 0;
-var note:Int = 0;
+var notecount = 0;
+var note = 0;
 function playsound(t:Int) {
   note = Math.pow(2,(scale[t]-61)/12);
   Music.playnote(3522376,note,1,1);

@@ -28,7 +28,7 @@ function buildStandalone(sourceCode) {
 	var htmlString = standalone_HTML_String.concat("");
 	var title = "terrylib Game";
 
-	var homepage = "www.puzzlescript.net";
+	var homepage = "www.zeedonk.net";
 
 	if ('background_color' in state.metadata) {
 		htmlString = htmlString.replace(/black;\/\*Don\'t/g,state.bgcolor+';\/\*Don\'t');	

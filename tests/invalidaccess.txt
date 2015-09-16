@@ -1,9 +1,0 @@
-var test:Dynamic;
-
-function new(){
-  test.boop = true;
-}
-
-function update(){
-  Text.display(Text.CENTER, Text.CENTER, "Test Successful", Col.WHITE);
-}

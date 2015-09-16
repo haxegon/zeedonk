@@ -1,15 +1,15 @@
-var starx:Array<Int>;
-var stary:Array<Int>;
-var starspeed:Array<Int>;
-var numstars:Int;
+var starx;
+var stary;
+var starspeed;
+var numstars;
 
-var fontlist:Array<String>;
-var fontcredits:Array<String>;
-var currentfont:Int = 0;
-var scrollposition:Int = 0;
-var scrolldelay:Int = 0;
-var counter:Int = 0;
-var coloroffset:Int = 60;
+var fontlist;
+var fontcredits;
+var currentfont = 0;
+var scrollposition = 0;
+var scrolldelay = 0;
+var counter = 0;
+var coloroffset = 60;
 
 function new(){
   initstars();
@@ -112,7 +112,7 @@ function altrandom(from:Int, to:Int):Int{
 	return from + Math.floor(((to - from + 1) * Math.random()));
 }
 
-var starcol:Int;
+var starcol;
 function drawstars(){
   for(i in 0 ... numstars){
     starcol = 255 - (6 - starspeed[i]) * 60;

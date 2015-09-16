@@ -415,7 +415,6 @@ function setEditorClean() {
 	}
 }
 
-/* https://github.com/ndrake/PuzzleScript/commit/de4ac2a38865b74e66c1d711a25f0691079a290d */
 editor.on('change', function(cm, changeObj) {
   // editor is dirty
   checkEditorDirty();

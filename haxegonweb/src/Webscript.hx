@@ -206,7 +206,7 @@ class Webscript {
 		Input.resetKeys();
 		Gfx._linethickness=1;
 		Game._title="terrylib game";
-		Game._homepage="http://www.puzzlescript.net";
+		Game._homepage="http://www.zeedonk.net";
 		Game._background=0x000000;
 		Game._foreground=0xffffff;
 	}

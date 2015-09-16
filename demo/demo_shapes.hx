@@ -2,14 +2,14 @@ Game.title="Shapes Demo";
 Game.homepage="http://www.distractionware.com";
 Game.background=Col.BLACK;
 
-var currenteffect:Int;    // Current effect we're drawing on the screen
-var totaleffects:Int;     // Total number of effects
-var currenteffectname:String;
+var currenteffect;    // Current effect we're drawing on the screen
+var totaleffects;     // Total number of effects
+var currenteffectname;
 
-var counter:Int;          // Count up one every frame: using in this program for animation.
+var counter;          // Count up one every frame: using in this program for animation.
 
-var pulse:Int;            // A variable that counts from 0 to 50 and back.
-var pulsedir:String;      // Controls the direction of the pulse.
+var pulse;            // A variable that counts from 0 to 50 and back.
+var pulsedir;      // Controls the direction of the pulse.
 
 // new() is a special function that is called on startup.
 function new() {
@@ -77,7 +77,7 @@ function drawtriangles(effectnum:Int) {
 function drawcircles(effectnum:Int) {
   currenteffectname = "2: CIRCLES";
   Gfx.linethickness=3;
-  var radius:Int = 0;
+  var radius = 0;
   
   radius = (counter % 120);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.RED);
@@ -97,7 +97,7 @@ function drawhexagon(effectnum:Int) {
   currenteffectname = "3: HEXAGON";
   Gfx.linethickness=1;
   
-  var shade:Int;
+  var shade;
   for (i in 0 ... 13) {
     shade = 255-(27*i);
   	if(shade<0) shade=0;
@@ -107,8 +107,8 @@ function drawhexagon(effectnum:Int) {
 
 function drawstripes(effectnum:Int) {
   currenteffectname = "4: STRIPES";
-  var colour1:Int;
-  var colour2:Int;
+  var colour1;
+  var colour2;
   
   if (counter % 60 < 20) {
     colour1 = Col.GRAY;

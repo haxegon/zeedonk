@@ -1,7 +1,7 @@
 Game.title="Roguelike Example";
 
 //Palette stuff
-var DOSpalette:Array<Int> = [
+var DOSpalette = [
   0x000000, //0 - BLACK
   0x000080, //1 - BLUE
   0x008000, //2 - GREEN
@@ -21,16 +21,16 @@ var DOSpalette:Array<Int> = [
 ];
 
 //Message line functions
-var message:String = "ROGUELIKE";
+var message = "ROGUELIKE";
 
 //Screen functions
-var screen:Array<String> = [];
-var cellbackground:Array<Int> = [];
-var cellforeground:Array<Int> = [];
-var vmult:Array<Int> = [];
-var updatescreen:Bool = false;
-var mapwidth:Int = 24;
-var mapheight:Int = 10;
+var screen = [];
+var cellbackground = [];
+var cellforeground = [];
+var vmult = [];
+var updatescreen = false;
+var mapwidth = 24;
+var mapheight = 10;
 
 function setupscreen(){
   //We're stuck with 768x480 aspect ratio for now
@@ -103,10 +103,10 @@ function inbox(x:Float, y:Float, x1:Float, y1:Float, w:Float, h:Float):Bool {
 	
 //Entity functions
 
-var entity:Array<Object>;
-var numentity:Int;
+var entity;
+var numentity;
 
-var player:Int;
+var player;
 
 function resetentity(t:Int){
   entity[t].x = 0;
@@ -119,8 +119,8 @@ function resetentity(t:Int){
 }
 
 function getfreeentityindex():Int{
-  var i:Int = 0;
-  var z:Int = -1;
+  var i = 0;
+  var z = -1;
   if(numentity == 0) {
     z = 0; 
   }else {
@@ -142,7 +142,7 @@ function getfreeentityindex():Int{
 }
 
 function create(_x:Int, _y:Int, t:String){
-  var i:Int = getfreeentityindex();
+  var i = getfreeentityindex();
   resetentity(i);
   
   entity[i].x = _x;
@@ -180,7 +180,7 @@ function new(){
   message = "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=";
 }
 
-var inputthisframe:Bool;
+var inputthisframe;
 
 function moveentity(t:Int, xchange:Int, ychange:Int){
   updatescreen = true;
