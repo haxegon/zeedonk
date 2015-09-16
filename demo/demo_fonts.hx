@@ -108,7 +108,7 @@ function updatestars(){
   }
 }
 
-function altrandom(from:Int, to:Int):Int{
+function altrandom(from, to){
 	return from + Math.floor(((to - from + 1) * Math.random()));
 }
 

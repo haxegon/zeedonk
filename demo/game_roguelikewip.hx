@@ -58,7 +58,7 @@ function drawscreen(){
   }
 }
 
-function placechar(x:Int, y:Int, t:String, col:Int, back:Int){
+function placechar(x, y, t, col, back){
   if(inbox(x, y, 0, 0, mapwidth, mapheight)){
     screen[x + vmult[y]] = t;
     cellforeground[x + vmult[y]] = col;
@@ -66,7 +66,7 @@ function placechar(x:Int, y:Int, t:String, col:Int, back:Int){
   }
 }
 
-function getchar(x:Int, y:Int):String {
+function getchar(x, y) {
   if(inbox(x, y, 0, 0, mapwidth, mapheight)){
     return screen[x + vmult[y]];
   }else{
@@ -74,7 +74,7 @@ function getchar(x:Int, y:Int):String {
   }
 }
 
-function getfore(x:Int, y:Int):Int {
+function getfore(x, y) {
   if(inbox(x, y, 0, 0, mapwidth, mapheight)){
     return cellforeground[x + vmult[y]];
   }else{
@@ -82,7 +82,7 @@ function getfore(x:Int, y:Int):Int {
   }
 }
 
-function getbackground(x:Int, y:Int):Int {
+function getbackground(x, y) {
   if(inbox(x, y, 0, 0, mapwidth, mapheight)){
     return cellbackground[x + vmult[y]];
   }else{
@@ -92,7 +92,7 @@ function getbackground(x:Int, y:Int):Int {
 
 
 //Help Functions
-function inbox(x:Float, y:Float, x1:Float, y1:Float, w:Float, h:Float):Bool {
+function inbox(x, y, x1, y1, w, h) {
   if (x >= x1 && y >= y1) {
     if (x < x1 + w && y < y1 + h) {
       return true;
@@ -108,7 +108,7 @@ var numentity;
 
 var player;
 
-function resetentity(t:Int){
+function resetentity(t){
   entity[t].x = 0;
   entity[t].y = 0;
   entity[t].active = false;
@@ -118,7 +118,7 @@ function resetentity(t:Int){
   entity[t].back = 0;
 }
 
-function getfreeentityindex():Int{
+function getfreeentityindex(){
   var i = 0;
   var z = -1;
   if(numentity == 0) {
@@ -141,7 +141,7 @@ function getfreeentityindex():Int{
   return z;
 }
 
-function create(_x:Int, _y:Int, t:String){
+function create(_x, _y, t){
   var i = getfreeentityindex();
   resetentity(i);
   
@@ -156,7 +156,7 @@ function create(_x:Int, _y:Int, t:String){
   }
 }
 
-function getplayer():Int {
+function getplayer() {
   for(i in 0 ... numentity){
     if(entity[i].type == "player") return i;
   }
@@ -182,7 +182,7 @@ function new(){
 
 var inputthisframe;
 
-function moveentity(t:Int, xchange:Int, ychange:Int){
+function moveentity(t, xchange, ychange){
   updatescreen = true;
   trace(entity[t].x, entity[t].y);
   placechar(entity[t].x,entity[t].y," ",7,0);

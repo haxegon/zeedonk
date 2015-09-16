@@ -3,11 +3,11 @@
 //Game.foreground(0x000000);
 //Game.background(Gfx.RGB(0, 87, 132));
   
-var boxheight:Float;
-var lineheight:Float;
+var boxheight ;
+var lineheight ;
 
-var currentbox:Int;
-var finishedyet:Int;
+var currentbox ;
+var finishedyet ;
 
 var box = [0, 0, 0, 0, 0];
 var contentat = [0, 0, 0, 0, 0];
@@ -20,29 +20,29 @@ var g = [0, 0, 0, 0, 0];
 var b = [0, 0, 0, 0, 0];
 var colourchange = ["red", "green", "blue", "green", "red"];
 
-var lightblack:Int;
+var lightblack ;
 
-var greydupe:Int;
-var greyduper:Int;
-var greydupeg:Int;
-var greydupeb:Int;
+var greydupe ;
+var greyduper ;
+var greydupeg ;
+var greydupeb ;
 
-var story:String;
+var story ;
 
-var linecolour:Int;
-var lr:Int;
-var lg:Int;
-var lb:Int;
+var linecolour ;
+var lr ;
+var lg ;
+var lb ;
 
-var startcolour:Int;
-var sr:Int;
-var sg:Int;
-var sb:Int;
+var startcolour ;
+var sr ;
+var sg ;
+var sb ;
 
-var start:Int;
+var start ;
 
 //how much does the colour change per press
-var changerate:Int;
+var changerate ;
 
 function new() {
   Gfx.resizescreen(384, 240, 2);
@@ -279,7 +279,7 @@ function update() {
   }
 }
 
-function changecol(t:Int) {
+function changecol(t) {
   for (i in 0 ... 5) {
     if (i != t) {
       if (colourchange[t] == "red") {

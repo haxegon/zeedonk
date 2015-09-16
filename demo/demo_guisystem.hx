@@ -153,7 +153,7 @@ function gui_addbox(xpos, ypos, rectwidth, rectheight, rectcol){
   if(gui_id != "none") gui_id = "none";
 }
 
-function inbox_w(x:Float, y:Float, x1:Float, y1:Float, w:Float, h:Float):Bool {
+function inbox_w(x, y, x1, y1, w, h) {
   if (x >= x1 && y >= y1) {
     if (x < x1 + w && y < y1 + h) {
       return true;

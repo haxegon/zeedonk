@@ -56,7 +56,7 @@ function update() {
   Text.display(Gfx.screenwidth-2, Gfx.screenheight - Text.height(), "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE, {align: Text.RIGHT});
 }
 
-function drawtriangles(effectnum:Int) {
+function drawtriangles(effectnum) {
   //Draw to a specially made image buffer
   currenteffectname = "1: TRIANGLES";
   Gfx.drawtoimage("triangles");
@@ -74,7 +74,7 @@ function drawtriangles(effectnum:Int) {
   Gfx.drawimage(0, 0, "triangles");
 }
 
-function drawcircles(effectnum:Int) {
+function drawcircles(effectnum) {
   currenteffectname = "2: CIRCLES";
   Gfx.linethickness=3;
   var radius = 0;
@@ -93,7 +93,7 @@ function drawcircles(effectnum:Int) {
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.ORANGE);
 }
 
-function drawhexagon(effectnum:Int) {
+function drawhexagon(effectnum) {
   currenteffectname = "3: HEXAGON";
   Gfx.linethickness=1;
   
@@ -105,7 +105,7 @@ function drawhexagon(effectnum:Int) {
   }
 }
 
-function drawstripes(effectnum:Int) {
+function drawstripes(effectnum) {
   currenteffectname = "4: STRIPES";
   var colour1;
   var colour2;

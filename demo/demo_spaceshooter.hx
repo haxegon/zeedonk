@@ -12,7 +12,7 @@ var numentity;
 
 var player;
 
-function getfreeentityindex():Int{
+function getfreeentityindex(){
   //Finds the first entity in the array that's not being used.
   var i = 0;
   var z = -1;
@@ -39,14 +39,14 @@ function getfreeentityindex():Int{
   return z;
 }
 
-function setcollisionrect(t:Int, x:Int, y:Int, w:Int, h:Int){
+function setcollisionrect(t, x, y, w, h){
   entity[t].cx = x;
   entity[t].cy = y;
   entity[t].cw = w;
   entity[t].ch = h;
 }
 
-function checkcollisionpoint(x:Int, y:Int, t:Int):Bool {
+function checkcollisionpoint(x, y, t) {
   if(inbox(x, y, entity[t].x + entity[t].cx, entity[t].y + entity[t].cy,
            entity[t].x + entity[t].cw, entity[t].y + entity[t].ch)){
     return true;
@@ -54,7 +54,7 @@ function checkcollisionpoint(x:Int, y:Int, t:Int):Bool {
   return false;
 }
 
-function checkcollision(a:Int, b:Int):Bool{
+function checkcollision(a, b){
   if(entity[a].active && entity[b].active){
     if(Math.abs(entity[a].x - entity[b].x) < 20){
    		if(Math.abs(entity[a].y - entity[b].y) < 20){
@@ -72,14 +72,14 @@ function checkcollision(a:Int, b:Int):Bool{
   return false;
 }
 
-function getplayer():Int {
+function getplayer() {
   for(i in 0 ... numentity){
     if(entity[i].type == "player") return i;
   }
   return -1;
 }
   
-function inbox(x:Float, y:Float, x1:Float, y1:Float, x2:Float, y2:Float):Bool {
+function inbox(x, y, x1, y1, x2, y2) {
   if (x >= x1 && y >= y1) {
     if (x < x2 && y < y2) {
       return true;
@@ -108,7 +108,7 @@ function killplayer(p){
   playerdestroyed = true;
 }
 
-function resetentity(t:Int){
+function resetentity(t){
   entity[t].x = 0;
   entity[t].y = 0;
   entity[t].vx = 0;
@@ -123,7 +123,7 @@ function resetentity(t:Int){
   entity[t].rule = "nothing";
 }
 
-function create(_x:Int, _y:Int, t:String){
+function create(_x, _y, t){
   var i = getfreeentityindex();
   resetentity(i);
   
@@ -141,7 +141,7 @@ function create(_x:Int, _y:Int, t:String){
   }
 }
 
-function drawentity(t:Int){
+function drawentity(t){
   tcol = Col.GRAY;
   if(entity[t].type == "player"){
     //Player Ship
@@ -159,7 +159,7 @@ function drawentity(t:Int){
   }
 }
 
-function updateentity(t:Int){
+function updateentity(t){
   if(entity[t].type == "playerbullet"){
     entity[t].x += 12;
     if(entity[t].x>Gfx.screenwidth){

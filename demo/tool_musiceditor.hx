@@ -135,7 +135,7 @@ function loadDat(s){
   }
 }
     
-function saveDat():String{  
+function saveDat(){  
   var intArray =[];
   intArray.push(dat.patternLength);
   intArray.push(dat.cellDuration);
@@ -176,7 +176,7 @@ function saveDat():String{
   return result;
 }
 
-  function makeRLE(s):String{
+  function makeRLE(s){
     var result ="";
     var lastChar=s[0];
     var lastCharCount=1;
@@ -203,7 +203,7 @@ function saveDat():String{
     return result;
   }
 
-  function unmakeRLE(s):String{
+  function unmakeRLE(s){
     var result ="";
     var lastInt=0;
     var i = 0;
@@ -263,7 +263,7 @@ function DoUndo(){
   }
 }
       
-function drawButton(text,x,y,textcolor,color,colorhover):Bool {
+function drawButton(text,x,y,textcolor,color,colorhover) {
   
   var width=text.length*(charWidth+1)+1;
   var height=charHeight+2;
@@ -307,7 +307,7 @@ function collideBox(x,y,w,h) : Int {
 var scrollt=0;
 var scrollInterval=12;
 
-function getNum():Int{
+function getNum(){
   if (Input.justpressed(Key.ONE)){
     return 1;
   }

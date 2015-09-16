@@ -196,7 +196,7 @@ function new() {
 
 var BASE64 = "abcdefghijklmnopqrstuvwxyz0123456789$=ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
 
-function convertobinary(t:Int, len:Int):String {
+function convertobinary(t, len) {
   var endstring = "";
   var currentbit;
 
@@ -211,7 +211,7 @@ function convertobinary(t:Int, len:Int):String {
   return ""+endstring;
 }
 
-function convertbase64tobinary(t:String):String {
+function convertbase64tobinary(t) {
   var returnstr = "";
   var currentval = 0;
 
@@ -222,7 +222,7 @@ function convertbase64tobinary(t:String):String {
   return returnstr;
 }
 
-function convertbinarytobase64(t:String):String {
+function convertbinarytobase64(t) {
   var endstring = "";
   var currentval = 0;
 
@@ -243,7 +243,7 @@ function convertbinarytobase64(t:String):String {
   return endstring;
 }
 
-function convertbinarytoint(binarystring:String):Int {
+function convertbinarytoint(binarystring) {
   var returnval = 0;
   for (i in -binarystring.length ... 0) {
     if (binarystring.substr( -i - 1, 1) == "1"){
@@ -253,10 +253,10 @@ function convertbinarytoint(binarystring:String):Int {
   return returnval;
 }
 
-function loadimagestring(inputstring:String) {
+function loadimagestring(inputstring) {
   if(inputstring == "" || inputstring == null) return;
   var currentchunk = "";
-  function getnextchunk(size:Int) {
+  function getnextchunk(size) {
     currentchunk = inputstring.substr(0, size);
     inputstring = inputstring.substr(size);
   }
@@ -277,7 +277,7 @@ function loadimagestring(inputstring:String) {
   
   if(imgformat == 0){
     //Load the palette
-    var r; var g:Int; var b:Int;
+    var r; var g ; var b;
     for (i in 0 ... 4) {
       getnextchunk(8);
       r = convertbinarytoint(currentchunk);
@@ -303,7 +303,7 @@ function loadimagestring(inputstring:String) {
   }else{
     //Load the palette
     randompalette();
-    var r; var g:Int; var b:Int;
+    var r; var g ; var b;
     for (i in 0 ... 2) {
       getnextchunk(8);
       r = convertbinarytoint(currentchunk);
@@ -534,7 +534,7 @@ function drawbackground() {
   }
 }
 
-function dobuttonaction(t:String, rclick:Bool) {
+function dobuttonaction(t, rclick) {
   if (t == "back") {
     Music.playsound(sound_select, 0.5);
     currentstate = "editor";
@@ -607,7 +607,7 @@ function drawgui() {
   }
 }
 
-function inbox_w(x:Float, y:Float, x1:Float, y1:Float, w:Float, h:Float):Bool {
+function inbox_w(x, y, x1, y1, w, h) {
   if (x >= x1 && y >= y1) {
     if (x < x1 + w && y < y1 + h) {
       return true;
@@ -617,7 +617,7 @@ function inbox_w(x:Float, y:Float, x1:Float, y1:Float, w:Float, h:Float):Bool {
 }
 
 
-function inbox(x:Float, y:Float, x1:Float, y1:Float, x2:Float, y2:Float):Bool {
+function inbox(x, y, x1, y1, x2, y2) {
   if (x >= x1 && y >= y1) {
     if (x < x2 && y < y2) {
       return true;
@@ -626,20 +626,20 @@ function inbox(x:Float, y:Float, x1:Float, y1:Float, x2:Float, y2:Float):Bool {
   return false;
 }
 
-function pset(x:Int, y:Int, c:Int) {
+function pset(x, y, c) {
   if (inbox(x, y, 0, 0, imgwidth, imgheight)) {
     imgcanvas[x + y * 16] = c;
   }
 }
 
-function pget(x:Int, y:Int):Int {
+function pget(x, y) {
   if (inbox(x, y, 0, 0, imgwidth, imgheight)) {
     return imgcanvas[x + y * 16];
   }
   return 0;
 }
 
-function setstaticcol(t:Int, c:Int) {
+function setstaticcol(t, c) {
   palette[t] = arnepalette[c];
 
   palettehue[t] = arnehue[c];
@@ -651,7 +651,7 @@ function setstaticcol(t:Int, c:Int) {
   currentlightness = palettelightness[t];
 }
 
-function selectcolour(t:Int){
+function selectcolour(t){
   Music.playsound(sound_click, 0.2);
   currentcol = t;
 

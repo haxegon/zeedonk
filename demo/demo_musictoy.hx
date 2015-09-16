@@ -175,7 +175,7 @@ function dorender() {
 var scale = [45, 48, 57, 60, 64, 69];
 var notecount = 0;
 var note = 0;
-function playsound(t:Int) {
+function playsound(t) {
   note = Math.pow(2,(scale[t]-61)/12);
   Music.playnote(3522376,note,1,1);
   notecount++;

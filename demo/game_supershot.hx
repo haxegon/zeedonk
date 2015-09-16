@@ -3,54 +3,54 @@ Game.background = Col.BLACK;
 Game.foreground = Col.LIGHTBLUE;
 
 //Keeping sound effects here
-var shootsound:Int = 361441;
-var powershotsound:Int = 85225901;
-var powerupsound:Int = 58573703;
-var hitenemysound:Int = 45280902;
-var deathsound:String = "qdpVdyeKoIèdé5ab3a2b3aefc9bk4b2acb2d4cbebiab18a";
-var titlemusic:String = "qgéuWåfUäkyeMUsVfb3agJEvéaibUaqad4abSaqad4abPaqad4abQaqad4abUaqad4abSaqad4abNaqad4abLaqad4a";
-var inmotion:String = "qbésCSgyIåKeMUsVfb3agJEvéa2cQaQa2eia2h9a";
+var shootsound = 361441;
+var powershotsound = 85225901;
+var powerupsound = 58573703;
+var hitenemysound = 45280902;
+var deathsound = "qdpVdyeKoIèdé5ab3a2b3aefc9bk4b2acb2d4cbebiab18a";
+var titlemusic = "qgéuWåfUäkyeMUsVfb3agJEvéaibUaqad4abSaqad4abPaqad4abQaqad4abUaqad4abSaqad4abNaqad4abLaqad4a";
+var inmotion = "qbésCSgyIåKeMUsVfb3agJEvéa2cQaQa2eia2h9a";
 
-var screenflash:Int = 0;
-var screenshake:Int = 0;
-var camerax:Int = 0;
-var cameray:Int = 0;
+var screenflash = 0;
+var screenshake = 0;
+var camerax = 0;
+var cameray = 0;
 
-var playerpowerup:Int = 0;
-var deathsequence:Int = 0;
-var gamestate:String = "title";
-var titlecountdown:Int = 0;
-var playerdestroyed:Bool;
+var playerpowerup = 0;
+var deathsequence = 0;
+var gamestate = "title";
+var titlecountdown = 0;
+var playerdestroyed ;
 
-var playermoving:Int;
-var timedelay:Int = 3;
-var timejuice:Int = 50;
-var maxtimejuice:Int = 50;
-var gametime:Float = 0;
-var shoottime:Float = 0;
-var wavedelay:Float = 0;
-var wavecount:Int = 0;
-var gamespeed:Float = 1;
-var newround:Int = 0;
-var powerupcount:Int = 0;
-var stopcol:Int = Col.GRAY;
-var highscore:Int;
-var score:Int;
+var playermoving ;
+var timedelay = 3;
+var timejuice = 50;
+var maxtimejuice = 50;
+var gametime = 0;
+var shoottime = 0;
+var wavedelay = 0;
+var wavecount = 0;
+var gamespeed = 1;
+var newround = 0;
+var powerupcount = 0;
+var stopcol = Col.GRAY;
+var highscore ;
+var score ;
 
-var bulletvx:Float;
-var bulletvy:Float;
-var bulletsize:Int;
+var bulletvx ;
+var bulletvy ;
+var bulletsize ;
 
-var temp:Int;
-var tcol:Int;
+var temp ;
+var tcol ;
 
 //Starfield stuff
-var starx:Array<Float>;
-var stary:Array<Int>;
-var starspeed:Array<Int>;
-var numstars:Int;
+var starx ;
+var stary ;
+var starspeed ;
+var numstars ;
 
-function effect(t:String){
+function effect(t){
   if(t == "shake"){
     screenshake = 10;
   }else if(t == "flash"){
@@ -74,7 +74,7 @@ function initstars(){
 }
 
 
-function updatestars(speed:Float){
+function updatestars(speed){
   for(i in 0 ... numstars){
     starx[i] -= starspeed[i] * speed;
     if(starx[i] < -10){    
@@ -85,7 +85,7 @@ function updatestars(speed:Float){
   }
 }
 
-var starcol:Int;
+var starcol ;
 function drawstars(){
   for(i in 0 ... numstars){
     starcol = 255 - (6 - starspeed[i]) * 60;
@@ -101,14 +101,14 @@ function drawstillstars(){
 }
 
 //Entity functions
-var entity:Array<Dynamic>;
-var numentity:Int;
+var entity ;
+var numentity ;
 
-var player:Int;
+var player ;
 
-function getfreeentityindex():Int{
-  var i:Int = 0;
-  var z:Int = -1;
+function getfreeentityindex(){
+  var i = 0;
+  var z = -1;
   if(numentity == 0) {
     z = 0; 
   }else {
@@ -132,14 +132,14 @@ function getfreeentityindex():Int{
   return z;
 }
 
-function setcollisionrect(t:Int, x:Int, y:Int, w:Int, h:Int){
+function setcollisionrect(t, x, y, w, h){
   entity[t].cx = x;
   entity[t].cy = y;
   entity[t].cw = w;
   entity[t].ch = h;
 }
 
-function checkcollisionpoint(x, y, t:Int):Bool {
+function checkcollisionpoint(x, y, t) {
   if(inboxw(x, y, entity[t].x + entity[t].cx, entity[t].y + entity[t].cy,
             entity[t].cw, entity[t].ch)){
     return true;
@@ -147,7 +147,7 @@ function checkcollisionpoint(x, y, t:Int):Bool {
   return false;
 }
 
-function checkcollision(a:Int, b:Int):Bool{
+function checkcollision(a, b){
   if(entity[a].active && entity[b].active){
     if(Gfx.fastAbs(Convert.toint(entity[a].x - entity[b].x)) < 10){
       if(Gfx.fastAbs(Convert.toint(entity[a].y - entity[b].y)) < 10){
@@ -165,14 +165,14 @@ function checkcollision(a:Int, b:Int):Bool{
   return false;
 }
 
-function getplayer():Int {
+function getplayer() {
   for(i in 0 ... numentity){
     if(entity[i].type == "player") return i;
   }
   return -1;
 }
 
-function inboxw(x:Float, y:Float, x1:Float, y1:Float, w:Float, h:Float):Bool {
+function inboxw(x, y, x1, y1, w, h) {
   if (x >= x1 && y >= y1) {
     if (x < x1 + w && y < y1 + h) {
       return true;
@@ -191,7 +191,7 @@ function cachegraphics() {
 
   Gfx.createimage("player_stopped", 10, 10);
   Gfx.drawtoimage("player_stopped");
-  tcol = stopcol; Gfx.drawtri(0, 1, 0, 9,	9, 5, tcol);
+  tcol = stopcol; Gfx.drawtri(0, 1, 0, 9, 9, 5, tcol);
 
   //Powerbullets
   Gfx.createimage("powershot", 10, 14);
@@ -254,7 +254,7 @@ function cachegraphics() {
       tcol = Gfx.rgb(220, 0, 0);
 
       Gfx.createimage("badguy_1_" + (i - 8), 17, 32);
-      Gfx.drawtoimage("badguy_1_" + (i - 8));			
+      Gfx.drawtoimage("badguy_1_" + (i - 8));     
     }else {
       Gfx.createimage("badguy_1_stopped_" + i, 17, 32);
       Gfx.drawtoimage("badguy_1_stopped_" + i);
@@ -450,7 +450,7 @@ function killplayer(p){
   playerdestroyed = true;
 }
 
-function resetentity(t:Int){
+function resetentity(t){
   entity[t].x = 0;
   entity[t].y = 0;
   entity[t].vx = 0;
@@ -471,14 +471,14 @@ function resetentity(t:Int){
   entity[t].rule = "nothing";
 }
 
-function createbullet(_x:Int, _y:Int, vx:Float, vy:Float, size:Int){
+function createbullet(_x, _y, vx, vy, size){
   bulletvx = vx;
   bulletvy = vy;
   bulletsize = size;
   create(_x, _y, "enemybullet");
 }
 
-function create(_x, _y, t:String) {
+function create(_x, _y, t) {
   if (t == "badguy_5") {
     //If we have more than 5 exploding stars on screen, do something else
     temp = 0;
@@ -495,7 +495,7 @@ function create(_x, _y, t:String) {
   }
 
 
-  var i:Int = getfreeentityindex();
+  var i = getfreeentityindex();
   resetentity(i);
 
   entity[i].x = _x;
@@ -561,7 +561,7 @@ function create(_x, _y, t:String) {
   }
 }
 
-function drawentity(t:Int){
+function drawentity(t){
   tcol = stopcol;
   if (entity[t].hurt > 0) entity[t].hurt--;
   if(entity[t].type == "player"){
@@ -657,7 +657,7 @@ function drawentity(t:Int){
     if (playermoving > 0) {
       if (entity[t].hurt > 0) {
         Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_red_" + temp);
-      }else	if (entity[t].frame > 0) {
+      }else if (entity[t].frame > 0) {
         if (Game.time % 16 > 8) {
           Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_white_" + temp);
         }else{
@@ -678,7 +678,7 @@ function drawentity(t:Int){
 
     if (entity[t].hurt > 0) {
       Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, "badguy_6_hurt_" + temp);
-    }else	if (playermoving > 0) {
+    }else if (playermoving > 0) {
       Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, "badguy_6_" + temp);
     }else {
       Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, "badguy_6_stopped_" + temp);
@@ -686,7 +686,7 @@ function drawentity(t:Int){
   }
 }
 
-function updateentity(t:Int, speed:Float){
+function updateentity(t, speed){
   entity[t].timer = entity[t].timer + speed;
   if (entity[t].type == "player") {
     if (entity[t].timer < 8) {
@@ -696,7 +696,7 @@ function updateentity(t:Int, speed:Float){
     if (entity[t].timer > 4) {
       entity[t].active = false;
     }
-  }else	if(entity[t].type == "playerbullet" || entity[t].type == "powershot"){
+  }else if(entity[t].type == "playerbullet" || entity[t].type == "powershot"){
     entity[t].x += 12 * speed;
     if(entity[t].x>Gfx.screenwidth){
       entity[t].active=false;
@@ -842,7 +842,7 @@ function updateentity(t:Int, speed:Float){
         entity[t].frame = 1;
       }
     }else if (entity[t].frame >= 30) {
-      var randoffset:Float = Random.float(0, 6.2);
+      var randoffset = Random.float(0, 6.2);
       for(i in 0 ... 12){
         createbullet(entity[t].x, entity[t].y, Math.cos(randoffset + (i / 6) * 3.14) * 3, Math.sin(randoffset + (i / 6) * 3.14) * 3, 2);
       }
@@ -891,8 +891,8 @@ function updateentity(t:Int, speed:Float){
   }
 }
 
-function spawn(patterntype:String){
-  var randomposition:Int;
+function spawn(patterntype){
+  var randomposition ;
   if (patterntype == "testing") {
     create(200, 55, "badguy_6");
     wavedelay = 70;
@@ -1050,7 +1050,7 @@ function spawn(patterntype:String){
 //badguy_6_single
 //badguy_6_snake
 //badguy_6_short
-var easyenemies:Array<String> = [
+var easyenemies = [
   "badguy_1_line", 
   "badguy_3_top", 
   "badguy_3_bottom", 
@@ -1064,7 +1064,7 @@ var easyenemies:Array<String> = [
   "badguy_6_short",
   "badguy_6_snake"
 ];
-var hardenemies:Array<String> = [
+var hardenemies = [
   "badguy_3_borders", 
   "badguy_3_borders", 
   "badguy_3_three", 
@@ -1228,7 +1228,7 @@ entity[i].ch, Col.WHITE);
   }
 
   //Cleanup
-  var i:Int;
+  var i ;
   i = numentity - 1; while (i >= 0 && !entity[i].active) { numentity--; i--; }
 
   Gfx.fillbox(0, Gfx.screenheight - 9, Gfx.screenwidth, 9, 0x333333);
