@@ -1,5 +1,5 @@
 import hscript.*;
-import terrylib.*;
+import haxegon.*;
 import openfl.external.ExternalInterface;
 
 @:keep
@@ -21,7 +21,7 @@ class Webdebug {
 	}
 	
 	public static function log(msg1:String, ?msg2:String, ?msg3:String, ?msg4:String, ?msg5:String, ?msg6:String, ?msg7:String, ?msg8:String) {
-		#if (flash || terrylibwebhtml5debug)
+		#if (flash || haxegonwebhtml5debug)
 	  trace(msg1);
 		#else
 		var returnarray:Array<String> = [];
@@ -64,7 +64,7 @@ class Webdebug {
 	}
 	
 	public static function error(msg:String, ?linenum:Int) {
-		#if (flash || terrylibwebhtml5debug)
+		#if (flash || haxegonwebhtml5debug)
 		if (linenum == null) {
 			trace(msg);
 		}else {
@@ -80,7 +80,7 @@ class Webdebug {
 	}
 	
 	public static function warn(msg:String, linenum:Int) {
-		#if (flash || terrylibwebhtml5debug)
+		#if (flash || haxegonwebhtml5debug)
 		trace(msg, linenum);
 		#else
 		ExternalInterface.call("logWarning", msg, linenum, true);
@@ -88,7 +88,7 @@ class Webdebug {
 	}
 	
 	public static function warn_noline(msg:String) {
-	  #if (flash || terrylibwebhtml5debug)
+	  #if (flash || haxegonwebhtml5debug)
 		trace(msg);
 		#else	
 		ExternalInterface.call("logWarningNoLine", msg, true);

@@ -1,4 +1,4 @@
-package terrylib.bitmapFont;
+package haxegon.bitmapFont;
 
 import flash.display.Bitmap;
 import flash.display.BitmapData;
@@ -7,7 +7,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.geom.Matrix;
 import flash.geom.Point;
-import terrylib.bitmapFont.BitmapFont;
+import haxegon.bitmapFont.BitmapFont;
 import haxe.Utf8;
 import openfl.display.PixelSnapping;
 import openfl.display.Tilesheet;

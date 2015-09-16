@@ -1,4 +1,4 @@
-package terrylib.bitmapFont;
+package haxegon.bitmapFont;
 
 import haxe.Utf8;
 import haxe.xml.Fast;

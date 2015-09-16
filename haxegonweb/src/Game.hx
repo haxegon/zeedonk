@@ -4,7 +4,7 @@ import openfl.external.ExternalInterface;
 class Game {
 	public static var time:Int;
 	
-	public static var _title:String="terrylib game";
+	public static var _title:String="haxegon game";
 	public static var title(get,set):String;
 
 	public static function get_title():String {

@@ -1,4 +1,4 @@
-import terrylib.*;
+import haxegon.*;
 import hscript.*;
 import openfl.Assets;
 import openfl.external.ExternalInterface;
@@ -6,9 +6,9 @@ import openfl.external.ExternalInterface;
 import openfl.events.*;
 import openfl.net.*;
 
-@:access(terrylib.Game)
-@:access(terrylib.Gfx)
-@:access(terrylib.Input)
+@:access(haxegon.Game)
+@:access(haxegon.Gfx)
+@:access(haxegon.Input)
 class Webscript {
 	public static var myscript:String;
 	public static var loadedscript:Array<String>;
@@ -56,7 +56,7 @@ class Webscript {
 		Text.setfont(Webfont.DEFAULT, 1);
 		
 		try {
-			#if terrylibwebhtml5debug
+			#if haxegonwebhtml5debug
 				loadfile("tests/invalidaccess.txt");
 			#else
 				var loadstring:String = ExternalInterface.call("getScript");
@@ -150,7 +150,7 @@ class Webscript {
 			Gfx.clearscreen(Col.BLUE);
 			Gfx.fillbox(4, 4, Gfx.screenwidth - 8, Gfx.screenheight - 8, Col.NIGHTBLUE);
 			
-			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height()-4, "terrylib alpha v0.1", Col.WHITE, { align:Text.RIGHT } );
+			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height()-4, "zeedonk alpha v0.1", Col.WHITE, { align:Text.RIGHT } );
 			
 			var msg:String = "WAITING FOR SCRIPTFILE...";
 			var startpos:Float = Gfx.screenwidthmid - Text.len(msg) / 2;
@@ -205,7 +205,7 @@ class Webscript {
 		MusicEngine.musicLoop=true;
 		Input.resetKeys();
 		Gfx._linethickness=1;
-		Game._title="terrylib game";
+		Game._title="zeedonk game";
 		Game._homepage="http://www.zeedonk.net";
 		Game._background=0x000000;
 		Game._foreground=0xffffff;
