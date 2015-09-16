@@ -1,8 +1,0 @@
-
-function new(){
-  Random.seed = 5;
-}
-
-function update(){
-  Text.display(Text.CENTER, Text.CENTER, "Test Successful: " + t, Col.WHITE);
-}
