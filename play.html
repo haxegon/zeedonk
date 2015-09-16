@@ -275,11 +275,13 @@ function getParameterByName(name) {
 
 
 
-	function qualifyURL(url) {
-		var a = document.createElement('a');
-		a.href = url;
-		return a.href;
-	}
+
+function qualifyURL(url) {
+   if (!/^(f|ht)tps?:\/\//i.test(url)) {
+      url = "http://" + url;
+   }
+   return url;
+}
 
 var interpreter;
 function terryRun(text){
