@@ -231,7 +231,7 @@ class Webscript {
 		errorinscript = false;
 		pausescript = false;
    	parser = new hscript.Parser();
-		parser.allowTypes = true;
+		parser.allowTypes = false;
     interpreter = new InterpExtended();
 		
 		Game.time = 0;
