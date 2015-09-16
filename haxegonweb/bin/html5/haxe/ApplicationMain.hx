@@ -210,7 +210,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "877",
+			build: "879",
 			company: "Stephen and Terry",
 			file: "webthing",
 			fps: 60,
@@ -301,7 +301,7 @@ class ApplicationMain {
 	
 	
 	#if neko
-	@:noCompletion public static function __init__ () {
+	@:noCompletion @:dox(hide) public static function __init__ () {
 		
 		var loader = new neko.vm.Loader (untyped $loader);
 		loader.addPath (haxe.io.Path.directory (Sys.executablePath ()));

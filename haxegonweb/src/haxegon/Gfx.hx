@@ -334,6 +334,8 @@ class Gfx {
 		drawto.unlock();
 		drawto = backbuffer;
 		drawto.lock();
+		
+		Text.drawto = Gfx.drawto;
 	}
 	
 	/** Tell draw commands to draw to the given image. */
@@ -344,6 +346,8 @@ class Gfx {
 		drawto.unlock();
 		drawto = images[imagenum];
 		drawto.lock();
+		
+		Text.drawto = Gfx.drawto;
 	}
 	
 	#if !haxegonweb
@@ -353,6 +357,8 @@ class Gfx {
 		drawto.unlock();
 		drawto = tiles[currenttileset].tiles[tilenumber];
 		drawto.lock();
+		
+		Text.drawto = Gfx.drawto;
 	}
 	#end
 	
@@ -1155,7 +1161,6 @@ class Gfx {
 	}
 
 	static function set_linethickness(size:Float) {
-		trace("setting thickness to "+size);
 		_linethickness = size;
 		if (_linethickness < 1) _linethickness = 1;
 		if (_linethickness > 255) _linethickness = 255;
