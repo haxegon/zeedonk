@@ -2,7 +2,7 @@
   SUPER SHOT
 
   This example game has been heavily optimised! In general, Zeedonk is not really
-  built for fast action games, but there are things you can do to speed things up.
+  built for busy action games, but there are things you can do to speed things up.
   Here are some tips that helped a lot in Super Shot:
 
   - Drawing lots of primitives (especially lines) starts to add up pretty quickly.
@@ -35,6 +35,10 @@
 
   - Avoid using alpha with primitives and images. It can be pretty slow!
 
+  Thanks for playing! Have fun with Zeedonk!
+  
+   - Terry
+   
 */
 
 Game.title = "SUPER SHOT";
