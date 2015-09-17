@@ -138,7 +138,7 @@ var haxeHintArray = [
 ["Music.playnote","(seed,pitch,length,volume [0-1] )","F"],
 ["Music.playmusic","(musicDat)","F"],
 ["Music.stopmusic","()","F"],
-["Music.musicvol",":Float","F","Sets the music volume, must be between 0 and 1 (default is 1)."],
+["Music.musicvol",":Float","P","Sets the music volume, must be between 0 and 1 (default is 1)."],
 ["Music.musicloop",":Bool","P","Should the music loop or not? (defaults to true)"],
 ["Key.A","","E"],
 ["Key.B","","E"],
