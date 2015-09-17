@@ -147,17 +147,25 @@ class Webscript {
 			}	
 		}else {
 			counter+=10;
-			Gfx.clearscreen(Col.BLUE);
-			Gfx.fillbox(4, 4, Gfx.screenwidth - 8, Gfx.screenheight - 8, Col.NIGHTBLUE);
+			Gfx.clearscreen(Col.GRAY);
+			var gap:Int = Std.int((Gfx.screenheightmid / 6));
+			for (i in 0 ... 6) {
+				if (i % 2 == 0) {
+					Gfx.fillbox(0, Gfx.screenheightmid + (i * gap), Gfx.screenwidth, gap, Col.WHITE);
+				}else {
+					Gfx.fillbox(0, Gfx.screenheightmid + (i * gap), Gfx.screenwidth, gap, Col.BLACK);
+				}
+			}
 			
-			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height()-4, "zeedonk alpha v0.1", Col.WHITE, { align:Text.RIGHT } );
+			
+			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height(), "zeedonk alpha v0.1", Col.WHITE, { align:Text.RIGHT } );
 			
 			var msg:String = "WAITING FOR SCRIPTFILE...";
 			var startpos:Float = Gfx.screenwidthmid - Text.len(msg) / 2;
 			var currentpos:Float = 0;
 			for (i in 0 ... msg.length) {
 				if (S.mid(msg, i, 1) != "_") {
-					Text.display(startpos + currentpos, Gfx.screenheightmid - 10 + Math.sin((((i*5)+counter)%360) * Math.PI * 2 / 360)*5, S.mid(msg, i, 1), Col.WHITE);
+					Text.display(startpos + currentpos, Gfx.screenheightmid - 35 + Math.sin((((i*5)+counter)%360) * Math.PI * 2 / 360)*5, S.mid(msg, i, 1), Col.WHITE);
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
