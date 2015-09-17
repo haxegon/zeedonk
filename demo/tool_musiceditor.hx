@@ -988,5 +988,6 @@ function blockNote(clickX,clickY){
 function new(){
   // Music.playnote(4123,1,1,10);
   Game.title="tinybox";
+  Game.homepage="www.google.com";
   Text.setfont(Font.PIXEL,1);
 }

@@ -206,6 +206,13 @@ function qualifyURL(url) {
     return a.href;
 }
 
+function qualifyURL2(url) {
+   if (!/^(f|ht)tps?:\/\//i.test(url)) {
+      url = "http://" + url;
+   }
+   return url;
+}
+
 function sethomepage(t){    
     metaData.homepage=t;
     if (canSetHTMLColors){       
@@ -224,7 +231,7 @@ function sethomepage(t){
         }
 
         separator.style.display="default";
-        link.href=qualifyURL(metaData.homepage);
+        link.href=qualifyURL2(metaData.homepage);
         if (link.textContent){
             link.textContent=strip_http(link.href);
         } else if (line.innerText){

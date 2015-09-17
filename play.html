@@ -276,11 +276,11 @@ function getParameterByName(name) {
 
 
 function qualifyURL(url) {
-   if (!/^(f|ht)tps?:\/\//i.test(url)) {
-      url = "http://" + url;
-   }
-   return url;
+    var a = document.createElement('a');
+    a.href = url;
+    return a.href;
 }
+
 
 var interpreter;
 function terryRun(text){
@@ -307,6 +307,15 @@ function tryLoadFile(fileName) {
       var code = fileOpenClient.responseText;
       terryRun(code);
       gameScript=code;
+
+
+      var hacklink = document.getElementById("hacklink");
+
+      var url = "editor.html?demo=../"+fileName;
+      url=qualifyURL(url);
+
+      hacklink.href=url;
+
   }
   fileOpenClient.send();
 }
