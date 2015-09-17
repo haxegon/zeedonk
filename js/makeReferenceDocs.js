@@ -245,7 +245,7 @@ function genTutorialPage(){
 			var formatted = highlight(doc[i]);
 			var fileName="tutorial_"+Math.floor(i/2);
 			fs.writeFileSync("../demo/tutorial/"+fileName+".hx",doc[i]);
-			docString="<div class=\"codeInsert\">"+formatted+"<a class=\"editLink\" href=\"../editor.html?demo=tutorial/"+fileName+"\">✎</a></div>";
+			docString="<div class=\"codeInsert tutorialCodeInsert\">"+formatted+"<a class=\"editLink\" target='editor' href=\"../editor.html?demo=tutorial/"+fileName+"\">✎</a></div>";
 			contents+=docString;			
 		}
 	}
