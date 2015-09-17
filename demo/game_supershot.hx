@@ -11,7 +11,7 @@
 
   - Interpreting code at runtime is slow! So give hscript as little to do as you 
     can. For example, I got a noticible speed increase in the checkcollision()
-    function by first checking that the two entities are within 10 pixels of 
+    function by first checking that the two entities are within 20 pixels of 
     each other before checking the individual points.
 
   - Also in the category of giving hscript less to do, try to do as little 
@@ -203,8 +203,8 @@ function setcollisionrect(t, x, y, w, h){
 
 function checkcollision(a, b){
   if(entity[a].active && entity[b].active){
-    if(Math.abs(Convert.toint(entity[a].x - entity[b].x)) < 10){
-      if(Math.abs(Convert.toint(entity[a].y - entity[b].y)) < 10){
+    if(Math.abs(Convert.toint(entity[a].x - entity[b].x)) < 20){
+      if(Math.abs(Convert.toint(entity[a].y - entity[b].y)) < 20){
         if(inboxw(entity[a].x + entity[a].cx,
                   entity[a].y + entity[a].cy, 
                   entity[b].x + entity[b].cx, 
@@ -601,7 +601,7 @@ function create(_x, _y, t) {
   if(t == "player"){
     setcollisionrect(i, -2, -1, 3, 2);
   }else if(t == "playerbullet"){
-    setcollisionrect(i, -2, -4, 4, 8);
+    setcollisionrect(i, -3, -4, 6, 8);
     entity[i].health = 1;
   }else if(t == "explosion"){
     entity[i].particle = bulletsize;
@@ -614,7 +614,7 @@ function create(_x, _y, t) {
     setcollisionrect(i, -6, -6, 12, 12);
     powerupcount++;
   }else if(t == "powershot"){
-    setcollisionrect(i, -2, -6, 4, 12);
+    setcollisionrect(i, -3, -6, 6, 12);
     entity[i].health = 3;
   }else if(t == "spaceteeth"){
     entity[i].rule = "enemy";
