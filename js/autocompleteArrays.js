@@ -245,7 +245,7 @@ var haxeHintArray = [
 ["Game.foreground",":Int","P","Sets color of title text + links in standalone player."],
 ["Game.prompt","(description,defaultText):String","F"],
 ["Game.save","(key:String,value:String)","F","Save some data permanently that will persevere even if the game is closed and reopened."],
-["Game.load","(key:String):String","F","Load save game data stored with Game.save."],
+["Game.load","(key:String):String","F","Load save game data stored with Game.save. Returns null if no key present."],
 ["Game.editor","():Bool","F","True when a game is in the editor, but false when being played in the player."],
 ["Game.time",":Int","F","Counter. Incremented by one each frame (30 per second)."],
 ["Game.restart","()","F","Restarts the game, resetting all variables."],
