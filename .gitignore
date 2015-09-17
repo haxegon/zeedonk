@@ -2,3 +2,7 @@ haxegonweb/bin
 haxegonweb/bin/*
 haxegonweb/bin.build
 Find Results
+
+*.gz
+
+.htaccess
