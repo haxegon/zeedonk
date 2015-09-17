@@ -200,3 +200,6 @@ table#header td {
   color: blue;
   text-decoration: underline;;
 }
+.tutorialBody {
+    width:600px;
+}
