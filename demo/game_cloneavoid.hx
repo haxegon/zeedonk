@@ -25,7 +25,7 @@ var score=0;
 var scoreStr="0";
 
 function new() {
-  Music.setmusicvol(0.5);
+  Music.musicvol=0.5;
   Music.playmusic(titlemusic);
 //  Gfx.showfps=true;
   newLevel();
