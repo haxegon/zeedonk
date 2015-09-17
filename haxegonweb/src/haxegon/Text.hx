@@ -268,7 +268,7 @@ class Text {
 		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		
 		if (typeface[currentindex].type == "bitmap") {
-			cachelabel = text + "_" + currentfont + Convert.tostring(col);
+			cachelabel = text + "_" + currentfont;
 			if (!cachedtextindex.exists(cachelabel)) {
 				//Cache the text
 				var numlines:Int = 1;
@@ -287,7 +287,7 @@ class Text {
 			}
 			
 			cacheindex = cachedtextindex.get(cachelabel);
-			display_bitmap(x, y, cacheindex, currentsize, parameters);
+			display_bitmap(x, y, cacheindex, currentsize, col, parameters);
 		}else if (typeface[currentindex].type == "tff") {
 			display_ttf(x, y, text, col, parameters);
 		}
@@ -300,13 +300,14 @@ class Text {
 		drawto.draw(typeface[currentindex].tf_bitmap);
 	}
 	
-	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, ?parameters:Textdrawparams) {
+	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, col:Int, ?parameters:Textdrawparams) {
 		if (parameters == null && size == 1) {
 			x = cachealignx(x, text); y = cachealigny(y, text);
 			
 		  fontmatrix.identity();
 			fontmatrix.translate(Math.floor(x), Math.floor(y));
-			drawto.draw(cachedtext[text], fontmatrix);
+			alphact = new ColorTransform(0, 0, 0, 1, Gfx.getred(col), Gfx.getgreen(col), Gfx.getblue(col));
+			drawto.draw(cachedtext[text], fontmatrix, alphact);
 		}else {
 			tempxpivot = 0;
 			tempypivot = 0;
@@ -314,6 +315,7 @@ class Text {
 			tempyscale = 1.0 * size;
 			temprotate = 0;
 			tempalpha = 1.0;
+			alphact = new ColorTransform();
 			tempred = 1.0; tempgreen = 1.0; tempblue = 1.0;
 			changecolours = false;
 			

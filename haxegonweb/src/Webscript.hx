@@ -178,14 +178,9 @@ class Webscript {
 			
 			Text.setfont(Webfont.DOS, 1);
 			
-			var t:String = "";
-			for(j in 0 ... 10){
-				t = "";
-				for (i in 0 ... 22) {
-					t += String.fromCharCode(32 + i + (j*22));
-				}
-				Text.display(1, (j * 12) + 1, t);
-			}
+			Text.display(Text.CENTER, 10, "RED", 0xFF0000);
+			Text.display(Text.CENTER, 50, "GREEN", 0x00FF00);
+			Text.display(Text.CENTER, 90, "BLUE", 0x0000FF);
 			*/
 		}
 		
