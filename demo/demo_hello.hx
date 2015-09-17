@@ -1,5 +1,5 @@
 function new(){
-  Music.playnote(4123,1,1,1);
+  Music.playsound(46173108);
 }
 
 function update() {
