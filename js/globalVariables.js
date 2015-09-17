@@ -209,10 +209,9 @@ function strip_http(url) {
 }
 
 function qualifyURL(url) {
-   if (!/^(f|ht)tps?:\/\//i.test(url)) {
-      url = "http://" + url;
-   }
-   return url;
+    var a = document.createElement('a');
+    a.href = url;
+    return a.href;
 }
 
 function sethomepage(t){
