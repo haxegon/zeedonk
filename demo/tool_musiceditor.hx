@@ -73,7 +73,7 @@ function stripWhitespace(s){
 function loadDat(s){
   s = stripWhitespace(s);
   s = unmakeRLE(s);
-  var arr : Array<int> = [];
+  var arr = [];
   for(ci in 0...s.length){
     var c = s[ci];
     arr.push(B62.indexOf(c));
@@ -106,7 +106,7 @@ function loadDat(s){
   outputAr.push(arr[i]);
   dat.notes=[];
   for (j in 0...sequenceCount){       
-    var sequence :Array<Array<Int> > = [[],[],[],[],[]];
+    var sequence  = [[],[],[],[],[]];
     for (m in 0...5){
       i++;      
       var noteCount =arr[i];
@@ -285,7 +285,7 @@ function drawButton(text,x,y,textcolor,color,colorhover) {
 }
 
 
-function collideBox(x,y,w,h) : Int {
+function collideBox(x,y,w,h) {
   var dx = Mouse.x-x;
   var dy = Mouse.y-y;
   
