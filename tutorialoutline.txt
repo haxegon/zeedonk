@@ -42,7 +42,7 @@ for (i in 0...100)
 
 For loops can only go up. sorry.
 
-<a href="https://en.wikipedia.org/wiki/Fibonacci_number">fibonacci number</a> printer
+<a class="tutoriallink"  href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci number</a> printer
 
 -
 

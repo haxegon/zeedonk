@@ -198,7 +198,7 @@ table#header td {
 
 .tutoriallink {
   color: blue;
-  text-decoration: underline;;
+  text-decoration: none;;
 }
 .tutorialBody {
     width:600px;
