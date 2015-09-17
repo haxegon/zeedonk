@@ -264,6 +264,7 @@ class Webscript {
 		interpreter.variables.set("Random", Random);
 		interpreter.variables.set("String", String);
 		interpreter.variables.set("trace", Webdebug.log);
+		interpreter.variables.set("Math.abs", Gfx.fastAbs);
 		
 		runscript = true;
 		try{

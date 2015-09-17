@@ -1,3 +1,42 @@
+/*
+  SUPER SHOT
+
+  This example game has been heavily optimised! In general, Zeedonk is not really
+  built for fast action games, but there are things you can do to speed things up.
+  Here are some tips that helped a lot in Super Shot:
+
+  - Drawing lots of primitives (especially lines) starts to add up pretty quickly.
+    Super Shot caches all the graphics as images before it starts in the 
+    cache() function, which is much faster.
+
+  - Interpreting code at runtime is slow! So give hscript as little to do as you 
+    can. For example, I got a noticible speed increase in the checkcollision()
+    function by first checking that the two entities are within 10 pixels of 
+    each other before checking the individual points.
+
+  - Also in the category of giving hscript less to do, try to do as little 
+    looping over arrays as you can. Instead of having an inner loop in the player
+    update to check if any enemy bullets have collided with them, it's better to
+    just have each bullet check if it's hit the player when the bullet moves.
+
+  - Consider inlining functions that get called a lot, even if it means some 
+    repetition. In the gameupdate() function, update and draw functions for the
+    entities have been inlined.
+
+  - With lots of image labels for the game's graphics, an earlier version of the
+    game had lots of drawimage commands that looked like this:
+
+    Gfx.drawimage(x, y, "spaceteeth_" + enemyframe);
+
+    Doing all these int to string conversions in hscript was slow - better to
+    store the lables in an array of strings instead, like this:
+   
+    Gfx.drawimage(x, y, spaceteeth_[enemyframe]);
+
+  - Avoid using alpha with primitives and images. It can be pretty slow!
+
+*/
+
 Game.title = "SUPER SHOT";
 Game.background = Col.BLACK;
 Game.foreground = Col.LIGHTBLUE;
@@ -7,8 +46,13 @@ var shootsound = 361441;
 var powershotsound = 85225901;
 var powerupsound = 58573703;
 var hitenemysound = 45280902;
-var deathsound = "qdpVdyeKoIèdé5ab3a2b3aefc9bk4b2acb2d4cbebiab18a";
-var titlemusic = "qgéuWåfUäkyeMUsVfb3agJEvéaibUaqad4abSaqad4abPaqad4abQaqad4abUaqad4abSaqad4abNaqad4abLaqad4a";
+var deathsound = 24760502;
+var launchsound = 61252908;
+var startsound = 29031708;
+var enemyshotsound = 57001101;
+var enemyhitsound = 74869904;
+var starexplodesound = 72951502;
+var pickupdropsound = 74702102;
 var inmotion = "qbésCSgyIåKeMUsVfb3agJEvéa2cQaQa2eia2h9a";
 
 var screenflash = 0;
@@ -52,21 +96,21 @@ var numstars;
 
 var powerup_ = [];
 var powerup_stopped_ = [];
-var badguy_1_=[];
-var badguy_1_stopped_=[];
-var badguy_3_=[];
-var badguy_3_stopped_=[];
-var badguy_3_hurt_=[];
-var badguy_4_=[];
-var badguy_4_stopped_=[];
-var badguy_4_hurt_=[];
-var badguy_5_white_=[];
-var badguy_5_yellow_=[];
-var badguy_5_red_=[];
-var badguy_5_gray_=[];
-var badguy_6_=[];
-var badguy_6_stopped_=[];
-var badguy_6_hurt_=[];
+var spaceteeth_=[];
+var spaceteeth_stopped_=[];
+var spaceeye_=[];
+var spaceeye_stopped_=[];
+var spaceeye_hurt_=[];
+var spacehexagon_=[];
+var spacehexagon_stopped_=[];
+var spacehexagon_hurt_=[];
+var spacestar_white_=[];
+var spacestar_yellow_=[];
+var spacestar_red_=[];
+var spacestar_gray_=[];
+var spacecube_=[];
+var spacecube_stopped_=[];
+var spacecube_hurt_=[];
 
 function effect(t){
   if(t == "shake"){
@@ -157,26 +201,38 @@ function setcollisionrect(t, x, y, w, h){
   entity[t].ch = h;
 }
 
-function checkcollisionpoint(x, y, t) {
-  if(inboxw(x, y, entity[t].x + entity[t].cx, entity[t].y + entity[t].cy,
-            entity[t].cw, entity[t].ch)){
-    return true;
-  }
-  return false;
-}
-
 function checkcollision(a, b){
   if(entity[a].active && entity[b].active){
-    if(Gfx.fastAbs(Convert.toint(entity[a].x - entity[b].x)) < 10){
-      if(Gfx.fastAbs(Convert.toint(entity[a].y - entity[b].y)) < 10){
-        if(checkcollisionpoint(entity[a].x + entity[a].cx,
-                               entity[a].y + entity[a].cy, b)) return true;
-        if(checkcollisionpoint(entity[a].x + entity[a].cx,
-                               entity[a].y + entity[a].ch, b)) return true;
-        if(checkcollisionpoint(entity[a].x + entity[a].cw,
-                               entity[a].y + entity[a].cy, b)) return true;
-        if(checkcollisionpoint(entity[a].x + entity[a].cw,
-                               entity[a].y + entity[a].ch, b)) return true;
+    if(Math.abs(Convert.toint(entity[a].x - entity[b].x)) < 10){
+      if(Math.abs(Convert.toint(entity[a].y - entity[b].y)) < 10){
+        if(inboxw(entity[a].x + entity[a].cx,
+                  entity[a].y + entity[a].cy, 
+                  entity[b].x + entity[b].cx, 
+                  entity[b].y + entity[b].cy,
+            			entity[b].cw, entity[b].ch)){
+          return true;
+        }
+        if(inboxw(entity[a].x + entity[a].cx,
+                  entity[a].y + entity[a].ch, 
+                  entity[b].x + entity[b].cx, 
+                  entity[b].y + entity[b].cy,
+            			entity[b].cw, entity[b].ch)){
+          return true;
+        }
+        if(inboxw(entity[a].x + entity[a].cw,
+                  entity[a].y + entity[a].cy, 
+                  entity[b].x + entity[b].cx, 
+                  entity[b].y + entity[b].cy,
+            			entity[b].cw, entity[b].ch)){
+          return true;
+        }
+        if(inboxw(entity[a].x + entity[a].cw,
+                  entity[a].y + entity[a].ch, 
+                  entity[b].x + entity[b].cx, 
+                  entity[b].y + entity[b].cy,
+            			entity[b].cw, entity[b].ch)){
+          return true;
+        }
       }
     }
   }
@@ -266,18 +322,18 @@ function cachegraphics() {
     }
   }
 
-  //Badguy_1:
+  //spaceteeth:
   tcol = stopcol;
   for (i in 0 ... 16) {
     if (i >= 8) {
       tcol = Gfx.rgb(220, 0, 0);
-      badguy_1_.push("badguy_1_" + (i - 8));
-      Gfx.createimage(badguy_1_[i-8], 17, 32);
-      Gfx.drawtoimage(badguy_1_[i-8]);
+      spaceteeth_.push("spaceteeth_" + (i - 8));
+      Gfx.createimage(spaceteeth_[i-8], 17, 32);
+      Gfx.drawtoimage(spaceteeth_[i-8]);
     }else {
-      badguy_1_stopped_.push("badguy_1_stopped_" + i);
-      Gfx.createimage(badguy_1_stopped_[i], 17, 32);
-      Gfx.drawtoimage(badguy_1_stopped_[i]);
+      spaceteeth_stopped_.push("spaceteeth_stopped_" + i);
+      Gfx.createimage(spaceteeth_stopped_[i], 17, 32);
+      Gfx.drawtoimage(spaceteeth_stopped_[i]);
     }
 
     temp = Convert.toint((i * 2) % 16);
@@ -288,19 +344,19 @@ function cachegraphics() {
     Gfx.drawline(16, 8, 16, 24, tcol);
   }
 
-  //Badguy_2:
+  //spacewall:
   tcol = stopcol;
-  var badguy_2_ = [];
-  var badguy_2_stopped_ = [];
+  var spacewall_ = [];
+  var spacewall_stopped_ = [];
   for (j in 0 ... 20) {
     if (j >= 10) {
-      badguy_2_.push("badguy_2_" + (j - 10));
-      Gfx.createimage(badguy_2_[j-10], 40, 40);
-      Gfx.drawtoimage(badguy_2_[j-10]);
+      spacewall_.push("spacewall_" + (j - 10));
+      Gfx.createimage(spacewall_[j-10], 40, 40);
+      Gfx.drawtoimage(spacewall_[j-10]);
     }else {
-      badguy_2_stopped_.push("badguy_2_stopped_" + j);
-      Gfx.createimage(badguy_2_stopped_[j], 40, 40);
-      Gfx.drawtoimage(badguy_2_stopped_[j]);
+      spacewall_stopped_.push("spacewall_stopped_" + j);
+      Gfx.createimage(spacewall_stopped_[j], 40, 40);
+      Gfx.drawtoimage(spacewall_stopped_[j]);
     }
 
     for (i in 0 ... (j % 10)) {
@@ -316,22 +372,22 @@ function cachegraphics() {
     }
   }
 
-  //Badguy_3
+  //spaceeye
   for (j in 0 ... 18) {
     if (j < 6) {
-      badguy_3_.push("badguy_3_" + j);
-      Gfx.createimage(badguy_3_[j], 21, 21);
-      Gfx.drawtoimage(badguy_3_[j]);
+      spaceeye_.push("spaceeye_" + j);
+      Gfx.createimage(spaceeye_[j], 21, 21);
+      Gfx.drawtoimage(spaceeye_[j]);
       tcol = Gfx.rgb(255, 128, 0);
     }else if (j < 12) {
-      badguy_3_stopped_.push("badguy_3_stopped_" + (j-6));
-      Gfx.createimage(badguy_3_stopped_[j-6], 21, 21);
-      Gfx.drawtoimage(badguy_3_stopped_[j-6]);
+      spaceeye_stopped_.push("spaceeye_stopped_" + (j-6));
+      Gfx.createimage(spaceeye_stopped_[j-6], 21, 21);
+      Gfx.drawtoimage(spaceeye_stopped_[j-6]);
       tcol = stopcol;
     }else{
-      badguy_3_hurt_.push("badguy_3_hurt_" + (j - 12));
-      Gfx.createimage(badguy_3_hurt_[j-12], 21, 21);
-      Gfx.drawtoimage(badguy_3_hurt_[j-12]);
+      spaceeye_hurt_.push("spaceeye_hurt_" + (j - 12));
+      Gfx.createimage(spaceeye_hurt_[j-12], 21, 21);
+      Gfx.drawtoimage(spaceeye_hurt_[j-12]);
       tcol = Gfx.rgb(255, 0, 0);
     }
 
@@ -342,22 +398,22 @@ function cachegraphics() {
     }
   }
 
-  //Badguy 4
+  //Space Hexagon
   for (k in 0 ... 3) {
     for (j in 0 ... 10) {
       if (k == 0) {
-        badguy_4_.push("badguy_4_" + j);
-        Gfx.createimage(badguy_4_[j], 32, 32);
-        Gfx.drawtoimage(badguy_4_[j]);
+        spacehexagon_.push("spacehexagon_" + j);
+        Gfx.createimage(spacehexagon_[j], 32, 32);
+        Gfx.drawtoimage(spacehexagon_[j]);
       }else if (k == 1) {
-        badguy_4_stopped_.push("badguy_4_stopped_" + j);
-        Gfx.createimage(badguy_4_stopped_[j], 32, 32);
-        Gfx.drawtoimage(badguy_4_stopped_[j]);
+        spacehexagon_stopped_.push("spacehexagon_stopped_" + j);
+        Gfx.createimage(spacehexagon_stopped_[j], 32, 32);
+        Gfx.drawtoimage(spacehexagon_stopped_[j]);
         tcol = stopcol;
       }else if (k == 2) {
-        badguy_4_hurt_.push("badguy_4_hurt_" + j);
-        Gfx.createimage(badguy_4_hurt_[j], 32, 32);
-        Gfx.drawtoimage(badguy_4_hurt_[j]);
+        spacehexagon_hurt_.push("spacehexagon_hurt_" + j);
+        Gfx.createimage(spacehexagon_hurt_[j], 32, 32);
+        Gfx.drawtoimage(spacehexagon_hurt_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }
 
@@ -371,28 +427,28 @@ function cachegraphics() {
     }
   }
 
-  //Badguy_5
+  //spacestar
   for (k in 0 ... 4) {
     for (j in 0 ... 10) {
       if (k == 0) {
-        badguy_5_white_.push("badguy_5_white_" + j);
-        Gfx.createimage(badguy_5_white_[j], 21, 21);
-        Gfx.drawtoimage(badguy_5_white_[j]);
+        spacestar_white_.push("spacestar_white_" + j);
+        Gfx.createimage(spacestar_white_[j], 21, 21);
+        Gfx.drawtoimage(spacestar_white_[j]);
         tcol = Col.WHITE;
       }else if (k == 1) {
-        badguy_5_yellow_.push("badguy_5_yellow_" + j);
-        Gfx.createimage(badguy_5_yellow_[j], 21, 21);
-        Gfx.drawtoimage(badguy_5_yellow_[j]);
+        spacestar_yellow_.push("spacestar_yellow_" + j);
+        Gfx.createimage(spacestar_yellow_[j], 21, 21);
+        Gfx.drawtoimage(spacestar_yellow_[j]);
         tcol = Col.YELLOW;
       }else if (k == 2) {
-        badguy_5_red_.push("badguy_5_red_" + j);
-        Gfx.createimage(badguy_5_red_[j], 21, 21);
-        Gfx.drawtoimage(badguy_5_red_[j]);
+        spacestar_red_.push("spacestar_red_" + j);
+        Gfx.createimage(spacestar_red_[j], 21, 21);
+        Gfx.drawtoimage(spacestar_red_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }else if (k == 3) {
-        badguy_5_gray_.push("badguy_5_gray_" + j);
-        Gfx.createimage(badguy_5_gray_[j], 21, 21);
-        Gfx.drawtoimage(badguy_5_gray_[j]);
+        spacestar_gray_.push("spacestar_gray_" + j);
+        Gfx.createimage(spacestar_gray_[j], 21, 21);
+        Gfx.drawtoimage(spacestar_gray_[j]);
         tcol = stopcol;
       }
 
@@ -418,23 +474,23 @@ function cachegraphics() {
     }
   }
 
-  //Badguy_6
+  //spacecube
   for (k in 0 ... 3) {
     for (j in 0 ... 10) {
       if (k == 0) {
-        badguy_6_.push("badguy_6_" + j);
-        Gfx.createimage(badguy_6_[j], 30, 30);
-        Gfx.drawtoimage(badguy_6_[j]);
+        spacecube_.push("spacecube_" + j);
+        Gfx.createimage(spacecube_[j], 30, 30);
+        Gfx.drawtoimage(spacecube_[j]);
         tcol = 0x22EEEE;
       }else if (k == 1) {
-        badguy_6_stopped_.push("badguy_6_stopped_" + j);
-        Gfx.createimage(badguy_6_stopped_[j], 30, 30);
-        Gfx.drawtoimage(badguy_6_stopped_[j]);
+        spacecube_stopped_.push("spacecube_stopped_" + j);
+        Gfx.createimage(spacecube_stopped_[j], 30, 30);
+        Gfx.drawtoimage(spacecube_stopped_[j]);
         tcol = stopcol;
       }else if (k == 2) {
-        badguy_6_hurt_.push("badguy_6_hurt_" + j);
-        Gfx.createimage(badguy_6_hurt_[j], 30, 30);
-        Gfx.drawtoimage(badguy_6_hurt_[j]);
+        spacecube_hurt_.push("spacecube_hurt_" + j);
+        Gfx.createimage(spacecube_hurt_[j], 30, 30);
+        Gfx.drawtoimage(spacecube_hurt_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }
 
@@ -463,8 +519,6 @@ function new() {
 
   cachegraphics();
   highscore = 0;
-
-  //Music.playmusic(titlemusic);
   initstars();
 
   entity = [];
@@ -475,7 +529,7 @@ function new() {
 
 function killplayer(p){
   Music.stopmusic();
-  Music.playmusic(deathsound);
+  Music.playsound(deathsound);
   entity[p].active = false;
   effect("shakeflash");
   deathsequence = 30;
@@ -513,7 +567,7 @@ function createbullet(_x, _y, vx, vy, size){
 }
 
 function create(_x, _y, t) {
-  if (t == "badguy_5") {
+  if (t == "spacestar") {
     //If we have more than 5 exploding stars on screen, do something else
     temp = 0;
     for (i in 0 ... numentity) {
@@ -524,7 +578,7 @@ function create(_x, _y, t) {
       }
     }
     if (temp >= 5) {
-      t = "badguy_1";
+      t = "spaceteeth";
     }
   }
 
@@ -539,7 +593,7 @@ function create(_x, _y, t) {
   if(t == "player"){
     setcollisionrect(i, -2, -1, 3, 2);
   }else if(t == "playerbullet"){
-    setcollisionrect(i, -2, -2, 4, 4);
+    setcollisionrect(i, -2, -3, 4, 6);
     entity[i].health = 1;
   }else if(t == "explosion"){
     entity[i].particle = bulletsize;
@@ -552,26 +606,26 @@ function create(_x, _y, t) {
     setcollisionrect(i, -6, -6, 12, 12);
     powerupcount++;
   }else if(t == "powershot"){
-    setcollisionrect(i, -2, -4, 4, 8);
+    setcollisionrect(i, -2, -5, 4, 10);
     entity[i].health = 3;
-  }else if(t == "badguy_1"){
+  }else if(t == "spaceteeth"){
     entity[i].rule = "enemy";
     setcollisionrect(i, -2, -8, 10, 16);
     entity[i].health = 1;
     entity[i].droprate = 10;
-  }else if(t == "badguy_2"){
+  }else if(t == "spacewall"){
     entity[i].rule = "enemy";
     setcollisionrect(i, -20, -20, 40, 40);
     entity[i].health = 10;
     entity[i].particle = Col.GRAY;
     entity[i].droprate = 100;
-  }else if(t == "badguy_3"){
+  }else if(t == "spaceeye"){
     entity[i].rule = "enemy";
     setcollisionrect(i, -8, -8, 16, 16);
     entity[i].health = 4;
     entity[i].particle = Col.ORANGE;
     entity[i].droprate = 10;
-  }else if(t == "badguy_4"){
+  }else if(t == "spacehexagon"){
     entity[i].rule = "enemy";
     setcollisionrect(i, -10, -10, 20, 20);
     entity[i].health = 5;
@@ -579,13 +633,13 @@ function create(_x, _y, t) {
     entity[i].frame = _y < 50? -1:1;
     entity[i].droprate = 10;
     entity[i].particle = Col.MAGENTA;
-  }else if(t == "badguy_5"){
+  }else if(t == "spacestar"){
     entity[i].rule = "enemy";
     setcollisionrect(i, -5, -5, 10, 10);
     entity[i].health = 1000;
     entity[i].particle = Col.ORANGE;
     entity[i].droprate = 0;
-  }else if(t == "badguy_6"){
+  }else if(t == "spacecube"){
     entity[i].rule = "enemy";
     setcollisionrect(i, -6, -6, 12, 12);
     entity[i].health = 2;
@@ -598,204 +652,204 @@ function create(_x, _y, t) {
 function spawn(patterntype){
   var randomposition;
   if (patterntype == "testing") {
-    create(200, 55, "badguy_6");
+    create(200, 55, "spacecube");
     wavedelay = 70;
-  }else if (patterntype == "badguy_1_full") {
+  }else if (patterntype == "spaceteeth_full") {
     for(i in 0 ... 5){
-      create(200, 8 + i * 24, "badguy_1");
-      create(250, 8 + i * 24, "badguy_1");
+      create(200, 8 + i * 24, "spaceteeth");
+      create(250, 8 + i * 24, "spaceteeth");
     }
     for(i in 0 ... 4){
-      create(225, 20 + i * 24, "badguy_1");
+      create(225, 20 + i * 24, "spaceteeth");
     }
     wavedelay = 70;
-  }else if(patterntype == "badguy_1_top"){
+  }else if(patterntype == "spaceteeth_top"){
     for(i in 0 ... 3){
-      create(200, 8 + i * 24, "badguy_1");
-      create(250, 8 + i * 24, "badguy_1");
+      create(200, 8 + i * 24, "spaceteeth");
+      create(250, 8 + i * 24, "spaceteeth");
     }
     for(i in 0 ... 2){
-      create(225, 20 + i * 24, "badguy_1");
+      create(225, 20 + i * 24, "spaceteeth");
     }
     wavedelay = 70;
-  }else if(patterntype == "badguy_1_bottom"){
+  }else if(patterntype == "spaceteeth_bottom"){
     for(i in 2 ... 5){
-      create(200, 8 + i * 24, "badguy_1");
-      create(250, 8 + i * 24, "badguy_1");
+      create(200, 8 + i * 24, "spaceteeth");
+      create(250, 8 + i * 24, "spaceteeth");
     }
     for(i in 2 ... 4){
-      create(225, 20 + i * 24, "badguy_1");
+      create(225, 20 + i * 24, "spaceteeth");
     }
     wavedelay = 70;
-  }else if(patterntype == "badguy_1_out"){
-    create(250, 8, "badguy_1");
-    create(225, 32, "badguy_1");
-    create(200, 56, "badguy_1");
-    create(225, 80, "badguy_1");
-    create(250, 104, "badguy_1");
+  }else if(patterntype == "spaceteeth_out"){
+    create(250, 8, "spaceteeth");
+    create(225, 32, "spaceteeth");
+    create(200, 56, "spaceteeth");
+    create(225, 80, "spaceteeth");
+    create(250, 104, "spaceteeth");
     wavedelay = 70;
-  }else if (patterntype == "badguy_1_in") {
-    create(200, 8, "badguy_1");
-    create(225, 32, "badguy_1");
-    create(250, 56, "badguy_1");
-    create(225, 80, "badguy_1");
-    create(200, 104, "badguy_1");
+  }else if (patterntype == "spaceteeth_in") {
+    create(200, 8, "spaceteeth");
+    create(225, 32, "spaceteeth");
+    create(250, 56, "spaceteeth");
+    create(225, 80, "spaceteeth");
+    create(200, 104, "spaceteeth");
     wavedelay = 70;
-  }else if (patterntype == "badguy_1_line") {
+  }else if (patterntype == "spaceteeth_line") {
     temp = Random.int(0, 4);
     for (i in 0 ... 5) {
-      create(200 + i * 25, 8 + temp * 24, "badguy_1");
+      create(200 + i * 25, 8 + temp * 24, "spaceteeth");
     }
     wavedelay = 70;
-  }else if (patterntype == "badguy_2_wall") {
-    create(220, 20, "badguy_2");
-    create(220, 60, "badguy_2");
-    create(220, 100, "badguy_2");
+  }else if (patterntype == "spacewall_wall") {
+    create(220, 20, "spacewall");
+    create(220, 60, "spacewall");
+    create(220, 100, "spacewall");
     wavedelay = 70;
-  }else if (patterntype == "badguy_2_single") {
+  }else if (patterntype == "spacewall_single") {
     temp = Random.int(0, 2);
-    create(220, 20 + temp * 40, "badguy_2");
+    create(220, 20 + temp * 40, "spacewall");
     wavedelay = 70;
-  }else if (patterntype == "badguy_3_center") {
-    create(200, 60, "badguy_3");
-    create(240, 60, "badguy_3");
+  }else if (patterntype == "spaceeye_center") {
+    create(200, 60, "spaceeye");
+    create(240, 60, "spaceeye");
     wavedelay = 70;
-  }else if (patterntype == "badguy_3_borders") {
-    create(200, 10, "badguy_3");
-    create(200, 100, "badguy_3");
+  }else if (patterntype == "spaceeye_borders") {
+    create(200, 10, "spaceeye");
+    create(200, 100, "spaceeye");
     wavedelay = 70;
-  }else if (patterntype == "badguy_3_top") {
-    create(200, 10, "badguy_3");
-    create(250, 10, "badguy_3");
+  }else if (patterntype == "spaceeye_top") {
+    create(200, 10, "spaceeye");
+    create(250, 10, "spaceeye");
     wavedelay = 120;
-  }else if (patterntype == "badguy_3_bottom") {
-    create(200, 100, "badguy_3");
-    create(250, 100, "badguy_3");
+  }else if (patterntype == "spaceeye_bottom") {
+    create(200, 100, "spaceeye");
+    create(250, 100, "spaceeye");
     wavedelay = 120;
-  }else if (patterntype == "badguy_3_three") {
-    create(200, 10, "badguy_3");
-    create(200, 55, "badguy_3");
-    create(200, 100, "badguy_3");
+  }else if (patterntype == "spaceeye_three") {
+    create(200, 10, "spaceeye");
+    create(200, 55, "spaceeye");
+    create(200, 100, "spaceeye");
     wavedelay = 70;
-  }else if (patterntype == "badguy_4_center") {
-    create(200, 55, "badguy_4");
+  }else if (patterntype == "spacehexagon_center") {
+    create(200, 55, "spacehexagon");
     wavedelay = 70;
-  }else if (patterntype == "badguy_4_down") {
-    create(200, 55, "badguy_4");
-    create(230, 65, "badguy_4");
-    create(260, 75, "badguy_4");
+  }else if (patterntype == "spacehexagon_down") {
+    create(200, 55, "spacehexagon");
+    create(230, 65, "spacehexagon");
+    create(260, 75, "spacehexagon");
     wavedelay = 120;
-  }else if (patterntype == "badguy_4_up") {
-    create(200, 45, "badguy_4");
-    create(230, 35, "badguy_4");
-    create(260, 25, "badguy_4");
+  }else if (patterntype == "spacehexagon_up") {
+    create(200, 45, "spacehexagon");
+    create(230, 35, "spacehexagon");
+    create(260, 25, "spacehexagon");
     wavedelay = 120;
-  }else if (patterntype == "badguy_4_cross") {
-    create(200, 20, "badguy_4");
-    create(200, 90, "badguy_4");
+  }else if (patterntype == "spacehexagon_cross") {
+    create(200, 20, "spacehexagon");
+    create(200, 90, "spacehexagon");
     wavedelay = 70;
-  }else if (patterntype == "badguy_5_center") {
-    create(200, 55, "badguy_5");
+  }else if (patterntype == "spacestar_center") {
+    create(200, 55, "spacestar");
     wavedelay = 70;
-  }else if (patterntype == "badguy_5_borders") {
-    create(200, 10, "badguy_5");
-    create(200, 100, "badguy_5");
+  }else if (patterntype == "spacestar_borders") {
+    create(200, 10, "spacestar");
+    create(200, 100, "spacestar");
     wavedelay = 70;
-  }else if (patterntype == "badguy_5_wall") {
+  }else if (patterntype == "spacestar_wall") {
     for(i in 0 ... 5){
-      create(200, 10 + i * 24, "badguy_5");
+      create(200, 10 + i * 24, "spacestar");
     }
     wavedelay = 70;
-  }else if (patterntype == "badguy_5_offcenter") {
-    create(220, 30, "badguy_5");
-    create(220, 80, "badguy_5");
+  }else if (patterntype == "spacestar_offcenter") {
+    create(220, 30, "spacestar");
+    create(220, 80, "spacestar");
     wavedelay = 70;
-  }else if (patterntype == "badguy_6_single") {
-    create(200, 55, "badguy_6");
+  }else if (patterntype == "spacecube_single") {
+    create(200, 55, "spacecube");
     wavedelay = 70;
-  }else if (patterntype == "badguy_6_snake") {
-    create(200, 55, "badguy_6");
-    create(220, 55, "badguy_6");
-    create(240, 55, "badguy_6");
-    create(260, 55, "badguy_6");
-    create(280, 55, "badguy_6");
-    create(300, 55, "badguy_6");
+  }else if (patterntype == "spacecube_snake") {
+    create(200, 55, "spacecube");
+    create(220, 55, "spacecube");
+    create(240, 55, "spacecube");
+    create(260, 55, "spacecube");
+    create(280, 55, "spacecube");
+    create(300, 55, "spacecube");
     wavedelay = 120;
-  }else if (patterntype == "badguy_6_short") {
-    create(200, 55, "badguy_6");
-    create(220, 55, "badguy_6");
-    create(240, 55, "badguy_6");
+  }else if (patterntype == "spacecube_short") {
+    create(200, 55, "spacecube");
+    create(220, 55, "spacecube");
+    create(240, 55, "spacecube");
     wavedelay = 90;
   }
 }
 
 //List of implemented patterns:
-//badguy_1_full
-//badguy_1_top
-//badguy_1_bottom
-//badguy_1_out
-//badguy_1_in
-//badguy_1_line
-//badguy_2_wall
-//badguy_2_single
-//badguy_3_center
-//badguy_3_borders
-//badguy_3_top
-//badguy_3_bottom
-//badguy_3_three
-//badguy_4_center
-//badguy_4_down
-//badguy_4_up
-//badguy_4_cross
-//badguy_5_center
-//badguy_5_borders
-//badguy_5_wall
-//badguy_5_offcenter
-//badguy_6_single
-//badguy_6_snake
-//badguy_6_short
+//spaceteeth_full
+//spaceteeth_top
+//spaceteeth_bottom
+//spaceteeth_out
+//spaceteeth_in
+//spaceteeth_line
+//spacewall_wall
+//spacewall_single
+//spaceeye_center
+//spaceeye_borders
+//spaceeye_top
+//spaceeye_bottom
+//spaceeye_three
+//spacehexagon_center
+//spacehexagon_down
+//spacehexagon_up
+//spacehexagon_cross
+//spacestar_center
+//spacestar_borders
+//spacestar_wall
+//spacestar_offcenter
+//spacecube_single
+//spacecube_snake
+//spacecube_short
 var easyenemies = [
-  "badguy_1_line",
-  "badguy_3_top",
-  "badguy_3_bottom",
-  "badguy_3_three",
-  "badguy_4_center",
-  "badguy_4_down",
-  "badguy_4_up",
-  "badguy_5_center",
-  "badguy_5_borders",
-  "badguy_6_single",
-  "badguy_6_short",
-  "badguy_6_snake"
+  "spaceteeth_line",
+  "spaceeye_top",
+  "spaceeye_bottom",
+  "spaceeye_three",
+  "spacehexagon_center",
+  "spacehexagon_down",
+  "spacehexagon_up",
+  "spacestar_center",
+  "spacestar_borders",
+  "spacecube_single",
+  "spacecube_short",
+  "spacecube_snake"
 ];
 var hardenemies = [
-  "badguy_3_borders",
-  "badguy_3_borders",
-  "badguy_3_three",
-  "badguy_4_cross",
-  "badguy_4_up",
-  "badguy_4_down",
-  "badguy_5_wall",
-  "badguy_5_offcenter",
-  "badguy_6_snake",
-  "badguy_6_snake",
-  "badguy_5_borders",
+  "spaceeye_borders",
+  "spaceeye_borders",
+  "spaceeye_three",
+  "spacehexagon_cross",
+  "spacehexagon_up",
+  "spacehexagon_down",
+  "spacestar_wall",
+  "spacestar_offcenter",
+  "spacecube_snake",
+  "spacecube_snake",
+  "spacestar_borders",
 ];
 
 function updatewaves(){
   if (wavedelay <= 0) {
     if (wavecount == 0) {
       //Initial wave
-      spawn(Random.pickstring("badguy_1_full", "badguy_1_in", "badguy_1_out", "badguy_6_short"));
+      spawn(Random.pickstring("spaceteeth_full", "spaceteeth_in", "spaceteeth_out", "spacecube_short"));
       wavedelay -= 30;
     }else if (wavecount % 4 == 0) {
       //Every forth wave is a wall of red guys
-      spawn(Random.pickstring("badguy_1_full", "badguy_1_top", "badguy_1_bottom", "badguy_1_out", "badguy_1_in"));
+      spawn(Random.pickstring("spaceteeth_full", "spaceteeth_top", "spaceteeth_bottom", "spaceteeth_out", "spaceteeth_in"));
     }else if (wavecount < 6) {
       //Easy
       spawn(easyenemies[Random.int(0, easyenemies.length - 1)]);
 
-      create(200, 8 + Random.int(0, 5) * 24, "badguy_1");
+      create(200, 8 + Random.int(0, 5) * 24, "spaceteeth");
       wavedelay -= 40;
     }else if (wavecount < 15) {
       //Medium
@@ -807,31 +861,30 @@ function updatewaves(){
         wavedelay -= 40;
       }
 
-      create(200, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(300, 8 + Random.int(0, 4) * 24, "badguy_1");
+      create(200, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(300, 8 + Random.int(0, 4) * 24, "spaceteeth");
     }else if (wavecount < 30) {
       //Hard
       spawn(hardenemies[Random.int(0, hardenemies.length - 1)]);
       wavedelay -= 30;
-      create(200, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(250, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(300, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(350, 8 + Random.int(0, 4) * 24, "badguy_1");
+      create(200, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(250, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(300, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(350, 8 + Random.int(0, 4) * 24, "spaceteeth");
     }else{
       //Just die already
       spawn(hardenemies[Random.int(0, hardenemies.length - 1)]);
       wavedelay -= 40;
-      create(200, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(250, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(300, 8 + Random.int(0, 4) * 24, "badguy_1");
-      create(350, 8 + Random.int(0, 4) * 24, "badguy_1");
+      create(200, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(250, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(300, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(350, 8 + Random.int(0, 4) * 24, "spaceteeth");
     }
     wavecount++;
   }
 }
 
 function gameupdate() {
-  //Music.setmusicvol(playermoving/timedelay);
   if (playermoving > 0) {
     if(playerpowerup > 0) playerpowerup--;
     playermoving--;
@@ -896,12 +949,14 @@ function gameupdate() {
 
   if (playermoving > 0) {
     gamespeed = 1;
+    Music.musicvol = 0;
   }else {
     if (gamespeed > 0.15) {
       gamespeed -= 0.075;
       if (gamespeed < 0.15) {
         gamespeed = 0.15;
       }
+      Music.musicvol = 1;
     }
   }
 
@@ -959,8 +1014,11 @@ function gameupdate() {
                     if (powerupcount < 3) {
                       if (Random.int(1, 99) < entity[i].droprate) {
                         create(entity[t].x, entity[t].y, "powerup_power");
+                        Music.playsound(pickupdropsound);
                       }
                     }
+                  }else{
+                    Music.playsound(enemyhitsound, 0.5);
                   }
                 }
               }
@@ -1006,7 +1064,7 @@ function gameupdate() {
         if(!inboxw(entity[t].x, entity[t].y, -10, -10, Gfx.screenwidth+20, Gfx.screenheight+20)){
           entity[t].active=false;
         }
-      }else if(entity[t].type == "badguy_1"){
+      }else if(entity[t].type == "spaceteeth"){
         entity[t].x -= 5 * gamespeed;
 
         if (entity[t].x < -10) {
@@ -1015,7 +1073,7 @@ function gameupdate() {
         if(!playerdestroyed){
           if(checkcollision(player, t)) killplayer(player);
         }
-      }else if(entity[t].type == "badguy_2"){
+      }else if(entity[t].type == "spacewall"){
         entity[t].x -= 2 * gamespeed;
         if(entity[t].health>3){
           entity[t].cx = -entity[t].health * 2;
@@ -1032,7 +1090,7 @@ function gameupdate() {
         if(!playerdestroyed){
           if(checkcollision(player, t)) killplayer(player);
         }
-      }else if(entity[t].type == "badguy_3"){
+      }else if(entity[t].type == "spaceeye"){
         entity[t].x -= 1 * gamespeed;
         if (entity[t].timer > 15) {
           entity[t].timer -= 15;
@@ -1045,7 +1103,7 @@ function gameupdate() {
         if(!playerdestroyed){
           if(checkcollision(player, t)) killplayer(player);
         }
-      }else if (entity[t].type == "badguy_4") {
+      }else if (entity[t].type == "spacehexagon") {
         entity[t].frame2 += gamespeed;
         entity[t].x -= gamespeed;
         entity[t].y += entity[t].frame * gamespeed;
@@ -1068,7 +1126,7 @@ function gameupdate() {
         if(!playerdestroyed){
           if(checkcollision(player, t)) killplayer(player);
         }
-      }else if(entity[t].type == "badguy_5"){
+      }else if(entity[t].type == "spacestar"){
         if(entity[t].frame == 0){
           entity[t].x -= 2 * gamespeed;
           if(entity[t].x< Gfx.screenwidthmid-5 || entity[t].health < 1000){
@@ -1079,6 +1137,7 @@ function gameupdate() {
           for(i in 0 ... 12){
             createbullet(entity[t].x, entity[t].y, Math.cos(randoffset + (i / 6) * 3.14) * 3, Math.sin(randoffset + (i / 6) * 3.14) * 3, 2);
           }
+          Music.playsound(starexplodesound, 0.5);
           entity[t].active=false;
         }else if(entity[t].frame >= 1){
           entity[t].frame+= gamespeed;
@@ -1086,7 +1145,7 @@ function gameupdate() {
         if(!playerdestroyed){
           if(checkcollision(player, t)) killplayer(player);
         }
-      }else if(entity[t].type == "badguy_6"){
+      }else if(entity[t].type == "spacecube"){
         entity[t].x -= 2 * gamespeed;
         entity[t].y = 55 + (Math.sin(entity[t].timer/10) * 55);
         if (entity[t].x < -10) {
@@ -1176,73 +1235,73 @@ function gameupdate() {
         }else{
           Gfx.drawimage(entity[t].x + camerax - 7, entity[t].y + cameray - 7, "powershot_stopped");
         }
-      }else if (entity[t].type == "badguy_1") {
+      }else if (entity[t].type == "spaceteeth") {
         temp = Convert.toint(entity[t].timer) % 8;
         if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, badguy_1_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, spaceteeth_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, badguy_1_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, spaceteeth_stopped_[temp]);
         }
-      }else if(entity[t].type == "badguy_2"){
+      }else if(entity[t].type == "spacewall"){
         temp = Convert.toint(entity[t].health) - 1;
         if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, badguy_2_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, spacewall_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, badguy_2_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, spacewall_stopped_[temp]);
         }
-      }else if (entity[t].type == "badguy_3") {
+      }else if (entity[t].type == "spaceeye") {
         temp = 0;
         if (entity[t].timer % 15 > 10) {
           temp = Convert.toint((entity[t].timer % 5) + 1);
         }
         if (entity[t].hurt > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_3_hurt_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spaceeye_hurt_[temp]);
         }else if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_3_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spaceeye_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_3_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spaceeye_stopped_[temp]);
         }
-      }else if (entity[t].type == "badguy_4") {
+      }else if (entity[t].type == "spacehexagon") {
         temp = Convert.toint(entity[t].timer % 10);
 
         if (entity[t].hurt > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, badguy_4_hurt_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, spacehexagon_hurt_[temp]);
         }else if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, badguy_4_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, spacehexagon_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, badguy_4_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, spacehexagon_stopped_[temp]);
         }
-      }else if(entity[t].type == "badguy_5"){
+      }else if(entity[t].type == "spacestar"){
         temp = Convert.toint(entity[t].timer % 10);
 
         if (playermoving > 0) {
           if (entity[t].hurt > 0) {
-            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_red_[temp]);
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_red_[temp]);
           }else if (entity[t].frame > 0) {
             if (Game.time % 16 > 8) {
-              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_white_[temp]);
+              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_white_[temp]);
             }else{
-              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_yellow_[temp]);
+              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_yellow_[temp]);
             }
           }else {
-            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_white_[temp]);
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_white_[temp]);
           }
         }else {
           if (entity[t].frame > 0) {
-            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_red_[temp]);
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_red_[temp]);
           }else {
-            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_gray_[temp]);
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_gray_[temp]);
           }
         }
-      }else if (entity[t].type == "badguy_6") {
+      }else if (entity[t].type == "spacecube") {
         temp = Convert.toint(entity[t].timer % 10);
 
         if (entity[t].hurt > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, badguy_6_hurt_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, spacecube_hurt_[temp]);
         }else if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, badguy_6_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, spacecube_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, badguy_6_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, spacecube_stopped_[temp]);
         }
       }
     }
@@ -1303,9 +1362,9 @@ function titleupdate(){
   if(titlecountdown % 2 == 0){
     Text.setfont(Font.RETROFUTURE, 1);
     Text.changesize(3.2);
-    Text.display(Text.CENTER, Gfx.screenheightmid - 36, "SUPER");
+    Text.display(Text.CENTER, Gfx.screenheightmid - 31, "SUPER");
     Text.changesize(3.5);
-    Text.display(Text.CENTER, Gfx.screenheightmid-10, "SHOT");
+    Text.display(Text.CENTER, Gfx.screenheightmid-5, "SHOT");
     Text.setfont(Font.PIXEL, 1);
   }
 
@@ -1331,6 +1390,7 @@ function titleupdate(){
 
   if ((Input.justpressed(Key.Z) || Input.justpressed(Key.SPACE)) && titlecountdown == 0) {
     titlecountdown = 16;
+    Music.playnote(startsound, 2, 1, 1);
   }
 
   if(titlecountdown>0){
@@ -1355,7 +1415,9 @@ function titleupdate(){
       newround = 20;
       deathsequence = 0;
       Music.stopmusic();
-      //Music.playmusic(inmotion);
+      Music.playmusic(inmotion);
+      Music.musicvol = 0;
+      Music.playsound(launchsound);
     }
   }
 }
