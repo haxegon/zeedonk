@@ -171,7 +171,7 @@ class Webscript {
 			}
 			
 			//Let's do some testing! Delete me in final version
-			/*
+			
 			Gfx.clearscreen(Gfx.rgb(128, 128, 128));
 			Gfx.fillbox(1, 1, Gfx.screenwidth - 2, Gfx.screenheight - 2, Gfx.rgb(16, 16, 16));
 			//Gfx.showfps = true;
@@ -181,7 +181,6 @@ class Webscript {
 			Text.display(Text.CENTER, 10, "RED", 0xFF0000);
 			Text.display(Text.CENTER, 50, "GREEN", 0x00FF00);
 			Text.display(Text.CENTER, 90, "BLUE", 0x0000FF);
-			*/
 		}
 		
 		if (Gfx.showfps) {

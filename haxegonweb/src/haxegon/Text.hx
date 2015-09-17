@@ -268,7 +268,7 @@ class Text {
 		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		
 		if (typeface[currentindex].type == "bitmap") {
-			cachelabel = text + "_" + currentfont;
+			cachelabel = text + "_" + currentfont + Convert.tostring(col);
 			if (!cachedtextindex.exists(cachelabel)) {
 				//Cache the text
 				var numlines:Int = 1;
@@ -280,14 +280,13 @@ class Text {
 				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].tf_bitmap.textHeight) * numlines, true, 0));
 			  
 				drawto = cachedtext[cacheindex];
-				//For testing
 				//cachedtext[cacheindex].fillRect(cachedtext[cacheindex].rect, (0xFF << 24) + Col.RED);
 				cache_bitmap_text(text, col);
 				drawto = Gfx.drawto;
 			}
 			
 			cacheindex = cachedtextindex.get(cachelabel);
-			display_bitmap(x, y, cacheindex, currentsize, col, parameters);
+			display_bitmap(x, y, cacheindex, currentsize, parameters);
 		}else if (typeface[currentindex].type == "tff") {
 			display_ttf(x, y, text, col, parameters);
 		}
@@ -300,14 +299,13 @@ class Text {
 		drawto.draw(typeface[currentindex].tf_bitmap);
 	}
 	
-	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, col:Int, ?parameters:Textdrawparams) {
+	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, ?parameters:Textdrawparams) {
 		if (parameters == null && size == 1) {
 			x = cachealignx(x, text); y = cachealigny(y, text);
 			
 		  fontmatrix.identity();
 			fontmatrix.translate(Math.floor(x), Math.floor(y));
-			alphact = new ColorTransform(0, 0, 0, 1, Gfx.getred(col), Gfx.getgreen(col), Gfx.getblue(col));
-			drawto.draw(cachedtext[text], fontmatrix, alphact);
+			drawto.draw(cachedtext[text], fontmatrix);
 		}else {
 			tempxpivot = 0;
 			tempypivot = 0;
@@ -315,7 +313,6 @@ class Text {
 			tempyscale = 1.0 * size;
 			temprotate = 0;
 			tempalpha = 1.0;
-			alphact = new ColorTransform();
 			tempred = 1.0; tempgreen = 1.0; tempblue = 1.0;
 			changecolours = false;
 			
