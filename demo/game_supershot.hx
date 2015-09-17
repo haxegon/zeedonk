@@ -7,9 +7,9 @@ var shootsound = 361441;
 var powershotsound = 85225901;
 var powerupsound = 58573703;
 var hitenemysound = 45280902;
-var deathsound = "qdpVdyeKoIËdÈ5ab3a2b3aefc9bk4b2acb2d4cbebiab18a";
-var titlemusic = "qgÈuWÂfU‰kyeMUsVfb3agJEvÈaibUaqad4abSaqad4abPaqad4abQaqad4abUaqad4abSaqad4abNaqad4abLaqad4a";
-var inmotion = "qbÈsCSgyIÂKeMUsVfb3agJEvÈa2cQaQa2eia2h9a";
+var deathsound = "qdpVdyeKoI√®d√©5ab3a2b3aefc9bk4b2acb2d4cbebiab18a";
+var titlemusic = "qg√©uW√•fU√§kyeMUsVfb3agJEv√©aibUaqad4abSaqad4abPaqad4abQaqad4abUaqad4abSaqad4abNaqad4abLaqad4a";
+var inmotion = "qb√©sCSgyI√•KeMUsVfb3agJEv√©a2cQaQa2eia2h9a";
 
 var screenflash = 0;
 var screenshake = 0;
