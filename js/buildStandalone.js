@@ -26,7 +26,7 @@ function buildStandalone(sourceCode) {
 	}
 
 	var htmlString = standalone_HTML_String.concat("");
-	var title = "terrylib Game";
+	var title = "Zeedonk Game";
 
 	var homepage = "www.zeedonk.net";
 

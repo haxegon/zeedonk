@@ -3,6 +3,6 @@ function new(){
 }
 
 function update() {
-	Text.display(50, 55, "Hello, TerryLib!");
+	Text.display(50, 55, "Hello, Zeedonk!");
 }
 

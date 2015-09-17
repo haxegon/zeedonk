@@ -205,7 +205,7 @@ function levelEditorClick_Fn() {
 
 function shareClick() {
 	consolePrint("Sending code to github...",true)
-	var title = getTitle();//"Untitled Terrylib Script";
+	var title = getTitle();//"Untitled Zeedonk Script";
 //	compile();
 
 

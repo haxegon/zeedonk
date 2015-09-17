@@ -1,9 +1,9 @@
-.TerryLib-completion {
+.Zeedonk-completion {
   padding-left: 22px;
   position: relative;
   line-height: 1.5;
 }
-.TerryLib-completion:before {
+.Zeedonk-completion:before {
   position: absolute;
   top:0px;
   left: 0px;
@@ -19,37 +19,37 @@
   box-sizing: border-box;
 }
 
-.F-TerryLib-completion:before {
+.F-Zeedonk-completion:before {
   content: "F";
   background: #0a0;
 }
 
-.P-TerryLib-completion:before {
+.P-Zeedonk-completion:before {
   content: "P";
   background: #f55;
 }
 
-.M-TerryLib-completion:before {
+.M-Zeedonk-completion:before {
   content: "M";
   background: #55f;
 }
 
-.V-TerryLib-completion:before {
+.V-Zeedonk-completion:before {
   content: "v";
   background: #099;
 }
 
-.E-TerryLib-completion:before {
+.E-Zeedonk-completion:before {
   content: "E";
   background: #833;
 }
 
-.T-TerryLib-completion:before {
+.T-Zeedonk-completion:before {
   content: "T";
   background: #00f;
 }
 
-.C-TerryLib-completion:before {
+.C-Zeedonk-completion:before {
   content: "C";
   background: #fff;
   color: #000;
@@ -57,7 +57,7 @@
 
 
 
-.CodeMirror-TerryLib-tooltip {
+.CodeMirror-Zeedonk-tooltip {
   border: 1px solid silver;
   border-radius: 3px;
   color: #E6E1DC;
@@ -84,7 +84,7 @@
 }
 
 
-.CodeMirror-TerryLib-hint-doc {
+.CodeMirror-Zeedonk-hint-doc {
   max-width: 25em;
   margin-top: -3px;
 }

@@ -1,1 +1,1 @@
-haxelib run dox -i output.xml  --toplevel-package terrylib -theme simple -ex bitmapFont -ex util -ex "terrylib.Keystate" -ex "terrylib.util" -ex "terrylib.bitmapFont" -ex "terrylib.Load" -ex "terrylib.Core"
+haxelib run dox -i output.xml  --toplevel-package Zeedonk -theme simple -ex bitmapFont -ex util -ex "Zeedonk.Keystate" -ex "Zeedonk.util" -ex "Zeedonk.bitmapFont" -ex "Zeedonk.Load" -ex "Zeedonk.Core"

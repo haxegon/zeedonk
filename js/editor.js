@@ -27,7 +27,7 @@ if (fileToOpen!==null&&fileToOpen.length>0) {
 	}
 }
 
-var cls = "CodeMirror-TerryLib-";
+var cls = "CodeMirror-Zeedonk-";
 
 var editor = window.CodeMirror.fromTextArea(code, {
 //	viewportMargin: Infinity,
@@ -104,9 +104,9 @@ function renderHint(elt,data,cur){
 
 	h.appendChild(t);   
 
-	h.className += " " + "TerryLib-completion";
+	h.className += " " + "Zeedonk-completion";
 	if (tag!=null){
-		h.className += " " + tag+"-TerryLib-completion";
+		h.className += " " + tag+"-Zeedonk-completion";
 	}
 
 	elt.appendChild(h);//document.createTextNode(cur.displayText || getText(cur)));

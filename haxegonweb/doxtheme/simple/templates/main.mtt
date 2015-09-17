@@ -32,7 +32,7 @@
 	<nav class="navbar dark navbar-static-top" role="navigation">
 	  <div class="container">
 	   <div class="navbar-header">
-	    <a class="brand" style="text-shadow:none;" href="/">terrylib</a>
+	    <a class="brand" style="text-shadow:none;" href="/">Zeedonk</a>
 	    <span class="tagline">Documentation</span>			
 		<div class="pull-right">
 			<a href="http://haxe.org/download/" target="_blank">Tutorial</a> |

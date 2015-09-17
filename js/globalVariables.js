@@ -177,13 +177,13 @@ var level = initLevel;
 
 function getTitle(){
     if (metaData.title==""){
-        metaData.title="terrylib game";
+        metaData.title="Zeedonk game";
     }   
     return metaData.title;
 }
 
 var metaData = {
-    title:"terrylib game",
+    title:"Zeedonk game",
     homepage:"",
     bgCol:"#000000"
 }
