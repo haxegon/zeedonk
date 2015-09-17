@@ -9,23 +9,23 @@
 <div class="navBar"><a href="/editor.html"><h2>Zeedonk</h2></a> <p><a class="moduleButton" href="Tutorial.html">Getting Started</a> <a class="moduleButton" href="index.html">Library Reference</a> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a> <span class="moduleSelected" >Questions</span></div><p>
 <h1>Questions</h1>
 <dl class="faq">
-<di>
+
 <dt>
 	Who made this?
 </dt>
 <dd>
 	At the time of launch <a class="tutoriallink" href="http://www.terrycavanaghgames.com">Terry Cavanagh</a> and <A class="tutoriallink" href="http://www.increpare.com">Stephen Lavelle</a>.  A list of all post-launch contributions can be found <a class="tutoriallink" href="https://github.com/increpare/zeedonk/graphs/contributors">here</a>.
 </dd>
-</di>
-<di>
+
+
 <dt>
 	What programming language am I using here?
 </dt>
 <dd>
 	<A class="tutoriallink" href="https://github.com/HaxeFoundation/hscript">HScript</A>, an interpreted dialect of <a class="tutoriallink" href="http://haxe.org">Haxe</a>.
 </dd>
-</di>
-<di>
+
+
 <dt>
 	Can I host games on my own website?
 </dt>
@@ -41,42 +41,59 @@
 	</ol>
 	<p>
 </dd>
-</di>
-<di>
+
+<dt>
+	Is there any way to modify the contents of a shared game url?
+</dt>
+<dd>
+If you want to share a link to a puzzle you've made, but still be able to update it (in case there are bugs you want to fix, or new levels you want to add), here's how you do that:
+<p>
+<ol>
+<li>Click Share in the Zeedonk editor as you normally would.</li>
+<li>Copy the ID at the end of the shareable URL that Zeedonk just generated for you:<p>
+ http://www.zeedonk.net/play.html?p=6878337, <p>
+ and paste it at the end of this URL:<p>
+  https://gist.github.com/anonymous/6878337.</li>
+<li>If you're signed into <a class="tutoriallink" href="https://github.com">GitHub</a>, you should see a button labelled Fork. Press that. (If you don't have a GitHub account, you'll need to create one for the following to work).</li>
+<li>Now you have your own updatable PuzzleScript file! Take the ID at the end of the URL of your fork (it will be different to the one you pasted above) and perform Step 2 in reverse to find out your shareable and updatable game URL.</li>
+<li>Now anytime you want to update it, just go back to the fork you made, make some changes, and the same game URL should be updated too!</li>
+</ol>
+</dd>
+
 <dt>
 	Where's the source code?
 </dt>
 <dd>
 	<a class="tutoriallink" href="https://github.com/increpare/zeedonk">Here on github</a>
 </dd>
-</di>
-<di>
+
+
 <dt>
 	I found a bug!
 </dt>
 <dd>
 	Report it <a class="tutoriallink" href="https://github.com/increpare/zeedonk/issues">here</a>.  Bug reports are crazy useful! We'd be ever so thankful.
 </dd>
-</di>
-<di>
+
+
 <dt>
 	I have a suggestion!
 </dt>
 <dd>
 	Suggest it <a class="tutoriallink" href="https://github.com/increpare/zeedonk/issues">here</a>!
 </dd>
-</di>
-<di>
+
+
 <dt>
 	Can I sell/distribute games made with Zeedonk?
 </dt>
 <dd>
 	You can do whatever you want with Zeedonk games basically (it'd distributed under <a class="tutoriallink" href="https://opensource.org/licenses/MIT">the MIT license</a> - though your games don't need to be).
 </dd>
-</di>
 
 
-<di>
+
+
 <dt>
 	Zeedonk is too slow for my purposes. I want to turbo-charge it!
 </dt>
@@ -87,9 +104,9 @@ There are many optimization techniques possible - caching images being a common 
 	<p>
 	It's super cool, and called <a class="tutoriallink" href="Http://www.haxegon.com">HAXEGON</a>.
 </dd>
-</di>
 
-<di>
+
+
 <dt>
 	I am a Zeedonk master! What other tools are there?
 </dt>
@@ -104,7 +121,7 @@ There are many optimization techniques possible - caching images being a common 
 	<li><a class="tutoriallink" href="http://www.renpy.org">Ren'Py</a></li>
 	</ul>
 </dd>
-</di>
+
 
 </dl>
 
