@@ -26,11 +26,11 @@ typedef Gfxdrawparams = {
 }
 
 class Gfx {
-	public static var LEFT:Int = -20000;
-	public static var RIGHT:Int = -20001;
-	public static var TOP:Int = -20002;
-	public static var BOTTOM:Int = -20003;
-	public static var CENTER:Int = -20004;
+	public static var LEFT:Int = -10000;
+	public static var RIGHT:Int = -20000;
+	public static var TOP:Int = -10000;
+	public static var BOTTOM:Int = -20000;
+	public static var CENTER:Int = -15000;
 	
 	public static var screenwidth:Int;
 	public static var screenheight:Int;
@@ -363,34 +363,77 @@ class Gfx {
 	#end
 	
 	/** Helper function for image drawing functions. */
+	private static var t1:Float;
+	private static var t2:Float;
+	private static var t3:Float;
 	private static function imagealignx(x:Float):Float {
-		if (x == CENTER) return Gfx.screenwidthmid - Std.int(images[imagenum].width / 2);
-		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return images[imagenum].width;
+		if (x <= -5000) {
+			t1 = x - CENTER;
+			t2 = x - LEFT;
+			t3 = x - RIGHT;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Gfx.screenwidthmid - Std.int(images[imagenum].width / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + images[imagenum].width;
+			}
+		}
+		
 		return x;
 	}
 	
 	/** Helper function for image drawing functions. */
 	private static function imagealigny(y:Float):Float {
-		if (y == CENTER) return Gfx.screenheightmid - Std.int(images[imagenum].height / 2);
-		if (y == LEFT || y == TOP) return 0;
-		if (y == RIGHT || y == BOTTOM) return images[imagenum].height;
+		if (y <= -5000) {
+			t1 = y - CENTER;
+			t2 = y - TOP;
+			t3 = y - BOTTOM;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Gfx.screenheightmid - Std.int(images[imagenum].height / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + images[imagenum].height;
+			}
+		}
+		
 		return y;
 	}
 	
 	/** Helper function for image drawing functions. */
 	private static function imagealignonimagex(x:Float):Float {
-		if (x == CENTER) return Std.int(images[imagenum].width / 2);
-		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return images[imagenum].width;
+		if (x <= -5000) {
+			t1 = x - CENTER;
+			t2 = x - LEFT;
+			t3 = x - RIGHT;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Std.int(images[imagenum].width / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + images[imagenum].width;
+			}
+		}
+		
 		return x;
 	}
 	
 	/** Helper function for image drawing functions. */
 	private static function imagealignonimagey(y:Float):Float {
-		if (y == CENTER) return Std.int(images[imagenum].height / 2);
-		if (y == LEFT || y == TOP) return 0;
-		if (y == RIGHT || y == BOTTOM) return images[imagenum].height;
+		if (y <= -5000) {
+			t1 = y - CENTER;
+			t2 = y - TOP;
+			t3 = y - BOTTOM;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Std.int(images[imagenum].height / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + images[imagenum].height;
+			}
+		}
+		
 		return y;
 	}
 	

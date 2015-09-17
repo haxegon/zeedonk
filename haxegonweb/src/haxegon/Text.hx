@@ -188,64 +188,141 @@ class Text {
 		return 0;
 	}
 	
+	private static var t1:Float;
+	private static var t2:Float;
+	private static var t3:Float;
 	private static function cachealignx(x:Float, c:Int):Float {
-		if (x == CENTER) return Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * typeface[currentindex].size / 2));
-		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return Math.floor(Gfx.screenwidth - (cachedtext[c].width * typeface[currentindex].size));
+		if (x <= -5000) {
+			t1 = x - CENTER;
+			t2 = x - LEFT;
+			t3 = x - RIGHT;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * typeface[currentindex].size / 2));
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width * typeface[currentindex].size));
+			}
+		}
 		
 		return Math.floor(x);
 	}
 	
 	private static function cachealigny(y:Float, c:Int):Float {
-		if (y == CENTER) return Math.floor(Gfx.screenheightmid - cachedtext[c].height * typeface[currentindex].size / 2);
-		if (y == LEFT || y == TOP) return 0;
-		if (y == RIGHT || y == BOTTOM) return Math.floor(Gfx.screenheight - (cachedtext[c].height * typeface[currentindex].size));
+		if (y <= -5000) {
+			t1 = y - CENTER;
+			t2 = y - TOP;
+			t3 = y - BOTTOM;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height * typeface[currentindex].size / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height * typeface[currentindex].size));
+			}
+		}
 		
 		return Math.floor(y);
 	}
 	
 	
 	private static function alignx(x:Float):Float {
-		if (x == CENTER) return Math.floor(Gfx.screenwidthmid - (currentlen() / 2));
-		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return Math.floor(Gfx.screenwidth - currentlen());
+		if (x <= -5000) {
+			t1 = x - CENTER;
+			t2 = x - LEFT;
+			t3 = x - RIGHT;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(Gfx.screenwidthmid - (currentlen() / 2));
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + Math.floor(Gfx.screenwidth - currentlen());
+			}
+		}
 		
 		return Math.floor(x);
 	}
 	
 	private static function aligny(y:Float):Float {
-		if (y == CENTER) return Math.floor(Gfx.screenheightmid - currentheight() / 2);
-		if (y == LEFT || y == TOP) return 0;
-		if (y == RIGHT || y == BOTTOM) return Math.floor(Gfx.screenheight - currentheight());
+		if (y <= -5000) {
+			t1 = y - CENTER;
+			t2 = y - TOP;
+			t3 = y - BOTTOM;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(Gfx.screenheightmid - currentheight() / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + Math.floor(Gfx.screenheight - currentheight());
+			}
+		}
 		
 		return Math.floor(y);
 	}
 	
 	private static function cachealigntextx(c:Int, x:Float):Float {
-		if (x == CENTER) return Math.floor(cachedtext[c].width / 2);
-		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return cachedtext[c].width;
+		if (x <= -5000) {
+			t1 = x - CENTER;
+			t2 = x - LEFT;
+			t3 = x - RIGHT;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(cachedtext[c].width / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + cachedtext[c].width;
+			}
+		}
+		
 		return x;
 	}
 	
 	private static function cachealigntexty(c:Int, y:Float):Float {
-		if (y == CENTER) return Math.floor(cachedtext[c].height / 2);
-		if (y == TOP || y == LEFT) return 0;
-		if (y == BOTTOM || y == RIGHT) return cachedtext[c].height;
+		if (y <= -5000) {
+			t1 = y - CENTER;
+			t2 = y - TOP;
+			t3 = y - BOTTOM;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(cachedtext[c].height / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + cachedtext[c].height;
+			}
+		}
 		return y;
 	}
 	
 	private static function aligntextx(t:String, x:Float):Float {
-		if (x == CENTER) return Math.floor(len(t) / 2);
-		if (x == LEFT || x == TOP) return 0;
-		if (x == RIGHT || x == BOTTOM) return len(t);
+		if (x <= -5000) {
+			t1 = x - CENTER;
+			t2 = x - LEFT;
+			t3 = x - RIGHT;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(len(t) / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + len(t);
+			}
+		}
+		
 		return x;
 	}
 	
 	private static function aligntexty(y:Float):Float {
-		if (y == CENTER) return Math.floor(height() / 2);
-		if (y == TOP || y == LEFT) return 0;
-		if (y == BOTTOM || y == RIGHT) return height();
+		if (y <= -5000) {
+			t1 = y - CENTER;
+			t2 = y - TOP;
+			t3 = y - BOTTOM;
+			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
+				return t1 + Math.floor(height() / 2);
+			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
+				return t2;
+			}else {
+				return t3 + height();
+			}
+		}
 		return y;
 	}
 	
@@ -523,11 +600,11 @@ class Text {
 	
 	public static var drawto:BitmapData;
 	
-	public static var LEFT:Int = -20000;
-	public static var RIGHT:Int = -20001;
-	public static var TOP:Int = -20002;
-	public static var BOTTOM:Int = -20003;
-	public static var CENTER:Int = -20004;
+	public static var LEFT:Int = -10000;
+	public static var RIGHT:Int = -20000;
+	public static var TOP:Int = -10000;
+	public static var BOTTOM:Int = -20000;
+	public static var CENTER:Int = -15000;
 	
 	private static var temprotate:Float;
 	private static var tempxscale:Float;
