@@ -18,6 +18,16 @@ body {
     word-spacing: 10px;
 }
 
+dt {
+    background-color: #eee;
+    display: inline-block;
+    border-radius: 5px;
+    padding:5px;
+}
+dd {
+    margin-top:10px;
+    margin-bottom:10px;
+}
 pre {
 	margin-top: 0em;
 	margin-bottom: 0em;

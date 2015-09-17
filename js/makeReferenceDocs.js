@@ -80,7 +80,7 @@ function genReferencePage(moduleName){
 	"</head>"+
 	"<body>"+
 	'<div class="navBar">'+
-	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><a class="moduleButton" href="Tutorial.html">Getting Started</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
+	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><a class="moduleButton" href="Tutorial.html">Getting Started</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a> <a class="moduleButton" href="Questions.html">Questions</a>'+
 	"</div><p>"+
 	"<h1>Library Reference</h1>";
 
@@ -223,7 +223,7 @@ function genTutorialPage(){
 	"</head>"+
 	"<body>"+
 	'<div class="navBar">'+
-	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><span class="moduleSelected" href="Tutorial.html">Getting Started</span> <a href="index.html" class="moduleButton">Library Reference</a> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
+	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><span class="moduleSelected" href="Tutorial.html">Getting Started</span> <a href="index.html" class="moduleButton">Library Reference</a> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a> <a class="moduleButton" href="Questions.html">Questions</a>'+
 	"</div><p>"+
 	'<div class="tutorialBody">'+
 	"<h1>Getting Started</h1>";
