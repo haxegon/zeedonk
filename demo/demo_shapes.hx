@@ -53,7 +53,7 @@ function update() {
   }
     
   Gfx.fillbox(0,Gfx.screenheight-10,Gfx.screenwidth,10,Col.BLACK);
-  Text.display(Gfx.screenwidth-2, Gfx.screenheight - Text.height(), "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE, {align: Text.RIGHT});
+  Text.display(Gfx.screenwidth-2, Gfx.screenheight - Text.height()-3, "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE, {align: Text.RIGHT});
 }
 
 function drawtriangles(effectnum) {

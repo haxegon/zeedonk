@@ -309,7 +309,7 @@ function cachegraphics() {
         tcol = Gfx.rgb(240, 240, 0);
         Gfx.drawhexagon(8, 8, 6, j * 2, Gfx.rgb(120, 120, 0));
         Gfx.drawhexagon(8, 8, 7, j * 2, tcol);
-        Text.display(7, 2, "P", tcol);
+        Text.display(7, 6, "P", tcol);
       }else if (k == 1) {
         powerup_stopped_.push("powerup_stopped_" + j);
         Gfx.createimage(powerup_stopped_[j], 16, 16);
@@ -317,7 +317,7 @@ function cachegraphics() {
         tcol = stopcol;
         Gfx.drawhexagon(8, 8, 6, j * 2, 0x222222);
         Gfx.drawhexagon(8, 8, 7, j * 2, tcol);
-        Text.display(7, 2, "P", tcol);
+        Text.display(7, 6, "P", tcol);
       }
     }
   }
@@ -601,7 +601,7 @@ function create(_x, _y, t) {
   if(t == "player"){
     setcollisionrect(i, -2, -1, 3, 2);
   }else if(t == "playerbullet"){
-    setcollisionrect(i, -2, -3, 4, 6);
+    setcollisionrect(i, -2, -4, 4, 8);
     entity[i].health = 1;
   }else if(t == "explosion"){
     entity[i].particle = bulletsize;
@@ -614,7 +614,7 @@ function create(_x, _y, t) {
     setcollisionrect(i, -6, -6, 12, 12);
     powerupcount++;
   }else if(t == "powershot"){
-    setcollisionrect(i, -2, -5, 4, 10);
+    setcollisionrect(i, -2, -6, 4, 12);
     entity[i].health = 3;
   }else if(t == "spaceteeth"){
     entity[i].rule = "enemy";
@@ -1323,28 +1323,28 @@ function gameupdate() {
   Text.setfont(Font.PIXEL, 2);
   if (deathsequence == 0) score = Convert.toint(gametime / 30);
   if(score<10){
-    Text.display(Gfx.screenwidth-10, Gfx.screenheight - 20, Convert.tostring(score));
+    Text.display(Gfx.screenwidth-10, Gfx.screenheight - 12, Convert.tostring(score));
     Text.setfont(Font.PIXEL, 1);
     if (score >= highscore && highscore > 0) {
-      Text.display(Gfx.screenwidth - 54, Gfx.screenheight - 11, "NEW RECORD", Game.time%16>8?Col.WHITE:Col.GRAY);
+      Text.display(Gfx.screenwidth - 54, Gfx.screenheight - 7, "NEW RECORD", Game.time%16>8?Col.WHITE:Col.GRAY);
     }else{
-      Text.display(Gfx.screenwidth - 30, Gfx.screenheight - 11, "TIME", Col.WHITE);
+      Text.display(Gfx.screenwidth - 30, Gfx.screenheight - 7, "TIME", Col.WHITE);
     }
   }else if (score < 100) {
-    Text.display(Gfx.screenwidth-18, Gfx.screenheight - 20, Convert.tostring(score));
+    Text.display(Gfx.screenwidth-18, Gfx.screenheight - 12, Convert.tostring(score));
     Text.setfont(Font.PIXEL, 1);
     if (score >= highscore && highscore > 0) {
-      Text.display(Gfx.screenwidth - 62, Gfx.screenheight - 11, "NEW RECORD", Game.time%16>8?Col.WHITE:Col.GRAY);
+      Text.display(Gfx.screenwidth - 62, Gfx.screenheight - 7, "NEW RECORD", Game.time%16>8?Col.WHITE:Col.GRAY);
     }else{
-      Text.display(Gfx.screenwidth - 38, Gfx.screenheight - 11, "TIME", Col.WHITE);
+      Text.display(Gfx.screenwidth - 38, Gfx.screenheight - 7, "TIME", Col.WHITE);
     }
   }else {
-    Text.display(Gfx.screenwidth-26, Gfx.screenheight - 20, Convert.tostring(score));
+    Text.display(Gfx.screenwidth-26, Gfx.screenheight - 12, Convert.tostring(score));
     Text.setfont(Font.PIXEL, 1);
     if (score >= highscore && highscore > 0) {
-      Text.display(Gfx.screenwidth - 70, Gfx.screenheight - 11, "NEW RECORD", Game.time%16>8?Col.WHITE:Col.GRAY);
+      Text.display(Gfx.screenwidth - 70, Gfx.screenheight - 7, "NEW RECORD", Game.time%16>8?Col.WHITE:Col.GRAY);
     }else{
-      Text.display(Gfx.screenwidth - 46, Gfx.screenheight - 11, "TIME", Col.WHITE);
+      Text.display(Gfx.screenwidth - 46, Gfx.screenheight - 7, "TIME", Col.WHITE);
     }
   }
 
@@ -1378,21 +1378,21 @@ function titleupdate(){
 
 
   Gfx.fillbox(0, Gfx.screenheight - 9, Gfx.screenwidth, 9, 0x333333);
-  Text.display(10, Gfx.screenheight - 11, "PRESS SPACE TO START", Game.time%16>8?Col.WHITE:Col.GRAY);
+  Text.display(10, Gfx.screenheight - 7, "PRESS SPACE TO START", Game.time%16>8?Col.WHITE:Col.GRAY);
   if (highscore > 0) {
     Text.setfont(Font.PIXEL, 2);
     if(highscore<10){
-      Text.display(Gfx.screenwidth - 10, Gfx.screenheight - 20, Convert.tostring(highscore));
+      Text.display(Gfx.screenwidth - 10, Gfx.screenheight - 12, Convert.tostring(highscore));
       Text.setfont(Font.PIXEL, 1);
-      Text.display(Gfx.screenwidth - 54, Gfx.screenheight - 11, "HIGH SCORE", Col.WHITE);
+      Text.display(Gfx.screenwidth - 54, Gfx.screenheight - 7, "HIGH SCORE", Col.WHITE);
     }else if (highscore < 100) {
-      Text.display(Gfx.screenwidth - 18, Gfx.screenheight - 20, Convert.tostring(highscore));
+      Text.display(Gfx.screenwidth - 18, Gfx.screenheight - 12, Convert.tostring(highscore));
       Text.setfont(Font.PIXEL, 1);
-      Text.display(Gfx.screenwidth - 62, Gfx.screenheight - 11, "HIGH SCORE", Col.WHITE);
+      Text.display(Gfx.screenwidth - 62, Gfx.screenheight - 7, "HIGH SCORE", Col.WHITE);
     }else {
-      Text.display(Gfx.screenwidth - 26, Gfx.screenheight - 20, Convert.tostring(highscore));
+      Text.display(Gfx.screenwidth - 26, Gfx.screenheight - 12, Convert.tostring(highscore));
       Text.setfont(Font.PIXEL, 1);
-      Text.display(Gfx.screenwidth - 70, Gfx.screenheight - 11, "HIGH SCORE", Col.WHITE);
+      Text.display(Gfx.screenwidth - 70, Gfx.screenheight - 7, "HIGH SCORE", Col.WHITE);
     }
   }
 

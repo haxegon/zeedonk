@@ -12,10 +12,6 @@ Game.title="Simple GUI System";
 
 var examplenumber = 100; //Just used as an example of modifying a variable
 
-//TO DO: Fix font offset bug
-var fontxoff = 0;
-var fontyoff = -3;
-
 // Stuff you can edit
 var gui_buttonwidth = 60;
 var gui_buttonheight = 7;
@@ -169,7 +165,7 @@ function gui_draw(){
         Gfx.fillbox(gui_button[i].x, gui_button[i].y, gui_button[i].width, gui_button[i].height, gui_button[i].col);
       }else if(gui_button[i].type == "text"){
         if (gui_button[i].text != "") {
-          Text.display(gui_button[i].x + fontxoff, gui_button[i].y + fontyoff, gui_button[i].text, gui_button[i].col, {align:gui_button[i].align });
+          Text.display(gui_button[i].x, gui_button[i].y + 1, gui_button[i].text, gui_button[i].col, {align:gui_button[i].align });
         }
       }else if(gui_button[i].type == "imagebutton"){     
         gui_button[i].mouseover = false; 
@@ -194,7 +190,7 @@ function gui_draw(){
           Gfx.fillbox(gui_button[i].x, gui_button[i].y, gui_button[i].width, gui_button[i].height, gui_buttoncolours.normal);
         }
         if (gui_button[i].text != "") {
-          Text.display(gui_button[i].x + fontxoff + ((gui_button[i].width-Text.len(gui_button[i].text))/2), gui_button[i].y + fontyoff, gui_button[i].text, gui_buttoncolours.text);
+          Text.display(gui_button[i].x + ((gui_button[i].width-Text.len(gui_button[i].text))/2), gui_button[i].y + 1, gui_button[i].text, gui_buttoncolours.text);
         }
 
         if (gui_button[i].mouseover) {

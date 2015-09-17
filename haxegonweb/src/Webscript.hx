@@ -170,23 +170,23 @@ class Webscript {
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
 			
-			
-			//Gfx.clearscreen();
-			//Gfx.showfps = true;
+			//Let's do some testing! Delete me in final version
 			/*
-			Gfx.drawhexagon(50,50,51,1,Col.WHITE);
-			Gfx.drawhexagon(50,50,51,1,Col.WHITE);
-			*/
+			Gfx.clearscreen(Gfx.rgb(128, 128, 128));
+			Gfx.fillbox(1, 1, Gfx.screenwidth - 2, Gfx.screenheight - 2, Gfx.rgb(16, 16, 16));
+			//Gfx.showfps = true;
 			
-			//for (i in 0 ... 30) {
-				//Gfx.drawline(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Gfx.hsl(Random.int(0,360),0.5,0.5));
-				//Gfx.drawhexagon(Random.int(0,Gfx.screenwidth), Random.int(0,Gfx.screenheight), Random.int(10,50), Random.int(0,360), Gfx.hsl(Random.int(0,360),0.5,0.5));
-				//Gfx.drawtri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
-				//Gfx.drawcircle(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(10, 50), Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
-			//}
-			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, (counter / 50) % 120, Col.WHITE);
-			//Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, ((counter%(150)) * 55)/150, Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
-			//Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, 55, Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
+			Text.setfont(Webfont.DOS, 1);
+			
+			var t:String = "";
+			for(j in 0 ... 10){
+				t = "";
+				for (i in 0 ... 22) {
+					t += String.fromCharCode(32 + i + (j*22));
+				}
+				Text.display(1, (j * 12) + 1, t);
+			}
+			*/
 		}
 		
 		if (Gfx.showfps) {

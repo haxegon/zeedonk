@@ -280,6 +280,8 @@ class Text {
 				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].tf_bitmap.textHeight) * numlines, true, 0));
 			  
 				drawto = cachedtext[cacheindex];
+				//For testing
+				//cachedtext[cacheindex].fillRect(cachedtext[cacheindex].rect, (0xFF << 24) + Col.RED);
 				cache_bitmap_text(text, col);
 				drawto = Gfx.drawto;
 			}

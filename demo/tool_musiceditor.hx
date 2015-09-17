@@ -1,7 +1,6 @@
 
 var charWidth =3;
 var charHeight =5;
-var charOffset = -4;
 
 var mainButton = 0x0000ff;
 var mainHighlight = 0x5555ff;
@@ -280,7 +279,7 @@ function drawButton(text,x,y,textcolor,color,colorhover) {
     color=colorhover;
   }
   Gfx.fillbox(x,y,width,height,color);
-  Text.display(x+1, y+1+charOffset, text, textcolor);
+  Text.display(x+1, y+1, text, textcolor);
   return click;
 }
 
@@ -564,7 +563,7 @@ function update() {
   var cellCount=12;  
   var colLength = Math.min(dat.notes.length+1,12);
   Gfx.fillbox(1,9,13,11+colLength*8,panelCol);
-  Text.display(2,10+charOffset,"SEQ",darkText);
+  Text.display(2,10,"SEQ",darkText);
 
   for (i in 0 ... dat.notes.length) {
     var tCol=darkText;
@@ -593,7 +592,7 @@ function update() {
     if (i<10){
       s="0"+s;
     }
-    Text.display(4,20 + i * 8+charOffset+1,s ,tCol);
+    Text.display(4,20 + i * 8+1,s ,tCol);
   }
   if (dat.notes.length<12){
     var i =dat.notes.length;
@@ -605,13 +604,13 @@ function update() {
     if (collide==2){
       PushNewSequence();
     }
-    Text.display(6,20 + i * 8+charOffset+1,"+" ,col);   
+    Text.display(6,20 + i * 8+1,"+" ,col);   
   }
 
   var xOffset=41;
   
   
-  Text.display(10,2+charOffset,"~~tinybox~~",Col.DARKBROWN);
+  Text.display(10,2,"~~tinybox~~",Col.DARKBROWN);
     
   //bpm box 
   var collide = collideBox(xOffset+46,1,26,7);
@@ -624,9 +623,9 @@ function update() {
   var col= collide==1?mainHighlighter:mainHighlight;
   Gfx.fillbox(xOffset+46,1,13,7,panelCol);
   Gfx.fillbox(xOffset+59,1,13,7,col);
-  Text.display(xOffset+47,2+charOffset,"bpm",textCol);
+  Text.display(xOffset+47,2,"bpm",textCol);
   var bpmString=Convert.tostring(Convert.toint(450/dat.cellDuration));
-  Text.display(xOffset+60,2+charOffset,bpmString,textCol);
+  Text.display(xOffset+60,2,bpmString,textCol);
 
   //notes box
   collide = collideBox(xOffset+73,1,30,7);
@@ -642,17 +641,17 @@ function update() {
   var col= collide==1?mainHighlighter:mainHighlight;
   Gfx.fillbox(xOffset+73,1,21,7,panelCol);
   Gfx.fillbox(xOffset+94,1,9,7,col);
-  Text.display(xOffset+74,2+charOffset,"notes",textCol);
+  Text.display(xOffset+74,2,"notes",textCol);
   var noteStr = Convert.tostring(dat.patternLength);
   if (dat.patternLength<10){
     noteStr="0"+noteStr;
   }
-  Text.display(xOffset+95,2+charOffset,noteStr,textCol);
+  Text.display(xOffset+95,2,noteStr,textCol);
   
   //instruments box
   Gfx.fillbox(145,2,45,7,panelCol);
   Gfx.fillbox(15,9,175,9,panelCol);
-  Text.display(146,3+charOffset,"instruments",textCol);
+  Text.display(146,3,"instruments",textCol);
 
   //draw sequencer
   Gfx.fillbox(16+selectedInst*35-1,9,35,9,0xffffff);
@@ -680,7 +679,7 @@ for (k in 0 ... 5){
     Gfx.fillbox(16+k*35,10,33,7,instCols[k][0]);
   }
   var n=dat.instruments[k];
-  Text.display(17+k*35,11+charOffset,Convert.tostring(n),instCols[k][1]);
+  Text.display(17+k*35,11,Convert.tostring(n),instCols[k][1]);
   if (c>0){
     var n = getNum();
     if (n>=0){
@@ -759,12 +758,12 @@ for (k in 0 ... 5){
   var cNotePos = ((bottomNote+11)%12);
 //  trace((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
   if (octaveDisplay>9){
-    Text.display(gx-7,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));
+    Text.display(gx-7,gy+cellHeight*(cNotePos)+2,Convert.tostring(octaveDisplay));
   } else {
-    Text.display(gx-3,gy+cellHeight*(cNotePos)+2+charOffset,Convert.tostring(octaveDisplay));    
+    Text.display(gx-3,gy+cellHeight*(cNotePos)+2,Convert.tostring(octaveDisplay));    
   }
         for (i in 0...12){
-          Text.display(gx-7,gy+cellHeight*(i)+2+charOffset,notenames[(bottomNote+11-i)%12],Col.GREY);
+          Text.display(gx-7,gy+cellHeight*(i)+2,notenames[(bottomNote+11-i)%12],Col.GREY);
         }
   Gfx.fillbox(gx-7,gy+cellHeight*(cNotePos+1),xCells*cellWidth+8,1,Col.GREY);
   

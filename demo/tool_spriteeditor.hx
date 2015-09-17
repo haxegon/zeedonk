@@ -24,9 +24,6 @@ var arnehue = [0, 0, 0, 355, 345, 34, 30, 28, 51, 192, 97, 75, 211, 200, 205, 19
 var arnesaturation = [0, 0, 0, 0.67, 0.65, 0.26, 0.66, 0.82, 0.9, 0.25, 0.68, 0.68, 0.3, 1, 0.88, 0.66, 1, 0];
 var arnelightness = [0, 0.62, 1, 0.45, 0.66, 0.23, 0.39, 0.56, 0.69, 0.25, 0.32, 0.48, 0.15, 0.26, 0.57, 0.82, 0.5, 0];
 
-var fontxoff = 0;
-var fontyoff = -3;
-
 var imgcanvas;
 var canvasx;
 var canvasy;
@@ -593,7 +590,7 @@ function drawgui() {
         Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, buttoncol);
       }
       if (button[i].text != "") {
-        Text.display(button[i].x + fontxoff + ((button[i].width-Text.len(button[i].text))/2), button[i].y + fontyoff, button[i].text, Col.WHITE);
+        Text.display(button[i].x + ((button[i].width-Text.len(button[i].text))/2), button[i].y + 1, button[i].text, Col.WHITE);
       }
 
       if (button[i].mouseover) {
@@ -814,7 +811,7 @@ function update() {
       }
     }
 
-    Text.display(169 + fontxoff, 56 + fontyoff, "x");
+    Text.display(169, 57, "x");
   }
   drawgui();
 }
