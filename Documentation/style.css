@@ -118,6 +118,7 @@ table#header td {
 }
 
 .moduleButton {
+    display: inline-block;;
     background-color: white;
     margin-left: 5px;
     margin-right: 5px;
@@ -132,6 +133,7 @@ table#header td {
     background-color: #eee;
 }
 .moduleSelected {
+    display: inline-block;;
     margin-left: 5px;
     margin-right: 5px;
     padding:3px 3px;
@@ -159,4 +161,31 @@ table#header td {
     padding:5px;
     display: inline-block;
     border-radius: 5px;
+}
+
+
+@keyframes donkRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bottomDonk{
+    animation-name: donkRotate;
+    animation-duration: 2s;
+    animation-timing-function:linear;
+    animation-iteration-count: infinite;
+    animation-delay:0;
+    animation-play-state: paused;  
+}
+.bottomDonk:hover{
+    animation-play-state: running;  
+}
+
+.tutoriallink {
+  color: blue;
+  text-decoration: underline;;
 }

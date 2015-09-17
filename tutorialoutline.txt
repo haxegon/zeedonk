@@ -1,0 +1,95 @@
+A simple program:
+
+-
+
+trace("hello world")
+
+-
+
+While loops -
+
+-
+
+var x = 5;
+while (x<10) {
+	x++;
+	trace(x)
+}
+
+-
+
+
+Do loops -
+
+-
+
+var x = 5;
+do {
+	x++;
+	trace(x)
+} while (x<10)
+
+-
+
+For loops
+
+-
+
+for (i in 0...100)
+	trace((100-i)+bottles of beer on the wall)
+
+-
+
+For loops can only go up. sorry.
+
+<a href="https://en.wikipedia.org/wiki/Fibonacci_number">fibonacci number</a> printer
+
+-
+
+function f(n) {
+    if (n<2) return 1;
+    else return f(n-1)+f(n-2);
+}
+
+/* if you make the value at all big,  */
+/* your browser will explode.         */
+/* So don't do that!                  */
+trace(f(5))
+
+-
+
+If you make an update function, it will be call every frame. That's how you draw things
+
+-
+
+function update(){
+  Gfx.fillbox(10,10,20,20,Col.RED);
+}
+
+-
+
+At any time, you can press ctrl/cmd+space to bring up autocomplete.  Here's how to do input:
+
+-
+
+function update()	{
+  if (Input.justpressed(Key.UP)){
+    trace("pressed up, innit");
+  }
+}
+
+-
+
+Here's how you display text on-screen:
+
+-
+
+function update()	{
+    trace("Hello, sailor!");
+}
+
+-
+
+For more, browse the examples via the examples dropdown in the <a class="tutoriallink" href="editor.html">editor</a>, or browse the many examples in the <a class="tutoriallink" href="index.html">library reference</a>.
+
+Good luck!

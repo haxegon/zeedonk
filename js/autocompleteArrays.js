@@ -47,6 +47,8 @@ var haxeLibraryArray = [
 ["var "],
 ["while"],
 ["return "],
+//putting a space after the brackets below stops autocomplete from inserting a semicolon
+["update","() ","F","This function will be called every frame by the engine if you define it."]
 ];
 
 var haxeHintArray = [

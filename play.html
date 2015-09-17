@@ -318,6 +318,12 @@ function loadDefault(){
 }
 
 function getData(){
+  var fileToOpen=getParameterByName("demo");
+  if (fileToOpen!==null&&fileToOpen.length>0) {
+    tryLoadFile("demo/"+fileToOpen);
+    return;
+  }
+
 	var id = getParameterByName("p").replace(/[\\\/]/,"");
 	if (id===null||id.length===0) {
     loadDefault()

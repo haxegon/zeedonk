@@ -71,6 +71,7 @@ function genReferencePage(moduleName){
 	"<head>"+
 	' <meta charset="utf-8">'+
 	"	<title>Zeedonk Reference " +moduleName+"</title>"+
+	'<link rel="shortcut icon" href="../images/icon256.png" />'+
 	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
 	'<link rel="stylesheet" type="text/css" href="style.css">'+
 	'<link rel="stylesheet" type="text/css" href="../css/codemirror.css">'+
@@ -79,7 +80,7 @@ function genReferencePage(moduleName){
 	"</head>"+
 	"<body>"+
 	'<div class="navBar">'+
-	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><a class="moduleButton" href="Tutorials.html">Tutorials</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
+	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><a class="moduleButton" href="Tutorial.html">Getting Started</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
 	"</div><p>"+
 	"<h1>Library Reference</h1>";
 
@@ -90,7 +91,7 @@ function genReferencePage(moduleName){
 	var tableEnd = 	"</tbody>"+
 	"</table>";
 
-	var pageFooter = '<br><br><br><center><img src="../images/bigzeedonk.png"><br><br><br></center></body>'+
+	var pageFooter = '<br><br><br><center><img class="bottomDonk" src="../images/bigzeedonk.png"><br><br><br></center></body>'+
 	"</html>";
 
 	var pageContents = "";
@@ -181,7 +182,81 @@ function genReferencePage(moduleName){
 	}
 }
 
+
+function splitTutorialTxt(s){
+	var lines = s.split("\n");
+	var result=[""];
+	var state=0;//0=text,1=code
+	for (var i=0;i<lines.length;i++){
+		var l = lines[i];
+		if (l.length>0&&l[0]=="-"){
+			result.push("");
+			state=1-state;
+			continue;
+		}
+		if (result[result.length-1].length>0){
+			if (state==0){
+				result[result.length-1]+="<br>";			
+			} else {
+				result[result.length-1]+="\n";			
+			}
+		}
+		result[result.length-1]+=l;
+	}
+	return result;
+}
+
+function genTutorialPage(){
+
+
+	var pageHeader = "<!DOCTYPE html>"+
+	"<html>"+
+	"<head>"+
+	' <meta charset="utf-8">'+
+	"	<title>Zeedonk Reference " +moduleName+"</title>"+
+	'<link rel="shortcut icon" href="../images/icon256.png" />'+
+	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
+	'<link rel="stylesheet" type="text/css" href="style.css">'+
+	'<link rel="stylesheet" type="text/css" href="../css/codemirror.css">'+
+	'<script src="../js/codemirror/codemirror.js"></script>'+
+	'<script src="../js/codemirror/haxe.js"></script>'+
+	"</head>"+
+	"<body>"+
+	'<div class="navBar">'+
+	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><span class="moduleSelected" href="Tutorial.html">Getting Started</span> <a href="index.html" class="moduleButton">Library Reference</a> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
+	"</div><p>"+
+	'<div class="tutorialBody">'+
+	"<h1>Getting Started</h1>";
+
+	var pageFooter = '<br><br><br><center><img class="bottomDonk" src="../images/bigzeedonk.png"><br><br><br></center></div></body>'+
+	"</html>";
+
+
+	var contents="";
+
+	tutorialtemplate = fs.readFileSync("../tutorialoutline.txt")+'';
+	var doc = splitTutorialTxt(tutorialtemplate);	
+	for (var i=0;i<doc.length;i++){
+		doc[i]=doc[i].trim();
+		contents+="<p>";
+		if (i%2==0){
+			contents+=doc[i];
+		} else {
+			var formatted = highlight(doc[i]);
+			var fileName="tutorial_"+Math.floor(i/2);
+			fs.writeFileSync("../demo/tutorial/"+fileName+".hx",doc[i]);
+			docString="<div class=\"codeInsert\">"+formatted+"<a class=\"editLink\" href=\"../editor.html?demo=tutorial/"+fileName+"\">✎</a></div>";
+			contents+=docString;			
+		}
+	}
+
+	var page = pageHeader+contents+pageFooter;
+	fs.writeFileSync("../Documentation/Tutorial.html",page);
+
+}
+
 for (var i=0;i<modules.length;i++){
 	genReferencePage(modules[i]);	
 }
 genReferencePage("");
+genTutorialPage();

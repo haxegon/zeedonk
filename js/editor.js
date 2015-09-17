@@ -4,7 +4,7 @@ var _editorCleanState = "";
 
 var fileToOpen=getParameterByName("demo");
 if (fileToOpen!==null&&fileToOpen.length>0) {
-	tryLoadFile(fileToOpen);
+	tryLoadFile("demo/"+fileToOpen);
 	code.value = "loading...";
 } else {
 	var gistToLoad=getParameterByName("hack");
@@ -484,14 +484,21 @@ function tryLoadGist(id) {
 
 function tryLoadFile(fileName) {
 	var fileOpenClient = new XMLHttpRequest();
-	fileOpenClient.open('GET', 'demo/'+fileName+".hx");
+	var contentType = "text/plain	; charset=utf-8";
+	fileOpenClient.open('GET', fileName+".hx");
+	fileOpenClient.setRequestHeader('Content-type', contentType);
+
 	fileOpenClient.onreadystatechange = function() {
 		
   		if(fileOpenClient.readyState!=4) {
   			return;
   		}
-  		
-		editor.setValue(fileOpenClient.responseText);
+  		var code = fileOpenClient.responseText;
+		editor.setValue(code);
+
+		terryRun(code);
+		gameScript=code;
+
 		setEditorClean();
 		unfocus();
 	}
@@ -499,7 +506,7 @@ function tryLoadFile(fileName) {
 }
 
 function dropdownChange() {
-	tryLoadFile(this.value);
+	tryLoadFile("demo/"+this.value);
 	this.selectedIndex=0;
 }
 
