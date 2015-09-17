@@ -121,6 +121,7 @@ var haxeHintArray = [
 ["Font.RETROFUTURE","","E"],
 ["Font.ROMAN","","E"],
 ["Font.SPECIAL","","E"],
+["Font.TINY","","E"],
 ["Font.YOSTER","","E"],
 ["Text.setfont","(fontname, size)","F"],
 ["Text.changesize","(fontsize)","F"],
