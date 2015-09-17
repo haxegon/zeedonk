@@ -6,7 +6,7 @@ trace("hello world")
 
 -
 
-While loops -
+While loops:
 
 -
 
@@ -19,7 +19,7 @@ while (x<10) {
 -
 
 
-Do loops -
+Do loops:
 
 -
 
@@ -31,7 +31,7 @@ do {
 
 -
 
-For loops
+For loops:
 
 -
 
@@ -58,7 +58,7 @@ trace(f(5))
 
 -
 
-If you make an update function, it will be call every frame. That's how you draw things
+If you make an update function, it will be call every frame. That's how you draw things.
 
 -
 
