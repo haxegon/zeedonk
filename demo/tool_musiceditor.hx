@@ -491,7 +491,7 @@ function update() {
   if (Input.justpressed(Key.V)||Input.justpressed(Key.P)){
     DoPaste();
   }
-  if (Input.justpressed(Key.SPACE)){
+  if (Input.justpressed(Key.SPACE)||Input.justpressed(Key.ENTER)){
     if (playing){
       playing=false;
     } else {
