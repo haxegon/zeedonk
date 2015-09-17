@@ -20,9 +20,9 @@ var playerpowerup = 0;
 var deathsequence = 0;
 var gamestate = "title";
 var titlecountdown = 0;
-var playerdestroyed ;
+var playerdestroyed;
 
-var playermoving ;
+var playermoving;
 var timedelay = 3;
 var timejuice = 50;
 var maxtimejuice = 50;
@@ -34,21 +34,39 @@ var gamespeed = 1;
 var newround = 0;
 var powerupcount = 0;
 var stopcol = Col.GRAY;
-var highscore ;
-var score ;
+var highscore;
+var score;
 
-var bulletvx ;
-var bulletvy ;
-var bulletsize ;
+var bulletvx;
+var bulletvy;
+var bulletsize;
 
-var temp ;
-var tcol ;
+var temp;
+var tcol;
 
 //Starfield stuff
-var starx ;
-var stary ;
-var starspeed ;
-var numstars ;
+var starx;
+var stary;
+var starspeed;
+var numstars;
+
+var powerup_ = [];
+var powerup_stopped_ = [];
+var badguy_1_=[];
+var badguy_1_stopped_=[];
+var badguy_3_=[];
+var badguy_3_stopped_=[];
+var badguy_3_hurt_=[];
+var badguy_4_=[];
+var badguy_4_stopped_=[];
+var badguy_4_hurt_=[];
+var badguy_5_white_=[];
+var badguy_5_yellow_=[];
+var badguy_5_red_=[];
+var badguy_5_gray_=[];
+var badguy_6_=[];
+var badguy_6_stopped_=[];
+var badguy_6_hurt_=[];
 
 function effect(t){
   if(t == "shake"){
@@ -70,14 +88,14 @@ function initstars(){
     starspeed.push(Random.int(3,6));
     starx.push(Random.float(0, Gfx.screenwidth * 2));
     stary.push(Random.int(0, Gfx.screenheight-10));
-  } 
+  }
 }
 
 
 function updatestars(speed){
   for(i in 0 ... numstars){
     starx[i] -= starspeed[i] * speed;
-    if(starx[i] < -10){    
+    if(starx[i] < -10){
       starspeed[i] = Random.int(3,6);
       starx[i] = Gfx.screenwidth;
       stary[i] = Random.int(0, Gfx.screenheight-10);
@@ -85,7 +103,7 @@ function updatestars(speed){
   }
 }
 
-var starcol ;
+var starcol;
 function drawstars(){
   for(i in 0 ... numstars){
     starcol = 255 - (6 - starspeed[i]) * 60;
@@ -101,16 +119,16 @@ function drawstillstars(){
 }
 
 //Entity functions
-var entity ;
-var numentity ;
+var entity;
+var numentity;
 
-var player ;
+var player;
 
 function getfreeentityindex(){
   var i = 0;
   var z = -1;
   if(numentity == 0) {
-    z = 0; 
+    z = 0;
   }else {
     while (i < numentity) {
       if (!entity[i].active) {
@@ -125,7 +143,7 @@ function getfreeentityindex(){
   if(z >= numentity){
     if(z > entity.length - 1){
       entity.push({});
-    }  
+    }
     numentity++;
   }
 
@@ -151,13 +169,13 @@ function checkcollision(a, b){
   if(entity[a].active && entity[b].active){
     if(Gfx.fastAbs(Convert.toint(entity[a].x - entity[b].x)) < 10){
       if(Gfx.fastAbs(Convert.toint(entity[a].y - entity[b].y)) < 10){
-        if(checkcollisionpoint(entity[a].x + entity[a].cx, 
+        if(checkcollisionpoint(entity[a].x + entity[a].cx,
                                entity[a].y + entity[a].cy, b)) return true;
-        if(checkcollisionpoint(entity[a].x + entity[a].cx, 
+        if(checkcollisionpoint(entity[a].x + entity[a].cx,
                                entity[a].y + entity[a].ch, b)) return true;
-        if(checkcollisionpoint(entity[a].x + entity[a].cw, 
+        if(checkcollisionpoint(entity[a].x + entity[a].cw,
                                entity[a].y + entity[a].cy, b)) return true;
-        if(checkcollisionpoint(entity[a].x + entity[a].cw, 
+        if(checkcollisionpoint(entity[a].x + entity[a].cw,
                                entity[a].y + entity[a].ch, b)) return true;
       }
     }
@@ -212,7 +230,7 @@ function cachegraphics() {
   Gfx.createimage("powershot_stopped", 10, 14);
   Gfx.drawtoimage("powershot_stopped");
 
-  tcol = stopcol; 
+  tcol = stopcol;
   Gfx.fillbox(2, 6, 4, 2, tcol);
   Gfx.fillbox(6, 5, 2, 4, tcol);
   Gfx.fillbox(8, 5, 2, 4, tcol);
@@ -225,20 +243,21 @@ function cachegraphics() {
   Gfx.fillbox(4, 10, 2, 4, tcol);
   Gfx.fillbox(6, 10, 2, 4, tcol);
 
-
   //Powerups
   for (k in 0 ... 2) {
     for (j in 0 ... 30) {
       if (k == 0) {
-        Gfx.createimage("powerup_" + j, 16, 16);
-        Gfx.drawtoimage("powerup_" + j);
+        powerup_.push("powerup_" + j);
+        Gfx.createimage(powerup_[j], 16, 16);
+        Gfx.drawtoimage(powerup_[j]);
         tcol = Gfx.rgb(240, 240, 0);
         Gfx.drawhexagon(8, 8, 6, j * 2, Gfx.rgb(120, 120, 0));
         Gfx.drawhexagon(8, 8, 7, j * 2, tcol);
         Text.display(7, 2, "P", tcol);
       }else if (k == 1) {
-        Gfx.createimage("powerup_stopped_" + j, 16, 16);
-        Gfx.drawtoimage("powerup_stopped_" + j);
+        powerup_stopped_.push("powerup_stopped_" + j);
+        Gfx.createimage(powerup_stopped_[j], 16, 16);
+        Gfx.drawtoimage(powerup_stopped_[j]);
         tcol = stopcol;
         Gfx.drawhexagon(8, 8, 6, j * 2, 0x222222);
         Gfx.drawhexagon(8, 8, 7, j * 2, tcol);
@@ -252,12 +271,13 @@ function cachegraphics() {
   for (i in 0 ... 16) {
     if (i >= 8) {
       tcol = Gfx.rgb(220, 0, 0);
-
-      Gfx.createimage("badguy_1_" + (i - 8), 17, 32);
-      Gfx.drawtoimage("badguy_1_" + (i - 8));     
+      badguy_1_.push("badguy_1_" + (i - 8));
+      Gfx.createimage(badguy_1_[i-8], 17, 32);
+      Gfx.drawtoimage(badguy_1_[i-8]);
     }else {
-      Gfx.createimage("badguy_1_stopped_" + i, 17, 32);
-      Gfx.drawtoimage("badguy_1_stopped_" + i);
+      badguy_1_stopped_.push("badguy_1_stopped_" + i);
+      Gfx.createimage(badguy_1_stopped_[i], 17, 32);
+      Gfx.drawtoimage(badguy_1_stopped_[i]);
     }
 
     temp = Convert.toint((i * 2) % 16);
@@ -270,18 +290,22 @@ function cachegraphics() {
 
   //Badguy_2:
   tcol = stopcol;
+  var badguy_2_ = [];
+  var badguy_2_stopped_ = [];
   for (j in 0 ... 20) {
     if (j >= 10) {
-      Gfx.createimage("badguy_2_" + (j - 10), 40, 40);
-      Gfx.drawtoimage("badguy_2_" + (j - 10));
+      badguy_2_.push("badguy_2_" + (j - 10));
+      Gfx.createimage(badguy_2_[j-10], 40, 40);
+      Gfx.drawtoimage(badguy_2_[j-10]);
     }else {
-      Gfx.createimage("badguy_2_stopped_" + j, 40, 40);
-      Gfx.drawtoimage("badguy_2_stopped_" + j);
+      badguy_2_stopped_.push("badguy_2_stopped_" + j);
+      Gfx.createimage(badguy_2_stopped_[j], 40, 40);
+      Gfx.drawtoimage(badguy_2_stopped_[j]);
     }
 
     for (i in 0 ... (j % 10)) {
       if (j >= 10) tcol = Gfx.rgb(255, Convert.toint(24 * i), 0);
-      Gfx.drawbox(20 - i * 2, 20 - i * 2,  i * 4, i * 4, tcol);  
+      Gfx.drawbox(20 - i * 2, 20 - i * 2,  i * 4, i * 4, tcol);
     }
 
     if (j >= 10) tcol = Col.WHITE;
@@ -295,16 +319,19 @@ function cachegraphics() {
   //Badguy_3
   for (j in 0 ... 18) {
     if (j < 6) {
-      Gfx.createimage("badguy_3_" + j, 21, 21);
-      Gfx.drawtoimage("badguy_3_" + j);
+      badguy_3_.push("badguy_3_" + j);
+      Gfx.createimage(badguy_3_[j], 21, 21);
+      Gfx.drawtoimage(badguy_3_[j]);
       tcol = Gfx.rgb(255, 128, 0);
     }else if (j < 12) {
-      Gfx.createimage("badguy_3_stopped_" + (j - 6), 21, 21);
-      Gfx.drawtoimage("badguy_3_stopped_" + (j - 6));
+      badguy_3_stopped_.push("badguy_3_stopped_" + (j-6));
+      Gfx.createimage(badguy_3_stopped_[j-6], 21, 21);
+      Gfx.drawtoimage(badguy_3_stopped_[j-6]);
       tcol = stopcol;
     }else{
-      Gfx.createimage("badguy_3_hurt_" + (j - 12), 21, 21);
-      Gfx.drawtoimage("badguy_3_hurt_" + (j - 12));
+      badguy_3_hurt_.push("badguy_3_hurt_" + (j - 12));
+      Gfx.createimage(badguy_3_hurt_[j-12], 21, 21);
+      Gfx.drawtoimage(badguy_3_hurt_[j-12]);
       tcol = Gfx.rgb(255, 0, 0);
     }
 
@@ -319,15 +346,18 @@ function cachegraphics() {
   for (k in 0 ... 3) {
     for (j in 0 ... 10) {
       if (k == 0) {
-        Gfx.createimage("badguy_4_" + j, 32, 32);
-        Gfx.drawtoimage("badguy_4_" + j);
+        badguy_4_.push("badguy_4_" + j);
+        Gfx.createimage(badguy_4_[j], 32, 32);
+        Gfx.drawtoimage(badguy_4_[j]);
       }else if (k == 1) {
-        Gfx.createimage("badguy_4_stopped_" + j, 32, 32);
-        Gfx.drawtoimage("badguy_4_stopped_" + j);
+        badguy_4_stopped_.push("badguy_4_stopped_" + j);
+        Gfx.createimage(badguy_4_stopped_[j], 32, 32);
+        Gfx.drawtoimage(badguy_4_stopped_[j]);
         tcol = stopcol;
       }else if (k == 2) {
-        Gfx.createimage("badguy_4_hurt_" + j, 32, 32);
-        Gfx.drawtoimage("badguy_4_hurt_" + j);
+        badguy_4_hurt_.push("badguy_4_hurt_" + j);
+        Gfx.createimage(badguy_4_hurt_[j], 32, 32);
+        Gfx.drawtoimage(badguy_4_hurt_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }
 
@@ -342,24 +372,27 @@ function cachegraphics() {
   }
 
   //Badguy_5
-
   for (k in 0 ... 4) {
     for (j in 0 ... 10) {
       if (k == 0) {
-        Gfx.createimage("badguy_5_white_" + j, 21, 21);
-        Gfx.drawtoimage("badguy_5_white_" + j);
+        badguy_5_white_.push("badguy_5_white_" + j);
+        Gfx.createimage(badguy_5_white_[j], 21, 21);
+        Gfx.drawtoimage(badguy_5_white_[j]);
         tcol = Col.WHITE;
       }else if (k == 1) {
-        Gfx.createimage("badguy_5_yellow_" + j, 21, 21);
-        Gfx.drawtoimage("badguy_5_yellow_" + j);
+        badguy_5_yellow_.push("badguy_5_yellow_" + j);
+        Gfx.createimage(badguy_5_yellow_[j], 21, 21);
+        Gfx.drawtoimage(badguy_5_yellow_[j]);
         tcol = Col.YELLOW;
       }else if (k == 2) {
-        Gfx.createimage("badguy_5_red_" + j, 21, 21);
-        Gfx.drawtoimage("badguy_5_red_" + j);
+        badguy_5_red_.push("badguy_5_red_" + j);
+        Gfx.createimage(badguy_5_red_[j], 21, 21);
+        Gfx.drawtoimage(badguy_5_red_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }else if (k == 3) {
-        Gfx.createimage("badguy_5_gray_" + j, 21, 21);
-        Gfx.drawtoimage("badguy_5_gray_" + j);
+        badguy_5_gray_.push("badguy_5_gray_" + j);
+        Gfx.createimage(badguy_5_gray_[j], 21, 21);
+        Gfx.drawtoimage(badguy_5_gray_[j]);
         tcol = stopcol;
       }
 
@@ -389,16 +422,19 @@ function cachegraphics() {
   for (k in 0 ... 3) {
     for (j in 0 ... 10) {
       if (k == 0) {
-        Gfx.createimage("badguy_6_" + j, 30, 30);
-        Gfx.drawtoimage("badguy_6_" + j);
+        badguy_6_.push("badguy_6_" + j);
+        Gfx.createimage(badguy_6_[j], 30, 30);
+        Gfx.drawtoimage(badguy_6_[j]);
         tcol = 0x22EEEE;
       }else if (k == 1) {
-        Gfx.createimage("badguy_6_stopped_" + j, 30, 30);
-        Gfx.drawtoimage("badguy_6_stopped_" + j);
+        badguy_6_stopped_.push("badguy_6_stopped_" + j);
+        Gfx.createimage(badguy_6_stopped_[j], 30, 30);
+        Gfx.drawtoimage(badguy_6_stopped_[j]);
         tcol = stopcol;
       }else if (k == 2) {
-        Gfx.createimage("badguy_6_hurt_" + j, 30, 30);
-        Gfx.drawtoimage("badguy_6_hurt_" + j);
+        badguy_6_hurt_.push("badguy_6_hurt_" + j);
+        Gfx.createimage(badguy_6_hurt_[j], 30, 30);
+        Gfx.drawtoimage(badguy_6_hurt_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }
 
@@ -424,8 +460,6 @@ function cachegraphics() {
 
 function new() {
   Text.setfont(Font.PIXEL, 1);
-
-  Gfx.showfps = true;
 
   cachegraphics();
   highscore = 0;
@@ -561,342 +595,12 @@ function create(_x, _y, t) {
   }
 }
 
-function drawentity(t){
-  tcol = stopcol;
-  if (entity[t].hurt > 0) entity[t].hurt--;
-  if(entity[t].type == "player"){
-    //Player Ship
-    if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 5, entity[t].y + cameray - 5, "player_moving");
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 5, entity[t].y + cameray - 5, "player_stopped");
-    }
-
-  }else if (entity[t].type == "explosion") {
-    if (playermoving > 0) tcol = entity[t].particle;
-    Gfx.fillbox(entity[t].x + 4 + entity[t].timer + camerax, entity[t].y - 2 - entity[t].timer + cameray, 3, 2, tcol);
-    Gfx.fillbox(entity[t].x + 4 + entity[t].timer + camerax, entity[t].y + 2 + entity[t].timer + cameray, 3, 2, tcol);
-  }else if(entity[t].type == "playerbullet"){
-    //Player Bullets
-    if (playerpowerup > 0) {
-      if (playermoving > 0) tcol = Col.YELLOW;
-      Gfx.fillbox(entity[t].x-5 + camerax,entity[t].y-1 + cameray,4,2,tcol);
-
-      if(playermoving>0)tcol = 0xEEEE22;
-      Gfx.fillbox(entity[t].x - 1 + camerax, entity[t].y - 2 + cameray, 2, 4, tcol);
-      if(playermoving>0)tcol = Col.WHITE;
-      Gfx.fillbox(entity[t].x + 1 + camerax, entity[t].y - 2 + cameray, 2, 4, tcol);
-    }else {
-      if (playermoving > 0) tcol = Col.YELLOW;
-      if(Random.bool()){
-        Gfx.fillbox(entity[t].x-3 + camerax,entity[t].y-1 + cameray,2,1,tcol);
-      }else{
-        Gfx.fillbox(entity[t].x-3 + camerax,entity[t].y + cameray,2,1,tcol);
-      }
-
-      if(playermoving>0)tcol = Col.WHITE;
-      Gfx.fillbox(entity[t].x-1 + camerax,entity[t].y-1 + cameray,3,2,tcol);
-    }
-  }else if (entity[t].type == "enemybullet") {
-    Gfx.fillbox(entity[t].x + camerax - 2, entity[t].y + cameray - 1, 5, 3, Gfx.rgb(255, 0, 0));
-    Gfx.fillbox(entity[t].x + camerax - 1, entity[t].y + cameray - 2, 3, 5, Gfx.rgb(255, 0, 0));
-  }else if(entity[t].type == "powerup_power"){
-    //Pickup: power
-    temp = Convert.toint(Game.time % 30);
-    if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 8, "powerup_" + temp);
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 8, "powerup_stopped_" + temp);
-    }
-  }else if(entity[t].type == "powershot"){
-    //Powershots
-    if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 7, entity[t].y + cameray - 7, "powershot");
-    }else{
-      Gfx.drawimage(entity[t].x + camerax - 7, entity[t].y + cameray - 7, "powershot_stopped");
-    }
-  }else if (entity[t].type == "badguy_1") {
-    temp = Convert.toint(entity[t].timer) % 8;
-    if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, "badguy_1_" + temp);
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, "badguy_1_stopped_" + temp);
-    }
-  }else if(entity[t].type == "badguy_2"){
-    temp = Convert.toint(entity[t].health) - 1;
-    if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, "badguy_2_" + temp);
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, "badguy_2_stopped_" + temp);
-    }
-  }else if (entity[t].type == "badguy_3") {
-    temp = 0;
-    if (entity[t].timer % 15 > 10) {
-      temp = Convert.toint((entity[t].timer % 5) + 1);
-    }
-    if (entity[t].hurt > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_3_hurt_" + temp);
-    }else if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_3_" + temp);
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_3_stopped_" + temp);
-    }
-  }else if (entity[t].type == "badguy_4") {
-    temp = Convert.toint(entity[t].timer % 10);
-
-    if (entity[t].hurt > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, "badguy_4_hurt_" + temp);
-    }else if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, "badguy_4_" + temp);
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, "badguy_4_stopped_" + temp);
-    }
-  }else if(entity[t].type == "badguy_5"){
-    temp = Convert.toint(entity[t].timer % 10);
-
-    if (playermoving > 0) {
-      if (entity[t].hurt > 0) {
-        Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_red_" + temp);
-      }else if (entity[t].frame > 0) {
-        if (Game.time % 16 > 8) {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_white_" + temp);
-        }else{
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_yellow_" + temp);
-        }
-      }else {
-        Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_white_" + temp);
-      }
-    }else {
-      if (entity[t].frame > 0) {
-        Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_red_" + temp);
-      }else {
-        Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, "badguy_5_gray_" + temp);
-      }
-    }
-  }else if (entity[t].type == "badguy_6") {
-    temp = Convert.toint(entity[t].timer % 10);
-
-    if (entity[t].hurt > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, "badguy_6_hurt_" + temp);
-    }else if (playermoving > 0) {
-      Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, "badguy_6_" + temp);
-    }else {
-      Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, "badguy_6_stopped_" + temp);
-    }
-  }
-}
-
-function updateentity(t, speed){
-  entity[t].timer = entity[t].timer + speed;
-  if (entity[t].type == "player") {
-    if (entity[t].timer < 8) {
-      entity[t].x += (8 - entity[t].timer) * speed;
-    }
-  }else if (entity[t].type == "explosion") {
-    if (entity[t].timer > 4) {
-      entity[t].active = false;
-    }
-  }else if(entity[t].type == "playerbullet" || entity[t].type == "powershot"){
-    entity[t].x += 12 * speed;
-    if(entity[t].x>Gfx.screenwidth){
-      entity[t].active=false;
-    }else{
-      //Check if the bullet's hit anything
-      for(i in 0 ... numentity){
-        if(entity[i].active){
-          if(entity[i].rule == "enemy"){
-            if (checkcollision(t, i)) {
-              while (entity[t].health > 0 && entity[i].health > 0) {
-                entity[t].health--;
-                entity[i].health--;
-              }
-
-              entity[i].hurt = 3;
-              if (entity[t].health <= 0) {
-                entity[t].active = false;
-              }
-
-              if (entity[i].health <= 0) {
-                entity[i].type = "explosion";
-                entity[i].timer = 0;
-                entity[i].rule = "particle";
-                effect("shake");
-                Music.playsound(hitenemysound);
-
-                if (powerupcount < 3) {
-                  if (Random.int(1, 99) < entity[i].droprate) {
-                    create(entity[t].x, entity[t].y, "powerup_power");
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }else if(entity[t].type == "enemybullet"){
-    if (Gfx.fastAbs(Convert.toint(entity[t].x - entity[player].x)) < 20) {
-      if(speed == 1.0){
-        entity[t].x += entity[t].vx / 3;
-        entity[t].y += entity[t].vy / 3;
-
-        if(!playerdestroyed){
-          if(checkcollision(player, t)) killplayer(player);
-        }
-
-        entity[t].x += entity[t].vx / 3;
-        entity[t].y += entity[t].vy / 3;
-
-        if(!playerdestroyed){
-          if(checkcollision(player, t)) killplayer(player);
-        }
-
-        entity[t].x += entity[t].vx / 3;
-        entity[t].y += entity[t].vy / 3;
-
-        if(!playerdestroyed){
-          if(checkcollision(player, t)) killplayer(player);
-        }
-      }else {
-        entity[t].x += entity[t].vx * speed;
-        entity[t].y += entity[t].vy * speed;
-
-        if(!playerdestroyed){
-          if(checkcollision(player, t)) killplayer(player);
-        }
-      }
-    }else{
-      entity[t].x+=entity[t].vx * speed;
-      entity[t].y+=entity[t].vy * speed;
-    }
-
-    if(!inboxw(entity[t].x, entity[t].y, -10, -10, Gfx.screenwidth+20, Gfx.screenheight+20)){
-      entity[t].active=false;
-    }
-  }else if(entity[t].type == "badguy_1"){
-    entity[t].x -= 5 * speed;
-
-    if (entity[t].x < -10) {
-      entity[t].active = false;
-    }
-    if(!playerdestroyed){
-      if(checkcollision(player, t)) killplayer(player);
-    }
-  }else if(entity[t].type == "badguy_2"){
-    entity[t].x -= 2 * speed;
-    if(entity[t].health>3){
-      entity[t].cx = -entity[t].health * 2;
-      entity[t].cy = -entity[t].health * 2;
-      entity[t].cw = entity[t].health * 4;
-      entity[t].ch = entity[t].health * 4;
-    }else {
-      entity[t].cx = -6; entity[t].cy = -6;
-      entity[t].cw = 12; entity[t].ch = 12;
-    }
-    if(entity[t].x< -30){
-      entity[t].active=false;
-    }
-    if(!playerdestroyed){
-      if(checkcollision(player, t)) killplayer(player);
-    }
-  }else if(entity[t].type == "badguy_3"){
-    entity[t].x -= 1 * speed;
-    if (entity[t].timer > 15) {
-      entity[t].timer -= 15;
-      var playerdir = Math.atan2(entity[player].y - entity[t].y, entity[player].x - entity[t].x);
-      createbullet(entity[t].x, entity[t].y, Math.cos(playerdir) * 5, Math.sin(playerdir)*5, 2);
-    }
-    if(entity[t].x< -10){
-      entity[t].active=false;
-    }
-    if(!playerdestroyed){
-      if(checkcollision(player, t)) killplayer(player);
-    }
-  }else if (entity[t].type == "badguy_4") {
-    entity[t].frame2 += speed;
-    entity[t].x -= speed;
-    entity[t].y += entity[t].frame * speed;
-    if (entity[t].y < 10) {
-      entity[t].frame = 1;
-    }else if (entity[t].y > 100) {
-      entity[t].frame = -1;
-    }
-    if (entity[t].frame2 > 8) {
-      entity[t].frame2 -= 8;
-      if(entity[t].timer % 252 > 125){
-        createbullet(entity[t].x, entity[t].y, -Math.sin(3.14 - ((entity[t].timer/40)%3.14)) * 3, -Math.cos(3.14-((entity[t].timer/40)%3.14)) * 3, 2); 
-      }else{
-        createbullet(entity[t].x, entity[t].y, -Math.sin((entity[t].timer/40)%3.14) * 3, -Math.cos((entity[t].timer/40)%3.14) * 3, 2);
-      }
-    }
-    if(entity[t].x< -10){
-      entity[t].active=false;
-    }
-    if(!playerdestroyed){
-      if(checkcollision(player, t)) killplayer(player);
-    }
-  }else if(entity[t].type == "badguy_5"){
-    if(entity[t].frame == 0){
-      entity[t].x -= 2 * speed;
-      if(entity[t].x< Gfx.screenwidthmid-5 || entity[t].health < 1000){
-        entity[t].frame = 1;
-      }
-    }else if (entity[t].frame >= 30) {
-      var randoffset = Random.float(0, 6.2);
-      for(i in 0 ... 12){
-        createbullet(entity[t].x, entity[t].y, Math.cos(randoffset + (i / 6) * 3.14) * 3, Math.sin(randoffset + (i / 6) * 3.14) * 3, 2);
-      }
-      entity[t].active=false;
-    }else if(entity[t].frame >= 1){
-      entity[t].frame+= speed;
-    }
-    if(!playerdestroyed){
-      if(checkcollision(player, t)) killplayer(player);
-    }
-  }else if(entity[t].type == "badguy_6"){
-    entity[t].x -= 2 * speed;
-    entity[t].y = 55 + (Math.sin(entity[t].timer/10) * 55);
-    if (entity[t].x < -10) {
-      entity[t].active=false;
-    }
-    if(!playerdestroyed){
-      if(checkcollision(player, t)) killplayer(player);
-    }
-  }else if (entity[t].type == "powerup_power") {
-    if (5 - (entity[t].timer / 3) > -2) {
-      entity[t].x += (5 - (entity[t].timer / 3)) * speed;
-    }else {
-      entity[t].x -= 2 * speed;
-    }
-    if(entity[t].x< -4){
-      entity[t].active = false;
-      powerupcount--;
-    }
-    if (checkcollision(t, player) || checkcollision(player, t)) {
-      powerupcount--;
-      timejuice = maxtimejuice;
-      playerpowerup = 120;
-      Music.playsound(powerupsound);
-      effect("shakeflash");
-      entity[t].active = false;
-
-      for (i in 0 ... numentity) {
-        if (entity[i].active) {
-          if (entity[i].type == "powerup_power") {
-            entity[i].timer = -5;
-          }
-        }
-      }
-    }
-  }
-}
-
 function spawn(patterntype){
-  var randomposition ;
+  var randomposition;
   if (patterntype == "testing") {
     create(200, 55, "badguy_6");
     wavedelay = 70;
-  }else if (patterntype == "badguy_1_full") { 
+  }else if (patterntype == "badguy_1_full") {
     for(i in 0 ... 5){
       create(200, 8 + i * 24, "badguy_1");
       create(250, 8 + i * 24, "badguy_1");
@@ -1051,9 +755,9 @@ function spawn(patterntype){
 //badguy_6_snake
 //badguy_6_short
 var easyenemies = [
-  "badguy_1_line", 
-  "badguy_3_top", 
-  "badguy_3_bottom", 
+  "badguy_1_line",
+  "badguy_3_top",
+  "badguy_3_bottom",
   "badguy_3_three",
   "badguy_4_center",
   "badguy_4_down",
@@ -1065,10 +769,10 @@ var easyenemies = [
   "badguy_6_snake"
 ];
 var hardenemies = [
-  "badguy_3_borders", 
-  "badguy_3_borders", 
-  "badguy_3_three", 
-  "badguy_4_cross", 
+  "badguy_3_borders",
+  "badguy_3_borders",
+  "badguy_3_three",
+  "badguy_4_cross",
   "badguy_4_up",
   "badguy_4_down",
   "badguy_5_wall",
@@ -1213,22 +917,339 @@ function gameupdate() {
     drawstillstars();
   }
 
-  for (i in 0 ... numentity) {
-    if(entity[i].active){
-      updateentity(i, gamespeed);
-      drawentity(i);
-      //Draw collision boxes for testing
-      /*
-Gfx.drawbox(entity[i].x + entity[i].cx + camerax,
-entity[i].y + entity[i].cy + cameray,
-entity[i].cw,
-entity[i].ch, Col.WHITE);
-*/
+  //Update and draw entities
+  for (t in 0 ... numentity) {
+    if(entity[t].active){
+      entity[t].timer = entity[t].timer + gamespeed;
+      if (entity[t].type == "player") {
+        if (entity[t].timer < 8) {
+          entity[t].x += (8 - entity[t].timer) * gamespeed;
+        }
+      }else if (entity[t].type == "explosion") {
+        if (entity[t].timer > 4) {
+          entity[t].active = false;
+        }
+      }else if(entity[t].type == "playerbullet" || entity[t].type == "powershot"){
+        entity[t].x += 12 * gamespeed;
+        if(entity[t].x>Gfx.screenwidth){
+          entity[t].active=false;
+        }else{
+          //Check if the bullet's hit anything
+          for(i in 0 ... numentity){
+            if(entity[i].active){
+              if(entity[i].rule == "enemy"){
+                if (checkcollision(t, i)) {
+                  while (entity[t].health > 0 && entity[i].health > 0) {
+                    entity[t].health--;
+                    entity[i].health--;
+                  }
+
+                  entity[i].hurt = 3;
+                  if (entity[t].health <= 0) {
+                    entity[t].active = false;
+                  }
+
+                  if (entity[i].health <= 0) {
+                    entity[i].type = "explosion";
+                    entity[i].timer = 0;
+                    entity[i].rule = "particle";
+                    effect("shake");
+                    Music.playsound(hitenemysound);
+
+                    if (powerupcount < 3) {
+                      if (Random.int(1, 99) < entity[i].droprate) {
+                        create(entity[t].x, entity[t].y, "powerup_power");
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }else if(entity[t].type == "enemybullet"){
+        if (Gfx.fastAbs(Convert.toint(entity[t].x - entity[player].x)) < 20) {
+          if(gamespeed == 1.0){
+            entity[t].x += entity[t].vx / 3;
+            entity[t].y += entity[t].vy / 3;
+
+            if(!playerdestroyed){
+              if(checkcollision(player, t)) killplayer(player);
+            }
+
+            entity[t].x += entity[t].vx / 3;
+            entity[t].y += entity[t].vy / 3;
+
+            if(!playerdestroyed){
+              if(checkcollision(player, t)) killplayer(player);
+            }
+
+            entity[t].x += entity[t].vx / 3;
+            entity[t].y += entity[t].vy / 3;
+
+            if(!playerdestroyed){
+              if(checkcollision(player, t)) killplayer(player);
+            }
+          }else {
+            entity[t].x += entity[t].vx * gamespeed;
+            entity[t].y += entity[t].vy * gamespeed;
+
+            if(!playerdestroyed){
+              if(checkcollision(player, t)) killplayer(player);
+            }
+          }
+        }else{
+          entity[t].x+=entity[t].vx * gamespeed;
+          entity[t].y+=entity[t].vy * gamespeed;
+        }
+
+        if(!inboxw(entity[t].x, entity[t].y, -10, -10, Gfx.screenwidth+20, Gfx.screenheight+20)){
+          entity[t].active=false;
+        }
+      }else if(entity[t].type == "badguy_1"){
+        entity[t].x -= 5 * gamespeed;
+
+        if (entity[t].x < -10) {
+          entity[t].active = false;
+        }
+        if(!playerdestroyed){
+          if(checkcollision(player, t)) killplayer(player);
+        }
+      }else if(entity[t].type == "badguy_2"){
+        entity[t].x -= 2 * gamespeed;
+        if(entity[t].health>3){
+          entity[t].cx = -entity[t].health * 2;
+          entity[t].cy = -entity[t].health * 2;
+          entity[t].cw = entity[t].health * 4;
+          entity[t].ch = entity[t].health * 4;
+        }else {
+          entity[t].cx = -6; entity[t].cy = -6;
+          entity[t].cw = 12; entity[t].ch = 12;
+        }
+        if(entity[t].x< -30){
+          entity[t].active=false;
+        }
+        if(!playerdestroyed){
+          if(checkcollision(player, t)) killplayer(player);
+        }
+      }else if(entity[t].type == "badguy_3"){
+        entity[t].x -= 1 * gamespeed;
+        if (entity[t].timer > 15) {
+          entity[t].timer -= 15;
+          var playerdir = Math.atan2(entity[player].y - entity[t].y, entity[player].x - entity[t].x);
+          createbullet(entity[t].x, entity[t].y, Math.cos(playerdir) * 5, Math.sin(playerdir)*5, 2);
+        }
+        if(entity[t].x< -10){
+          entity[t].active=false;
+        }
+        if(!playerdestroyed){
+          if(checkcollision(player, t)) killplayer(player);
+        }
+      }else if (entity[t].type == "badguy_4") {
+        entity[t].frame2 += gamespeed;
+        entity[t].x -= gamespeed;
+        entity[t].y += entity[t].frame * gamespeed;
+        if (entity[t].y < 10) {
+          entity[t].frame = 1;
+        }else if (entity[t].y > 100) {
+          entity[t].frame = -1;
+        }
+        if (entity[t].frame2 > 8) {
+          entity[t].frame2 -= 8;
+          if(entity[t].timer % 252 > 125){
+            createbullet(entity[t].x, entity[t].y, -Math.sin(3.14 - ((entity[t].timer/40)%3.14)) * 3, -Math.cos(3.14-((entity[t].timer/40)%3.14)) * 3, 2);
+          }else{
+            createbullet(entity[t].x, entity[t].y, -Math.sin((entity[t].timer/40)%3.14) * 3, -Math.cos((entity[t].timer/40)%3.14) * 3, 2);
+          }
+        }
+        if(entity[t].x< -10){
+          entity[t].active=false;
+        }
+        if(!playerdestroyed){
+          if(checkcollision(player, t)) killplayer(player);
+        }
+      }else if(entity[t].type == "badguy_5"){
+        if(entity[t].frame == 0){
+          entity[t].x -= 2 * gamespeed;
+          if(entity[t].x< Gfx.screenwidthmid-5 || entity[t].health < 1000){
+            entity[t].frame = 1;
+          }
+        }else if (entity[t].frame >= 30) {
+          var randoffset = Random.float(0, 6.2);
+          for(i in 0 ... 12){
+            createbullet(entity[t].x, entity[t].y, Math.cos(randoffset + (i / 6) * 3.14) * 3, Math.sin(randoffset + (i / 6) * 3.14) * 3, 2);
+          }
+          entity[t].active=false;
+        }else if(entity[t].frame >= 1){
+          entity[t].frame+= gamespeed;
+        }
+        if(!playerdestroyed){
+          if(checkcollision(player, t)) killplayer(player);
+        }
+      }else if(entity[t].type == "badguy_6"){
+        entity[t].x -= 2 * gamespeed;
+        entity[t].y = 55 + (Math.sin(entity[t].timer/10) * 55);
+        if (entity[t].x < -10) {
+          entity[t].active=false;
+        }
+        if(!playerdestroyed){
+          if(checkcollision(player, t)) killplayer(player);
+        }
+      }else if (entity[t].type == "powerup_power") {
+        if (5 - (entity[t].timer / 3) > -2) {
+          entity[t].x += (5 - (entity[t].timer / 3)) * gamespeed;
+        }else {
+          entity[t].x -= 2 * gamespeed;
+        }
+        if(entity[t].x< -4){
+          entity[t].active = false;
+          powerupcount--;
+        }
+        if (checkcollision(t, player) || checkcollision(player, t)) {
+          powerupcount--;
+          timejuice = maxtimejuice;
+          playerpowerup = 120;
+          Music.playsound(powerupsound);
+          effect("shakeflash");
+          entity[t].active = false;
+
+          for (i in 0 ... numentity) {
+            if (entity[i].active) {
+              if (entity[i].type == "powerup_power") {
+                entity[i].timer = -5;
+              }
+            }
+          }
+        }
+      }
+
+      tcol = stopcol;
+      if (entity[t].hurt > 0) entity[t].hurt--;
+      if(entity[t].type == "player"){
+        //Player Ship
+        if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 5, entity[t].y + cameray - 5, "player_moving");
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 5, entity[t].y + cameray - 5, "player_stopped");
+        }
+
+      }else if (entity[t].type == "explosion") {
+        if (playermoving > 0) tcol = entity[t].particle;
+        Gfx.fillbox(entity[t].x + 4 + entity[t].timer + camerax, entity[t].y - 2 - entity[t].timer + cameray, 3, 2, tcol);
+        Gfx.fillbox(entity[t].x + 4 + entity[t].timer + camerax, entity[t].y + 2 + entity[t].timer + cameray, 3, 2, tcol);
+      }else if(entity[t].type == "playerbullet"){
+        //Player Bullets
+        if (playerpowerup > 0) {
+          if (playermoving > 0) tcol = Col.YELLOW;
+          Gfx.fillbox(entity[t].x-5 + camerax,entity[t].y-1 + cameray,4,2,tcol);
+
+          if(playermoving>0)tcol = 0xEEEE22;
+          Gfx.fillbox(entity[t].x - 1 + camerax, entity[t].y - 2 + cameray, 2, 4, tcol);
+          if(playermoving>0)tcol = Col.WHITE;
+          Gfx.fillbox(entity[t].x + 1 + camerax, entity[t].y - 2 + cameray, 2, 4, tcol);
+        }else {
+          if (playermoving > 0) tcol = Col.YELLOW;
+          if(Random.bool()){
+            Gfx.fillbox(entity[t].x-3 + camerax,entity[t].y-1 + cameray,2,1,tcol);
+          }else{
+            Gfx.fillbox(entity[t].x-3 + camerax,entity[t].y + cameray,2,1,tcol);
+          }
+
+          if(playermoving>0)tcol = Col.WHITE;
+          Gfx.fillbox(entity[t].x-1 + camerax,entity[t].y-1 + cameray,3,2,tcol);
+        }
+      }else if (entity[t].type == "enemybullet") {
+        Gfx.fillbox(entity[t].x + camerax - 2, entity[t].y + cameray - 1, 5, 3, Gfx.rgb(255, 0, 0));
+        Gfx.fillbox(entity[t].x + camerax - 1, entity[t].y + cameray - 2, 3, 5, Gfx.rgb(255, 0, 0));
+      }else if(entity[t].type == "powerup_power"){
+        //Pickup: power
+        temp = Convert.toint(Game.time % 30);
+        if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 8, powerup_[temp]);
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 8, powerup_stopped_[temp]);
+        }
+      }else if(entity[t].type == "powershot"){
+        //Powershots
+        if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 7, entity[t].y + cameray - 7, "powershot");
+        }else{
+          Gfx.drawimage(entity[t].x + camerax - 7, entity[t].y + cameray - 7, "powershot_stopped");
+        }
+      }else if (entity[t].type == "badguy_1") {
+        temp = Convert.toint(entity[t].timer) % 8;
+        if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, badguy_1_[temp]);
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, badguy_1_stopped_[temp]);
+        }
+      }else if(entity[t].type == "badguy_2"){
+        temp = Convert.toint(entity[t].health) - 1;
+        if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, badguy_2_[temp]);
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, badguy_2_stopped_[temp]);
+        }
+      }else if (entity[t].type == "badguy_3") {
+        temp = 0;
+        if (entity[t].timer % 15 > 10) {
+          temp = Convert.toint((entity[t].timer % 5) + 1);
+        }
+        if (entity[t].hurt > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_3_hurt_[temp]);
+        }else if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_3_[temp]);
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_3_stopped_[temp]);
+        }
+      }else if (entity[t].type == "badguy_4") {
+        temp = Convert.toint(entity[t].timer % 10);
+
+        if (entity[t].hurt > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, badguy_4_hurt_[temp]);
+        }else if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, badguy_4_[temp]);
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, badguy_4_stopped_[temp]);
+        }
+      }else if(entity[t].type == "badguy_5"){
+        temp = Convert.toint(entity[t].timer % 10);
+
+        if (playermoving > 0) {
+          if (entity[t].hurt > 0) {
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_red_[temp]);
+          }else if (entity[t].frame > 0) {
+            if (Game.time % 16 > 8) {
+              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_white_[temp]);
+            }else{
+              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_yellow_[temp]);
+            }
+          }else {
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_white_[temp]);
+          }
+        }else {
+          if (entity[t].frame > 0) {
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_red_[temp]);
+          }else {
+            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, badguy_5_gray_[temp]);
+          }
+        }
+      }else if (entity[t].type == "badguy_6") {
+        temp = Convert.toint(entity[t].timer % 10);
+
+        if (entity[t].hurt > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, badguy_6_hurt_[temp]);
+        }else if (playermoving > 0) {
+          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, badguy_6_[temp]);
+        }else {
+          Gfx.drawimage(entity[t].x + camerax - 15, entity[t].y + cameray - 15, badguy_6_stopped_[temp]);
+        }
+      }
     }
   }
 
   //Cleanup
-  var i ;
+  var i;
   i = numentity - 1; while (i >= 0 && !entity[i].active) { numentity--; i--; }
 
   Gfx.fillbox(0, Gfx.screenheight - 9, Gfx.screenwidth, 9, 0x333333);
