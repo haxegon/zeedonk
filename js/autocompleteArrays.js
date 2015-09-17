@@ -239,7 +239,7 @@ var haxeHintArray = [
 ["Random.pickstring",'("this one", "or this one?", "maybe this one?"):String',"F","Pick between a list of strings. Can list up to 12!"],
 ["Random.pickint","(5, 14, 72, 92, 1, -723, 8):Int","F","Pick between a list of integers. Can list up to 12!"],
 ["Random.pickfloat","(5.1, 14.2, 72.3, 92.4, 1.5, -723.6, 8.7):Float","F","Pick between a list of floating-point numbers. Can list up to 12!"],
-["Game.title",":String","P","Set page title, and page header in the standalone player."],
+["Game.title",":String","P","Sets the page header."],
 ["Game.homepage",":String","P","Set a homepage link to appear in the standalone player."],
 ["Game.background",":Int","P","Sets color of the background in the standalone player."],
 ["Game.foreground",":Int","P","Sets color of title text + links in standalone player."],

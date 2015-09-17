@@ -191,14 +191,6 @@ function settitle(t){
     window.console.log("setting title to "+t)
     metaData.title=t;
 
-    if (canSetHTMLColors){        
-        var link = document.getElementById ("gametitle");
-        if (link.textContent){
-            link.textContent=t;
-        } else if (line.innerText){
-            link.innerText=t;            
-        }
-    }
     document.title = t;
 }
 
@@ -214,10 +206,24 @@ function qualifyURL(url) {
     return a.href;
 }
 
-function sethomepage(t){
+function sethomepage(t){    
     metaData.homepage=t;
-    if (canSetHTMLColors){        
+    if (canSetHTMLColors){       
         var link = document.getElementById ("homepagelink");
+
+        var separator = document.getElementById ("separator");
+        if (t==""){
+            separator.style.display="none";
+
+            if (link.textContent){
+                link.textContent="";
+            } else if (line.innerText){
+                link.innerText="";       
+            }
+            return;
+        }
+
+        separator.style.display="default";
         link.href=qualifyURL(metaData.homepage);
         if (link.textContent){
             link.textContent=strip_http(link.href);
@@ -253,8 +259,6 @@ function setforegroundcolor(t){
         meta = document.getElementById ("hacklink");
         meta.style.color = metaData.fgCol;
         meta = document.getElementById ("separator");
-        meta.style.color = metaData.fgCol;
-        meta = document.getElementById ("gametitle");
         meta.style.color = metaData.fgCol;
         meta = document.getElementById ("homepagelink");
         meta.style.color = metaData.fgCol;
