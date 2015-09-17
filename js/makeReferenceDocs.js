@@ -70,7 +70,7 @@ function genReferencePage(moduleName){
 	"<html>"+
 	"<head>"+
 	' <meta charset="utf-8">'+
-	"	<title>Zeedonk_Online Reference " +moduleName+"</title>"+
+	"	<title>Zeedonk Reference " +moduleName+"</title>"+
 	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
 	'<link rel="stylesheet" type="text/css" href="style.css">'+
 	'<link rel="stylesheet" type="text/css" href="../css/codemirror.css">'+
@@ -79,7 +79,7 @@ function genReferencePage(moduleName){
 	"</head>"+
 	"<body>"+
 	'<div class="navBar">'+
-	'<a href="/editor.html"><h2>Zeedonk Online</h2></a> <p><a class="moduleButton" href="Tutorials.html">Tutorials</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
+	'<a href="/editor.html"><h2>Zeedonk</h2></a> <p><a class="moduleButton" href="Tutorials.html">Tutorials</a> <span class="moduleSelected">Library Reference</span> <a class="moduleButton" href="Shortcuts.html">Keyboard Shortcuts</a>'+
 	"</div><p>"+
 	"<h1>Library Reference</h1>";
 

@@ -1,1 +1,1 @@
-//borked I think, cf https://github.com/increpare/Zeedonk_online/issues/233
+//borked I think, cf https://github.com/increpare/Zeedonk/issues/233
