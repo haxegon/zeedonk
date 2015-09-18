@@ -64,7 +64,18 @@ class Input {
 		stage.removeEventListener(KeyboardEvent.KEY_UP, handlekeyup);
 	}
 	
-	private static function update(){
+	private static function update() {
+		if (lastcharcode == -1) {
+		  lastcharcode = charcode;	
+		}else {
+		  if (charcode == lastcharcode) {
+			  lastcharcode = -1;	
+				charcode = -1;
+			}else {
+			  lastcharcode = charcode;
+			}
+		}
+		
 		for (i in 0 ... numletters) {
 			if (lookup.exists(i)) {
 				if ((last[i] == Keystate.justreleased) && (current[i] == Keystate.justreleased)) current[i] = Keystate.notpressed;
@@ -102,7 +113,9 @@ class Input {
 			}
 		#end
 		
-		if (event.charCode == 91 || event.charCode == 93 || event.charCode == 224 || event.charCode == 17) {	
+		charcode = event.charCode;
+		
+		if (charcode == 91 || charcode == 93 || charcode == 224 || charcode == 17) {	
 			for(keycode in 0 ... numletters){				
 				if (iskeycodeheld(current[keycode])) {
 					current[keycode] = Keystate.justreleased;
@@ -118,7 +131,6 @@ class Input {
 		}
 		
 		keycode = event.keyCode;
-		charcode = event.charCode;
 		
 		if (lookup.exists(keycode)) {
 			if (iskeycodeheld(current[keycode])) {
@@ -156,7 +168,8 @@ class Input {
 	}
 	
 	public static function getchar():String {
-	  return String.fromCharCode(charcode);	
+		if (lastcharcode == -1) return "";
+		return String.fromCharCode(lastcharcode);
 	}
 	
 	private static function handlekeyup(event:KeyboardEvent) {
@@ -187,8 +200,9 @@ class Input {
 		last = new Array<Keystate>();
 		keydelay = new Array<Int>();
 		keyheld = new Array<Bool>();
-
-
+		
+		lastcharcode = -1;
+		
 		//BASIC STORAGE & TRACKING			
 		var i:Int = 0;
 		for(i in 0...numletters){
@@ -287,6 +301,7 @@ class Input {
 	private static var numletters:Int = 256;
 	private static var keycode:Int;
 	private static var charcode:Int;
+	private static var lastcharcode:Int;
 	
 	private static var keybuffer:String = "";
 }
