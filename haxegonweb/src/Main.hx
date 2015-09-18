@@ -8,19 +8,19 @@ class Webbridge {
   }
 	
 	public function get_background_colour():Int {
-		return Webscript.background_color;
+		return Game._background;
 	}
 	
 	public function get_foreground_colour():Int {
-		return Webscript.foreground_color;
+		return Game._foreground;
 	}
 	
 	public function get_title():String {
-		return Webscript.title;
+		return Game._title;
 	}
 	
 	public function get_homepage():String {
-		return Webscript.homepage;
+		return Game._homepage;
 	}
 	
 	public function stop() {

@@ -13,7 +13,6 @@ class Game {
 
 	public static function set_title(t:String) {
 		_title=t;
-		Webscript.title = t;
 		#if !flash
 		ExternalInterface.call("settitle", t);
 		#end
@@ -28,8 +27,7 @@ class Game {
 	}
 
 	public static function set_homepage(p:String):String {
-		_homepage=p;
-		Webscript.homepage = p;
+		_homepage = p;
 		#if !flash
 		ExternalInterface.call("sethomepage", p);
 		#end
@@ -40,8 +38,7 @@ class Game {
 	public static var background(get,set):Int;
 
 	public static function set_background(c:Int):Int {
-		_background=c;
-		Webscript.background_color = c;
+		_background = c;
 		#if !flash
 		ExternalInterface.call("setbackgroundcolor", c);
 		#end
@@ -59,8 +56,7 @@ class Game {
 	}
 
 	public static function set_foreground(c:Int):Int {
-		_foreground=c;
-		Webscript.foreground_color = c;
+		_foreground = c;
 		#if !flash
 		ExternalInterface.call("setforegroundcolor", c);
 		#end

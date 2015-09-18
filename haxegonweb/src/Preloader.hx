@@ -108,8 +108,7 @@ class Preloader extends NMEPreloader{
 			for (j in 1 ... sarray.length) {
 				for (i in 0 ... sarray[j].length) {
 					if (sarray[j].substr(i, 1) == "1") {
-						pset(i, j*2);
-						pset(i, j*2+1);
+						pset(i, j);
 					}
 				}
 			}
@@ -129,7 +128,7 @@ class Preloader extends NMEPreloader{
 		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)), Std.int((screenheight / 2) - 11)-10, loadingbarwidth, 28, backcol);
 		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)) + 1, Std.int((screenheight / 2) - 11)+1-10, Std.int(p * (loadingbarwidth))-2, 28-2, loadercol);
 		
-		glyphprint(Std.int((screenwidth / 2)) - 7 * 4, Std.int((screenheight / 2) + 12), "LOADING HAXEGON");
+		glyphprint(Std.int((screenwidth / 2)) - 7 * 4, Std.int((screenheight / 2) + 12), "LOADING ZEEDONK");
 		
 		//Render
 		screenbuffer.lock();

@@ -27,11 +27,6 @@ class Webscript {
 	public static var initfunction:Dynamic;
 	public static var updatefunction:Dynamic;
 	
-	public static var title:String;
-	public static var homepage:String;
-	public static var background_color:Int;
-	public static var foreground_color:Int;
-	
 	public static function init() {
 		scriptloaded = false;
 		runscript = false;
@@ -264,22 +259,22 @@ class Webscript {
 				Err.log(Err.RUNTIME_INIT, Err.process(e));
 			}
 			
-			title = interpreter.variables.get("title");
-			if (title == null) title = "Untitled";
-			homepage = interpreter.variables.get("homepage");
-			if (homepage == null) homepage = "";
+			Game._title = interpreter.variables.get("title");
+			if (Game._title == null) Game._title = "Untitled";
+			Game._homepage = interpreter.variables.get("homepage");
+			if (Game._homepage == null) Game._homepage = "";
 			var bg_col:Dynamic = interpreter.variables.get("background_color");
 			if (bg_col == null) {
-				background_color = Col.BLACK;
+				Game._background = Col.BLACK;
 			}else{
-				background_color = Convert.toint(bg_col);
+				Game._background = Convert.toint(bg_col);
 			}
 			
 			var fg_col:Dynamic = interpreter.variables.get("foreground_color");
 			if (fg_col == null) {
-				foreground_color = Col.WHITE;
+				Game._foreground = Col.WHITE;
 			}else{
-				foreground_color = Convert.toint(bg_col);
+				Game._foreground = Convert.toint(bg_col);
 			}
 			
 			initfunction = interpreter.variables.get("new");
