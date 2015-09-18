@@ -13,17 +13,13 @@ body {
 	background-color:black;
 	font-family:"Courier New", Courier, monospace
 }
-#gameCanvas {
-  position:absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  bottom: 0px;
-  right:0px;
-  border: 0px;
-  background-color: black;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+canvas {
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }
 
 h1 {

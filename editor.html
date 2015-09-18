@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="css/ambiance.css">
 <link rel="stylesheet" href="css/dialog.css">
 <link rel="stylesheet" href="css/console.css">
-<link rel="stylesheet" href="css/gamecanvas.css">
 <link rel="stylesheet" href="css/soundbar.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/toolbar.css">
@@ -27,6 +26,16 @@
 <style>
 	html,body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
 	#openfl-content { background: #000000; width: 100%; height: 100%; }
+
+
+canvas {
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+}
 
 </style>
 
@@ -176,7 +185,7 @@ OMG WE CAN'T STRESS HOW ALPHA THIS IS<br>
 
 
 	<script type="text/javascript">
-		lime.embed ("openfl-content", 768, 480, "000000");
+		lime.embed ("openfl-content", 192, 120, "000000");
 	</script>
 
 <!--ENDREPLACE-->
