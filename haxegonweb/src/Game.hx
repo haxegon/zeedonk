@@ -68,9 +68,17 @@ class Game {
 		return false;
 		#else
 		#if terryhasntupgraded
-			return ExternalInterface.call("isIDE");
+		  try{
+			  return ExternalInterface.call("isIDE");
+			}catch (e:Dynamic) {
+			  return false;	
+			}
 		#else
-			return untyped __js__('IDE');
+		  try{
+			  return untyped __js__('IDE');
+			}catch (e:Dynamic) {
+			  return false;	
+			}
 		#end
 		#end
 	}

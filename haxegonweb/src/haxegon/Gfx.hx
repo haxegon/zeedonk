@@ -1,6 +1,7 @@
 package haxegon;
 	
 import haxegon.util.*;
+import js.Browser;
 import openfl.display.*;
 import openfl.geom.*;
 import openfl.events.*;
@@ -1442,7 +1443,8 @@ class Gfx {
 			screen.height = screenheight * screenscale;
 			screen.x = 0.0;
 			screen.y = 0.0;
-			gfxstage.scaleMode = StageScaleMode.SHOW_ALL;
+			gfxstage.scaleMode = StageScaleMode.NO_SCALE;
+			gfxstage.align = StageAlign.TOP_LEFT;
 			#if haxegonweb
 			gfxstage.quality = StageQuality.LOW;
 			#else
@@ -1481,16 +1483,29 @@ class Gfx {
 			gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscaleeditor) / 2;
 			gfxstage.y = (gfxstage.stageHeight - screenheight * jsscaleeditor) / 2;
 		}else {
-		  scaleX = Math.floor(gfxstage.stageWidth / screenwidth);
-			scaleY = Math.floor(gfxstage.stageHeight / screenheight);			
+			var pixelratio:Float = js.Browser.window.devicePixelRatio;
+			var innerwidth:Int = js.Browser.window.innerWidth;
+			var innerheight:Int = js.Browser.window.innerHeight;
+			/*
+			trace("pixel ratio: " + pixelratio);
+			trace("window size (" + gfxstage.stageWidth + ", " + gfxstage.stageHeight + ")");
+			trace("inner window size (" + js.Browser.window.innerWidth + ", " + js.Browser.window.innerHeight + ")");
+			trace("window size after scaling: (" + (gfxstage.stageWidth * pixelratio) + ", " + (gfxstage.stageHeight * pixelratio) + ")");
+			trace("window size (" + screenwidth + ", " + screenheight + ")");
+			*/
 			
-			var jsscale:Int = Convert.toint(Math.min(scaleX, scaleY));
+			scaleX = Math.floor(innerwidth / screenwidth);
+			scaleY = Math.floor(innerheight / screenheight);
+			
+			var jsscale:Float = Math.min(scaleX, scaleY);
+			
+			untyped __js__('var c = document.getElementById(\'openfl-content\'); c.style.transform = \'scale(\'+(1/window.devicePixelRatio)+\',\'+(1/ window.devicePixelRatio)+\')\'');
 			
 			gfxstage.scaleX = jsscale;
 			gfxstage.scaleY = jsscale;
 			
-			gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscale) / 2;
-			gfxstage.y = (gfxstage.stageHeight - screenheight * jsscale) / 2;
+			gfxstage.x = (innerwidth - screenwidth * jsscale) / 2;
+			gfxstage.y = (innerheight - screenheight * jsscale) / 2;
 		}
 	}
 	#end
