@@ -57,11 +57,11 @@ class Err {
 		}
 	}
 	
-	private static function getCharPosition(s:String, bytePos:Int):Int {
+	public static function getCharPosition(s:String, bytePos:Int):Int {
 		var bytes = haxe.io.Bytes.ofString(s);
 		return bytes.getString(0,bytePos).length;
 	}
-	
+
 	public static function process(errorhandle:Dynamic):Array<String> {
 		/*
 			e looks like
