@@ -74,7 +74,7 @@ var haxeHintArray = [
 ["Gfx.gethue","(col):Int","F","Returns the hue (0-360) value of a color."],
 ["Gfx.getsaturation","(col):Float","F","Returns the saturation (0.0-1.0) value of a color."],
 ["Gfx.getlightness","(col):Int","F","Returns the lightness (0.0-1.0) value of a color."],
-["Gfx.resizescreen","(width, height, scale)","F","By default, Zeedonk has a 768x480 screen with 1:1 scaling. If you want something different, call this function!"],
+["Gfx.resizescreen","(width, height)","F","By default, Zeedonk has a 192x120 screen. If you want something different, call this function!"],
 ["Gfx.screenwidth",":Int","P"],
 ["Gfx.screenheight",":Int","P"],
 ["Gfx.screenwidthmid",":Int","P","Returns screen width divided by two."],

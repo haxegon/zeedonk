@@ -1,7 +1,7 @@
-//Game.title("PUZZLE GAME");
-//Game.homepage("http://www.hollygramazio.net/");
-//Game.foreground(0x000000);
-//Game.background(Gfx.RGB(0, 87, 132));
+Game.title = "PUZZLE GAME";
+Game.homepage = "http://www.hollygramazio.net/";
+Game.foreground = Col.GRAY;
+Game.background = Col.BLACK;
   
 var boxheight ;
 var lineheight ;
@@ -45,7 +45,7 @@ var start ;
 var changerate ;
 
 function new() {
-  Gfx.resizescreen(384, 240, 2);
+  Gfx.resizescreen(384, 240);
 
   Text.setfont(Font.GANON, 1);
   start = 0;
