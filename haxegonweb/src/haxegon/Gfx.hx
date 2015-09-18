@@ -1466,8 +1466,8 @@ class Gfx {
 	#if html5
 	private static function onResize(e:Event):Void {
 		trace(gfxstage.stageWidth, gfxstage.stageHeight);
-		var scaleX = gfxstage.stageWidth / screenwidth;
-		var scaleY = gfxstage.stageHeight / screenheight;
+		var scaleX:Int = Math.floor(gfxstage.stageWidth / screenwidth);
+		var scaleY:Int = Math.floor(gfxstage.stageHeight / screenheight);
 		
 		var jsscale = Math.min(scaleX, scaleY);
 		
