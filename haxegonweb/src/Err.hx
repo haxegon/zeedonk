@@ -50,7 +50,7 @@ class Err {
 			if (details.length > 0) {
 				for (i in 0 ... details.length) {
 					if(details[i] != null){
-					  Webdebug.error(details[i]);
+					  Webdebug.error(StringTools.htmlEscape(details[i]));
 					}
 				}	
 			}
