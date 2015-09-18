@@ -59,6 +59,7 @@ class Core extends Sprite {
 		#if haxegonweb
 			Gfx.resizescreen(192, 120, 4);
 			Text.setfont("default", 1);
+			Input.keybuffer = "";
 		#else
 			Gfx.resizescreen(768, 480);
 			Text.setfont("opensans", 24);

@@ -128,6 +128,8 @@ var haxeHintArray = [
 ["Text.display","(x, y, text, col, optional parameters)","F","Draws text on the screen at a given coordinate."],
 ["Text.input",'(x, y, "Question: ", Q colour, A colour):Bool',"F"],
 ["Text.getinput","():String","F"],
+["Text.inputsound",":Int","P","Sets an optional sound to play while typing in Text.input()."],
+["Text.inputlength",":Int","P","Sets maximum response length of Text.input()."],
 ["Text.CENTER","","P"],
 ["Text.LEFT","","P"],
 ["Text.RIGHT","","P"],

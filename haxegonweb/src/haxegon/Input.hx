@@ -132,17 +132,24 @@ class Input {
 		
 		#if (js || html5)
 		if (Text.input_show > 0) {
-			if (keycode == 32) {
-				//Space
-				keybuffer += " ";
-			}else if (keycode == 8) {
+			if (keycode == 8) {
 				//Backspace
 				if (keybuffer.length > 0) {
 			    keybuffer = keybuffer.substr(0, keybuffer.length - 1);
 				}
-			}else	if (charcode >= 32 && charcode <= 126) {
-				//Regular letter
-				keybuffer += String.fromCharCode(charcode);
+				if (Text.inputsound > -1) Webmusic.playsound(Text.inputsound, 1);
+			}else {
+			  if (keybuffer.length < Text.inputlength) {
+					if (keycode == 32) {
+						//Space
+						keybuffer += " ";
+						if (Text.inputsound > -1) Webmusic.playsound(Text.inputsound, 1);
+					}else if (charcode >= 32 && charcode <= 126) {
+						//Regular letter
+						keybuffer += String.fromCharCode(charcode);
+						if (Text.inputsound > -1) Webmusic.playsound(Text.inputsound, 1);
+					}
+				}
 			}
 		}
 		#end
