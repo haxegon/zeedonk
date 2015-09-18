@@ -1465,7 +1465,8 @@ class Gfx {
 	
 	#if html5
 	private static function onResize(e:Event):Void {
-		trace(gfxstage.stageWidth, gfxstage.stageHeight);
+		//trace(gfxstage.stageWidth, gfxstage.stageHeight);
+		//Window.devicePixelratio
 		var scaleX:Float;
 		var scaleY:Float;
 		
