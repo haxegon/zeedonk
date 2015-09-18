@@ -58,8 +58,12 @@ class Err {
 	}
 	
 	public static function getCharPosition(s:String, bytePos:Int):Int {
-		var bytes = haxe.io.Bytes.ofString(s);
-		return bytes.getString(0,bytePos).length;
+		var bytes = haxe.io.Bytes.ofString(s);		
+		try {			
+			return bytes.getString(0,bytePos).length;
+		} catch (e:Dynamic) {
+			return s.length-1;
+		}
 	}
 
 	public static function process(errorhandle:Dynamic):Array<String> {
