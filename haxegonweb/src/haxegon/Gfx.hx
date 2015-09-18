@@ -1466,16 +1466,31 @@ class Gfx {
 	#if html5
 	private static function onResize(e:Event):Void {
 		trace(gfxstage.stageWidth, gfxstage.stageHeight);
-		var scaleX:Int = Math.floor(gfxstage.stageWidth / screenwidth);
-		var scaleY:Int = Math.floor(gfxstage.stageHeight / screenheight);
+		var scaleX:Float;
+		var scaleY:Float;
 		
-		var jsscale = Math.min(scaleX, scaleY);
-		
-		gfxstage.scaleX = jsscale;
-		gfxstage.scaleY = jsscale;
-		
-		gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscale) / 2;
-		gfxstage.y = (gfxstage.stageHeight - screenheight * jsscale) / 2;
+		if (Game.editor()) {
+			scaleX = gfxstage.stageWidth / screenwidth;
+			scaleY = gfxstage.stageHeight / screenheight;
+			var jsscaleeditor:Float = Math.min(scaleX, scaleY);
+			
+			gfxstage.scaleX = jsscaleeditor;
+			gfxstage.scaleY = jsscaleeditor;
+			
+			gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscaleeditor) / 2;
+			gfxstage.y = (gfxstage.stageHeight - screenheight * jsscaleeditor) / 2;
+		}else {
+		  scaleX = Math.floor(gfxstage.stageWidth / screenwidth);
+			scaleY = Math.floor(gfxstage.stageHeight / screenheight);			
+			
+			var jsscale:Int = Convert.toint(Math.min(scaleX, scaleY));
+			
+			gfxstage.scaleX = jsscale;
+			gfxstage.scaleY = jsscale;
+			
+			gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscale) / 2;
+			gfxstage.y = (gfxstage.stageHeight - screenheight * jsscale) / 2;
+		}
 	}
 	#end
 	
