@@ -50,7 +50,7 @@ function terryRun(){
 
 	var editor = code.editorreference;
 
-	text = editor.getValue()+"\n";
+	text = editor.getValue();
 	interpreter.runScript(text);
 	unfocus();
 }
