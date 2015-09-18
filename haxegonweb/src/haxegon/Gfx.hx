@@ -51,9 +51,6 @@ class Gfx {
 	/** Create a screen with a given width, height and scale. Also inits Text. */
 	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
-		#if haxegonweb
-			onResize(null);
-		#end
 		Text.init(gfxstage);
 		showfps = false;
 		gfxstage.addChild(screen);
@@ -1455,60 +1452,10 @@ class Gfx {
 	
 	/** Just gives Gfx access to the stage. */
 	private static function init(stage:Stage) {
-		if (initrun) {
-			gfxstage = stage;
-			
-			onResize(null);
-			stage.addEventListener(Event.RESIZE, onResize);
-		}
+		if (initrun) gfxstage = stage;
 		clearscreeneachframe = true;
 		linethickness=1;
 	}	
-	
-	#if html5
-	private static function onResize(e:Event):Void {
-		//trace(gfxstage.stageWidth, gfxstage.stageHeight);
-		//Window.devicePixelratio
-		var scaleX:Float;
-		var scaleY:Float;
-		
-		if (Game.editor()) {
-			scaleX = gfxstage.stageWidth / screenwidth;
-			scaleY = gfxstage.stageHeight / screenheight;
-			var jsscaleeditor:Float = Math.min(scaleX, scaleY);
-			
-			gfxstage.scaleX = jsscaleeditor;
-			gfxstage.scaleY = jsscaleeditor;
-			
-			gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscaleeditor) / 2;
-			gfxstage.y = (gfxstage.stageHeight - screenheight * jsscaleeditor) / 2;
-		}else {
-			var pixelratio:Float = js.Browser.window.devicePixelRatio;
-			var innerwidth:Int = js.Browser.window.innerWidth;
-			var innerheight:Int = js.Browser.window.innerHeight;
-			/*
-			trace("pixel ratio: " + pixelratio);
-			trace("window size (" + gfxstage.stageWidth + ", " + gfxstage.stageHeight + ")");
-			trace("inner window size (" + js.Browser.window.innerWidth + ", " + js.Browser.window.innerHeight + ")");
-			trace("window size after scaling: (" + (gfxstage.stageWidth * pixelratio) + ", " + (gfxstage.stageHeight * pixelratio) + ")");
-			trace("window size (" + screenwidth + ", " + screenheight + ")");
-			*/
-			
-			scaleX = Math.floor(innerwidth / screenwidth);
-			scaleY = Math.floor(innerheight / screenheight);
-			
-			var jsscale:Float = Math.min(scaleX, scaleY);
-			
-			untyped __js__('var c = document.getElementById(\'openfl-content\'); c.style.transform = \'scale(\'+(1/window.devicePixelRatio)+\',\'+(1/ window.devicePixelRatio)+\')\'');
-			
-			gfxstage.scaleX = jsscale;
-			gfxstage.scaleY = jsscale;
-			
-			gfxstage.x = (innerwidth - screenwidth * jsscale) / 2;
-			gfxstage.y = (innerheight - screenheight * jsscale) / 2;
-		}
-	}
-	#end
 	
 	/** Called from resizescreen(). Sets up all our graphics buffers. */
 	private static function initgfx(width:Int, height:Int, scale:Int) {
