@@ -151,7 +151,7 @@ class Input {
 				}
 				if (Text.inputsound > -1) Webmusic.playsound(Text.inputsound, 1);
 			}else {
-			  if (keybuffer.length < Text.inputlength) {
+			  if (keybuffer.length < Text.inputmaxlength) {
 					if (keycode == 32) {
 						//Space
 						keybuffer += " ";

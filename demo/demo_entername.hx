@@ -4,7 +4,7 @@ var nameentered;        // true once you've typed in the name, false otherwise.
 function new() {
   Text.setfont(Font.CRYPT, 1);
   Text.inputsound = 32330304;
-  Text.inputlength = 16;
+  Text.inputmaxlength = 16;
   playername = "";
   nameentered = false;
 }

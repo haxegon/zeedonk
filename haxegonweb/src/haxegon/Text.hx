@@ -33,7 +33,7 @@ class Text {
 		#end
 		alphact = new ColorTransform();
 		input_cursorglow = 0;
-		inputlength = 40;
+		inputmaxlength = 40;
 		#if haxegonweb
 			inputsound = -1;
 		#end
@@ -51,7 +51,7 @@ class Text {
 		inputfield.type = TextFieldType.INPUT;
 		inputfield.visible = false;
 		
-		inputfield.maxChars = inputlength;
+		inputfield.maxChars = inputmaxlength;
 		
 		resetinput("");
 	}
@@ -143,7 +143,7 @@ class Text {
 			if (input_cursorglow >= 96) input_cursorglow = 0;
 			
 			display(input_textxp, input_textyp, input_text, input_textcol);
-			if (input_text.length < inputlength) {
+			if (input_text.length < inputmaxlength) {
 				if (input_cursorglow % 48 < 24) {
 					display(input_responsexp, input_responseyp, input_response, input_responsecol);
 				}else {
@@ -637,7 +637,7 @@ class Text {
 	#if haxegonweb
 	public static var inputsound:Int;
 	#end
-	public static var inputlength:Int;
+	public static var inputmaxlength:Int;
 	
 	private static var input_textxp:Float;
 	private static var input_textyp:Float;
