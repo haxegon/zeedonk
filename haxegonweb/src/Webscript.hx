@@ -170,14 +170,6 @@ class Webscript {
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
-			
-			//Let's do some testing! Delete me in final version
-			/*
-			Gfx.clearscreen(Gfx.rgb(128, 128, 128));
-			Gfx.fillbox(1, 1, Gfx.screenwidth - 2, Gfx.screenheight - 2, Gfx.rgb(16, 16, 16));
-			//Gfx.showfps = true;
-			*/
-			
 		}
 		
 		if (Gfx.showfps) {
@@ -194,6 +186,7 @@ class Webscript {
 			Text.setfont(oldfont, oldfontsize);
 		}
 	}
+	public static var name:String;
 	private static var counter:Int = 0;
 	private static var oldfont:String = "";
 	private static var oldfontsize:Int = 0;

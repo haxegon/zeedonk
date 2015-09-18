@@ -22,66 +22,65 @@ typedef Textdrawparams = {
 	@:optional var align:Int;
 }
 
+@:access(haxegon.Input)
 @:access(haxegon.Gfx)
 class Text {
 	public static function init(stage:Stage) {
 		drawto = Gfx.backbuffer;
 		gfxstage = stage;
-		enabletextfield();
+		#if flash
+			enabletextfield();
+		#end
 		alphact = new ColorTransform();
 		input_cursorglow = 0;
 	}
 	
 	//Text Input functions
-	
+	#if flash
 	private static function enabletextfield() {
-		gfxstage.addChild(inputField);
-		inputField.border = true;
-		inputField.width = Gfx.screenwidth;
-		inputField.height = 20;
-		inputField.x = 0;
-		inputField.y = Gfx.screenheight + 10;
-		inputField.type = TextFieldType.INPUT;
-		inputField.visible = false;
+		gfxstage.addChild(inputfield);
+		inputfield.border = true;
+		inputfield.width = Gfx.screenwidth;
+		inputfield.height = 20;
+		inputfield.x = 0;
+		inputfield.y = Gfx.screenheight + 10;
+		inputfield.type = TextFieldType.INPUT;
+		inputfield.visible = false;
 		
-		inputField.maxChars = 80;
+		inputfield.maxChars = 80;
 		
 		resetinput("");
 	}
 	
 	private static function input_checkfortext() {
-		gfxstage.focus = inputField;
-		#if flash
-		inputField.setSelection(inputField.text.length, inputField.text.length);
-		#else
-		inputField.setSelection(inputField.text.length, inputField.text.length);
-		#end
-		inputtext = inputField.text;
+		gfxstage.focus = inputfield;
+		inputfield.setSelection(inputfield.text.length, inputfield.text.length);
+		//inputfield.setSelection(inputfield.text.length, inputfield.text.length); //C++ maybe
+		inputtext = inputfield.text;
 	}
+	#end
 	
-	/** Return characters from the middle of a string. */
-	private static function mid(s:String, start:Int = 0, length:Int = 1):String {
-		return s.substr(start,length);
+	#if (js || html5)
+	private static function input_checkfortext() {
+		inputtext = Input.keybuffer;
 	}
+	#end
 	
 	/** Reverse a string. */
-	private static function reversetext(t:String):String {
+	private static function reverse(t:String):String {
 		var t2:String = "";
 		
-		for (i in 0...t.length) {
-			t2 += mid(t, t.length-i-1, 1);
-		}
+		for (i in 0...t.length) t2 += t.substr(t.length - i - 1, 1);
 		return t2;
 	}
 	
+	#if flash
 	public static function resetinput(t:String) {
-		#if flash
-		inputField.text = t; inputtext = t;
-		#else
-		inputField.text = reversetext(t); inputtext = reversetext(t);
-		#end
+		inputfield.text = t; inputtext = t;
+		//inputfield.text = reversetext(t); inputtext = reversetext(t); //Seems to work for native
 		input_show = 0;
 	}
+	#end
 	
 	public static function input(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, responsecol:Int = 0xCCCCCC):Bool {
 		input_show = 2;
@@ -96,7 +95,6 @@ class Text {
 		x = alignx(x); y = aligny(y);
 		input_textxp = x;
 		input_textyp = y;
-		
 		
 		if (typeface[currentindex].type == "bitmap") {			
 			typeface[currentindex].tf_bitmap.text = text;
@@ -124,7 +122,11 @@ class Text {
 		var response:String = inputtext;
 		lastentry = inputtext;
 		inputtext = "";
-		inputField.text = "";
+		#if flash
+		inputfield.text = "";
+		#else
+		Input.keybuffer = "";
+		#end
 		input_show = 0;
 		
 		return response;
@@ -619,7 +621,9 @@ class Text {
 	private static var alphact:ColorTransform;
 	
 	//Text input variables
-	private static var inputField:TextField = new TextField();
+	#if flash
+	private static var inputfield:TextField = new TextField();
+	#end
 	private static var inputtext:String;
 	private static var lastentry:String;
 	

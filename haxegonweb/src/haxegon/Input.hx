@@ -12,6 +12,7 @@ enum Keystate {
 	justpressed;
 }
 
+@:access(haxegon.Text)
 class Input {
 	public static function pressed(k:Key):Bool {
 		return keyheld[keymap.get(k)];
@@ -91,23 +92,18 @@ class Input {
 	}
 	
 	private static function handlekeydown(event:KeyboardEvent) {
-		#if flash
-		return "";
-		#else
-
 		#if terryhasntupgraded
-			if (ExternalInterface.call("bodyIsTargetted")==false){
+			if (ExternalInterface.call("bodyIsTargetted") == false) {
 				return;
 			}
 		#else
 			if (untyped __js__('document.activeElement.nodeName!="BODY"')){
 				return;
 			}
-
 		#end
-
-		if (event.charCode==91||event.charCode==93||event.charCode==224||event.charCode==17){			
-			for(keycode in 0...numletters){				
+		
+		if (event.charCode == 91 || event.charCode == 93 || event.charCode == 224 || event.charCode == 17) {	
+			for(keycode in 0 ... numletters){				
 				if (iskeycodeheld(current[keycode])) {
 					current[keycode] = Keystate.justreleased;
 				}else {
@@ -120,9 +116,9 @@ class Input {
 				return;
 			}
 		}
-		#end
-
+		
 		keycode = event.keyCode;
+		charcode = event.charCode;
 		
 		if (lookup.exists(keycode)) {
 			if (iskeycodeheld(current[keycode])) {
@@ -133,6 +129,23 @@ class Input {
 			}
 			keyheld[keycode] = true;
 		}
+		
+		#if (js || html5)
+		if (Text.input_show > 0) {
+			if (keycode == 32) {
+				//Space
+				keybuffer += " ";
+			}else if (keycode == 8) {
+				//Backspace
+				if (keybuffer.length > 0) {
+			    keybuffer = keybuffer.substr(0, keybuffer.length - 1);
+				}
+			}else	if (charcode >= 32 && charcode <= 126) {
+				//Regular letter
+				keybuffer += String.fromCharCode(charcode);
+			}
+		}
+		#end
 	}
 	
 	private static function handlekeyup(event:KeyboardEvent) {
@@ -262,4 +275,7 @@ class Input {
 	
 	private static var numletters:Int = 256;
 	private static var keycode:Int;
+	private static var charcode:Int;
+	
+	private static var keybuffer:String = "";
 }
