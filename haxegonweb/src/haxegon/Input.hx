@@ -155,6 +155,10 @@ class Input {
 		#end
 	}
 	
+	public static function getchar():String {
+	  return String.fromCharCode(charcode);	
+	}
+	
 	private static function handlekeyup(event:KeyboardEvent) {
 		keycode = event.keyCode;
 		if (lookup.exists(keycode)) {

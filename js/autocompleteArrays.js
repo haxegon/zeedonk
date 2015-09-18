@@ -218,6 +218,7 @@ var haxeHintArray = [
 ["Input.pressed","(Key.LEFT):Bool","F","True if this key is currently held down."],
 ["Input.justreleased","(Key.SPACE):Bool","F","True if the key has been released this frame"],
 ["Input.delaypressed","(Key.Z, 5):Bool","F","True once every N frames, if the key is pressed."],
+["Input.getchar","():String","F","Returns the last letter pressed."],
 ["Mouse.x",":Int","P"],
 ["Mouse.y",":Int","P"],
 ["Mouse.leftclick","():Bool","F","True if the button has been clicked this frame."],
