@@ -497,11 +497,11 @@ function update() {
       startPlay();
     }
   }
-  if ((Input.pressed(Key.DOWN)||Input.pressed(Key.S))&&bottomNote>0){
+  if ((Input.pressed(Key.DOWN)||Input.pressed(Key.S)||(Mouse.mousewheel<0))&&bottomNote>0){
     bottomNote--;
   }
   
-  if ((Input.pressed(Key.UP)||Input.pressed(Key.W))&&bottomNote<132-24){
+  if ((Input.pressed(Key.UP)||Input.pressed(Key.W)||(Mouse.mousewheel>0))&&bottomNote<132-24){
     bottomNote++;
   }
   if (Input.pressed(Key.LEFT)||Input.pressed(Key.A)){
