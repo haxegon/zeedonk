@@ -50,6 +50,9 @@ class Gfx {
 	/** Create a screen with a given width, height and scale. Also inits Text. */
 	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
+		#if haxegonweb
+			onResize(null);
+		#end
 		Text.init(gfxstage);
 		showfps = false;
 		gfxstage.addChild(screen);
@@ -1450,10 +1453,31 @@ class Gfx {
 	
 	/** Just gives Gfx access to the stage. */
 	private static function init(stage:Stage) {
-		if (initrun) gfxstage = stage;
+		if (initrun) {
+			gfxstage = stage;
+			
+			onResize(null);
+			stage.addEventListener(Event.RESIZE, onResize);
+		}
 		clearscreeneachframe = true;
 		linethickness=1;
 	}	
+	
+	#if html5
+	private static function onResize(e:Event):Void {
+		trace(gfxstage.stageWidth, gfxstage.stageHeight);
+		var scaleX = gfxstage.stageWidth / screenwidth;
+		var scaleY = gfxstage.stageHeight / screenheight;
+		
+		var jsscale = Math.min(scaleX, scaleY);
+		
+		gfxstage.scaleX = jsscale;
+		gfxstage.scaleY = jsscale;
+		
+		gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscale) / 2;
+		gfxstage.y = (gfxstage.stageHeight - screenheight * jsscale) / 2;
+	}
+	#end
 	
 	/** Called from resizescreen(). Sets up all our graphics buffers. */
 	private static function initgfx(width:Int, height:Int, scale:Int) {

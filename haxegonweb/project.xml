@@ -11,10 +11,9 @@
       main="haxegon.Load"
       path="bin" 
       file="webthing" 
-      preloader="Preloader"
    />
    
-  <window width="192" height="120" if="html5" />
+  <window width="0" height="0" if="html5" />
    
 	<window
       background="0x000000"
