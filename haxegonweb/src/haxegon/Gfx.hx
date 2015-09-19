@@ -49,12 +49,7 @@ class Gfx {
 	public static var drawto:BitmapData;
 	
 	/** Create a screen with a given width, height and scale. Also inits Text. */
-	#if !haxegonweb
-	private 
-	#else
-	public
-	#end
-	static function resizescreen(width:Float, height:Float, scale:Int = 1) {
+	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
 		Text.init(gfxstage);
 		showfps = false;
@@ -217,6 +212,15 @@ class Gfx {
 			}
 		}
 		return fixedstring;
+	}
+	
+	public static function clearimages() {
+		imageindex = new Map<String, Int>();
+		for(i in 0 ... images.length){
+		  images[i].dispose();
+		}
+		
+		images = [];
 	}
 	
 	public static function loadimagestring(imagename:String, inputstring:String, col1:Int = -1, col2:Int = -1, col3:Int = -1, col4:Int = -1) {

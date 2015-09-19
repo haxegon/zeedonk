@@ -29,6 +29,7 @@ class Webbridge {
 	public function stop() {
 		Gfx.resizescreen(240, 150);
 		Text.setfont("default", 1);
+		Webscript.cleanupimages();
 		Webscript.scriptloaded = false;
 		Webscript.runscript = false;
 		Webscript.errorinscript = false;

@@ -29,6 +29,9 @@ class Webscript {
 	public static var initfunction:Dynamic;
 	public static var updatefunction:Dynamic;
 	
+	public static var donkeyhop:Int = 0;
+	public static var zebrahop:Int = 0;
+	
 	public static function init() {
 		scriptloaded = false;
 		runscript = false;
@@ -54,6 +57,8 @@ class Webscript {
 		
 		Text.setfont(Webfont.DEFAULT, 1);
 		
+		cleanupimages();
+		
 		try {
 			#if haxegonwebhtml5debug
 				loadfile("tests/invalidaccess.txt");
@@ -71,6 +76,12 @@ class Webscript {
 			#end
 		}
 		readytogo = true;
+	}
+	
+	public static function cleanupimages() {
+		Gfx.clearimages();
+  	Gfx.loadimagestring("__library_zebra", "YKaaapZZZSaaaaaaaaaabeaaaaraaaacE6aaaEOaaavnaaac6avkFqaiHvkaquEHaac6aCabqauaauafaa");
+		Gfx.loadimagestring("__library_donkey", "YKaaaks4f3iMeqaaaaeqaaabeaaacE6aafkCaabsEaaaac6aaaaEEE6akEE8acEECqaCakaakac6afabqa");
 	}
 	
 	public static var myLoader:URLLoader;
@@ -149,7 +160,22 @@ class Webscript {
 				Game.time++;
 			}	
 		}else {
-			counter+=10;
+			counter += 1;
+			if (counter % 120 == 0) donkeyhop = 10;
+			if (counter % 120 == 60) zebrahop = 10;
+			
+			if (zebrahop > 0) zebrahop--;
+			if (donkeyhop > 0) donkeyhop--;
+			/*
+			
+			for (i in 0 ... 16) {
+				Gfx.fillbox(0, (i * 10) - ((counter/20) % 10) * 2, Gfx.screenwidth, 10, i%2==0?Col.BLACK:Col.WHITE);
+			}
+			
+			Gfx.fillbox(10, 10, Gfx.screenwidth - 20, Gfx.screenheight - 20, Col.DARKBROWN);
+			*/
+			/*
+			counter += 10;
 			Gfx.clearscreen(Col.GRAY);
 			var gap:Int = Std.int((Gfx.screenheightmid / 5));
 			for (i in 0 ... 5) {
@@ -171,7 +197,14 @@ class Webscript {
 					Text.display(startpos + currentpos, Gfx.screenheightmid - 35 + Math.sin((((i*5)+counter)%360) * Math.PI * 2 / 360)*5, S.mid(msg, i, 1), Col.WHITE);
 				}
 				currentpos += Text.len(S.mid(msg, i, 1));
-			}
+			}*/
+			
+			Gfx.clearscreen(Col.LIGHTBLUE);
+			Gfx.fillbox(0, Gfx.screenheightmid, Gfx.screenwidth, Gfx.screenheightmid, Col.GREEN);
+			Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER-10 - zebrahop%5, "__library_donkey", {scale: 2});
+			Gfx.drawimage(Gfx.CENTER - 80 - 16, Gfx.CENTER-10 - donkeyhop%5, "__library_zebra", {scale: 2});
+			Text.display(Text.CENTER, Text.CENTER + 40, "WAITING FOR SCRIPTFILE", Col.WHITE);
+			Text.display(Text.CENTER, Gfx.screenheight - Text.height()-14, "zeedonk alpha v0.5", Col.WHITE);
 		}
 		/*
 		Gfx.clearscreen(Col.DARKBLUE);
