@@ -549,9 +549,9 @@ class Text {
 			addfont(t, s);
 		}
 		
-		if(t != currentfont){
+		if (t != currentfont) {
 			currentfont = t;
-			if (currentsize != -1) {
+			if (s != -1) {
 				if (typefaceindex.exists(currentfont + "_" + Std.string(currentsize))) {
 					currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
 				}else {

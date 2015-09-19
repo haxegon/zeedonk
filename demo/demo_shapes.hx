@@ -49,7 +49,7 @@ function update() {
   }
     
   Gfx.fillbox(0,Gfx.screenheight-10,Gfx.screenwidth,10,Col.BLACK);
-  Text.display(Text.CENTER, Gfx.screenheight - Text.height()- 1, "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE);
+  Text.display(Text.CENTER, Gfx.screenheight - Text.height(), "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE);
 }
 
 function drawtriangles(effectnum) {

@@ -284,6 +284,7 @@ class Webscript {
 		
 		//Set default font
 		Text.setfont("default", 1);
+		Gfx.clearscreeneachframe = true;
 		
 		runscript = true;
 		try{
@@ -329,6 +330,7 @@ class Webscript {
 			}
 			
 			if (updatefunction == null) {
+				Gfx.clearscreeneachframe = false;
 				Webscript.pausescript = true;
 			}
 		}

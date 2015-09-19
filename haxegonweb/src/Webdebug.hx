@@ -26,8 +26,45 @@ class Webdebug {
 	  trace(msg1);
 		#else
 		var returnarray:Array<String> = [];
-		var linenum:Int = getlinenum(Webscript.interpreter.curExpr.pmin);
-		if (linenum == 0) {
+		var linenum:Int = 0;
+		if(Webscript.interpreter != null){
+			linenum = getlinenum(Webscript.interpreter.curExpr.pmin);
+			if (linenum == 0) {
+				returnarray.push(msg1);
+				if (msg2 != null) returnarray.push(msg2);
+				if (msg3 != null) returnarray.push(msg3);
+				if (msg4 != null) returnarray.push(msg4);
+				if (msg5 != null) returnarray.push(msg5);
+				if (msg6 != null) returnarray.push(msg6);
+				if (msg7 != null) returnarray.push(msg7);
+				if (msg8 != null) returnarray.push(msg8);
+				
+				#if terryhasntupgraded
+					trace(returnarray);
+					ExternalInterface.call("consolePrintArray", returnarray, true);
+				#else
+					untyped __js__('consolePrintArray({0},true)', returnarray);
+				#end
+			}else{
+				returnarray.push(msg1);
+				if (msg2 != null) returnarray.push(msg2);
+				if (msg3 != null) returnarray.push(msg3);
+				if (msg4 != null) returnarray.push(msg4);
+				if (msg5 != null) returnarray.push(msg5);
+				if (msg6 != null) returnarray.push(msg6);
+				if (msg7 != null) returnarray.push(msg7);
+				if (msg8 != null) returnarray.push(msg8);
+
+
+				#if terryhasntupgraded
+					trace(returnarray, linenum);
+					ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);
+				#else
+					untyped __js__('consolePrintWithLinesArray({0},{1},true)', returnarray,linenum);
+				#end
+			}
+		}else {
+		  trace("!CONSOLE NOT AVAILABLE YET!");
 			returnarray.push(msg1);
 			if (msg2 != null) returnarray.push(msg2);
 			if (msg3 != null) returnarray.push(msg3);
@@ -36,30 +73,7 @@ class Webdebug {
 			if (msg6 != null) returnarray.push(msg6);
 			if (msg7 != null) returnarray.push(msg7);
 			if (msg8 != null) returnarray.push(msg8);
-			
-			#if terryhasntupgraded
-				trace(returnarray);
-				ExternalInterface.call("consolePrintArray", returnarray, true);
-			#else
-				untyped __js__('consolePrintArray({0},true)', returnarray);
-			#end
-		}else{
-			returnarray.push(msg1);
-			if (msg2 != null) returnarray.push(msg2);
-			if (msg3 != null) returnarray.push(msg3);
-			if (msg4 != null) returnarray.push(msg4);
-			if (msg5 != null) returnarray.push(msg5);
-			if (msg6 != null) returnarray.push(msg6);
-			if (msg7 != null) returnarray.push(msg7);
-			if (msg8 != null) returnarray.push(msg8);
-
-
-			#if terryhasntupgraded
-				trace(returnarray, linenum);
-				ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);
-			#else
-				untyped __js__('consolePrintWithLinesArray({0},{1},true)', returnarray,linenum);
-			#end
+			trace(returnarray);
 		}
 		#end
 	}
