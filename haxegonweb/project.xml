@@ -49,5 +49,5 @@
 	<haxedef name="RENDER_BLIT" if="RENDER_BLIT" />
 	<haxedef name="RENDER_TILE" if="RENDER_TILE" />
 	
-	<assets path="data" exclude="*.svg|*.mp3|*.ogg|*.wav"/>	
+	<assets path="data" exclude="*.svg|*.mp3|*.ogg|*.wav|*.gz"/>	
 </project>

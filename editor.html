@@ -3,7 +3,6 @@
 <head>
 	<link rel="shortcut icon" href="images/icon256.png" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
     <title>Zeedonk</title>
 
 
@@ -54,7 +53,7 @@ function update() {
 <div id="verticaldragbar"></div>
 
 <div id="uppertoolbar">	
-	<img src="images/favicon2.png" width="16px" height="16px">&nbsp;&nbsp;&nbsp;<a href="index.html"><h2 class="title">zeedonk</h2></a> &nbsp;&nbsp; 
+	<span class="zeedonkimg"></span>&nbsp;&nbsp;&nbsp;<a href="index.html"><h2 class="title">zeedonk</h2></a> &nbsp;&nbsp; 
 	<span id="titlespan">
 	<a id="newClickLink" href="javascript:void(0);" class="button-link" >NEW</a> &nbsp;&nbsp;
 	<a id="saveClickLink" href="javascript:void(0);" class="button-link" >SAVE</a> &nbsp;&nbsp;
@@ -86,8 +85,8 @@ function update() {
 </optgroup>
 </select>
 </form> &nbsp;&nbsp;
-	<a id="runClickLink" href="javascript:void('Run the Game');" class="button-link">► RUN</a> &nbsp;&nbsp; 
-	<a id="stopClickLink" href="javascript:void('Stop the Game');" class="button-link">◼ STOP</a> &nbsp;&nbsp;
+	<a id="runClickLink" href="javascript:void('Run the Game');" class="button-link">&#9658; RUN</a> &nbsp;&nbsp; 
+	<a id="stopClickLink" href="javascript:void('Stop the Game');" class="button-link">&#9724; STOP</a> &nbsp;&nbsp;
 	<a id="shareClickLink" href="javascript:void('Generate Link To Game');" class="button-link">SHARE</a> &nbsp;&nbsp; 
 	<a href="Documentation/index.html"  target="Documentation" class="button-link">DOCS</a> &nbsp;&nbsp; 
 	<!--<a id="referenceClickLink"  href="javascript:void('Print Reference Sheet');" target="_blank" class="button-link">REFERENCE</a> &nbsp;&nbsp; -->
@@ -106,20 +105,20 @@ function update() {
 	<div class="lowertoolbar">
 <div id="soundbar">
 	&nbsp;&nbsp;&nbsp;
-	<span class="soundbutton"><a id="newsound0" title="collect item sound" href="javascript:void('Generate Collect Item Sound');"><img src="images/audio1.gif" width="18px" height="18px" alt="collect item sound"></a></span>
-	<span class="soundbutton"><a  id="newsound7" title="push sounds" href="javascript:void('Generate Push Sound');" ><img src="images/audio2.gif" width="18px" height="18px" alt="push sounds"></a></span>
-	<span class="soundbutton"><a id="newsound2" title="explosion sound" href="javascript:void('Generate Explosion Sound');" ><img src="images/audio3.gif" width="18px" height="18px" alt="explosion sound"></a></span>
-	<span class="soundbutton"><a id="newsound3" title="powerup sound" href="javascript:void('Generate Power-Up Sound');" ><img src="images/audio4.gif" width="18px" height="18px" alt="powerup sound"></a></span>
-	<span class="soundbutton"><a id="newsound9" title="bird tweet sound" href="javascript:void('Generate Bird Tweet Sound');"><img src="images/audio5.gif" width="18px" height="18px"  alt="bird tweet sound"></a></span>
-	<span class="soundbutton"><a id="newsound4" title="hurt sound" href="javascript:void('Generate Hurt Sound');" ><img src="images/audio6.gif" width="18px" height="18px" alt="hurt sound"></a></span>
-	<span class="soundbutton"><a id="newsound5" title="jump sound" href="javascript:void('Generate Jump Sound');"><img src="images/audio7.gif" width="18px" height="18px"  alt="jump sound"></a></span>
-	<span class="soundbutton"><a id="newsound1" title="pew pew sound" href="javascript:void('Generate Pew Pew Sound');"><img src="images/audio8.gif" width="18px" height="18px"  alt="pew pew pew"></a></span>
-	<span class="soundbutton"><a id="newsound6" title="selection sound" href="javascript:void('Generate Selection Sound');"><img src="images/audio9.gif" width="18px" height="18px"  alt="selection sound"></a></span>
-	<span class="soundbutton"><a id="newsound8" title="random sound" href="javascript:void('Generate Random Sound');"><img src="images/audio10.gif" width="18px" height="18px"  alt="random sound"></a></span>
-	<span style="position:absolute;top:0px;right:5px;" class="soundbutton"><a target="musiceditor" href="play.html?demo=tool_musiceditor">&nbsp;&nbsp;<img src="images/audio11.gif" width="18px" height="18px"  alt="selection sound">&nbsp;&nbsp;</a></span>
+	<span class="soundbutton"><a id="newsound0" title="collect item sound" href="javascript:void('Generate Collect Item Sound');"><span class="button2" alt="collect item sound"></span></a></span>
+	<span class="soundbutton"><a  id="newsound7" title="push sounds" href="javascript:void('Generate Push Sound');" ><span class="button3" alt="push sounds"></span></a></span>
+	<span class="soundbutton"><a id="newsound2" title="explosion sound" href="javascript:void('Generate Explosion Sound');" ><span class="button4" alt="explosion sound"></span></a></span>
+	<span class="soundbutton"><a id="newsound3" title="powerup sound" href="javascript:void('Generate Power-Up Sound');" ><span class="button5" alt="powerup sound"></span></a></span>
+	<span class="soundbutton"><a id="newsound9" title="bird tweet sound" href="javascript:void('Generate Bird Tweet Sound');"><span class="button6" alt="bird tweet sound"></span></a></span>
+	<span class="soundbutton"><a id="newsound4" title="hurt sound" href="javascript:void('Generate Hurt Sound');" ><span class="button7" alt="hurt sound"></span></a></span>
+	<span class="soundbutton"><a id="newsound5" title="jump sound" href="javascript:void('Generate Jump Sound');"><span class="button8" alt="jump sound"></span></a></span>
+	<span class="soundbutton"><a id="newsound1" title="pew pew sound" href="javascript:void('Generate Pew Pew Sound');"><span class="button9" alt="pew pew pew"></span></a></span>
+	<span class="soundbutton"><a id="newsound6" title="selection sound" href="javascript:void('Generate Selection Sound');"><span class="button10" alt="selection sound"></span></a></span>
+	<span class="soundbutton"><a id="newsound8" title="random sound" href="javascript:void('Generate Random Sound');"><span class="button11" alt="random sound"></span></a></span>
+	<span style="position:absolute;top:0px;right:5px;" class="soundbutton"><a target="musiceditor" href="play.html?demo=tool_musiceditor">&nbsp;&nbsp;<span class="button12" alt="selection sound"></span>&nbsp;&nbsp;</a></span>
 	</div></div>
 	<div class="lowerarea" id="lowerarea">
-<div class="clearconsolebutton" style="float:right;position:fixed;right:4px;"><a id="clearConsoleClick" title="clears the console" href="javascript:void('Clear Console');"><img src="images/clearConsole.gif"  width="18px" height="18px" alt="clear console contents"></a></div>
+<div class="clearconsolebutton" style="float:right;position:fixed;right:4px;"><a id="clearConsoleClick" title="clears the console" href="javascript:void('Clear Console');"><span class="button1" alt="clear console contents"></span></a></div>
 <div id = "consoletextarea" >
 
 =================================<br>

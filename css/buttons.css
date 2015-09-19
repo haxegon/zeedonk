@@ -1,4 +1,3 @@
-
 a.button-link {
     padding: 1px 3px;
     background: #4d4d4d;
@@ -80,4 +79,96 @@ select {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     background: darkgrey;
     border: solid 1px #303030;
+}
+
+.button1 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat 0px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.button2 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -18px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.button3 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -36px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.button4 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -54px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.button5 {
+    display: inline-block;
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -72px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.button6 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -90px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.button7 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat 0px -18px;
+    width: 18px;
+    height: 18px;
+}
+
+.button8 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -18px -18px;
+    width: 18px;
+    height: 18px;
+}
+
+.button9 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -36px -18px;
+    width: 18px;
+    height: 18px;
+}
+
+.button10 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -54px -18px;
+    width: 18px;
+    height: 18px;
+}
+
+.button11 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -72px -18px;
+    width: 18px;
+    height: 18px;
+}
+
+.button12 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -108px 0px;
+    width: 18px;
+    height: 18px;
+}
+
+.zeedonkimg {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -90px -18px;
+    width: 18px;
+    height: 18px;
 }

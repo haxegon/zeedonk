@@ -1,4 +1,6 @@
-rm ../bin/js/*.*
+rm -rf ../bin/js/*.*
+rm -rf ../bin/js/*
+
 java -jar ~/progs/closure.jar --language_in ECMASCRIPT5 --js_output_file ../bin/js/compiled.js \
 	--js ../haxegonweb/bin/html5/bin/lib/soundjs.min.js\
         --js ../haxegonweb/bin/html5/bin/webthing.js \
