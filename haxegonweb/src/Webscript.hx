@@ -47,6 +47,7 @@ class Webscript {
 		Text.setfont(Webfont.RETROFUTURE, 1);
 		Text.setfont(Webfont.ROMAN, 1);
 		Text.setfont(Webfont.SPECIAL, 1);
+		Text.setfont(Webfont.TALL, 1);
 		Text.setfont(Webfont.TINY, 1);
 		Text.setfont(Webfont.YOSTER, 1);
 		
@@ -145,9 +146,9 @@ class Webscript {
 		}else {
 			counter+=10;
 			Gfx.clearscreen(Col.GRAY);
-			var gap:Int = Std.int((Gfx.screenheightmid / 6));
-			for (i in 0 ... 6) {
-				if (i % 2 == 0) {
+			var gap:Int = Std.int((Gfx.screenheightmid / 5));
+			for (i in 0 ... 5) {
+				if (i % 2 == 1) {
 					Gfx.fillbox(0, Gfx.screenheightmid + (i * gap), Gfx.screenwidth, gap, Col.WHITE);
 				}else {
 					Gfx.fillbox(0, Gfx.screenheightmid + (i * gap), Gfx.screenwidth, gap, Col.BLACK);
@@ -155,7 +156,7 @@ class Webscript {
 			}
 			
 			
-			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height(), "zeedonk alpha v0.1", Col.WHITE, { align:Text.RIGHT } );
+			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height(), "zeedonk alpha v0.5", Col.WHITE, { align:Text.RIGHT } );
 			
 			var msg:String = "WAITING FOR SCRIPTFILE...";
 			var startpos:Float = Gfx.screenwidthmid - Text.len(msg) / 2;
@@ -167,7 +168,19 @@ class Webscript {
 				currentpos += Text.len(S.mid(msg, i, 1));
 			}
 		}
+		/*
+		Gfx.clearscreen();
 		
+		Text.setfont(Webfont.TALL, 1);
+		
+		Text.display(1, 1, "the quick brown, fox jumped. Over");
+		Text.display(1, 10, "the lazy dog! Oh no!");
+		
+		Text.display(1, 21, "The quick brown fox jumped over".toUpperCase());
+		Text.display(1, 30, "the lazy dog?".toUpperCase());
+		
+		Text.display(1, 50, "1234567890,".toUpperCase());
+		*/
 		if (Gfx.showfps) {
 			oldfont = Text.currentfont;
 			oldfontsize = Text.currentsize;

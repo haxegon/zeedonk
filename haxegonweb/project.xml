@@ -14,7 +14,7 @@
       preloader="Preloader" 
    />
    
-  <window width="192" height="120" if="html5" />
+  <window width="240" height="150" if="html5" />
    
 	<window
       background="0x000000"

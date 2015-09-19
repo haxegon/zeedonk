@@ -1,1 +1,1 @@
-lime.embed ("openfl-content", 192, 120, "000000");
+lime.embed ("openfl-content", 240, 150, "000000");
