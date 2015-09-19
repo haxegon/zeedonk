@@ -82,7 +82,7 @@ private static function TryPlayNote(x){
 	private static var playTick:Int=0;
 	private static var selectedSequence:Int=0;
 
-private static var maxVol:Int=7;
+private static var maxVol:Int=9;
 
 private static function startPlay() {
   playing=true;

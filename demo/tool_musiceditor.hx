@@ -1,4 +1,3 @@
-
 var charWidth =5;
 var charHeight =8;
 
@@ -237,7 +236,7 @@ var selectedInst =0;
 var noteLength =3;
 var lastl = noteLength;           
            
-var maxVol =7;
+var maxVol =9;
 var noteVol =maxVol;
 var selectedSequence =0;
 var bottomNote=60;
@@ -263,10 +262,7 @@ function DoUndo(){
 }
       
 function drawButton(inittext,x,y,textcolor,color,colorhover) {
-  x=Convert.toint(x*1.25);
-  y=Convert.toint(y*1.25);
-  
-  var width=45;
+  var width=35;
   var height=charHeight+2;
   var text = "";
   for(i in 0 ... inittext.length){
@@ -286,7 +282,7 @@ function drawButton(inittext,x,y,textcolor,color,colorhover) {
   }
   Gfx.fillbox(x,y,width,height,color);
   var textoffset = (width - Text.len(text))/2;
-  Text.display(x+1 + textoffset, y+1, text, textcolor);
+  Text.display(x+1 + textoffset, y+2, text, textcolor);
   return click;
 }
 
@@ -541,7 +537,7 @@ function update() {
   if (Input.pressed(Key.PLUS)||Input.pressed(Key.E)){
     plusCounter--;
     if (plusCounter<=0){
-      if (noteVol<7){
+      if (noteVol<maxVol){
         noteVol++;
         plusCounter=5;
       } 
@@ -567,14 +563,15 @@ function update() {
   Gfx.clearscreen(backgroundCol);
 
   //draw sequence panel
-  var cellCount=12;  
+  var cellCount=12;    
   var colLength = Math.min(dat.notes.length+1,12);
-  Gfx.fillbox(1,9,13,11+colLength*8,panelCol);
-  Text.display(2,10,"SEQ",darkText);
+  var seqTop=18;
+  Gfx.fillbox(1,seqTop,13,11+colLength*10,panelCol);
+  Text.display(2,seqTop+3,"SEQ",darkText);
 
   for (i in 0 ... dat.notes.length) {
     var tCol=darkText;
-    var collide=collideBox(2,20+i*8,11,7);
+    var collide=collideBox(2,seqTop+11+i*10,11,9);
     var col =i==selectedSequence?mainHighlighter:mainHighlight;
     if (collide==1&&i!=selectedSequence){
       col=mainHighlightish;
@@ -590,20 +587,19 @@ function update() {
         if (selectedSequence==i){
           selectedSequence--;
         }
-        trace("removed from sequence");
         break;
       }
     }
-    Gfx.fillbox(2,20+i*8,11,7,col);   
+    Gfx.fillbox(2,seqTop+11+i*10,11,9,col);   
     var s = Convert.tostring(i);
     if (i<10){
       s="0"+s;
     }
-    Text.display(4,20 + i * 8+1,s ,tCol);
+    Text.display(4,seqTop+11 + i * 10+2,s ,tCol);
   }
   if (dat.notes.length<12){
     var i =dat.notes.length;
-    var collide=collideBox(2,20+i*8,11,7);
+    var collide=collideBox(2,seqTop+11+i*10,11,9);
     var col=Col.GREY;
     if (collide==1){
       col=Col.WHITE;
@@ -611,7 +607,7 @@ function update() {
     if (collide==2){
       PushNewSequence();
     }
-    Text.display(6,20 + i * 8+1,"+" ,col);   
+    Text.display(6,seqTop+11 + i * 10+2,"+" ,col);   
   }
 
   var xOffset=41;
@@ -702,20 +698,22 @@ for (k in 0 ... 5){
 
   //draw note
 
-  if (drawButton("  play   ",152,21,textCol,mainButton,mainHighlight)){
+  var buttonx=Gfx.screenwidth-36;
+  var buttonStep=13;
+  if (drawButton("  play   ",buttonx,21+buttonStep*0,textCol,mainButton,mainHighlight)){
     startPlay();
   }
-  if (drawButton("  stop   ",152,31,textCol,mainButton,mainHighlight)){
+  if (drawButton("  stop   ",buttonx,21+buttonStep*1,textCol,mainButton,mainHighlight)){
     playing=false;
   }
   
     
-  if (drawButton("clear pat",152,51,textCol,mainButton,mainHighlight)){
+  if (drawButton("clear pat",buttonx,21+buttonStep*3,textCol,mainButton,mainHighlight)){
     MakeBackupCopy();
     dat.notes[selectedSequence]=[[],[],[],[],[]];
   }
     
-  if (drawButton("   new   ",152,71,textCol,mainButton,mainHighlight)){
+  if (drawButton("   new   ",buttonx,21+buttonStep*5,textCol,mainButton,mainHighlight)){
     MakeBackupCopy();
     dat = {
       patternLength:16,
@@ -730,7 +728,7 @@ for (k in 0 ... 5){
   }
 
 
-  if (drawButton("  save   ",152,81,textCol,mainButton,mainHighlight)){
+  if (drawButton("  save   ",buttonx,21+buttonStep*6,textCol,mainButton,mainHighlight)){
     if (Game.editor())
         {
       trace(saveDat());
@@ -741,19 +739,19 @@ for (k in 0 ... 5){
     
 
 
-  if (drawButton("  load   ",152,91,textCol,mainButton,mainHighlight)){
+  if (drawButton("  load   ",buttonx,21+buttonStep*7,textCol,mainButton,mainHighlight)){
     var ld = Game.prompt("Enter music data string:","");
         trace(ld);
         if (ld!=null&&ld.length>0){loadDat(ld);}
   }
   
-  if (drawButton("  help   ",152,111,textCol,mainButton,mainHighlight)){
+  if (drawButton("  help   ",buttonx,21+buttonStep*8+10,textCol,mainButton,mainHighlight)){
     helpmode=true;
   }
   //draw grid
-  var gx=22;
-  var gy=21;
-  var cellWidth=10;
+  var gx=26;
+  var gy=24;
+  var cellWidth=11;
   var cellHeight=10;
   var xCells=dat.patternLength;
   var yCells=12;
@@ -765,12 +763,12 @@ for (k in 0 ... 5){
   var cNotePos = ((bottomNote+11)%12);
 //  trace((gx-5)+","+(gy+cellHeight*cNotePos)+","+octaveDisplay);
   if (octaveDisplay>9){
-    Text.display(gx-7,gy+cellHeight*(cNotePos)+2,Convert.tostring(octaveDisplay));
+    Text.display(gx-11,gy+cellHeight*(cNotePos)+4,Convert.tostring(octaveDisplay));
   } else {
-    Text.display(gx-3,gy+cellHeight*(cNotePos)+2,Convert.tostring(octaveDisplay));    
+    Text.display(gx-4,gy+cellHeight*(cNotePos)+4,Convert.tostring(octaveDisplay));    
   }
         for (i in 0...12){
-          Text.display(gx-7,gy+cellHeight*(i)+2,notenames[(bottomNote+11-i)%12],Col.GREY);
+          Text.display(gx-8,gy+cellHeight*(i)+4,notenames[(bottomNote+11-i)%12],Col.GREY);
         }
   Gfx.fillbox(gx-7,gy+cellHeight*(cNotePos+1),xCells*cellWidth+8,1,Col.GREY);
   
@@ -804,18 +802,18 @@ for (k in 0 ... 5){
          var l = n[1];
          if (dNote<=0){
           //draw note on bottom
-           var y = 118;
+           var y = 145;
            Gfx.fillbox(x,y,cellWidth*l-1,1,col);
          } else if (dNote>12){
            //draw note on top
-           var y = 20;
+           var y = 23;
            Gfx.fillbox(x,y,cellWidth*l-1,1,col);
          } else {
            //draw note on grid
-           var y = gy+1+cellHeight*(12-dNote);
+           var y = gy+2+cellHeight*(12-dNote);
            var l = n[1];
            var v = n[3];
-           Gfx.fillbox(x,y+maxVol-v,cellWidth*l-1,v,col);
+           Gfx.fillbox(x,y+maxVol-v-1,cellWidth*l-1,v,col);
          }
     }
   }
@@ -996,5 +994,5 @@ function new(){
   // Music.playnote(4123,1,1,10);
   Game.title="tinybox";
   Game.homepage="www.google.com";
-  Text.setfont(Font.TALL,1);
+  Text.setfont(Font.PIXEL,1);
 }
