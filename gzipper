@@ -8,7 +8,7 @@ use File::Find;
 find (\&wanted, ("."));
 sub wanted
 {
-    if (/(.*\.(?:html|fnt|css|txt|js)$)/i) {
+    if (/(.*\.(?:html|fnt|css|txt|js|hx)$)/i) {
         print "Compressing $File::Find::name\n";
 		system ("rm -f \"$_.gz\"");
         if (! -f "$_.gz") {
