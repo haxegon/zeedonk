@@ -71,7 +71,6 @@ class Webscript {
 			#end
 		}
 		readytogo = true;
-
 	}
 	
 	public static var myLoader:URLLoader;
@@ -130,8 +129,10 @@ class Webscript {
 			Gfx.clearscreen(Gfx.rgb(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
 		}else if (loadwhenready) {
-		  loadwhenready = false;	
-			loadscript(myscript);
+			if (readytogo) {
+	  		loadwhenready = false;	
+				loadscript(myscript);
+			}
 	  }else if (script_waitforreset) {
 			if (!waitforreset) {
 				scriptfound_enginereset();
