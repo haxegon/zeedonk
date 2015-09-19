@@ -169,7 +169,7 @@ class Webscript {
 			}
 		}
 		/*
-		Gfx.clearscreen();
+		Gfx.clearscreen(Col.DARKBLUE);
 		
 		Text.setfont(Webfont.TALL, 1);
 		
@@ -180,7 +180,26 @@ class Webscript {
 		Text.display(1, 30, "the lazy dog?".toUpperCase());
 		
 		Text.display(1, 50, "1234567890,".toUpperCase());
+		Text.display(1, 60, "a\"b\\c/d#e£f$g%h^i&j*k(l)m{o}A<B>C_D".toUpperCase());
+		
+		Text.display(1, 80, "What does that say? I can't read it!");
+		Text.display(1, 95, "It reads: 'stupid font`");
 		*/
+		/*
+		Text.changesize(2);
+		Text.display(Text.CENTER,1,"TinyBox");
+		Text.changesize(1);
+		var i=0;
+		Text.display(3,30+13*(i++),"Shortcuts:");
+		Text.display(3,30+13*(i++),"~ Arrow keys or wsad,to scroll/set note length.");
+		Text.display(3,30+13*(i++),"~ +/- or q and e to control volume.");
+		Text.display(3,30+13*(i++),"~ Right click on instruments to randomize,");
+		Text.display(3,30+13*(i++),"~ Or press numbers when hovering to enter.");
+		Text.display(3,30+13*(i++),"~ You can press c/v to copy/paste sequences.");
+		Text.display(3,30+13*(i++),"~ Right click notes/sequences to remove.");
+		Text.display(3,30+13*(i++),"~ Z to undo.");
+		*/
+		
 		if (Gfx.showfps) {
 			oldfont = Text.currentfont;
 			oldfontsize = Text.currentsize;
