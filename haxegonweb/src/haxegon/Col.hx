@@ -2,7 +2,6 @@ package haxegon;
 
 //From Arne's legendary 16 colour palette: http://androidarts.com/palette/16pal.htm
 
-@:keep
 class Col {
 	public static var BLACK:Int = 0x000000;
 	public static var GREY:Int = 0x9D9D9D;
