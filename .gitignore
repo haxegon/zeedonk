@@ -6,3 +6,7 @@ Find Results
 *.gz
 
 .htaccess
+
+bin/
+
+*.swp

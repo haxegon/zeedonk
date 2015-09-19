@@ -1,3 +1,17 @@
+#!/bin/bash 
 ./build
 ./docbuild
+rm -rf bin
+echo copying directory
+cd ..
+cp -R zeedonk zeedonkbin
+mv zeedonkbin zeedonk/bin
+cd zeedonk
+cd bin
 ./gzipper
+cd ..
+echo optimizing images
+rm bin/images/*.png
+cd images
+./minimize
+cd ..
