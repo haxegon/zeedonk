@@ -1,4 +1,0 @@
-cd haxegonweb
-./releasebuild
-cd ..
-./gzipper

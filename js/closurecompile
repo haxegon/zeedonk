@@ -1,7 +1,7 @@
 rm -rf ../bin/js/*.*
 rm -rf ../bin/js/*
 
-java -jar ~/progs/closure.jar --language_in ECMASCRIPT5 --js_output_file ../bin/js/compiled.js \
+java -jar ~/progs/closure.jar --warning_level QUIET --language_in ECMASCRIPT5 --js_output_file compiled.js \
 	--js ../haxegonweb/bin/html5/bin/lib/soundjs.min.js\
         --js ../haxegonweb/bin/html5/bin/webthing.js \
         --js debug.js \
@@ -28,7 +28,7 @@ java -jar ~/progs/closure.jar --language_in ECMASCRIPT5 --js_output_file ../bin/
         --js layout.js\
         --js addlisteners_editor.js\
         --js lime_embed.js
-java -jar ~/progs/closure.jar --js_output_file ../bin/js/player_compiled.js \
+java -jar ~/progs/closure.jar --warning_level QUIET --language_in ECMASCRIPT5 --js_output_file player_compiled.js \
 	--js ../haxegonweb/bin/html5/bin/lib/soundjs.min.js\
         --js ../haxegonweb/bin/html5/bin/webthing.js \
         --js globalVariables.js \

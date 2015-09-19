@@ -9,8 +9,8 @@ find (\&wanted, ("."));
 sub wanted
 {
     if (/(.*\.(?:html|fnt|css|txt|js|hx)$)/i) {
-        print "Compressing $File::Find::name\n";
-		system ("rm -f \"$_.gz\"");
+	    #print "Compressing $File::Find::name\n";
+	    system ("rm -f \"$_.gz\"");
         if (! -f "$_.gz") {
             system ("gzip -c --best --force \"$_\" > \"$_.gz\"");
         }
