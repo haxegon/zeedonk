@@ -156,7 +156,7 @@ class Webscript {
 			}
 			
 			
-			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height(), "zeedonk alpha v0.5", Col.WHITE, { align:Text.RIGHT } );
+			Text.display(Gfx.screenwidth - 6, Gfx.screenheight - Text.height()-2, "zeedonk alpha v0.5", Col.WHITE, { align:Text.RIGHT } );
 			
 			var msg:String = "WAITING FOR SCRIPTFILE...";
 			var startpos:Float = Gfx.screenwidthmid - Text.len(msg) / 2;

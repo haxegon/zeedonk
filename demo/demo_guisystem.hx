@@ -13,9 +13,9 @@ Game.title="Simple GUI System";
 var examplenumber = 100; //Just used as an example of modifying a variable
 
 // Stuff you can edit
-var gui_buttonwidth = 60;
-var gui_buttonheight = 7;
-var gui_buttonsounds = [54699906, 48646904, 230309];
+var gui_buttonwidth = 75;
+var gui_buttonheight = 9;
+var gui_buttonsounds = [55877306, 48646904, 95527503];
 var gui_buttoncolours = {
   normal: Col.BLUE,
   highlight: Col.LIGHTBLUE,
@@ -29,9 +29,9 @@ function gui_changescene(s){
   
   if(s == "init"){
     gui_addbox(0, 0, Gfx.screenwidth, Gfx.screenheight, Col.NIGHTBLUE);
-    gui_addtext(Gfx.screenwidthmid, 45, "THIS IS A SIMPLE GUI SYSTEM THAT YOU CAN", Col.WHITE, Text.CENTER);
-    gui_addtext(Gfx.screenwidthmid, 52, "COPY AND PASTE AND USE IN YOUR OWN GAMES", Col.WHITE, Text.CENTER);
-    gui_addbutton(66, 65, "COOL", "cool");
+    gui_addtext(Gfx.screenwidthmid, 55, "THIS IS A SIMPLE GUI SYSTEM THAT YOU CAN", Col.WHITE, Text.CENTER);
+    gui_addtext(Gfx.screenwidthmid, 65, "COPY AND PASTE AND USE IN YOUR OWN GAMES", Col.WHITE, Text.CENTER);
+    gui_addbutton(80, 82, "COOL", "cool");
   }else if(s == "examples"){
     for(i in 0 ... 10){
       gui_addbox(i*(Gfx.screenwidth/10), 0, Gfx.screenwidth/10, Gfx.screenheight, Gfx.hsl(i*36, 0.5, 0.3));
@@ -39,11 +39,11 @@ function gui_changescene(s){
     
     gui_addbutton(Gfx.screenwidth - 10 - gui_buttonwidth, 10, "BACK", "back");
     
-    gui_addimagebutton(Gfx.screenwidthmid+15, 105, "plus", "increase");
-    gui_addimagebutton(Gfx.screenwidthmid-23, 105, "minus", "decrease");
+    gui_addimagebutton(Gfx.screenwidthmid+15, 130, "plus", "increase");
+    gui_addimagebutton(Gfx.screenwidthmid-23, 130, "minus", "decrease");
     
     gui_setid("exampleid");
-    gui_addtext(Gfx.screenwidthmid, 105, Convert.tostring(examplenumber), Col.WHITE, Text.CENTER);
+    gui_addtext(Gfx.screenwidthmid, 130, Convert.tostring(examplenumber), Col.WHITE, Text.CENTER);
     
     gui_setid("exampleimage");
     gui_addimagebutton(Gfx.screenwidthmid - 8, Gfx.screenheightmid - 8, "smiley", "smileyclick");
@@ -74,7 +74,7 @@ function gui_buttonaction(act){
 }
 
 function new(){
-  Text.setfont("pixel", 1);
+  Text.setfont(Font.TALL, 1);
   
   //Load in some 8x8 sprite strings for icons
   Gfx.loadimagestring("plus", "3KaaamMzmaaaahZZZSvqb5bvXvZZxZXvXqxKbva");

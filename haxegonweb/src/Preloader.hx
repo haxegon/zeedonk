@@ -22,8 +22,8 @@ class Preloader extends NMEPreloader{
 		//----------------
 		// GRAPHICS :
 		//----------------
-		screenwidth = 192; screenheight = 120;    // Size of the screen for preloader
-		stagewidth = 192; stageheight = 120;      // Size of the screen for stage
+		screenwidth = 240; screenheight = 150;    // Size of the screen for preloader
+		stagewidth = 240; stageheight = 150;      // Size of the screen for stage
 		backcol = RGB(0, 0, 0);
 		frontcol = RGB(128, 128, 128);
 		loadercol = RGB(196, 196, 196); 

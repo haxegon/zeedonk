@@ -13,8 +13,8 @@ enemyShips =  [];
 
 var level=5;
 var turnspeed=0.1;
-var acceleration=0.05;
-var maxspeed=2.0;
+var acceleration=0.0625;
+var maxspeed=2.5;
 
 var cx=0;
 var cy=0;
@@ -111,12 +111,12 @@ function tickShip(e, col){
   e.x=cx;
   e.y=cy;
   var d = e.dir;
-  var p1x = cx+(dx)*5;
-  var p2x = cx+(Math.sin(e.dir-2)+Math.cos(e.dir-2))*2;
-  var p3x = cx+(Math.sin(e.dir+2)+Math.cos(e.dir+2))*2;
-  var p1y = cy+(dy)*5;
-  var p2y = cy+(Math.cos(e.dir-2)-Math.sin(e.dir-2))*2;
-  var p3y = cy+(Math.cos(e.dir+2)-Math.sin(e.dir+2))*2;
+  var p1x = cx+(dx)*6.25;
+  var p2x = cx+(Math.sin(e.dir-2)+Math.cos(e.dir-2))*2.5;
+  var p3x = cx+(Math.sin(e.dir+2)+Math.cos(e.dir+2))*2.5;
+  var p1y = cy+(dy)*6.25;
+  var p2y = cy+(Math.cos(e.dir-2)-Math.sin(e.dir-2))*2.5;
+  var p3y = cy+(Math.cos(e.dir+2)-Math.sin(e.dir+2))*2.5;
   Gfx.drawtri(p1x,p1y,p2x,p2y,p3x,p3y,col);
 }
 
@@ -151,10 +151,10 @@ function drawTitle(){
   }
     
   Text.changesize(2.5);
-  Text.display(Text.CENTER,40,"CLONE AVOID",titleCol);
+  Text.display(Text.CENTER,50,"CLONE AVOID",titleCol);
   Text.changesize(1);
-  Text.display(Text.CENTER,100,"press SPACE to start");
-  Text.display(3,3,"HIGH SCORE : "+highScoreStr);
+  Text.display(Text.CENTER,125,"press SPACE to start");
+  Text.display(3,4,"HIGH SCORE : "+highScoreStr);
   if (Input.justpressed(Key.SPACE))
   {    
     Music.playsound(80298709);
@@ -228,7 +228,7 @@ function update() {
   }
 
   for (shipb in enemyShips){
-    if (Math.abs(player.x-shipb.x)<3 && Math.abs(player.y-shipb.y)<3){
+    if (Math.abs(player.x-shipb.x)<4 && Math.abs(player.y-shipb.y)<4){
       restart();
       Music.playsound(96784902);
       return;
@@ -253,13 +253,13 @@ function update() {
   }
     
     
-    if (Math.abs(player.x-cx)<3 && Math.abs(player.y-cy)<3){
+    if (Math.abs(player.x-cx)<4 && Math.abs(player.y-cy)<4){
       Music.playsound(29570503);
       spawnEnemyShip();
       spawnEnemyShip();
       repositionCollectable();
     }            
 
-  Gfx.fillbox(cx-1,cy-1,3,3,Col.YELLOW);
+  Gfx.fillbox(cx-1,cy-1,4,4,Col.YELLOW);
   Text.display(Text.CENTER,0,scoreStr);
 }

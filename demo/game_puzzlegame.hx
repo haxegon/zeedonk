@@ -3,11 +3,11 @@ Game.homepage = "http://www.hollygramazio.net/";
 Game.foreground = Col.GRAY;
 Game.background = Col.BLACK;
   
-var boxheight ;
-var lineheight ;
+var boxheight;
+var lineheight;
 
-var currentbox ;
-var finishedyet ;
+var currentbox;
+var finishedyet;
 
 var box = [0, 0, 0, 0, 0];
 var contentat = [0, 0, 0, 0, 0];
@@ -20,34 +20,32 @@ var g = [0, 0, 0, 0, 0];
 var b = [0, 0, 0, 0, 0];
 var colourchange = ["red", "green", "blue", "green", "red"];
 
-var lightblack ;
+var lightblack;
 
-var greydupe ;
-var greyduper ;
-var greydupeg ;
-var greydupeb ;
+var greydupe;
+var greyduper;
+var greydupeg;
+var greydupeb;
 
-var story ;
+var story;
 
-var linecolour ;
-var lr ;
-var lg ;
-var lb ;
+var linecolour;
+var lr;
+var lg;
+var lb;
 
-var startcolour ;
-var sr ;
-var sg ;
-var sb ;
+var startcolour;
+var sr;
+var sg;
+var sb;
 
-var start ;
+var start;
 
 //how much does the colour change per press
-var changerate ;
+var changerate;
 
 function new() {
-  Gfx.resizescreen(384, 240);
-
-  Text.setfont(Font.GANON, 1);
+  Text.setfont("tall", 1);
   start = 0;
 
   sr = 0;
@@ -146,8 +144,8 @@ function new() {
 
 
 function update() {
-  boxheight = 45;
-  lineheight = 3;
+  boxheight = 29;
+  lineheight = 2;
 
   for (i in 0 ... 5) {
     if (r[i] > 255) { r[i] = 255; }
@@ -172,16 +170,16 @@ function update() {
   startcolour = Gfx.rgb(sr, sg, sb);
   linecolour = Gfx.rgb(lr, lg, lb);
 
-  if ( start <= 30)
+  if (start <= 30)
   {
     for (i in 0 ... 5) {
       Gfx.fillbox(0, box[i], Gfx.screenwidth, boxheight, Col.GREY);
       Gfx.fillbox(0, line[i], Gfx.screenwidth, lineheight, Col.BLACK);
     }
 
-    Text.display(Gfx.screenwidthmid, box[1] + 15, "PUZZLE GAME", startcolour, {align: Text.CENTER});
-    Text.display(Gfx.screenwidthmid, box[2] + 15, "use arrow keys to play", lightblack, {align: Text.CENTER});
-    Text.display(Gfx.screenwidthmid, box[3] + 15, "Holly Gramazio", lightblack, { align: Text.CENTER } );
+    Text.display(Gfx.screenwidthmid, box[1] + 10, "PUZZLE GAME", startcolour, {align: Text.CENTER});
+    Text.display(Gfx.screenwidthmid, box[2] + 10, "use arrow keys to play", lightblack, {align: Text.CENTER});
+    Text.display(Gfx.screenwidthmid, box[3] + 10, "Holly Gramazio", lightblack, { align: Text.CENTER } );
 
     if (Input.justpressed(Key.DOWN) || Input.justpressed(Key.UP) || Input.justpressed(Key.LEFT) || Input.justpressed(Key.RIGHT))
     {
@@ -197,9 +195,9 @@ function update() {
   }
   else if (greydupeb <= 20)
   {
-    Gfx.fillbox(0, 0, Gfx.screenwidth, 100, Col.GREY);
-    Gfx.fillbox(0, 55, Gfx.screenwidth, 150, Col.BLUE);
-    Gfx.fillbox(0, 200, Gfx.screenwidth, 150, Col.GREY);
+    Gfx.fillbox(0, 0, Gfx.screenwidth, 62, Col.GREY);
+    Gfx.fillbox(0, 27, Gfx.screenwidth, 94, Col.BLUE);
+    Gfx.fillbox(0, 125, Gfx.screenwidth, 94, Col.GREY);
 
     story = "";
     for (i in 0 ... 4) {
@@ -207,8 +205,8 @@ function update() {
     }
     story += content[4][contentat[4]];
 
-    Text.display(5, 5, "You have no moves left.\nSolve your problem.", Col.WHITE);
-    Text.display(15,60, story, Col.BLACK);
+    Text.display(2, 2, "You have no moves left.\nSolve your problem.", Col.WHITE);
+    Text.display(8,38, story, Col.BLACK);
   }
   else if ( finishedyet > 40 )
   {
@@ -216,7 +214,7 @@ function update() {
       Gfx.fillbox(0, box[i], Gfx.screenwidth, boxheight, greydupe);
       Gfx.fillbox(0, line[i], Gfx.screenwidth, lineheight, Col.BLACK);
 
-      Text.display(5, box[i] + 5, content[i][contentat[i]], Col.BLACK);
+      Text.display(5, box[i] + 2, content[i][contentat[i]], Col.BLACK);
     }
 
     greyduper -= 2;

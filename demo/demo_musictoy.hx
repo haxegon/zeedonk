@@ -23,28 +23,28 @@ var barrestore; // True when we've clicked on a repeating bar: restores it.
 
 function new() {
   //To get the rounded edges on the bars, we create images for the tops.
-  Gfx.createimage("corner1", 28, 28);
-  Gfx.createimage("corner2", 28, 28);
-  Gfx.createimage("corner3", 28, 28);
+  Gfx.createimage("corner1", 35, 35);
+  Gfx.createimage("corner2", 35, 35);
+  Gfx.createimage("corner3", 35, 35);
 
   //On each image, we draw a circle in the corner, so that we are left with only a quadrant.
   Gfx.drawtoimage("corner1");
-  Gfx.fillcircle(28, 28, 28, ACCENT1);
+  Gfx.fillcircle(35, 35, 35, ACCENT1);
 
   Gfx.drawtoimage("corner2");
-  Gfx.fillcircle(28, 28, 28, ACCENT2);
+  Gfx.fillcircle(35, 35, 35, ACCENT2);
 
   Gfx.drawtoimage("corner3");
-  Gfx.fillcircle(28, 28, 28, ACCENT3);
+  Gfx.fillcircle(35, 35, 35, ACCENT3);
 
   //Switch to drawing on the screen again.
   Gfx.drawtoscreen();
 
-  xstart = 4;							// How many pixels from the left to start from.
-  ystart = 25;							// How many pixels from the top to start from.
+  xstart = 5;							// How many pixels from the left to start from.
+  ystart = 32;							// How many pixels from the top to start from.
   yend = Gfx.screenheight - ystart - 2;  // The lowest point that the bars should fall.
-  barwidth = 28;						// Gap between each bar.
-  gapsize = 31;						// Width of each bar.
+  barwidth = 35;						// Gap between each bar.
+  gapsize = 38;						// Width of each bar.
 
   //Contains the y positions of the bars. Default to offscreen so that they appear at startup.
   barheight = [Gfx.screenheight, Gfx.screenheight + 10, Gfx.screenheight + 20, Gfx.screenheight + 30, Gfx.screenheight + 40, Gfx.screenheight + 50];
@@ -115,14 +115,14 @@ function dologic() {
 
     if (barrestore[i]) {
       //If a bar is being restored, bring it back up to the top quickly.
-      barheight[i] = barheight[i] - 10;
+      barheight[i] = barheight[i] - 12;
       if (barheight[i] < 0) {
         barheight[i] = 0;
         barrestore[i] = false;
       }
     }else if (barhammer[i]) {
       //If a bar is being hammered down, bring it down to the bottom quickly.
-      barheight[i] = barheight[i] + 50;
+      barheight[i] = barheight[i] + 62;
       if (barheight[i] > yend) {
         barheight[i] = yend;
         barhammer[i] = false;

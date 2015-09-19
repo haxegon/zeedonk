@@ -1,6 +1,6 @@
 
-var charWidth =3;
-var charHeight =5;
+var charWidth =5;
+var charHeight =8;
 
 var mainButton = 0x0000ff;
 var mainHighlight = 0x5555ff;
@@ -262,16 +262,22 @@ function DoUndo(){
   }
 }
       
-function drawButton(text,x,y,textcolor,color,colorhover) {
+function drawButton(inittext,x,y,textcolor,color,colorhover) {
+  x=Convert.toint(x*1.25);
+  y=Convert.toint(y*1.25);
   
-  var width=text.length*(charWidth+1)+1;
+  var width=45;
   var height=charHeight+2;
-
+  var text = "";
+  for(i in 0 ... inittext.length){
+    if(inittext.substr(i,1) !=" "){
+      text += inittext.substr(i,1);
+    }
+  }
   var dx = Mouse.x-x;
   var dy = Mouse.y-y;
 
   var collide = !(dx<0||dx>=width||dy<0||dy>=height);
-
 
   var click = collide && Mouse.leftclick();
 
@@ -279,7 +285,8 @@ function drawButton(text,x,y,textcolor,color,colorhover) {
     color=colorhover;
   }
   Gfx.fillbox(x,y,width,height,color);
-  Text.display(x+1, y+1, text, textcolor);
+  var textoffset = (width - Text.len(text))/2;
+  Text.display(x+1 + textoffset, y+1, text, textcolor);
   return click;
 }
 
@@ -460,14 +467,14 @@ function doHelp(){
   Text.display(Text.CENTER,0,"tinybox");
   Text.changesize(1);
   var i=0;
-  Text.display(3,24+10*(i++),"Shortcuts:");
-  Text.display(3,24+10*(i++),"~ Arrow keys or wsad,to scroll/set note length.");
-  Text.display(3,24+10*(i++),"~ +/- or q and e to control volume.");
-  Text.display(3,24+10*(i++),"~ Right click on instruments to randomize,");
-  Text.display(3,24+10*(i++),"~ Or press numbers when hovering to enter.");
-  Text.display(3,24+10*(i++),"~ You can press c/v to copy/paste sequences.");
-  Text.display(3,24+10*(i++),"~ Right click notes/sequences to remove.");
-  Text.display(3,24+10*(i++),"~ Z to undo.");
+  Text.display(3,30+13*(i++),"Shortcuts:");
+  Text.display(3,30+13*(i++),"~ Arrow keys or wsad,to scroll/set note length.");
+  Text.display(3,30+13*(i++),"~ +/- or q and e to control volume.");
+  Text.display(3,30+13*(i++),"~ Right click on instruments to randomize,");
+  Text.display(3,30+13*(i++),"~ Or press numbers when hovering to enter.");
+  Text.display(3,30+13*(i++),"~ You can press c/v to copy/paste sequences.");
+  Text.display(3,30+13*(i++),"~ Right click notes/sequences to remove.");
+  Text.display(3,30+13*(i++),"~ Z to undo.");
 }
 
 function update() {
@@ -746,8 +753,8 @@ for (k in 0 ... 5){
   //draw grid
   var gx=22;
   var gy=21;
-  var cellWidth=8;
-  var cellHeight=8;
+  var cellWidth=10;
+  var cellHeight=10;
   var xCells=dat.patternLength;
   var yCells=12;
   
@@ -989,5 +996,5 @@ function new(){
   // Music.playnote(4123,1,1,10);
   Game.title="tinybox";
   Game.homepage="www.google.com";
-  Text.setfont(Font.PIXEL,1);
+  Text.setfont(Font.TALL,1);
 }
