@@ -1,4 +1,6 @@
 #!/bin/bash 
+#this toolchain requires the same stuff to be installed in the same places as puzzlescript - see here for how to use
+#https://groups.google.com/forum/#!searchin/puzzlescript/development/puzzlescript/yptIpY9hlng/cjfrOPy_4jcJ
 ./build
 ./docbuild
 rm -rf bin
@@ -7,23 +9,33 @@ cd ..
 cp -R zeedonk zeedonkbin
 mv zeedonkbin zeedonk/bin
 cd zeedonk
-echo changing css
-sed -e 's/<link rel="stylesheet" href="[A-Za-z0-9_\/-]*\.css">//g' < editor.html > editor2.html
-sed -e 's/<!--CSSREPLACE-->/<link rel="stylesheet" href="css\/combined.css">/' < editor2.html > editor3.html
-rm editor2.html
-mv editor3.html bin/editor.html
-
+rm -r bin/haxegonweb
+cd js
+./closurecompile
+cd ..
 echo optimizing images
 rm bin/images/*.png
 cd images
 ./minimize
 cd ..
 echo building css
-cd bin/css
+cd css
 ./concat
-cd ../../
-echo inlining html files
-./inline
+cd ../
+echo generating editor.html
+sed -e 's/<link rel="stylesheet" href="[A-Za-z0-9_\/-]*\.css">//g' < editor.html > _editor2.html
+sed -e 's/<!--CSSREPLACE-->/<link rel="stylesheet" href="css\/combined.css">/' < _editor2.html > _editor3.html
+sed -e 's/<script type="text\/javascript" src="[A-Za-z0-9\._\/-]*\.js"><\/script>//g' < _editor3.html > _editor4.html
+sed -e 's/<!--TOREPLACE-->/<script type="text\/javascript" src="js\/compiled.js"><\/script>/g' < _editor4.html > _editor5.html
+echo generating play.html
+sed -e 's/<script type="text\/javascript" src="[A-Za-z0-9\.\-_\/]*\.js"><\/script>//g' < play.html > _play4.html
+sed -e 's/<!--TOREPLACE-->/<script type="text\/javascript" src="js\/player_compiled.js"><\/script>/g' < _play4.html > _play5.html
+
+
+mv _editor5.html bin/editor.html
+mv _play5.html bin/play.html
+rm _*.html
+
 echo gzipping
 cd bin
 ./gzipper

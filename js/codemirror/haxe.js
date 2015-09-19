@@ -403,8 +403,6 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
         context: parserConfig.localVars && {vars: parserConfig.localVars},
         indented: 0
       };
-      if (parserConfig.globalVars && typeof parserConfig.globalVars == "object")
-        state.globalVars = parserConfig.globalVars;
     },
 
     token: function(stream, state) {

@@ -10,7 +10,7 @@ sub wanted
 {
     if (/(.*\.(?:html|css|txt|js)$)/i) {
         print "Compressing $File::Find::name\n";
-	system ("rm \"$_.gz\"");
+		system ("rm -f \"$_.gz\"");
         if (! -f "$_.gz") {
             system ("gzip -c --best --force \"$_\" > \"$_.gz\"");
         }

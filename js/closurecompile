@@ -1,0 +1,39 @@
+rm ../bin/js/*.*
+java -jar ~/progs/closure.jar --language_in ECMASCRIPT5 --js_output_file ../bin/js/compiled.js \
+	--js ../haxegonweb/bin/html5/bin/lib/soundjs.min.js\
+        --js ../haxegonweb/bin/html5/bin/webthing.js \
+        --js debug.js \
+        --js globalVariables.js \
+	--js autocompleteArrays.js\
+        --js rng.js \
+        --js riffwave.js \
+        --js sfxr.js \
+        --js codemirror/codemirror.js \
+        --js addon/edit/closebrackets.js\
+        --js addon/edit/matchbrackets.js\
+        --js codemirror/active-line.js\
+        --js codemirror/dialog.js\
+        --js codemirror/search.js\
+        --js codemirror/searchcursor.js\
+        --js codemirror/match-highlighter.js\
+        --js codemirror/haxe.js\
+        --js codemirror/show-hint.js\
+        --js inputoutput.js\
+        --js console.js\
+        --js editor.js\
+        --js soundbar.js\
+        --js toolbar.js\
+        --js layout.js\
+        --js addlisteners_editor.js\
+        --js lime_embed.js
+java -jar ~/progs/closure.jar --js_output_file ../bin/js/player_compiled.js \
+	--js ../haxegonweb/bin/html5/bin/lib/soundjs.min.js\
+        --js ../haxegonweb/bin/html5/bin/webthing.js \
+        --js globalVariables.js \
+        --js debug_off.js \
+        --js rng.js \
+        --js riffwave.js \
+        --js sfxr.js \
+        --js inputoutput.js\
+	--js playscript.js\
+        --js lime_embed.js

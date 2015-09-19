@@ -1,0 +1,1990 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"errorst",
+				"errorstart	var"
+			],
+			[
+				"errors",
+				"errorstart	var"
+			],
+			[
+				"tutori",
+				"tutorialtemplate"
+			],
+			[
+				"split",
+				"splitTutorialTxt"
+			],
+			[
+				"inln",
+				"inline-block"
+			],
+			[
+				"wordC",
+				"wordCount"
+			],
+			[
+				"Avera",
+				"average"
+			],
+			[
+				"scalem",
+				"scaleMin"
+			],
+			[
+				"mid",
+				"minDistHit"
+			],
+			[
+				"mindi",
+				"minDistHit"
+			],
+			[
+				"select",
+				"selectionAlpha"
+			],
+			[
+				"client",
+				"clientY"
+			],
+			[
+				"icon",
+				"iconSelect"
+			],
+			[
+				"move",
+				"moveTo"
+			],
+			[
+				"save",
+				"saveStack"
+			],
+			[
+				"stroke",
+				"strokeStyle"
+			],
+			[
+				"curce",
+				"curCenterX"
+			],
+			[
+				"curCe",
+				"curCenterY"
+			],
+			[
+				"adjust",
+				"adjustY"
+			],
+			[
+				"adjs",
+				"adjustX"
+			],
+			[
+				"adju",
+				"adjustY"
+			],
+			[
+				"offset",
+				"offsetY"
+			],
+			[
+				"curc",
+				"curCenterX"
+			],
+			[
+				"offse",
+				"offsetX"
+			],
+			[
+				"clien",
+				"clientY"
+			],
+			[
+				"old",
+				"oldX"
+			],
+			[
+				"pre",
+				"preventDefault"
+			],
+			[
+				"strok",
+				"stroke"
+			],
+			[
+				"stro",
+				"stroke"
+			],
+			[
+				"str",
+				"stroke"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"haxe",
+				"haxeLibraryArray"
+			],
+			[
+				"module",
+				"moduleDescription"
+			],
+			[
+				"paddi",
+				"padding-top"
+			],
+			[
+				"is",
+				"isalnum"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"heigh",
+				"min-height"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"bacck",
+				"background-color"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"enum",
+				"enumContents"
+			],
+			[
+				"st",
+				"style	<style>"
+			],
+			[
+				"Modu",
+				"moduleName"
+			],
+			[
+				"gen",
+				"genReferencePage"
+			],
+			[
+				"l",
+				"length"
+			],
+			[
+				"moduel",
+				"moduleName"
+			],
+			[
+				"index",
+				"indexOf"
+			],
+			[
+				"ac",
+				"activeElement"
+			],
+			[
+				"lo",
+				"log"
+			],
+			[
+				"dialog",
+				"dialogText"
+			],
+			[
+				"sc",
+				"script	<script>"
+			],
+			[
+				"consolePrin",
+				"consolePrintWithLines"
+			],
+			[
+				"logEr",
+				"logErrorNoLine"
+			],
+			[
+				"sound",
+				"sound_vol"
+			],
+			[
+				"consol",
+				"consoleError"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"margin-",
+				"margin-left"
+			],
+			[
+				"border-bot",
+				"border-bottom-width"
+			],
+			[
+				"bg",
+				"backgroundColor"
+			],
+			[
+				"displ",
+				"displayText"
+			],
+			[
+				"leftri",
+				"leftRightMerge	function"
+			],
+			[
+				"leftLea",
+				"leftLeanRow	var"
+			],
+			[
+				"carria",
+				"carriageIndex	var"
+			],
+			[
+				"bott",
+				"bottomTopMerge"
+			],
+			[
+				"carri",
+				"carriageIndex	var"
+			],
+			[
+				"scre",
+				"screenheightmid"
+			],
+			[
+				"screen",
+				"screenwidthmid"
+			],
+			[
+				"left",
+				"leftclick"
+			],
+			[
+				"cooki",
+				"cookiesEaten=0	var"
+			],
+			[
+				"overlap",
+				"overlappingany	var"
+			],
+			[
+				"overla",
+				"overlappingany	var"
+			],
+			[
+				"cook",
+				"cookie0"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"keyo",
+				"keyCode"
+			],
+			[
+				"scrip",
+				"script	<script>"
+			],
+			[
+				"copy",
+				"uint8ar_copy"
+			],
+			[
+				"gameTit",
+				"gameTitleHeader"
+			],
+			[
+				"canvas",
+				"canvasIndex"
+			],
+			[
+				"newtar",
+				"newTargetCol"
+			],
+			[
+				"exitpo",
+				"exitPointCount"
+			],
+			[
+				"exitpoi",
+				"exitPointX"
+			],
+			[
+				"exitPoi",
+				"exitPointCount"
+			],
+			[
+				"exitpoin",
+				"exitPointY"
+			],
+			[
+				"exitp",
+				"exitPointX"
+			],
+			[
+				"togg",
+				"togglableWallDisabledCol"
+			],
+			[
+				"toggl",
+				"togglableWallCol"
+			],
+			[
+				"activate",
+				"activatedConnections"
+			],
+			[
+				"Connec",
+				"connectionGroupIndex"
+			],
+			[
+				"connec",
+				"connections"
+			],
+			[
+				"wallco",
+				"togglableWallCol"
+			],
+			[
+				"region",
+				"regionCanvas"
+			],
+			[
+				"bumpers",
+				"bumpersHit"
+			],
+			[
+				"targetca",
+				"targetCanvasIndex"
+			],
+			[
+				"sweep",
+				"sweepAreas"
+			],
+			[
+				"sourca",
+				"sourceCanvas"
+			],
+			[
+				"generateSp",
+				"generateSweepSprings"
+			],
+			[
+				"targetSwee",
+				"targetSweepAreaInverse"
+			],
+			[
+				"down_the",
+				"down_then_leftSweepArea"
+			],
+			[
+				"down_then",
+				"down_then_rightSweepArea"
+			],
+			[
+				"rightswe",
+				"rightSweepArea"
+			],
+			[
+				"leftSwee",
+				"leftSweepCanvas"
+			],
+			[
+				"source",
+				"sourceCanvas"
+			],
+			[
+				"leftfl",
+				"leftFlipperPivotCol"
+			],
+			[
+				"lefts",
+				"leftSweepArea"
+			],
+			[
+				"leftsw",
+				"leftSweepArea_inverse"
+			],
+			[
+				"U",
+				"Uint32Array"
+			],
+			[
+				"won",
+				"wonText"
+			],
+			[
+				"ballsp",
+				"ballSpinSpeed"
+			],
+			[
+				"oldSp",
+				"oldSpeedY"
+			],
+			[
+				"oldS",
+				"oldSpeedX"
+			],
+			[
+				"conn",
+				"connectionCol"
+			],
+			[
+				"spawnPo",
+				"spawnPointY"
+			],
+			[
+				"spawnP",
+				"spawnPointX"
+			],
+			[
+				"spawnPO",
+				"spawnPointX"
+			],
+			[
+				"spawn",
+				"spawnPointCount"
+			],
+			[
+				"spawnC",
+				"ballSpawnCol"
+			],
+			[
+				"spe",
+				"speedN"
+			],
+			[
+				"bumper",
+				"bumperSpeed"
+			],
+			[
+				"collision",
+				"collisiondat"
+			],
+			[
+				"spee",
+				"speedX"
+			],
+			[
+				"coll",
+				"collisiondat"
+			],
+			[
+				"spaw",
+				"ballSpawnPoint"
+			],
+			[
+				"balls",
+				"ballSpawnPoint"
+			],
+			[
+				"reg",
+				"regionNumberStr"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "editor.html",
+			"settings":
+			{
+				"buffer_size": 8970,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/codemirror/haxe.js",
+			"settings":
+			{
+				"buffer_size": 17445,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/inputoutput.js",
+			"settings":
+			{
+				"buffer_size": 1409,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/editor.js",
+			"settings":
+			{
+				"buffer_size": 12972,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/playscript.js",
+			"settings":
+			{
+				"buffer_size": 3326,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "play.html",
+			"settings":
+			{
+				"buffer_size": 5920,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 107.0,
+		"last_filter": "iside",
+		"selected_items":
+		[
+			[
+				"iside",
+				"View: Toggle Side Bar"
+			],
+			[
+				"remove package",
+				"Package Control: Remove Package"
+			],
+			[
+				"remote",
+				"Remote: Disconnect from Session"
+			],
+			[
+				"packages",
+				"Preferences: Package Control Settings – User"
+			],
+			[
+				"",
+				"File: Save All"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"install p",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			],
+			[
+				"indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"add repo",
+				"Package Control: Add Repository"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/stephenlavelle/Documents/zeedonk",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src"
+	],
+	"file_history":
+	[
+		"/Users/stephenlavelle/Documents/zeedonk/js/buildStandalone.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/colors.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/scripts.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/touchEvent.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/inputoutput.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/addlisteners.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/addlisteners_editor.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/addon/selection/selection-pointer.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/lime-embed.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/playscript.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/editor.js",
+		"/Users/stephenlavelle/Documents/zeedonk/bin/css/concat",
+		"/Users/stephenlavelle/Documents/zeedonk/play.html",
+		"/Users/stephenlavelle/Documents/zeedonk/editor.html",
+		"/Users/stephenlavelle/Documents/zeedonk/zeedonk.sublime-workspace",
+		"/Users/stephenlavelle/Documents/zeedonk/bin/css/ambiance.css.gz",
+		"/Users/stephenlavelle/Documents/zeedonk/embed.html",
+		"/Users/stephenlavelle/Documents/zeedonk/index.html",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/haxegon/Gfx.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/js/autocompleteArrays.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/codemirror/haxe.js",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/tool_musiceditor.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Webscript.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Webdebug.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Err.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/InterpExtended.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/MusicEngine.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Preloader.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/project.xml",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/haxegon/Col.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/S.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/html5/bin/webthing.js",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Gfx.html",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.inputsound.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.inputmaxlength.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.input.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/js/toolbar.js",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/game_supershot.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/style.css",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Shortcuts.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Questions.html",
+		"/Users/stephenlavelle/Documents/zeedonkarchitecture/index.html",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/flash/haxe/ApplicationMain.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/css/soundbar.css",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Main.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/css/gamecanvas.css",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Architecture/index.html",
+		"/Users/stephenlavelle/Documents/zeedonk/js/globalVariables.js",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Game.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/default.hx",
+		"/Users/stephenlavelle/Documents/gameenginemanifesto/index.html",
+		"/Users/stephenlavelle/Documents/zeedonk/css/buttons.css",
+		"/Users/stephenlavelle/Documents/zeedonk/js/makeReferenceDocs.js",
+		"/Users/stephenlavelle/Documents/zeedonk/tutorialoutline.txt",
+		"/Users/stephenlavelle/Documents/zeedonk/Find Results",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/game_cloneavoid.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Webmusic.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/haxegon/Music.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/tool_spriteeditor.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/js/soundbar.js",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Debug.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/shortcuts copy.html",
+		"/Users/stephenlavelle/Documents/zeedonk/docbuild",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Tutorials.html",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/doxtheme/simple/templates/main.mtt",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/html5/haxe/ApplicationMain (Terry Cavanagh's conflicted copy 2015-08-26).hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/html5/haxe/ApplicationMain (stephen lavelle's conflicted copy 2015-08-26).hx",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/flash/haxe/release.hxml",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/flash/haxe/final.hxml",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/flash/haxe/debug.hxml",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/builddox",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Text.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/String.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Random.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Music.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Mouse.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Math.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Key.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Input.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/index.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Game.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Font.html",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Convert.html",
+		"/Users/stephenlavelle/Documents/zeedonk/css/hintclasses.css",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_hello.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Col.html",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_guisystem.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_spaceshooter.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/game_roguelikewip.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/.gitignore",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_shapes.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_musictoy.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_fonts.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/game_puzzlegame.hx",
+		"/Users/stephenlavelle/Documents/AudioTestCase/sfxr.js",
+		"/Users/stephenlavelle/Documents/AudioTestCase/test.html",
+		"/Users/stephenlavelle/Documents/zeedonk/build",
+		"/Users/stephenlavelle/Documents/zeedonk/js/debug_off.js",
+		"/Users/stephenlavelle/Documents/zeedonk/Levels/MainLanguage/loopbreaker.txt",
+		"/Users/stephenlavelle/Documents/zeedonk/js/parser.js",
+		"/Users/stephenlavelle/Documents/zeedonk/Webthing.url",
+		"/Users/stephenlavelle/Documents/zeedonk/TO DO.txt",
+		"/Users/stephenlavelle/Documents/zeedonk/play_old.html",
+		"/Users/stephenlavelle/Documents/zeedonk/css/layout.css",
+		"/Users/stephenlavelle/Documents/zeedonk/css/toolbar.css",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/demo_movingcircle.hx",
+		"/Users/stephenlavelle/Documents/tokipona/simulate.py",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/game_roguelikewip.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/Game.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/Webscript.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/editor.html",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/css/docs.css",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/index.html",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/terrylib/Gfx.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/Webmusic.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/Documentation/Gfx.html",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/bin/flash/bin/roguelike.txt",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Random.rare.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Random.occasional.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Random.bool.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.rightreleased.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.rightclick.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.middlereleased.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.middleheld.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.middleclick.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.leftreleased.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.leftclick.hx",
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Math.PI.hx"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"*.js",
+			"*.html",
+			"*.js",
+			"*.css",
+			"*.js",
+			"*",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"webkitImageSmoothingEnabled",
+			"*.css",
+			"*.js",
+			"*.html",
+			"*.js",
+			"*.*",
+			"*.js",
+			"*.css",
+			"*.hx",
+			"*.*",
+			"*.js",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"*.*",
+			"*.css",
+			"*.*",
+			"demo/*.hx",
+			"demo/doc/*.hx",
+			"demo/*.hx",
+			"game_supershot.hx",
+			"*.*",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.*",
+			"demo/doc/*.hx",
+			"demo/*.hx",
+			"demo/doc/*.hx",
+			"demo/*.hx",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"*.*",
+			"*.css",
+			"*.js",
+			"*.css",
+			"*.js",
+			"*.*",
+			"*.hx",
+			"*.*",
+			"*.html",
+			"*.hx",
+			"*.js",
+			"*.*",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.*",
+			"*.js",
+			"*.hx",
+			"*.*",
+			"*.js",
+			"*.hx",
+			"*.jhx",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.*",
+			"*.js",
+			"*.*",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.css",
+			"*.js",
+			"*.css",
+			"*.*",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.*",
+			"*.js",
+			"*.*",
+			"*.css",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.*",
+			"*.hx",
+			"*.jx",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.hx",
+			"*.css",
+			"*.js",
+			"*.css",
+			"*.*",
+			"*.js",
+			"*.css",
+			"*.js",
+			"*.css",
+			"*.js",
+			"*.hx",
+			"*.js",
+			"*.*",
+			"*.js",
+			"*.css",
+			"*.*",
+			"*.js",
+			"*.hx",
+			"*.*"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"erConfig.globa",
+			"te.global",
+			"rConfig.global",
+			"mobile",
+			"checkkey",
+			"checkKey",
+			"checkkey",
+			"setMouseCoord",
+			"relMouseCoords",
+			"arrCopy",
+			"selectText",
+			"levelEditorClick",
+			"gif",
+			"GIF",
+			"animation",
+			"gif",
+			"jsgif",
+			"gif",
+			"<script",
+			"openfl-content\", 192,",
+			"addlisteners",
+			"function mouseout",
+			"function mousemove",
+			"function mouseout",
+			"ndow.devicePixelRatio != 'und",
+			"x-shadow: inset 0 1px 0 rgba(255, 255, 255, 0",
+			"\"folders\"",
+			"x-shadow: inset 0 1px 0 rgba(255, 255, 255, 0",
+			"\"folders\"",
+			"\"folder\"",
+			"x-shadow: inset 0 1px 0 rgba(255, 255, 255, 0",
+			"\"folder\"",
+			"exclude\"",
+			"exclude",
+			"x-shadow: inset 0 1px 0 rgba(255, 255, 255, 0",
+			"tab_size\":",
+			"exclude",
+			"folder_exclude_patterns",
+			"ndow.addEventListener (\"touchmove\", function (event) { event.pre",
+			"of window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {\n		var meta = document.getElementById (\"viewport",
+			"<script",
+			"EventListener (\"touchmove\", function (event) ",
+			"touch",
+			"combined2",
+			"utf",
+			"<script",
+			"url",
+			"dce",
+			"getCharPosition",
+			"getline",
+			"line",
+			"linenumber",
+			"charpos",
+			"localVars",
+			"localVars.",
+			"localVars",
+			".vars",
+			"vars[",
+			".localvars &&",
+			".localvars",
+			".localvars)",
+			"globalvars",
+			"globalvars.",
+			"parserConfig",
+			"parserconfig",
+			"context",
+			"context:",
+			"resize",
+			"\"function\"",
+			"\"def\"",
+			"variable\"",
+			"\"for",
+			"vardef",
+			"var",
+			"expression",
+			"expression(",
+			"maybeexpression",
+			"statement",
+			"parseHaxe",
+			"startState",
+			"tryLoadFile",
+			"tryLoadGist",
+			"\"hack\"",
+			"linenum(",
+			"getlinenum",
+			"consolePrintWithLinesArray",
+			"errorstart",
+			"line",
+			"interpreter.",
+			"linenumber",
+			"output",
+			".error",
+			"import hscript",
+			"hscript",
+			"eunexpected",
+			"errorstart",
+			"myscript",
+			"myscript=",
+			"myscript =",
+			"hxoverrides.substr",
+			"errorstart",
+			"geterrorline",
+			"err.log",
+			"PRE_BRACKETMISMATCH",
+			"<eof>",
+			"outputdetails",
+			"errorline",
+			"geterrorline",
+			"in processing script",
+			"parser error",
+			"msimagesmoothi",
+			"msImageSmoothingEnabled",
+			"192",
+			"imageSmoothingEnabled",
+			"192",
+			"ratio",
+			"192",
+			"canvas",
+			"192",
+			"window width",
+			"onresize",
+			"1073741933",
+			"f18 =",
+			"onResize",
+			"onresize",
+			"getelement",
+			"getelementby",
+			"gamecanvas"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"webkitImageSmoothingEnabled",
+			"",
+			"Zeedonk",
+			"",
+			"var $1 $2",
+			"var $1 = $2",
+			";",
+			"var $1 $2",
+			"var $1 = $2",
+			"var $1 =",
+			"Gfx.clearscreeneachframe=true",
+			"Gfx.clearscreeneachframe=false",
+			"Game.foreground=$1;",
+			"Game.background=$1;",
+			"Game.homepage=$1;",
+			"Game.title=$1;",
+			"_linethickness",
+			"darkCol",
+			"cellSize",
+			"[0-1]",
+			"",
+			"TerryLib",
+			"Textdrawparams",
+			"Gfxdrawparams",
+			"],",
+			"[",
+			"\\\",",
+			"\"",
+			",\\n",
+			"",
+			",\\n",
+			"",
+			"\"\\],\\n\\[\"",
+			"[",
+			"\"],",
+			"imagename",
+			"",
+			"\"",
+			"^\"",
+			"\",\"\\(",
+			"\\(",
+			"",
+			"\\\"$1\\\",",
+			"",
+			"\\n",
+			"",
+			"\\n",
+			"",
+			"public static ",
+			"public static",
+			"+1]",
+			"[l",
+			"frames0",
+			"applyCanvasSweep",
+			"\"#\" onclick=\"setLayer(1);return false;\"",
+			"<li class=\"layerItem\">",
+			"\"#\" onclick=\"setLayer(1);return false;\" class=\"layer\"",
+			"\"#\" onclick=\"setLayer(1);return false;\"",
+			"\"layer\"",
+			"<select name=\"col1\">\n<option value=\"col1-0\"></option>",
+			">$0",
+			">($0)",
+			"\n                                <option value=\"col1-0\"></option>\n                                <option value=\"col1-1\">",
+			"\n	<option value=\"col1-0\"> </option>\n	<option value=\"col1-1\">1</option>",
+			"\" class=\"unselected\"",
+			"",
+			"class=\"hideImg\"",
+			"",
+			"WHITE GREY",
+			"purple pink",
+			"",
+			" letterCount",
+			" \\",
+			"Math.PI",
+			"transform",
+			"\\",
+			"\\\\$",
+			"z",
+			"y",
+			"x",
+			"w",
+			"v",
+			"u",
+			"t",
+			"s",
+			"r",
+			"q",
+			"p",
+			"o",
+			"n",
+			"m",
+			"l",
+			"k",
+			"j",
+			"i",
+			"h",
+			"g",
+			"f",
+			"e",
+			"slice()",
+			"",
+			"throttle_movement",
+			"| Light_",
+			"Documentation/",
+			"Documentation",
+			"\\n",
+			"M",
+			"L",
+			"pink",
+			"yellow",
+			"M",
+			"L",
+			"N",
+			",null]",
+			",null]$"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"/Users/stephenlavelle/Documents/zeedonk/bin"
+			],
+			"path": "/Users/stephenlavelle/Documents/zeedonk"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "editor.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8970,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7176,
+								7176
+							]
+						],
+						"settings":
+						{
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "html",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2143.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/codemirror/haxe.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17445,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14551,
+								14551
+							]
+						],
+						"settings":
+						{
+							"WordCountShouldRun": false,
+							"WordCountSyntax": "javascript",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5768.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/inputoutput.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1409,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								450,
+								450
+							]
+						],
+						"settings":
+						{
+							"WordCountShouldRun": false,
+							"WordCountSyntax": "javascript",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/editor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12972,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								217,
+								217
+							]
+						],
+						"settings":
+						{
+							"WordCountShouldRun": false,
+							"WordCountSyntax": "javascript",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "js/playscript.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3326,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"WordCountShouldRun": false,
+							"WordCountSyntax": "javascript",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "play.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5920,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5818,
+								5818
+							]
+						],
+						"settings":
+						{
+							"WordCountShouldRun": true,
+							"WordCountSyntax": "html",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3186.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"haxe.j",
+				"js/codemirror/haxe.js"
+			],
+			[
+				"buildstand",
+				"js/buildStandalone.js"
+			],
+			[
+				"inputout",
+				"js/inputoutput.js"
+			],
+			[
+				"colors.js",
+				"js/colors.js"
+			],
+			[
+				"editor",
+				"js/editor.js"
+			],
+			[
+				"scripts",
+				"js/scripts.js"
+			],
+			[
+				"_editor",
+				"js/addlisteners_editor.js"
+			],
+			[
+				"addlist",
+				"js/addlisteners.js"
+			],
+			[
+				"play.html",
+				"play.html"
+			],
+			[
+				"editor.htm",
+				"editor.html"
+			],
+			[
+				"play.htm",
+				"play.html"
+			],
+			[
+				"editor.ht",
+				"editor.html"
+			],
+			[
+				"editor.",
+				"js/editor.js"
+			],
+			[
+				"editor.html",
+				"editor.html"
+			],
+			[
+				"play.h",
+				"play.html"
+			],
+			[
+				"index",
+				"index.html"
+			],
+			[
+				"play",
+				"play.html"
+			],
+			[
+				"webscri",
+				"haxegonweb/src/Webscript.hx"
+			],
+			[
+				"web",
+				"haxegonweb/src/Webscript.hx"
+			],
+			[
+				"webthin",
+				"haxegonweb/bin/html5/bin/webthing.js"
+			],
+			[
+				"projec",
+				"haxegonweb/project.xml"
+			],
+			[
+				"err",
+				"haxegonweb/src/Err.hx"
+			],
+			[
+				"haxe",
+				"js/codemirror/haxe.js"
+			],
+			[
+				"gfx.hx",
+				"haxegonweb/src/haxegon/Gfx.hx"
+			],
+			[
+				"gfx",
+				"Documentation/Gfx.html"
+			],
+			[
+				"autocom",
+				"js/autocompleteArrays.js"
+			],
+			[
+				"haxe.js",
+				"js/codemirror/haxe.js"
+			],
+			[
+				"music",
+				"demo/tool_musiceditor.hx"
+			],
+			[
+				"maxlen",
+				"demo/doc/Text.inputmaxlength.hx"
+			],
+			[
+				"text.inpu",
+				"demo/doc/Text.inputsound.hx"
+			],
+			[
+				"text.inputsou",
+				"demo/doc/Text.inputsound.hx"
+			],
+			[
+				"edito",
+				"editor.html"
+			],
+			[
+				"project.xml",
+				"haxegonweb/project.xml"
+			],
+			[
+				"toolbar.j",
+				"js/toolbar.js"
+			],
+			[
+				"websri",
+				"haxegonweb/src/Webscript.hx"
+			],
+			[
+				"err.h",
+				"haxegonweb/src/Err.hx"
+			],
+			[
+				"err.hx",
+				"haxegonweb/src/Err.hx"
+			],
+			[
+				"super",
+				"demo/game_supershot.hx"
+			],
+			[
+				"webthing.js",
+				"haxegonweb/bin/html5/bin/webthing.js"
+			],
+			[
+				"play.ht",
+				"play.html"
+			],
+			[
+				"gamecanvas",
+				"css/gamecanvas.css"
+			],
+			[
+				"gamecanva",
+				"css/gamecanvas.css"
+			],
+			[
+				"webthing.j",
+				"haxegonweb/bin/html5/bin/webthing.js"
+			],
+			[
+				"index.html",
+				"Documentation/Architecture/index.html"
+			],
+			[
+				"questio",
+				"Documentation/Questions.html"
+			],
+			[
+				"style.cs",
+				"Documentation/style.css"
+			],
+			[
+				"shortcu",
+				"Documentation/Shortcuts.html"
+			],
+			[
+				"tool_m",
+				"demo/tool_musiceditor.hx"
+			],
+			[
+				"game.hx",
+				"haxegonweb/src/Game.hx"
+			],
+			[
+				"defua",
+				"default.hx"
+			],
+			[
+				"play.",
+				"play.html"
+			],
+			[
+				"quest",
+				"Documentation/Questions.html"
+			],
+			[
+				"autoc",
+				"js/autocompleteArrays.js"
+			],
+			[
+				"edit",
+				"editor.html"
+			],
+			[
+				"toolba",
+				"js/toolbar.js"
+			],
+			[
+				"global",
+				"js/globalVariables.js"
+			],
+			[
+				"button",
+				"css/buttons.css"
+			],
+			[
+				"style",
+				"Documentation/style.css"
+			],
+			[
+				"tutori",
+				"tutorialoutline.txt"
+			],
+			[
+				"make",
+				"js/makeReferenceDocs.js"
+			],
+			[
+				"ques",
+				"Documentation/Questions.html"
+			],
+			[
+				"style.c",
+				"Documentation/style.css"
+			],
+			[
+				"tutor",
+				"tutorialoutline.txt"
+			],
+			[
+				"shortc",
+				"Documentation/Shortcuts.html"
+			],
+			[
+				"short",
+				"Documentation/Shortcuts.html"
+			],
+			[
+				"maked",
+				"js/makeReferenceDocs.js"
+			],
+			[
+				"musiced",
+				"demo/tool_musiceditor.hx"
+			],
+			[
+				"clonea",
+				"demo/game_cloneavoid.hx"
+			],
+			[
+				"cloneav",
+				"demo/game_cloneavoid.hx"
+			],
+			[
+				"webmusi",
+				"haxegonweb/src/Webmusic.hx"
+			],
+			[
+				"music.hx",
+				"haxegonweb/src/haxegon/Music.hx"
+			],
+			[
+				"editor.h",
+				"editor.html"
+			],
+			[
+				"sprit",
+				"demo/tool_spriteeditor.hx"
+			],
+			[
+				"style.",
+				"Documentation/style.css"
+			],
+			[
+				"sound",
+				"css/soundbar.css"
+			],
+			[
+				"soundb",
+				"js/soundbar.js"
+			],
+			[
+				"index.ht",
+				"index.html"
+			],
+			[
+				"tutoria",
+				"tutorialoutline.txt"
+			],
+			[
+				"editor.j",
+				"js/editor.js"
+			],
+			[
+				"styl",
+				"Documentation/style.css"
+			],
+			[
+				"makede",
+				"js/makeReferenceDocs.js"
+			],
+			[
+				"docbu",
+				"docbuild"
+			],
+			[
+				"makere",
+				"js/makeReferenceDocs.js"
+			],
+			[
+				"",
+				".gitignore"
+			],
+			[
+				"puzzl",
+				"demo/game_puzzlegame.hx"
+			],
+			[
+				"supersho",
+				"demo/game_supershot.hx"
+			],
+			[
+				"build",
+				"build"
+			],
+			[
+				"loopbrea",
+				"Levels/MainLanguage/loopbreaker.txt"
+			],
+			[
+				"layout.cs",
+				"css/layout.css"
+			],
+			[
+				"shoot",
+				"demo/demo_spaceshooter.hx"
+			],
+			[
+				"ditor.htm",
+				"editor.html"
+			],
+			[
+				"docs.css",
+				"css/docs.css"
+			],
+			[
+				"webmusic",
+				"terrylibweb/src/Webmusic.hx"
+			],
+			[
+				"webscrip",
+				"terrylibweb/src/Webscript.hx"
+			],
+			[
+				"demo_gui",
+				"demo/demo_guisystem.hx"
+			],
+			[
+				"musicloo",
+				"demo/doc/Music.musicloop.hx"
+			],
+			[
+				"textsiz",
+				"demo/doc/Text.changesize.hx"
+			],
+			[
+				"text",
+				"terrylibweb/src/terrylib/Text.hx"
+			],
+			[
+				"clearsc",
+				"demo/doc/Gfx.clearscreeneachframe.hx"
+			],
+			[
+				"backgroun",
+				"demo/doc/Game.background.hx"
+			],
+			[
+				"game.home",
+				"demo/doc/Game.homepage.hx"
+			],
+			[
+				"game.tit",
+				"demo/doc/Game.title.hx"
+			],
+			[
+				"musicvo",
+				"demo/doc/Music.musicvol.hx"
+			],
+			[
+				"music.vol",
+				"demo/doc/Music.setmusicvol.hx"
+			],
+			[
+				"linethick",
+				"demo/doc/Gfx.linethickness.hx"
+			],
+			[
+				"webmus",
+				"terrylibweb/src/Webmusic.hx"
+			],
+			[
+				"gfx.h",
+				"terrylibweb/src/terrylib/Gfx.hx"
+			],
+			[
+				"rgb",
+				"demo/doc/Gfx.RGB.hx"
+			],
+			[
+				"webgame.",
+				"terrylibweb/src/Game.hx"
+			],
+			[
+				"gf",
+				"terrylibweb/src/terrylib/Gfx.hx"
+			],
+			[
+				"webgfx",
+				"terrylibweb/src/terrylib/Gfx.hx"
+			],
+			[
+				"getligh",
+				"demo/doc/Gfx.getlightness.hx"
+			],
+			[
+				"getsatu",
+				"demo/doc/Gfx.getsaturation.hx"
+			],
+			[
+				"gethue",
+				"demo/doc/Gfx.gethue.hx"
+			],
+			[
+				"auto",
+				"js/autocompleteArrays.js"
+			],
+			[
+				"consol",
+				"js/console.js"
+			],
+			[
+				"main",
+				"terrylibweb/src/Main.hx"
+			],
+			[
+				"setmusicloo",
+				"demo/doc/Music.setmusicloop.hx"
+			],
+			[
+				"setmusiclo",
+				"demo/doc/Music.setmusicvol.hx"
+			],
+			[
+				"musicen",
+				"terrylibweb/src/MusicEngine.hx"
+			],
+			[
+				"musice",
+				"terrylibweb/src/MusicEngine.hx"
+			],
+			[
+				"main.h",
+				"terrylibweb/src/Main.hx"
+			],
+			[
+				"codemir",
+				"js/codemirror/codemirror.js"
+			],
+			[
+				"codemirro",
+				"css/codemirror.css"
+			],
+			[
+				"diction",
+				"toki-utala/www/js/dictionary.js"
+			],
+			[
+				"confi",
+				"ortho/config.xml"
+			],
+			[
+				"inde.x",
+				"ortho/www/index.html"
+			],
+			[
+				"index.h",
+				"index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 173.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
