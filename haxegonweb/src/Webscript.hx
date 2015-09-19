@@ -47,7 +47,7 @@ class Webscript {
 		Text.setfont(Webfont.RETROFUTURE, 1);
 		Text.setfont(Webfont.ROMAN, 1);
 		Text.setfont(Webfont.SPECIAL, 1);
-		Text.setfont(Webfont.TALL, 1);
+		Text.setfont(Webfont.THIN, 1);
 		Text.setfont(Webfont.TINY, 1);
 		Text.setfont(Webfont.YOSTER, 1);
 		
@@ -171,7 +171,7 @@ class Webscript {
 		/*
 		Gfx.clearscreen(Col.DARKBLUE);
 		
-		Text.setfont(Webfont.TALL, 1);
+		Text.setfont(Webfont.THIN, 1);
 		
 		Text.display(1, 1, "the quick brown, fox jumped. Over");
 		Text.display(1, 10, "the lazy dog! Oh no!");

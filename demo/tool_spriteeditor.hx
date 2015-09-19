@@ -51,7 +51,7 @@ var currentstate;
 var mouseheld = false;
 
 function new() {
-  Text.setfont(Font.TALL, 1);
+  Text.setfont(Font.THIN, 1);
   Gfx.clearscreeneachframe=false;
 
   //8, 12, 14, 16]

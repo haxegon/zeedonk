@@ -74,7 +74,7 @@ function gui_buttonaction(act){
 }
 
 function new(){
-  Text.setfont(Font.TALL, 1);
+  Text.setfont(Font.THIN, 1);
   
   //Load in some 8x8 sprite strings for icons
   Gfx.loadimagestring("plus", "3KaaamMzmaaaahZZZSvqb5bvXvZZxZXvXqxKbva");

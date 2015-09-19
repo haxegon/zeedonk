@@ -27,8 +27,7 @@
 	<source path="src" />
 	
 	<haxeflag name="--macro keep('IntIterator')"/>
-	<haxeflag name="-dce full"/>
-	<haxeflag name="--macro keep('haxegon')"/>
+	<haxeflag name="-dce no"/>
 	<!--<haxeflag name="-xml output.xml"/>-->
 	<!-- haxeflag name="-D" value="webgl" / --> 
 	<!-- set name="webgl" / --> 
@@ -49,5 +48,5 @@
 	<haxedef name="RENDER_BLIT" if="RENDER_BLIT" />
 	<haxedef name="RENDER_TILE" if="RENDER_TILE" />
 	
-	<assets path="data" exclude="*.svg|*.mp3|*.ogg|*.wav|*.gz"/>	
+	<assets path="data" exclude="*.svg|*.mp3|*.ogg|*.wav"/>	
 </project>

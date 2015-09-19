@@ -65,7 +65,7 @@ function loadfontinfo(){
   fontlist = [Font.ZERO4B11, Font.C64, Font.COMIC, Font.CRYPT, Font.DEFAULT,
               Font.DOS, Font.GANON, Font.NOKIA, Font.OLDENGLISH, Font.PIXEL,
               Font.PRESSSTART, Font.RETROFUTURE, Font.ROMAN, Font.SPECIAL,
-              Font.TALL, Font.TINY, Font.YOSTER];
+              Font.THIN, Font.TINY, Font.YOSTER];
   
   fontcredits = [];
   fontcredits.push("04B11 by Yuji Oshimoto, 04.jp.org");
@@ -82,8 +82,8 @@ function loadfontinfo(){
   fontcredits.push("Retro Future Heavy, by Cyclone Graphics.");
   fontcredits.push("\"Roman\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
   fontcredits.push("\"Special\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("Small, tall 4x7 font! Made especially for Zeedonk by Terry.");
-  fontcredits.push("Tiny three by three font! Made especially for Zeedonk by Terry.");
+  fontcredits.push("Small, thin 3x7 font with lowercase letters! Made for Zeedonk by Terry.");
+  fontcredits.push("Useless unreadable 3x3 font! Made for Zeedonk by Terry.");
   fontcredits.push("Inspired by the font from Yoshi's Island. Converted by codeman38, zone38.net");
 
   //Load in all the fonts now
