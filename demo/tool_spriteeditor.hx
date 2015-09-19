@@ -51,11 +51,39 @@ var currentstate;
 var mouseheld = false;
 
 function new() {
-  Gfx.resizescreen(192, 120, 4);
-  Text.setfont("pixel", 1);
+  Text.setfont(Font.TALL, 1);
   Gfx.clearscreeneachframe=false;
-  Gfx.showfps = true;
 
+  //8, 12, 14, 16]
+  //Precache some stuff for speed
+  Gfx.createimage("transparent_8", 8, 8);
+  Gfx.drawtoimage("transparent_8");
+  Gfx.fillbox(0, 0, 8, 8, Gfx.rgb(64, 64, 64));
+  Gfx.fillbox(0, 0, 4, 4, Gfx.rgb(32, 32, 32));
+  Gfx.fillbox(4, 4, 4, 4, Gfx.rgb(32, 32, 32));
+  
+  Gfx.createimage("transparent_12", 12, 12);
+  Gfx.drawtoimage("transparent_12");
+  Gfx.fillbox(0, 0, 12, 12, Gfx.rgb(64, 64, 64));
+  Gfx.fillbox(0, 0, 6, 6, Gfx.rgb(32, 32, 32));
+  Gfx.fillbox(6, 6, 6, 6, Gfx.rgb(32, 32, 32));
+  
+  Gfx.createimage("transparent_14", 14, 14);
+  Gfx.drawtoimage("transparent_14");
+  Gfx.fillbox(0, 0, 14, 14, Gfx.rgb(64, 64, 64));
+  Gfx.fillbox(0, 0, 7, 7, Gfx.rgb(32, 32, 32));
+  Gfx.fillbox(7, 7, 7, 7, Gfx.rgb(32, 32, 32));
+  
+  Gfx.createimage("transparent_16", 16, 16);
+  Gfx.drawtoimage("transparent_16");
+  Gfx.fillbox(0, 0, 16, 16, Gfx.rgb(64, 64, 64));
+  Gfx.fillbox(0, 0, 8, 8, Gfx.rgb(32, 32, 32));
+  Gfx.fillbox(8, 8, 8, 8, Gfx.rgb(32, 32, 32));
+  
+  Gfx.drawtoscreen();
+  
+  
+  
   brushsize = 0;
   randompalette();
   currentstate = "editor";
@@ -67,31 +95,33 @@ function new() {
   Gfx.fillbox(0, 0, 16, 16, Col.BLACK);
   Gfx.drawtoscreen();
 
-  Gfx.createimage("hue", 72, 20);
+  Gfx.createimage("hue", 90, 25);
   Gfx.drawtoimage("hue");
-  Gfx.fillbox(0, 0, 72, 20, Col.BLACK);
-  for (j in 1 ... 19) {
-    for (i in 1 ... 71) {
-      Gfx.fillbox(i, j, 1, 1, Gfx.hsl(i * 360 / 72, 1 - ((j*j)/400), 0.5));
+  Gfx.fillbox(0, 0, 90, 25, Col.BLACK);
+  for (j in 1 ... 24) {
+    for (i in 1 ... 89) {
+      Gfx.fillbox(i, j, 1, 1, Gfx.hsl(i * 360 / 90, 1 - ((j*j)/625), 0.5));
     }
   }
 
-  Gfx.createimage("lightness", 72, 8);
+  Gfx.createimage("lightness", 90, 10);
   Gfx.drawtoimage("lightness");
-  Gfx.fillbox(0, 0, 72, 8, Col.BLACK);
-  for (i in 1 ... 71) {
-    Gfx.fillbox(i, 1, 1, 6, Gfx.rgb(Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72), Convert.toint(i * 255 / 72)));
+  Gfx.fillbox(0, 0, 90, 10, Col.BLACK);
+  for (i in 1 ... 89) {
+    Gfx.fillbox(i, 1, 1, 6, Gfx.rgb(Convert.toint(i * 255 / 90), Convert.toint(i * 255 / 90), Convert.toint(i * 255 / 90)));
   }
 
-  Gfx.createimage("preset", 72, 16);
+  Gfx.createimage("preset", 90, 20);
   Gfx.drawtoimage("preset");
   for (i in 0 ... 9) {
-    Gfx.fillbox(1 + i * 8, 0, 7, 7, Col.BLACK);
-    Gfx.fillbox(1 + i * 8, 8, 7, 7, Col.BLACK);
-    Gfx.fillbox(2 + i * 8, 1, 5, 5, arnepalette[i]);
-    Gfx.fillbox(2 + i * 8, 9, 5, 5, arnepalette[i + 9]);
+    Gfx.fillbox(1 + i * 10, 0, 9, 9, Col.BLACK);
+    Gfx.fillbox(1 + i * 10, 10, 9, 9, Col.BLACK);
+    Gfx.fillbox(2 + i * 10, 1, 7, 7, arnepalette[i]);
+    Gfx.fillbox(2 + i * 10, 11, 7, 7, arnepalette[i + 9]);
   }
-  for (j in 0 ... 5) for (i in 0 ... 5) Gfx.fillbox(66 + i, 9 + j, 1, 1, (i + j) % 2 == 0?Col.GRAY:Col.BLACK);
+  for (j in 0 ... 4) for (i in 0 ... 4) Gfx.fillbox(82 + i * 2, 11 + j * 2, 2, 2, (i + j) % 2 == 0?Gfx.rgb(64, 64, 64):Gfx.rgb(32, 32, 32));
+  Gfx.drawline(89, 11, 89, 19, Col.BLACK);
+  Gfx.drawline(82, 18, 90, 18, Col.BLACK);
   Gfx.drawtoscreen();
 
   currentcol = 3;
@@ -110,81 +140,81 @@ function new() {
   }
 
   button.push( {
-    x: Gfx.screenwidthmid - 40,
-    y: Gfx.screenheightmid+5,
-    width: 30,
+    x: Gfx.screenwidthmid - 50,
+    y: Gfx.screenheightmid + 6,
+    width: 38,
     text: "YES",
     action: "clear_yes",
     state: "clear"
   });
 
   button.push( {
-    x: Gfx.screenwidthmid+10,
-    y: Gfx.screenheightmid+5,
-    width: 30,
+    x: Gfx.screenwidthmid+12,
+    y: Gfx.screenheightmid+6,
+    width: 38,
     text: "NO",
     action: "clear_no",
     state: "clear"
   });
 
   button.push( {
-    x: Gfx.screenwidthmid-30,
+    x: Gfx.screenwidthmid-38,
     y: Gfx.screenheightmid,
-    width: 60,
+    width: 75,
     text: "BOO! BOOO!",
     action: "back",
     state: "todo"
   });
 
   button.push( {
-    x: 11,
-    y: 108,
-    width: 30,
+    x: 14,
+    y: 135,
+    width: 38,
     text: "RANDOM",
     action: "random",
     state: "editor"
   });
 
   button.push( {
-    x: 116+4,
-    y: 108,
-    width: 30,
+    x: 150,
+    y: 135,
+    width: 38,
     text: "IMPORT", 
     action: "import",
     state: "editor"
   });
 
   button.push( {
-    x: 116 + 40,
-    y: 108,
-    width: 30,
+    x: 195,
+    y: 135,
+    width: 38,
     text: "EXPORT", 
     action: "export",
     state: "editor" 
   }); 
 
   button.push( {
-    x: 120,
-    y: 56,
-    width: 30,
+    x: 150,
+    y: 70,
+    width: 38,
     text: "NEW", 
     action: "new",
     state: "editor"
   });
 
   button.push( {
-    x: 156,
-    y: 56,
-    width: 12,
+    x: 195,
+    y: 70,
+    width: 15,
     text: "16", 
     action: "resizex",
     state: "editor" 
   });
 
   button.push( {
-    x: 174,
-    y: 56,
-    width: 12,
+    x: 218,
+    y: 70,
+    width: 15,
     text: "16", 
     action: "resizey",
     state: "editor" 
@@ -407,8 +437,8 @@ function saveimagestring() {
 }
 
 function updatehueposition() {
-  huex = Convert.toint(116 + (currenthue * 72) / 360);
-  huey = Convert.toint(5 + ((1-currentsaturation) * 20));
+  huex = Convert.toint(145 + (currenthue * 90) / 360);
+  huey = Convert.toint(6 + ((1-currentsaturation) * 25));
   setbackgroundcolour();
 }
 
@@ -465,21 +495,21 @@ function randompalette(){
 function resize() {
   //Call when width or height have changed
   if(imgheight > imgwidth){
-    if (imgheight >= 10) { boxsize = 6;
-    }else if (imgheight >= 8) {	boxsize = 10;
-    }else if (imgheight >= 6) {	boxsize = 12;
+    if (imgheight >= 10) { boxsize = 8;
+    }else if (imgheight >= 8) {	boxsize = 12;
+    }else if (imgheight >= 6) {	boxsize = 14;
     }else {	boxsize = 16;	}
   }else {
-    if (imgwidth >= 10) { boxsize = 6;
-    }else if (imgwidth >= 8) {	boxsize = 10;
-    }else if (imgwidth >= 6) {	boxsize = 12;
+    if (imgwidth >= 10) { boxsize = 8;
+    }else if (imgwidth >= 8) {	boxsize = 12;
+    }else if (imgwidth >= 6) {	boxsize = 14;
     }else {	boxsize = 16;	}
   }
 
   canvaswidth = boxsize * imgwidth;
   canvasheight = boxsize * imgheight;
-  canvasx = Convert.toint((120 - canvaswidth) / 2);
-  canvasy = Convert.toint((120 - canvasheight) / 2) - 6;
+  canvasx = Convert.toint((150 - canvaswidth) / 2);
+  canvasy = Convert.toint((150 - canvasheight) / 2) - 8;
 
   for (i in 0 ... button.length) {
     if (button[i].action == "resizex") {
@@ -491,18 +521,17 @@ function resize() {
 }
 
 function drawbackground() {
-  Gfx.fillbox(0, 0, 192, 120, backgroundcol);
+  Gfx.clearscreen(backgroundcol);
 
   Gfx.fillbox(canvasx - 1, canvasy - 1, canvaswidth + 2, canvasheight + 2, Col.LIGHTBLUE);
   Gfx.fillbox(canvasx, canvasy, canvaswidth, canvasheight, Col.BLACK);
 
+  var transparentpixel = "transparent_" + boxsize;
   for (j in 0 ... imgheight) {
     for (i in 0 ... imgwidth) {
       var pixel = palette[imgcanvas[i + j * 16]];
       if (pixel == Col.TRANSPARENT) {
-        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, Gfx.rgb(64, 64, 64));
-        Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize/2, boxsize/2, Gfx.rgb(32, 32, 32));
-        Gfx.fillbox(canvasx + i * boxsize + boxsize/2, canvasy + j * boxsize  + boxsize/2, boxsize/2, boxsize/2, Gfx.rgb(32, 32, 32));
+        Gfx.drawimage(canvasx + i * boxsize, canvasy + j * boxsize, transparentpixel);
       }else{
         Gfx.fillbox(canvasx + i * boxsize, canvasy + j * boxsize, boxsize, boxsize, palette[imgcanvas[i + j * 16]]);
       }
@@ -512,20 +541,20 @@ function drawbackground() {
   for (i in 0 ... 4) {
     if (currentcol == i) {
       if (palette[i] == Col.TRANSPARENT) {
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Gfx.rgb(64, 64, 64));
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 5, 5, Gfx.rgb(32, 32, 32));
-        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 6 + 5, 5, 5, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(135 + (18 * i) - 65, 128 + 8, 12, 12, Gfx.rgb(64, 64, 64));
+        Gfx.fillbox(135 + (18 * i) - 65, 128 + 8, 6, 6, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(135 + (18 * i) - 65 + 6, 128 + 8 + 6, 6, 6, Gfx.rgb(32, 32, 32));
       }else{
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, palette[i]);
+        Gfx.fillbox(135 + (18 * i) - 65, 128 + 8, 12, 12, palette[i]);
       }
     }else {
-      Gfx.fillbox(108 + (14 * i) - 52, 102 + 6, 10, 10, Col.BLACK);
+      Gfx.fillbox(135 + (18 * i) - 65, 128 + 8, 12, 12, Col.BLACK);
       if (palette[i] == Col.TRANSPARENT) {
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, Gfx.rgb(64, 64, 64));
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 5, 5, Gfx.rgb(32, 32, 32));
-        Gfx.fillbox(108 + (14 * i) - 52 + 5, 102 + 4 + 5, 5, 5, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(135 + (18 * i) - 65, 128 + 6, 12, 12, Gfx.rgb(64, 64, 64));
+        Gfx.fillbox(135 + (18 * i) - 65, 128 + 6, 6, 6, Gfx.rgb(32, 32, 32));
+        Gfx.fillbox(135 + (18 * i) - 65 + 6, 128 + 4 + 8, 6, 6, Gfx.rgb(32, 32, 32));
       }else{
-        Gfx.fillbox(108 + (14 * i) - 52, 102 + 4, 10, 10, palette[i]);
+        Gfx.fillbox(135 + (18 * i) - 65, 128 + 6, 12, 12, palette[i]);
       }
     }
   }
@@ -583,11 +612,11 @@ function drawgui() {
   for (i in 0 ... button.length) {
     button[i].mouseover = false;
     if(currentstate == button[i].state){
-      if (inbox_w(Mouse.x, Mouse.y, button[i].x, button[i].y, button[i].width, 7)) {
-        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, buttonhighlightcol);
+      if (inbox_w(Mouse.x, Mouse.y, button[i].x, button[i].y, button[i].width, 9)) {
+        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 9, buttonhighlightcol);
         button[i].mouseover = true;
       }else{
-        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 7, buttoncol);
+        Gfx.fillbox(button[i].x, button[i].y, button[i].width, 9, buttoncol);
       }
       if (button[i].text != "") {
         Text.display(button[i].x + ((button[i].width-Text.len(button[i].text))/2), button[i].y + 1, button[i].text, Col.WHITE);
@@ -663,12 +692,12 @@ function update() {
   if (!Mouse.leftheld() && mouseheld) mouseheld = false;
 
   if (currentstate == "clear") {
-    Gfx.fillbox(0, 0, 192, 120, backgroundcol);
-    Text.display(Text.CENTER, Gfx.screenheightmid - 14, "ARE YOU SURE YOU WANT");
-    Text.display(Text.CENTER, Gfx.screenheightmid - 7, "TO DELETE THIS SPRITE?");
+    Gfx.fillbox(0, 0, 240, 150, backgroundcol);
+    Text.display(Text.CENTER, Gfx.screenheightmid - 18, "ARE YOU SURE YOU WANT");
+    Text.display(Text.CENTER, Gfx.screenheightmid - 9, "TO DELETE THIS SPRITE?");
   }else	if (currentstate == "todo") {
-    Gfx.fillbox(0, 0, 192, 120, backgroundcol);
-    Text.display(Text.CENTER, Gfx.screenheightmid - 14, "TO DO: IMPLEMENT THIS");
+    Gfx.fillbox(0, 0, 240, 150, backgroundcol);
+    Text.display(Text.CENTER, Gfx.screenheightmid - 18, "TO DO: IMPLEMENT THIS");
   }else	if (currentstate == "editor") {
     drawbackground();
 
@@ -719,9 +748,9 @@ function update() {
       }
     }
 
-    if (inbox_w(Mouse.x, Mouse.y, 108 - 52, 102 + 4, 52, 10)) {
+    if (inbox_w(Mouse.x, Mouse.y, 70, 134, 65, 12)) {
       for (i in 0 ... 4) {
-        if (inbox_w(Mouse.x, Mouse.y, 108 - 52 + (i * 14), 102 + 4, 10, 10)) {
+        if (inbox_w(Mouse.x, Mouse.y, 70 + (i * 18), 134, 12, 12)) {
           if (Mouse.leftclick()) {
             if (i != currentcol) {
               selectcolour(i);
@@ -729,9 +758,9 @@ function update() {
           }
 
           if (i == currentcol) {
-            Gfx.drawbox(108 - 52 + (i * 14), 102 + 6, 10, 10, Col.WHITE);
+            Gfx.drawbox(70 + (i * 18), 136, 12, 12, Col.WHITE);
           }else{
-            Gfx.drawbox(108 - 52 + (i * 14), 102 + 4, 10, 10, Col.WHITE);
+            Gfx.drawbox(70 + (i * 18), 134, 12, 12, Col.WHITE);
           }
         }
       }
@@ -747,14 +776,14 @@ function update() {
       selectcolour(3);
     }
 
-    Gfx.drawimage(116, 5, "hue");
-    Gfx.drawimage(116, 27, "lightness");
-    Gfx.drawimage(116, 38, "preset");
+    Gfx.drawimage(145, 6, "hue");
+    Gfx.drawimage(145, 34, "lightness");
+    Gfx.drawimage(145, 48, "preset");
 
-    if (inbox_w(Mouse.x, Mouse.y, 116, 5, 72, 20)) {
+    if (inbox_w(Mouse.x, Mouse.y, 145, 6, 90, 25)) {
       if (Mouse.leftheld() && !mouseheld) {
-        currenthue = Convert.toint((Mouse.x - 116) * 360 / 72);
-        currentsaturation = 1 - ((Mouse.y - 5) / 20);
+        currenthue = Convert.toint((Mouse.x - 145) * 360 / 90);
+        currentsaturation = 1 - ((Mouse.y - 6) / 25);
 
         palettehue[currentcol] = Convert.toint(currenthue);
         palettesaturation[currentcol] = currentsaturation;
@@ -767,20 +796,20 @@ function update() {
     Gfx.fillbox(huex - 4, huey - 4, 8, 8, palette[currentcol]);
     Gfx.drawbox(huex - 4, huey - 4, 8, 8, Col.WHITE);
 
-    if (inbox_w(Mouse.x, Mouse.y, 116, 27, 72, 8)) {
+    if (inbox_w(Mouse.x, Mouse.y, 145, 34, 90, 10)) {
       if (Mouse.leftheld() && !mouseheld) {
-        currentlightness = ((Mouse.x - 116) / 72);
+        currentlightness = ((Mouse.x - 145) / 90);
         palettelightness[currentcol] = currentlightness;
         palette[currentcol] = Gfx.hsl(currenthue, currentsaturation, currentlightness);
       }
     }
-    Gfx.drawbox(116 + Convert.toint(72 * currentlightness) - 2, 27, 4, 7, Col.WHITE);
+    Gfx.drawbox(145 + Convert.toint(90 * currentlightness) - 2, 34, 5, 7, Col.WHITE);
 
 
-    if (inbox_w(Mouse.x, Mouse.y, 116, 38, 72, 16)) {
+    if (inbox_w(Mouse.x, Mouse.y, 145, 47, 90, 20)) {
       for (i in 0 ... 9) {
-        if (inbox_w(Mouse.x, Mouse.y, 116 + 1 + i * 8, 38, 7, 7)) {
-          Gfx.drawbox(116 + 1 + i * 8, 38, 7, 6, Col.WHITE);
+        if (inbox_w(Mouse.x, Mouse.y, 145 + 1 + i * 10, 47, 8, 8)) {
+          Gfx.drawbox(145 + 1 + i * 10, 48, 8, 8, Col.WHITE);
           if (Mouse.leftclick()) {        
             Music.playsound(sound_click, 0.2);
             palette[currentcol] = arnepalette[i];
@@ -793,8 +822,8 @@ function update() {
             currentlightness = palettelightness[currentcol];
             updatehueposition();
           }
-        }else if (inbox_w(Mouse.x, Mouse.y, 116 + 1 + i * 8, 38 + 8, 7, 7)) {
-          Gfx.drawbox(116 + 1 + i * 8, 38 + 8, 7, 6, Col.WHITE);
+        }else if (inbox_w(Mouse.x, Mouse.y, 145 + 1 + i * 10, 47 + 10, 8, 8)) {
+          Gfx.drawbox(145 + 1 + i * 10, 48 + 10, 8, 8, Col.WHITE);
           if (Mouse.leftclick()) {
             Music.playsound(sound_click, 0.2);
             palette[currentcol] = arnepalette[i + 9];
@@ -811,7 +840,7 @@ function update() {
       }
     }
 
-    Text.display(169, 57, "x");
+    Text.display(211, 71, "x");
   }
   drawgui();
 }

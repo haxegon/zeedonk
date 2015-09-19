@@ -6,8 +6,6 @@ var currenteffect;    // Current effect we're drawing on the screen
 var totaleffects;     // Total number of effects
 var currenteffectname;
 
-var counter;          // Count up one every frame: using in this program for animation.
-
 var pulse;            // A variable that counts from 0 to 50 and back.
 var pulsedir;      // Controls the direction of the pulse.
 
@@ -18,10 +16,9 @@ function new() {
   currenteffectname = "1: TRIANGLES";
   
   pulse = 0;
-  counter = 0;
   pulsedir = "up";
   
-  Text.setfont(Font.PIXEL, 1);
+  Text.setfont(Font.ZERO4B11, 1);
   //Set up the triangle buffer
   Gfx.createimage("triangles", Gfx.screenwidth, Gfx.screenheight);
   drawtriangles(1);
@@ -33,7 +30,6 @@ function update() {
     if (currenteffect > totaleffects) currenteffect = 1;
   }
   
-  counter++;
   if (pulsedir == "up") {
     pulse++;
     if (pulse >= 50) pulsedir = "down";
@@ -53,7 +49,7 @@ function update() {
   }
     
   Gfx.fillbox(0,Gfx.screenheight-10,Gfx.screenwidth,10,Col.BLACK);
-  Text.display(Gfx.screenwidth-2, Gfx.screenheight - Text.height()-3, "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE, {align: Text.RIGHT});
+  Text.display(Text.CENTER, Gfx.screenheight - Text.height()- 1, "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE);
 }
 
 function drawtriangles(effectnum) {
@@ -61,7 +57,7 @@ function drawtriangles(effectnum) {
   currenteffectname = "1: TRIANGLES";
   Gfx.drawtoimage("triangles");
   
-  if (counter % 60 == 0) {
+  if (Game.time % 60 == 0) {
     //Clear the screen every second
     Gfx.fillbox(0, 0, Gfx.screenwidth, Gfx.screenheight, Col.NIGHTBLUE, 0.9);
   }
@@ -79,18 +75,20 @@ function drawcircles(effectnum) {
   Gfx.linethickness=3;
   var radius = 0;
   
-  radius = (counter % 120);
+  radius = (Game.time % 140);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.RED);
-  radius = ((counter+20) % 120);
+  radius = ((Game.time+20) % 140);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.YELLOW);
-  radius = ((counter+40) % 120);
+  radius = ((Game.time+40) % 140);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.ORANGE);
-  radius = ((counter+60) % 120);
+  radius = ((Game.time+60) % 140);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.YELLOW);
-  radius = ((counter+80) % 120);
+  radius = ((Game.time+80) % 140);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.WHITE);
-  radius = ((counter+100) % 120);
+  radius = ((Game.time+100) % 140);
   Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.ORANGE);
+  radius = ((Game.time+120) % 140);
+  Gfx.drawcircle(Gfx.screenwidthmid, Gfx.screenheightmid, radius, Col.YELLOW);
 }
 
 function drawhexagon(effectnum) {
@@ -101,7 +99,7 @@ function drawhexagon(effectnum) {
   for (i in 0 ... 13) {
     shade = 255-(27*i);
   	if(shade<0) shade=0;
-    Gfx.drawhexagon(Gfx.screenwidthmid, Gfx.screenheightmid, 10 + (i*10) + (pulse / 2), counter / 50, Gfx.rgb(shade, shade, shade));
+    Gfx.drawhexagon(Gfx.screenwidthmid, Gfx.screenheightmid, 10 + (i*10) + (pulse / 2), Game.time / 50, Gfx.rgb(shade, shade, shade));
   }
 }
 
@@ -110,10 +108,10 @@ function drawstripes(effectnum) {
   var colour1;
   var colour2;
   
-  if (counter % 60 < 20) {
+  if (Game.time % 60 < 20) {
     colour1 = Col.GRAY;
     colour2 = Col.WHITE;
-  }else if (counter % 60 < 40) {
+  }else if (Game.time % 60 < 40) {
     colour1 = Col.RED;
     colour2 = Col.YELLOW;
   }else {
@@ -121,17 +119,17 @@ function drawstripes(effectnum) {
     colour2 = Col.LIGHTBLUE;
   }
   
-  if (counter % 120 < 60) {
+  if (Game.time % 120 < 60) {
     //Horizontal stripes
     for (stripe in 0 ... 20) {
-      Gfx.fillbox(0, ( -(counter % 20)) + (stripe * 10), Gfx.screenwidth, 5, colour1);
-      Gfx.fillbox(0, ( -(counter % 20)) + (stripe * 10) + 5, Gfx.screenwidth, 5, colour2);
+      Gfx.fillbox(0, ( -(Game.time % 20)) + (stripe * 10), Gfx.screenwidth, 5, colour1);
+      Gfx.fillbox(0, ( -(Game.time % 20)) + (stripe * 10) + 5, Gfx.screenwidth, 5, colour2);
     }
   }else {
     //Vertical stripes
-    for (stripe in 0 ... 24) {
-      Gfx.fillbox(( -(counter % 20)) + (stripe * 10), 0, 5, Gfx.screenheight, colour1);
-      Gfx.fillbox(( -(counter % 20)) + (stripe * 10) + 5, 0, 5, Gfx.screenheight, colour2);
+    for (stripe in 0 ... 30) {
+      Gfx.fillbox(( -(Game.time % 20)) + (stripe * 10), 0, 5, Gfx.screenheight, colour1);
+      Gfx.fillbox(( -(Game.time % 20)) + (stripe * 10) + 5, 0, 5, Gfx.screenheight, colour2);
     }
   }
 }

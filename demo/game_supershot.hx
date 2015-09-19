@@ -11,7 +11,7 @@
 
   - Interpreting code at runtime is slow! So give hscript as little to do as you 
     can. For example, I got a noticible speed increase in the checkcollision()
-    function by first checking that the two entities are within 20 pixels of 
+    function by first checking that the two entities are within 25 pixels of 
     each other before checking the individual points.
 
   - Also in the category of giving hscript less to do, try to do as little 
@@ -98,6 +98,8 @@ var powerup_ = [];
 var powerup_stopped_ = [];
 var spaceteeth_=[];
 var spaceteeth_stopped_=[];
+var spacewall_ = [];
+var spacewall_stopped_ = [];
 var spaceeye_=[];
 var spaceeye_stopped_=[];
 var spaceeye_hurt_=[];
@@ -203,8 +205,8 @@ function setcollisionrect(t, x, y, w, h){
 
 function checkcollision(a, b){
   if(entity[a].active && entity[b].active){
-    if(Math.abs(Convert.toint(entity[a].x - entity[b].x)) < 20){
-      if(Math.abs(Convert.toint(entity[a].y - entity[b].y)) < 20){
+    if(Math.abs(Convert.toint(entity[a].x - entity[b].x)) < 25){
+      if(Math.abs(Convert.toint(entity[a].y - entity[b].y)) < 25){
         if(inboxw(entity[a].x + entity[a].cx,
                   entity[a].y + entity[a].cy, 
                   entity[b].x + entity[b].cx, 
@@ -259,68 +261,70 @@ function cachegraphics() {
   //Cache entity graphics as images to speed things up
 
   //Player
-  Gfx.createimage("player_moving", 10, 10);
+  Gfx.createimage("player_moving", 12, 12);
   Gfx.drawtoimage("player_moving");
-  tcol = 0xEEEE22; Gfx.drawtri(0, 1, 0, 9, 9, 5, tcol);
+  tcol = 0xEEEE22; Gfx.drawtri(0, 1, 0, 11, 11, 6, tcol);
 
-  Gfx.createimage("player_stopped", 10, 10);
+  Gfx.createimage("player_stopped", 12, 12);
   Gfx.drawtoimage("player_stopped");
-  tcol = stopcol; Gfx.drawtri(0, 1, 0, 9, 9, 5, tcol);
+  tcol = stopcol; Gfx.drawtri(0, 1, 0, 11, 11, 6, tcol);
 
   //Powerbullets
-  Gfx.createimage("powershot", 10, 14);
+  Gfx.createimage("powershot", 10, 18);
   Gfx.drawtoimage("powershot");
 
-  tcol = Col.YELLOW; Gfx.fillbox(2, 6, 4, 2, tcol);
-  tcol = 0xEEEE22;   Gfx.fillbox(6, 5, 2, 4, tcol);
-  tcol = Col.WHITE;  Gfx.fillbox(8, 5, 2, 4, tcol);
+  tcol = Col.YELLOW; Gfx.fillbox(2, 7, 4, 3, tcol);
+  tcol = 0xEEEE22;   Gfx.fillbox(6, 6, 2, 5, tcol);
+  tcol = Col.WHITE;  Gfx.fillbox(8, 6, 2, 5, tcol);
 
-  tcol = Col.YELLOW; Gfx.fillbox(0, 1, 4, 2, tcol);
-  tcol = 0xEEEE22;   Gfx.fillbox(4, 0, 2, 4, tcol);
-  tcol = Col.WHITE;  Gfx.fillbox(6, 0, 2, 4, tcol);
+  tcol = Col.YELLOW; Gfx.fillbox(0, 1, 4, 3, tcol);
+  tcol = 0xEEEE22;   Gfx.fillbox(4, 0, 2, 5, tcol);
+  tcol = Col.WHITE;  Gfx.fillbox(6, 0, 2, 5, tcol);
 
-  tcol = Col.YELLOW; Gfx.fillbox(0, 11, 4, 2, tcol);
-  tcol = 0xEEEE22;   Gfx.fillbox(4, 10, 2, 4, tcol);
-  tcol = Col.WHITE;  Gfx.fillbox(6, 10, 2, 4, tcol);
+  tcol = Col.YELLOW; Gfx.fillbox(0, 13, 4, 3, tcol);
+  tcol = 0xEEEE22;   Gfx.fillbox(4, 12, 2, 5, tcol);
+  tcol = Col.WHITE;  Gfx.fillbox(6, 12, 2, 5, tcol);
 
-  Gfx.createimage("powershot_stopped", 10, 14);
+  Gfx.createimage("powershot_stopped", 10, 18);
   Gfx.drawtoimage("powershot_stopped");
 
   tcol = stopcol;
-  Gfx.fillbox(2, 6, 4, 2, tcol);
-  Gfx.fillbox(6, 5, 2, 4, tcol);
-  Gfx.fillbox(8, 5, 2, 4, tcol);
+  Gfx.fillbox(2, 7, 4, 3, tcol);
+  Gfx.fillbox(6, 6, 2, 5, tcol);
+  Gfx.fillbox(8, 6, 2, 5, tcol);
 
-  Gfx.fillbox(0, 1, 4, 2, tcol);
-  Gfx.fillbox(4, 0, 2, 4, tcol);
-  Gfx.fillbox(6, 0, 2, 4, tcol);
+  Gfx.fillbox(0, 1, 4, 3, tcol);
+  Gfx.fillbox(4, 0, 2, 5, tcol);
+  Gfx.fillbox(6, 0, 2, 5, tcol);
 
-  Gfx.fillbox(0, 11, 4, 2, tcol);
-  Gfx.fillbox(4, 10, 2, 4, tcol);
-  Gfx.fillbox(6, 10, 2, 4, tcol);
+  Gfx.fillbox(0, 13, 4, 3, tcol);
+  Gfx.fillbox(4, 12, 2, 5, tcol);
+  Gfx.fillbox(6, 12, 2, 5, tcol);
 
   //Powerups
+  Text.setfont(Font.PRESSSTART);
   for (k in 0 ... 2) {
     for (j in 0 ... 30) {
       if (k == 0) {
         powerup_.push("powerup_" + j);
-        Gfx.createimage(powerup_[j], 16, 16);
+        Gfx.createimage(powerup_[j], 20, 20);
         Gfx.drawtoimage(powerup_[j]);
         tcol = Gfx.rgb(240, 240, 0);
-        Gfx.drawhexagon(8, 8, 6, j * 2, Gfx.rgb(120, 120, 0));
-        Gfx.drawhexagon(8, 8, 7, j * 2, tcol);
+        Gfx.drawhexagon(10, 10, 9, j * 2, Gfx.rgb(120, 120, 0));
+        Gfx.drawhexagon(10, 10, 10, j * 2, tcol);
         Text.display(7, 6, "P", tcol);
       }else if (k == 1) {
         powerup_stopped_.push("powerup_stopped_" + j);
-        Gfx.createimage(powerup_stopped_[j], 16, 16);
+        Gfx.createimage(powerup_stopped_[j], 20, 20);
         Gfx.drawtoimage(powerup_stopped_[j]);
         tcol = stopcol;
-        Gfx.drawhexagon(8, 8, 6, j * 2, 0x222222);
-        Gfx.drawhexagon(8, 8, 7, j * 2, tcol);
+        Gfx.drawhexagon(10, 10, 9, j * 2, 0x222222);
+        Gfx.drawhexagon(10, 10, 10, j * 2, tcol);
         Text.display(7, 6, "P", tcol);
       }
     }
   }
+  Text.setfont(Font.PIXEL);
 
   //spaceteeth:
   tcol = stopcol;
@@ -328,26 +332,24 @@ function cachegraphics() {
     if (i >= 8) {
       tcol = Gfx.rgb(220, 0, 0);
       spaceteeth_.push("spaceteeth_" + (i - 8));
-      Gfx.createimage(spaceteeth_[i-8], 17, 32);
+      Gfx.createimage(spaceteeth_[i-8], 22, 40);
       Gfx.drawtoimage(spaceteeth_[i-8]);
     }else {
       spaceteeth_stopped_.push("spaceteeth_stopped_" + i);
-      Gfx.createimage(spaceteeth_stopped_[i], 17, 32);
+      Gfx.createimage(spaceteeth_stopped_[i], 22, 40);
       Gfx.drawtoimage(spaceteeth_stopped_[i]);
     }
 
     temp = Convert.toint((i * 2) % 16);
-    Gfx.drawline(8, 16, 0, 16 - temp, tcol);
-    Gfx.drawline(16, 8, 0, 16 - temp, tcol);
-    Gfx.drawline(8, 16, 0, 16 + temp, tcol);
-    Gfx.drawline(16, 24, 0, 16 + temp, tcol);
-    Gfx.drawline(16, 8, 16, 24, tcol);
+    Gfx.drawline(10, 20, 0, 20 - temp, tcol);
+    Gfx.drawline(20, 10, 0, 20 - temp, tcol);
+    Gfx.drawline(10, 20, 0, 20 + temp, tcol);
+    Gfx.drawline(20, 30, 0, 20 + temp, tcol);
+    Gfx.drawline(20, 10, 20, 30, tcol);
   }
 
   //spacewall:
   tcol = stopcol;
-  var spacewall_ = [];
-  var spacewall_stopped_ = [];
   for (j in 0 ... 20) {
     if (j >= 10) {
       spacewall_.push("spacewall_" + (j - 10));
@@ -376,25 +378,25 @@ function cachegraphics() {
   for (j in 0 ... 18) {
     if (j < 6) {
       spaceeye_.push("spaceeye_" + j);
-      Gfx.createimage(spaceeye_[j], 21, 21);
+      Gfx.createimage(spaceeye_[j], 27, 27);
       Gfx.drawtoimage(spaceeye_[j]);
       tcol = Gfx.rgb(255, 128, 0);
     }else if (j < 12) {
       spaceeye_stopped_.push("spaceeye_stopped_" + (j-6));
-      Gfx.createimage(spaceeye_stopped_[j-6], 21, 21);
+      Gfx.createimage(spaceeye_stopped_[j-6], 27, 27);
       Gfx.drawtoimage(spaceeye_stopped_[j-6]);
       tcol = stopcol;
     }else{
       spaceeye_hurt_.push("spaceeye_hurt_" + (j - 12));
-      Gfx.createimage(spaceeye_hurt_[j-12], 21, 21);
+      Gfx.createimage(spaceeye_hurt_[j-12], 27, 27);
       Gfx.drawtoimage(spaceeye_hurt_[j-12]);
       tcol = Gfx.rgb(255, 0, 0);
     }
 
-    Gfx.drawcircle(10, 10, 10, tcol);
+    Gfx.drawcircle(13, 13, 13, tcol);
     if (j % 6 > 0) {
       if (j < 6) tcol = Gfx.rgb(128, 64, 0);
-      Gfx.drawcircle(10, 10, ((j % 6) - 1) * 2, tcol);
+      Gfx.drawcircle(13, 13, (j % 6) * 2, tcol);
     }
   }
 
@@ -403,27 +405,27 @@ function cachegraphics() {
     for (j in 0 ... 10) {
       if (k == 0) {
         spacehexagon_.push("spacehexagon_" + j);
-        Gfx.createimage(spacehexagon_[j], 32, 32);
+        Gfx.createimage(spacehexagon_[j], 40, 40);
         Gfx.drawtoimage(spacehexagon_[j]);
       }else if (k == 1) {
         spacehexagon_stopped_.push("spacehexagon_stopped_" + j);
-        Gfx.createimage(spacehexagon_stopped_[j], 32, 32);
+        Gfx.createimage(spacehexagon_stopped_[j], 40, 40);
         Gfx.drawtoimage(spacehexagon_stopped_[j]);
         tcol = stopcol;
       }else if (k == 2) {
         spacehexagon_hurt_.push("spacehexagon_hurt_" + j);
-        Gfx.createimage(spacehexagon_hurt_[j], 32, 32);
+        Gfx.createimage(spacehexagon_hurt_[j], 40, 40);
         Gfx.drawtoimage(spacehexagon_hurt_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }
 
       //0.10472 is 1/10 of a 60 degree rotation in radians
       if (k == 0) tcol = 0xEE88EE;
-      Gfx.drawhexagon(16, 16, 15, 0.10472 * j, tcol);
+      Gfx.drawhexagon(20, 20, 18, 0.10472 * j, tcol);
       if (k == 0) tcol = 0x884488;
-      Gfx.drawhexagon(16, 16, 10, 0.10472 * j, tcol);
+      Gfx.drawhexagon(20, 20, 12, 0.10472 * j, tcol);
       if (k == 0) tcol = 0x331133;
-      Gfx.drawhexagon(16, 16, 5, 0.10472 * j, tcol);
+      Gfx.drawhexagon(20, 20, 6, 0.10472 * j, tcol);
     }
   }
 
@@ -432,22 +434,22 @@ function cachegraphics() {
     for (j in 0 ... 10) {
       if (k == 0) {
         spacestar_white_.push("spacestar_white_" + j);
-        Gfx.createimage(spacestar_white_[j], 21, 21);
+        Gfx.createimage(spacestar_white_[j], 26, 26);
         Gfx.drawtoimage(spacestar_white_[j]);
         tcol = Col.WHITE;
       }else if (k == 1) {
         spacestar_yellow_.push("spacestar_yellow_" + j);
-        Gfx.createimage(spacestar_yellow_[j], 21, 21);
+        Gfx.createimage(spacestar_yellow_[j], 26, 26);
         Gfx.drawtoimage(spacestar_yellow_[j]);
         tcol = Col.YELLOW;
       }else if (k == 2) {
         spacestar_red_.push("spacestar_red_" + j);
-        Gfx.createimage(spacestar_red_[j], 21, 21);
+        Gfx.createimage(spacestar_red_[j], 26, 26);
         Gfx.drawtoimage(spacestar_red_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }else if (k == 3) {
         spacestar_gray_.push("spacestar_gray_" + j);
-        Gfx.createimage(spacestar_gray_[j], 21, 21);
+        Gfx.createimage(spacestar_gray_[j], 26, 26);
         Gfx.drawtoimage(spacestar_gray_[j]);
         tcol = stopcol;
       }
@@ -455,17 +457,17 @@ function cachegraphics() {
       //0.12566368 is 1/10 of a 72 degree rotation in radians
       var temprotate = ((Math.PI * 2) / 10);
 
-      var tx = (Math.cos(0.12566368 * j) * 5) + 10;
-      var ty = (Math.sin(0.12566368 * j) * 5) + 10;
+      var tx = (Math.cos(0.12566368 * j) * 6) + 12;
+      var ty = (Math.sin(0.12566368 * j) * 6) + 12;
       var tx2 = 0.0;
       var ty2 = 0.0;
       for (i in 0 ... 10) {
         if (i % 2 == 0) {
-          tx2 = (Math.cos((0.12566368 * j) + (temprotate * (i + 1))) * 10) + 10;
-          ty2 = (Math.sin((0.12566368 * j) + (temprotate * (i + 1))) * 10) + 10;
+          tx2 = (Math.cos((0.12566368 * j) + (temprotate * (i + 1))) * 12) + 12;
+          ty2 = (Math.sin((0.12566368 * j) + (temprotate * (i + 1))) * 12) + 12;
         }else {
-          tx2 = (Math.cos((0.12566368 * j) + (temprotate * (i + 1))) * 5) + 10;
-          ty2 = (Math.sin((0.12566368 * j) + (temprotate * (i + 1))) * 5) + 10;
+          tx2 = (Math.cos((0.12566368 * j) + (temprotate * (i + 1))) * 6) + 12;
+          ty2 = (Math.sin((0.12566368 * j) + (temprotate * (i + 1))) * 6) + 12;
         }
 
         Gfx.drawline(tx, ty, tx2, ty2, tcol);
@@ -479,30 +481,30 @@ function cachegraphics() {
     for (j in 0 ... 10) {
       if (k == 0) {
         spacecube_.push("spacecube_" + j);
-        Gfx.createimage(spacecube_[j], 30, 30);
+        Gfx.createimage(spacecube_[j], 38, 38);
         Gfx.drawtoimage(spacecube_[j]);
         tcol = 0x22EEEE;
       }else if (k == 1) {
         spacecube_stopped_.push("spacecube_stopped_" + j);
-        Gfx.createimage(spacecube_stopped_[j], 30, 30);
+        Gfx.createimage(spacecube_stopped_[j], 38, 38);
         Gfx.drawtoimage(spacecube_stopped_[j]);
         tcol = stopcol;
       }else if (k == 2) {
         spacecube_hurt_.push("spacecube_hurt_" + j);
-        Gfx.createimage(spacecube_hurt_[j], 30, 30);
+        Gfx.createimage(spacecube_hurt_[j], 38, 38);
         Gfx.drawtoimage(spacecube_hurt_[j]);
         tcol = Gfx.rgb(255, 0, 0);
       }
 
       var temprotate = ((Math.PI * 2) / 4);
 
-      var tx = (Math.cos(0.1570796 * j) * 10) + 15;
-      var ty = (Math.sin(0.1570796 * j) * 10) + 15;
+      var tx = (Math.cos(0.1570796 * j) * 12) + 15;
+      var ty = (Math.sin(0.1570796 * j) * 12) + 15;
       var tx2 = 0.0;
       var ty2 = 0.0;
       for (i in 0 ... 4) {
-        tx2 = (Math.cos((0.1570796 * j) + (temprotate * (i+1))) * 10) + 15;
-        ty2 = (Math.sin((0.1570796 * j) + (temprotate * (i+1))) * 10) + 15;
+        tx2 = (Math.cos((0.1570796 * j) + (temprotate * (i+1))) * 12) + 15;
+        ty2 = (Math.sin((0.1570796 * j) + (temprotate * (i+1))) * 12) + 15;
 
         Gfx.drawline(tx, ty, tx2, ty2, tcol);
         tx = tx2; ty = ty2;
@@ -599,7 +601,7 @@ function create(_x, _y, t) {
   entity[i].active = true;
   entity[i].type = t;
   if(t == "player"){
-    setcollisionrect(i, -2, -1, 3, 2);
+    setcollisionrect(i, -2, -1, 3, 3);
   }else if(t == "playerbullet"){
     setcollisionrect(i, -3, -4, 6, 8);
     entity[i].health = 1;
@@ -611,14 +613,14 @@ function create(_x, _y, t) {
     entity[i].vy = bulletvy;
     entity[i].frame = bulletsize;
   }else if(t == "powerup_power"){
-    setcollisionrect(i, -6, -6, 12, 12);
+    setcollisionrect(i, -8, -8, 16, 16);
     powerupcount++;
   }else if(t == "powershot"){
     setcollisionrect(i, -3, -6, 6, 12);
     entity[i].health = 3;
   }else if(t == "spaceteeth"){
     entity[i].rule = "enemy";
-    setcollisionrect(i, -2, -8, 10, 16);
+    setcollisionrect(i, -3, -10, 12, 20);
     entity[i].health = 1;
     entity[i].droprate = 10;
   }else if(t == "spacewall"){
@@ -629,27 +631,27 @@ function create(_x, _y, t) {
     entity[i].droprate = 100;
   }else if(t == "spaceeye"){
     entity[i].rule = "enemy";
-    setcollisionrect(i, -8, -8, 16, 16);
+    setcollisionrect(i, -10, -10, 20, 20);
     entity[i].health = 4;
     entity[i].particle = Col.ORANGE;
     entity[i].droprate = 10;
   }else if(t == "spacehexagon"){
     entity[i].rule = "enemy";
-    setcollisionrect(i, -10, -10, 20, 20);
+    setcollisionrect(i, -12, -12, 24, 24);
     entity[i].health = 5;
     entity[i].timer = Random.int(0, 252);
-    entity[i].frame = _y < 50? -1:1;
+    entity[i].frame = _y < 62? -1:1;
     entity[i].droprate = 10;
     entity[i].particle = Col.MAGENTA;
   }else if(t == "spacestar"){
     entity[i].rule = "enemy";
-    setcollisionrect(i, -5, -5, 10, 10);
+    setcollisionrect(i, -6, -6, 12, 12);
     entity[i].health = 1000;
     entity[i].particle = Col.ORANGE;
     entity[i].droprate = 0;
   }else if(t == "spacecube"){
     entity[i].rule = "enemy";
-    setcollisionrect(i, -6, -6, 12, 12);
+    setcollisionrect(i, -7, -7, 14, 14);
     entity[i].health = 2;
     entity[i].timer = (_x - 200) / 4;
     entity[i].particle = Col.BLUE;
@@ -660,133 +662,133 @@ function create(_x, _y, t) {
 function spawn(patterntype){
   var randomposition;
   if (patterntype == "testing") {
-    create(200, 55, "spacecube");
+    create(250, 70, "spacecube");
     wavedelay = 70;
   }else if (patterntype == "spaceteeth_full") {
     for(i in 0 ... 5){
-      create(200, 8 + i * 24, "spaceteeth");
-      create(250, 8 + i * 24, "spaceteeth");
+      create(250, 10 + i * 30, "spaceteeth");
+      create(310, 10 + i * 30, "spaceteeth");
     }
     for(i in 0 ... 4){
-      create(225, 20 + i * 24, "spaceteeth");
+      create(280, 25 + i * 30, "spaceteeth");
     }
     wavedelay = 70;
   }else if(patterntype == "spaceteeth_top"){
     for(i in 0 ... 3){
-      create(200, 8 + i * 24, "spaceteeth");
-      create(250, 8 + i * 24, "spaceteeth");
+      create(250, 10 + i * 30, "spaceteeth");
+      create(310, 10 + i * 30, "spaceteeth");
     }
     for(i in 0 ... 2){
-      create(225, 20 + i * 24, "spaceteeth");
+      create(280, 25 + i * 30, "spaceteeth");
     }
     wavedelay = 70;
   }else if(patterntype == "spaceteeth_bottom"){
     for(i in 2 ... 5){
-      create(200, 8 + i * 24, "spaceteeth");
-      create(250, 8 + i * 24, "spaceteeth");
+      create(250, 10 + i * 30, "spaceteeth");
+      create(310, 10 + i * 30, "spaceteeth");
     }
     for(i in 2 ... 4){
-      create(225, 20 + i * 24, "spaceteeth");
+      create(280, 25 + i * 30, "spaceteeth");
     }
     wavedelay = 70;
   }else if(patterntype == "spaceteeth_out"){
-    create(250, 8, "spaceteeth");
-    create(225, 32, "spaceteeth");
-    create(200, 56, "spaceteeth");
-    create(225, 80, "spaceteeth");
-    create(250, 104, "spaceteeth");
+    create(310, 10, "spaceteeth");
+    create(280, 40, "spaceteeth");
+    create(250, 70, "spaceteeth");
+    create(280, 100, "spaceteeth");
+    create(310, 130, "spaceteeth");
     wavedelay = 70;
   }else if (patterntype == "spaceteeth_in") {
-    create(200, 8, "spaceteeth");
-    create(225, 32, "spaceteeth");
-    create(250, 56, "spaceteeth");
-    create(225, 80, "spaceteeth");
-    create(200, 104, "spaceteeth");
+    create(250, 10, "spaceteeth");
+    create(280, 40, "spaceteeth");
+    create(310, 70, "spaceteeth");
+    create(280, 100, "spaceteeth");
+    create(250, 130, "spaceteeth");
     wavedelay = 70;
   }else if (patterntype == "spaceteeth_line") {
     temp = Random.int(0, 4);
     for (i in 0 ... 5) {
-      create(200 + i * 25, 8 + temp * 24, "spaceteeth");
+      create(250 + i * 30, 10 + temp * 30, "spaceteeth");
     }
     wavedelay = 70;
   }else if (patterntype == "spacewall_wall") {
-    create(220, 20, "spacewall");
-    create(220, 60, "spacewall");
-    create(220, 100, "spacewall");
+    create(275, 25, "spacewall");
+    create(275, 75, "spacewall");
+    create(275, 125, "spacewall");
     wavedelay = 70;
   }else if (patterntype == "spacewall_single") {
     temp = Random.int(0, 2);
-    create(220, 20 + temp * 40, "spacewall");
+    create(275, 25 + temp * 50, "spacewall");
     wavedelay = 70;
   }else if (patterntype == "spaceeye_center") {
-    create(200, 60, "spaceeye");
-    create(240, 60, "spaceeye");
+    create(250, 75, "spaceeye");
+    create(300, 75, "spaceeye");
     wavedelay = 70;
   }else if (patterntype == "spaceeye_borders") {
-    create(200, 10, "spaceeye");
-    create(200, 100, "spaceeye");
+    create(250, 12, "spaceeye");
+    create(250, 125, "spaceeye");
     wavedelay = 70;
   }else if (patterntype == "spaceeye_top") {
-    create(200, 10, "spaceeye");
-    create(250, 10, "spaceeye");
+    create(250, 12, "spaceeye");
+    create(312, 12, "spaceeye");
     wavedelay = 120;
   }else if (patterntype == "spaceeye_bottom") {
-    create(200, 100, "spaceeye");
-    create(250, 100, "spaceeye");
+    create(250, 125, "spaceeye");
+    create(312, 125, "spaceeye");
     wavedelay = 120;
   }else if (patterntype == "spaceeye_three") {
-    create(200, 10, "spaceeye");
-    create(200, 55, "spaceeye");
-    create(200, 100, "spaceeye");
+    create(250, 12, "spaceeye");
+    create(250, 68, "spaceeye");
+    create(250, 125, "spaceeye");
     wavedelay = 70;
   }else if (patterntype == "spacehexagon_center") {
-    create(200, 55, "spacehexagon");
+    create(250, 68, "spacehexagon");
     wavedelay = 70;
   }else if (patterntype == "spacehexagon_down") {
-    create(200, 55, "spacehexagon");
-    create(230, 65, "spacehexagon");
-    create(260, 75, "spacehexagon");
+    create(250, 68, "spacehexagon");
+    create(287, 80, "spacehexagon");
+    create(325, 92, "spacehexagon");
     wavedelay = 120;
   }else if (patterntype == "spacehexagon_up") {
-    create(200, 45, "spacehexagon");
-    create(230, 35, "spacehexagon");
-    create(260, 25, "spacehexagon");
+    create(250, 56, "spacehexagon");
+    create(287, 44, "spacehexagon");
+    create(325, 32, "spacehexagon");
     wavedelay = 120;
   }else if (patterntype == "spacehexagon_cross") {
-    create(200, 20, "spacehexagon");
-    create(200, 90, "spacehexagon");
+    create(250, 25, "spacehexagon");
+    create(250, 112, "spacehexagon");
     wavedelay = 70;
   }else if (patterntype == "spacestar_center") {
-    create(200, 55, "spacestar");
+    create(250, 68, "spacestar");
     wavedelay = 70;
   }else if (patterntype == "spacestar_borders") {
-    create(200, 10, "spacestar");
-    create(200, 100, "spacestar");
+    create(250, 12, "spacestar");
+    create(250, 125, "spacestar");
     wavedelay = 70;
   }else if (patterntype == "spacestar_wall") {
     for(i in 0 ... 5){
-      create(200, 10 + i * 24, "spacestar");
+      create(250, 12 + i * 30, "spacestar");
     }
     wavedelay = 70;
   }else if (patterntype == "spacestar_offcenter") {
-    create(220, 30, "spacestar");
-    create(220, 80, "spacestar");
+    create(275, 37, "spacestar");
+    create(275, 100, "spacestar");
     wavedelay = 70;
   }else if (patterntype == "spacecube_single") {
-    create(200, 55, "spacecube");
+    create(250, 68, "spacecube");
     wavedelay = 70;
   }else if (patterntype == "spacecube_snake") {
-    create(200, 55, "spacecube");
-    create(220, 55, "spacecube");
-    create(240, 55, "spacecube");
-    create(260, 55, "spacecube");
-    create(280, 55, "spacecube");
-    create(300, 55, "spacecube");
+    create(250, 68, "spacecube");
+    create(275, 68, "spacecube");
+    create(300, 68, "spacecube");
+    create(325, 68, "spacecube");
+    create(350, 68, "spacecube");
+    create(375, 68, "spacecube");
     wavedelay = 120;
   }else if (patterntype == "spacecube_short") {
-    create(200, 55, "spacecube");
-    create(220, 55, "spacecube");
-    create(240, 55, "spacecube");
+    create(250, 68, "spacecube");
+    create(275, 68, "spacecube");
+    create(300, 68, "spacecube");
     wavedelay = 90;
   }
 }
@@ -857,7 +859,7 @@ function updatewaves(){
       //Easy
       spawn(easyenemies[Random.int(0, easyenemies.length - 1)]);
 
-      create(200, 8 + Random.int(0, 5) * 24, "spaceteeth");
+      create(250, 10 + Random.int(0, 4) * 30, "spaceteeth");
       wavedelay -= 40;
     }else if (wavecount < 15) {
       //Medium
@@ -869,24 +871,24 @@ function updatewaves(){
         wavedelay -= 40;
       }
 
-      create(200, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(300, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(250, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(375, 10 + Random.int(0, 4) * 30, "spaceteeth");
     }else if (wavecount < 30) {
       //Hard
       spawn(hardenemies[Random.int(0, hardenemies.length - 1)]);
       wavedelay -= 30;
-      create(200, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(250, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(300, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(350, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(250, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(312, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(375, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(437, 10 + Random.int(0, 4) * 30, "spaceteeth");
     }else{
       //Just die already
       spawn(hardenemies[Random.int(0, hardenemies.length - 1)]);
       wavedelay -= 40;
-      create(200, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(250, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(300, 8 + Random.int(0, 4) * 24, "spaceteeth");
-      create(350, 8 + Random.int(0, 4) * 24, "spaceteeth");
+      create(250, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(312, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(375, 10 + Random.int(0, 4) * 30, "spaceteeth");
+      create(437, 10 + Random.int(0, 4) * 30, "spaceteeth");
     }
     wavecount++;
   }
@@ -956,7 +958,7 @@ function gameupdate() {
   }
 
   if (playermoving > 0) {
-    gamespeed = 1;
+    gamespeed = 1.5;
     Music.musicvol = 0;
   }else {
     if (gamespeed > 0.15) {
@@ -1034,7 +1036,7 @@ function gameupdate() {
           }
         }
       }else if(entity[t].type == "enemybullet"){
-        if (Gfx.fastAbs(Convert.toint(entity[t].x - entity[player].x)) < 20) {
+        if (Gfx.fastAbs(Convert.toint(entity[t].x - entity[player].x)) < 15) {
           if(gamespeed == 1.0){
             entity[t].x += entity[t].vx / 3;
             entity[t].y += entity[t].vy / 3;
@@ -1105,7 +1107,7 @@ function gameupdate() {
           var playerdir = Math.atan2(entity[player].y - entity[t].y, entity[player].x - entity[t].x);
           createbullet(entity[t].x, entity[t].y, Math.cos(playerdir) * 5, Math.sin(playerdir)*5, 2);
         }
-        if(entity[t].x< -10){
+        if(entity[t].x< -12){
           entity[t].active=false;
         }
         if(!playerdestroyed){
@@ -1117,7 +1119,7 @@ function gameupdate() {
         entity[t].y += entity[t].frame * gamespeed;
         if (entity[t].y < 10) {
           entity[t].frame = 1;
-        }else if (entity[t].y > 100) {
+        }else if (entity[t].y > 125) {
           entity[t].frame = -1;
         }
         if (entity[t].frame2 > 8) {
@@ -1155,7 +1157,7 @@ function gameupdate() {
         }
       }else if(entity[t].type == "spacecube"){
         entity[t].x -= 2 * gamespeed;
-        entity[t].y = 55 + (Math.sin(entity[t].timer/10) * 55);
+        entity[t].y = 69 + (Math.sin(entity[t].timer/10) * 69);
         if (entity[t].x < -10) {
           entity[t].active=false;
         }
@@ -1232,9 +1234,9 @@ function gameupdate() {
         //Pickup: power
         temp = Convert.toint(Game.time % 30);
         if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 8, powerup_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, powerup_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 8, powerup_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, powerup_stopped_[temp]);
         }
       }else if(entity[t].type == "powershot"){
         //Powershots
@@ -1246,9 +1248,9 @@ function gameupdate() {
       }else if (entity[t].type == "spaceteeth") {
         temp = Convert.toint(entity[t].timer) % 8;
         if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, spaceteeth_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 20, spaceteeth_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 8, entity[t].y + cameray - 16, spaceteeth_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 20, spaceteeth_stopped_[temp]);
         }
       }else if(entity[t].type == "spacewall"){
         temp = Convert.toint(entity[t].health) - 1;
@@ -1263,33 +1265,33 @@ function gameupdate() {
           temp = Convert.toint((entity[t].timer % 5) + 1);
         }
         if (entity[t].hurt > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spaceeye_hurt_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 13, entity[t].y + cameray - 13, spaceeye_hurt_[temp]);
         }else if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spaceeye_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 13, entity[t].y + cameray - 13, spaceeye_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spaceeye_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 13, entity[t].y + cameray - 13, spaceeye_stopped_[temp]);
         }
       }else if (entity[t].type == "spacehexagon") {
         temp = Convert.toint(entity[t].timer % 10);
 
         if (entity[t].hurt > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, spacehexagon_hurt_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, spacehexagon_hurt_[temp]);
         }else if (playermoving > 0) {
-          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, spacehexagon_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, spacehexagon_[temp]);
         }else {
-          Gfx.drawimage(entity[t].x + camerax - 16, entity[t].y + cameray - 16, spacehexagon_stopped_[temp]);
+          Gfx.drawimage(entity[t].x + camerax - 20, entity[t].y + cameray - 20, spacehexagon_stopped_[temp]);
         }
       }else if(entity[t].type == "spacestar"){
         temp = Convert.toint(entity[t].timer % 10);
 
         if (playermoving > 0) {
           if (entity[t].hurt > 0) {
-            Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_red_[temp]);
+            Gfx.drawimage(entity[t].x + camerax - 12, entity[t].y + cameray - 12, spacestar_red_[temp]);
           }else if (entity[t].frame > 0) {
             if (Game.time % 16 > 8) {
-              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_white_[temp]);
+              Gfx.drawimage(entity[t].x + camerax - 12, entity[t].y + cameray - 12, spacestar_white_[temp]);
             }else{
-              Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_yellow_[temp]);
+              Gfx.drawimage(entity[t].x + camerax - 12, entity[t].y + cameray - 12, spacestar_yellow_[temp]);
             }
           }else {
             Gfx.drawimage(entity[t].x + camerax - 10, entity[t].y + cameray - 10, spacestar_white_[temp]);
@@ -1369,10 +1371,10 @@ function titleupdate(){
 
   if(titlecountdown % 2 == 0){
     Text.setfont(Font.RETROFUTURE, 1);
-    Text.changesize(3.2);
-    Text.display(Text.CENTER, Gfx.screenheightmid - 31, "SUPER");
-    Text.changesize(3.5);
-    Text.display(Text.CENTER, Gfx.screenheightmid-5, "SHOT");
+    Text.changesize(4);
+    Text.display(Text.CENTER, Gfx.screenheightmid - 39, "SUPER");
+    Text.changesize(4.36);
+    Text.display(Text.CENTER, Gfx.screenheightmid-6, "SHOT");
     Text.setfont(Font.PIXEL, 1);
   }
 
