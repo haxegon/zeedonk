@@ -19,6 +19,7 @@ class Webscript {
 	
 	public static var skipnextloadscript:Bool = false;
 	public static var readytogo:Bool = false;
+	public static var loadwhenready:Bool = false;
 	
 	public static var scriptloaded:Bool;
 	public static var runscript:Bool;
@@ -128,7 +129,10 @@ class Webscript {
 			Text.setfont("default", 1);
 			Gfx.clearscreen(Gfx.rgb(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
-		}else if (script_waitforreset) {
+		}else if (loadwhenready) {
+		  loadwhenready = false;	
+			loadscript(myscript);
+	  }else if (script_waitforreset) {
 			if (!waitforreset) {
 				scriptfound_enginereset();
 				script_waitforreset = false;
@@ -278,6 +282,9 @@ class Webscript {
 		interpreter.variables.set("trace", Webdebug.log);
 		interpreter.variables.set("Math.abs", Gfx.fastAbs);
 		
+		//Set default font
+		Text.setfont("default", 1);
+		
 		runscript = true;
 		try{
 			parsedscript = parser.parseString(myscript);
@@ -313,8 +320,6 @@ class Webscript {
 			initfunction = interpreter.variables.get("new");
 			updatefunction = interpreter.variables.get("update");
 			
-			//Set default font
-			Text.setfont("default", 1);
 			if (initfunction != null) {
 				try {
 					initfunction();	

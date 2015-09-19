@@ -85,11 +85,6 @@ function loadfontinfo(){
   fontcredits.push("Small, thin 3x7 font with lowercase letters! Made for Zeedonk by Terry.");
   fontcredits.push("Useless unreadable 3x3 font! Made for Zeedonk by Terry.");
   fontcredits.push("Inspired by the font from Yoshi's Island. Converted by codeman38, zone38.net");
-
-  //Load in all the fonts now
-  for(i in 0 ... fontlist.length){
-    Text.setfont(fontlist[i], 1);
-  }
 }
   
 function initstars(){
