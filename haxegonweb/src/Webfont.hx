@@ -14,6 +14,7 @@ class Webfont {
 	public static var RETROFUTURE:String = "retrofuture";
 	public static var ROMAN:String = "roman";
 	public static var SPECIAL:String = "special";
+	public static var TALL:String = "tall";
 	public static var TINY:String = "tiny";
 	public static var YOSTER:String = "yoster";
 }
