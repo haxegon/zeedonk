@@ -7,11 +7,24 @@ cd ..
 cp -R zeedonk zeedonkbin
 mv zeedonkbin zeedonk/bin
 cd zeedonk
-cd bin
-./gzipper
-cd ..
+echo changing css
+sed -e 's/<link rel="stylesheet" href="[A-Za-z0-9_\/-]*\.css">//g' < editor.html > editor2.html
+sed -e 's/<!--CSSREPLACE-->/<link rel="stylesheet" href="css\/combined.css">/' < editor2.html > editor3.html
+rm editor2.html
+mv editor3.html bin/editor.html
+
 echo optimizing images
 rm bin/images/*.png
 cd images
 ./minimize
+cd ..
+echo building css
+cd bin/css
+./concat
+cd ../../
+echo inlining html files
+./inline
+echo gzipping
+cd bin
+./gzipper
 cd ..
