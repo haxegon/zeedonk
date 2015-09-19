@@ -83,6 +83,7 @@ var haxeHintArray = [
 ["Gfx.imageheight","(imagename):Int","P"],
 ["Gfx.loadimagestring","(imagename, imagestring, optional color1, color2, color3, color4) ","F"],
 ["Gfx.createimage","(imagename, width, height) ","F"],
+["Gfx.resizeimage","(imagename, scale)","F"],
 ["Gfx.drawtoscreen","()","F"],
 ["Gfx.drawtoimage","(imagename)","F"],
 ["Gfx.grabimagefromscreen","(imagename, screen x, screen y)","F","This function grabs a copy of the screen from position x,y, and places it in the image."],
