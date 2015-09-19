@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"in",
+				"inline-block"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"pad",
+				"padding-left"
+			],
+			[
 				"errorst",
 				"errorstart	var"
 			],
@@ -166,10 +178,6 @@
 			[
 				"back",
 				"background-color"
-			],
-			[
-				"padd",
-				"padding"
 			],
 			[
 				"mar",
@@ -506,67 +514,11 @@
 			[
 				"spaw",
 				"ballSpawnPoint"
-			],
-			[
-				"balls",
-				"ballSpawnPoint"
-			],
-			[
-				"reg",
-				"regionNumberStr"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "editor.html",
-			"settings":
-			{
-				"buffer_size": 8970,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/codemirror/haxe.js",
-			"settings":
-			{
-				"buffer_size": 17445,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/inputoutput.js",
-			"settings":
-			{
-				"buffer_size": 1409,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/editor.js",
-			"settings":
-			{
-				"buffer_size": 12972,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "js/playscript.js",
-			"settings":
-			{
-				"buffer_size": 3326,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "play.html",
-			"settings":
-			{
-				"buffer_size": 5920,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -650,32 +602,55 @@
 	"expanded_folders":
 	[
 		"/Users/stephenlavelle/Documents/zeedonk",
-		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb",
-		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src"
+		"/Users/stephenlavelle/Documents/zeedonk/css"
 	],
 	"file_history":
 	[
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/project.xml",
+		"/Users/stephenlavelle/Documents/zeedonk/js/autocompleteArrays.js",
+		"/Users/stephenlavelle/Documents/zeedonk/compile",
+		"/Users/stephenlavelle/Documents/zeedonk/js/addon/fold/comment-fold.js",
+		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.inputsound.hx",
+		"/Users/stephenlavelle/Documents/zeedonk/css/concat",
+		"/Users/stephenlavelle/Documents/zeedonk/play.html",
+		"/Users/stephenlavelle/Documents/zeedonk/js/closurecompile",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/html5/bin/webthing.js",
+		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Questions.html",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/flash/haxe/ApplicationMain.hx",
+		"/Users/stephenlavelle/Desktop/project.xml",
+		"/Users/stephenlavelle/Documents/zeedonk/bin/js/compiled.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/editor.js",
+		"/Users/stephenlavelle/Documents/zeedonk/htaccess",
+		"/Users/stephenlavelle/Documents/zeedonk/editor.html",
+		"/Users/stephenlavelle/Documents/zeedonk/gzipper",
+		"/Users/stephenlavelle/Documents/zeedonk/css/buttons.css",
+		"/Users/stephenlavelle/Documents/zeedonk/.htaccess",
+		"/Users/stephenlavelle/Documents/zeedonk/index.html",
+		"/Users/stephenlavelle/Documents/zeedonk/bin/editor.html",
+		"/Users/stephenlavelle/Documents/zeedonk/js/parser.js",
+		"/Users/stephenlavelle/Documents/zeedonk/bin/play.html",
+		"/Users/stephenlavelle/Documents/zeedonk/_play5.html",
+		"/Users/stephenlavelle/Documents/zeedonk/editor5.html",
+		"/Users/stephenlavelle/Documents/zeedonk/js/inputoutput.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/lime_embed.js",
+		"/Users/stephenlavelle/Documents/zeedonk/_play4.html",
+		"/Users/stephenlavelle/Documents/zeedonk/editor2.html",
+		"/Users/stephenlavelle/Documents/zeedonk/js/touchEvent.js",
+		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/html5/bin/lib/soundjs.min.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/codemirror/haxe.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/playscript.js",
+		"/Users/stephenlavelle/Documents/zeedonk/js/scripts.js",
 		"/Users/stephenlavelle/Documents/zeedonk/js/buildStandalone.js",
 		"/Users/stephenlavelle/Documents/zeedonk/js/colors.js",
-		"/Users/stephenlavelle/Documents/zeedonk/js/scripts.js",
-		"/Users/stephenlavelle/Documents/zeedonk/js/touchEvent.js",
-		"/Users/stephenlavelle/Documents/zeedonk/js/inputoutput.js",
 		"/Users/stephenlavelle/Documents/zeedonk/js/addlisteners.js",
 		"/Users/stephenlavelle/Documents/zeedonk/js/addlisteners_editor.js",
 		"/Users/stephenlavelle/Documents/zeedonk/js/addon/selection/selection-pointer.js",
 		"/Users/stephenlavelle/Documents/zeedonk/js/lime-embed.js",
-		"/Users/stephenlavelle/Documents/zeedonk/js/playscript.js",
-		"/Users/stephenlavelle/Documents/zeedonk/js/editor.js",
 		"/Users/stephenlavelle/Documents/zeedonk/bin/css/concat",
-		"/Users/stephenlavelle/Documents/zeedonk/play.html",
-		"/Users/stephenlavelle/Documents/zeedonk/editor.html",
 		"/Users/stephenlavelle/Documents/zeedonk/zeedonk.sublime-workspace",
 		"/Users/stephenlavelle/Documents/zeedonk/bin/css/ambiance.css.gz",
 		"/Users/stephenlavelle/Documents/zeedonk/embed.html",
-		"/Users/stephenlavelle/Documents/zeedonk/index.html",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/haxegon/Gfx.hx",
-		"/Users/stephenlavelle/Documents/zeedonk/js/autocompleteArrays.js",
-		"/Users/stephenlavelle/Documents/zeedonk/js/codemirror/haxe.js",
 		"/Users/stephenlavelle/Documents/zeedonk/demo/tool_musiceditor.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Webscript.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Webdebug.hx",
@@ -683,21 +658,16 @@
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/InterpExtended.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/MusicEngine.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Preloader.hx",
-		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/project.xml",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/haxegon/Col.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/S.hx",
-		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/html5/bin/webthing.js",
 		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Gfx.html",
-		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.inputsound.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.inputmaxlength.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/demo/doc/Text.input.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/js/toolbar.js",
 		"/Users/stephenlavelle/Documents/zeedonk/demo/game_supershot.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/Documentation/style.css",
 		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Shortcuts.html",
-		"/Users/stephenlavelle/Documents/zeedonk/Documentation/Questions.html",
 		"/Users/stephenlavelle/Documents/zeedonkarchitecture/index.html",
-		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/bin/flash/haxe/ApplicationMain.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/css/soundbar.css",
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Main.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/css/gamecanvas.css",
@@ -706,7 +676,6 @@
 		"/Users/stephenlavelle/Documents/zeedonk/haxegonweb/src/Game.hx",
 		"/Users/stephenlavelle/Documents/zeedonk/default.hx",
 		"/Users/stephenlavelle/Documents/gameenginemanifesto/index.html",
-		"/Users/stephenlavelle/Documents/zeedonk/css/buttons.css",
 		"/Users/stephenlavelle/Documents/zeedonk/js/makeReferenceDocs.js",
 		"/Users/stephenlavelle/Documents/zeedonk/tutorialoutline.txt",
 		"/Users/stephenlavelle/Documents/zeedonk/Find Results",
@@ -754,7 +723,6 @@
 		"/Users/stephenlavelle/Documents/zeedonk/build",
 		"/Users/stephenlavelle/Documents/zeedonk/js/debug_off.js",
 		"/Users/stephenlavelle/Documents/zeedonk/Levels/MainLanguage/loopbreaker.txt",
-		"/Users/stephenlavelle/Documents/zeedonk/js/parser.js",
 		"/Users/stephenlavelle/Documents/zeedonk/Webthing.url",
 		"/Users/stephenlavelle/Documents/zeedonk/TO DO.txt",
 		"/Users/stephenlavelle/Documents/zeedonk/play_old.html",
@@ -765,24 +733,7 @@
 		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/game_roguelikewip.hx",
 		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/Game.hx",
 		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/Webscript.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/editor.html",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/css/docs.css",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/index.html",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/terrylib/Gfx.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/src/Webmusic.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/Documentation/Gfx.html",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/terrylibweb/bin/flash/bin/roguelike.txt",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Random.rare.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Random.occasional.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Random.bool.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.rightreleased.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.rightclick.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.middlereleased.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.middleheld.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.middleclick.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.leftreleased.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Mouse.leftclick.hx",
-		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/demo/doc/Math.PI.hx"
+		"/Users/stephenlavelle/Documents/terrylibtodo/PuzzleScript/editor.html"
 	],
 	"find":
 	{
@@ -793,6 +744,10 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"*",
+			"*.*",
+			"*.html",
+			"*",
 			"*.js",
 			"*.html",
 			"*.js",
@@ -916,11 +871,7 @@
 			"*.js",
 			"*.*",
 			"*.js",
-			"*.css",
-			"*.*",
-			"*.js",
-			"*.hx",
-			"*.*"
+			"*.css"
 		]
 	},
 	"find_state":
@@ -928,6 +879,39 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"webthing",
+			"combinedjs",
+			"function int",
+			"#!",
+			"javascript",
+			"fnt",
+			"|fnt",
+			"/new",
+			".fnt",
+			"httprequest",
+			"http",
+			"compi",
+			"css",
+			".hx",
+			"button2",
+			"button1",
+			".css",
+			"width=",
+			"utf-8",
+			"shortcut icon",
+			"====",
+			"optimizing",
+			"favicon2",
+			"css",
+			"combined.css",
+			"clearConsoleClick.addEventListener",
+			"temp1",
+			"lime",
+			"<style",
+			"css",
+			"soundjs",
+			"\"demo\"",
+			"<script",
 			"erConfig.globa",
 			"te.global",
 			"rConfig.global",
@@ -1022,40 +1006,7 @@
 			".error",
 			"import hscript",
 			"hscript",
-			"eunexpected",
-			"errorstart",
-			"myscript",
-			"myscript=",
-			"myscript =",
-			"hxoverrides.substr",
-			"errorstart",
-			"geterrorline",
-			"err.log",
-			"PRE_BRACKETMISMATCH",
-			"<eof>",
-			"outputdetails",
-			"errorline",
-			"geterrorline",
-			"in processing script",
-			"parser error",
-			"msimagesmoothi",
-			"msImageSmoothingEnabled",
-			"192",
-			"imageSmoothingEnabled",
-			"192",
-			"ratio",
-			"192",
-			"canvas",
-			"192",
-			"window width",
-			"onresize",
-			"1073741933",
-			"f18 =",
-			"onResize",
-			"onresize",
-			"getelement",
-			"getelementby",
-			"gamecanvas"
+			"eunexpected"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1182,7 +1133,7 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"folders":
@@ -1198,194 +1149,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "editor.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8970,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7176,
-								7176
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": true,
-							"WordCountSyntax": "html",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2143.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "js/codemirror/haxe.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17445,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								14551,
-								14551
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": false,
-							"WordCountSyntax": "javascript",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 5768.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "js/inputoutput.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1409,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								450,
-								450
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": false,
-							"WordCountSyntax": "javascript",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "js/editor.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12972,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								217,
-								217
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": false,
-							"WordCountSyntax": "javascript",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "js/playscript.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3326,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": false,
-							"WordCountSyntax": "javascript",
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "play.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5920,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5818,
-								5818
-							]
-						],
-						"settings":
-						{
-							"WordCountShouldRun": true,
-							"WordCountSyntax": "html",
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3186.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1442,6 +1207,222 @@
 		"selected_items":
 		[
 			[
+				"compi",
+				"compile"
+			],
+			[
+				"autoc",
+				"js/autocompleteArrays.js"
+			],
+			[
+				"projec",
+				"haxegonweb/project.xml"
+			],
+			[
+				"proe",
+				"haxegonweb/project.xml"
+			],
+			[
+				"inputsoun",
+				"demo/doc/Text.inputsound.hx"
+			],
+			[
+				"compil",
+				"compile"
+			],
+			[
+				"clos",
+				"js/closurecompile"
+			],
+			[
+				"compile",
+				"compile"
+			],
+			[
+				"",
+				"js/closurecompile"
+			],
+			[
+				"com",
+				"js/addon/fold/comment-fold.js"
+			],
+			[
+				"project.",
+				"haxegonweb/project.xml"
+			],
+			[
+				"conca",
+				"css/concat"
+			],
+			[
+				"htacc",
+				"htaccess"
+			],
+			[
+				"edit",
+				"editor.html"
+			],
+			[
+				"play.ht",
+				"play.html"
+			],
+			[
+				"question",
+				"Documentation/Questions.html"
+			],
+			[
+				"editor",
+				"editor.html"
+			],
+			[
+				"project",
+				"haxegonweb/project.xml"
+			],
+			[
+				"editor.h",
+				"editor.html"
+			],
+			[
+				"gzipp",
+				"gzipper"
+			],
+			[
+				"webthin",
+				"haxegonweb/bin/html5/bin/webthing.js"
+			],
+			[
+				"htac",
+				"htaccess"
+			],
+			[
+				"gzi",
+				"gzipper"
+			],
+			[
+				"edito",
+				"editor.html"
+			],
+			[
+				"index.",
+				"index.html"
+			],
+			[
+				"button",
+				"css/buttons.css"
+			],
+			[
+				"buttons.c",
+				"css/buttons.css"
+			],
+			[
+				"play",
+				"play.html"
+			],
+			[
+				"play.h",
+				"play.html"
+			],
+			[
+				".hta",
+				".htaccess"
+			],
+			[
+				"editor.ht",
+				"editor.html"
+			],
+			[
+				".htacc",
+				".htaccess"
+			],
+			[
+				"parser",
+				"js/parser.js"
+			],
+			[
+				"clo",
+				"js/closurecompile"
+			],
+			[
+				"play5",
+				"_play5.html"
+			],
+			[
+				"lime",
+				"js/lime-embed.js"
+			],
+			[
+				"play4",
+				"_play4.html"
+			],
+			[
+				"play.html",
+				"play.html"
+			],
+			[
+				"editor5",
+				"editor5.html"
+			],
+			[
+				"closur",
+				"js/closurecompile"
+			],
+			[
+				"editor.htm",
+				"editor.html"
+			],
+			[
+				"inputout",
+				"js/inputoutput.js"
+			],
+			[
+				"play.",
+				"play.html"
+			],
+			[
+				"touche",
+				"js/touchEvent.js"
+			],
+			[
+				"sundjs",
+				"haxegonweb/bin/html5/bin/lib/soundjs.min.js"
+			],
+			[
+				"toucheve",
+				"js/touchEvent.js"
+			],
+			[
+				"autocom",
+				"js/autocompleteArrays.js"
+			],
+			[
+				"play.htm",
+				"play.html"
+			],
+			[
+				"playscri",
+				"js/playscript.js"
+			],
+			[
+				"edi",
+				"editor2.html"
+			],
+			[
+				"editor2.",
+				"editor2.html"
+			],
+			[
+				"scripts.",
+				"js/scripts.js"
+			],
+			[
+				"editor.html",
+				"editor.html"
+			],
+			[
+				"webthing.j",
+				"haxegonweb/bin/html5/bin/webthing.js"
+			],
+			[
 				"haxe.j",
 				"js/codemirror/haxe.js"
 			],
@@ -1450,16 +1431,8 @@
 				"js/buildStandalone.js"
 			],
 			[
-				"inputout",
-				"js/inputoutput.js"
-			],
-			[
 				"colors.js",
 				"js/colors.js"
-			],
-			[
-				"editor",
-				"js/editor.js"
 			],
 			[
 				"scripts",
@@ -1474,40 +1447,12 @@
 				"js/addlisteners.js"
 			],
 			[
-				"play.html",
-				"play.html"
-			],
-			[
-				"editor.htm",
-				"editor.html"
-			],
-			[
-				"play.htm",
-				"play.html"
-			],
-			[
-				"editor.ht",
-				"editor.html"
-			],
-			[
 				"editor.",
 				"js/editor.js"
 			],
 			[
-				"editor.html",
-				"editor.html"
-			],
-			[
-				"play.h",
-				"play.html"
-			],
-			[
 				"index",
 				"index.html"
-			],
-			[
-				"play",
-				"play.html"
 			],
 			[
 				"webscri",
@@ -1516,14 +1461,6 @@
 			[
 				"web",
 				"haxegonweb/src/Webscript.hx"
-			],
-			[
-				"webthin",
-				"haxegonweb/bin/html5/bin/webthing.js"
-			],
-			[
-				"projec",
-				"haxegonweb/project.xml"
 			],
 			[
 				"err",
@@ -1540,10 +1477,6 @@
 			[
 				"gfx",
 				"Documentation/Gfx.html"
-			],
-			[
-				"autocom",
-				"js/autocompleteArrays.js"
 			],
 			[
 				"haxe.js",
@@ -1564,10 +1497,6 @@
 			[
 				"text.inputsou",
 				"demo/doc/Text.inputsound.hx"
-			],
-			[
-				"edito",
-				"editor.html"
 			],
 			[
 				"project.xml",
@@ -1598,20 +1527,12 @@
 				"haxegonweb/bin/html5/bin/webthing.js"
 			],
 			[
-				"play.ht",
-				"play.html"
-			],
-			[
 				"gamecanvas",
 				"css/gamecanvas.css"
 			],
 			[
 				"gamecanva",
 				"css/gamecanvas.css"
-			],
-			[
-				"webthing.j",
-				"haxegonweb/bin/html5/bin/webthing.js"
 			],
 			[
 				"index.html",
@@ -1642,20 +1563,8 @@
 				"default.hx"
 			],
 			[
-				"play.",
-				"play.html"
-			],
-			[
 				"quest",
 				"Documentation/Questions.html"
-			],
-			[
-				"autoc",
-				"js/autocompleteArrays.js"
-			],
-			[
-				"edit",
-				"editor.html"
 			],
 			[
 				"toolba",
@@ -1664,10 +1573,6 @@
 			[
 				"global",
 				"js/globalVariables.js"
-			],
-			[
-				"button",
-				"css/buttons.css"
 			],
 			[
 				"style",
@@ -1726,10 +1631,6 @@
 				"haxegonweb/src/haxegon/Music.hx"
 			],
 			[
-				"editor.h",
-				"editor.html"
-			],
-			[
 				"sprit",
 				"demo/tool_spriteeditor.hx"
 			],
@@ -1774,10 +1675,6 @@
 				"js/makeReferenceDocs.js"
 			],
 			[
-				"",
-				".gitignore"
-			],
-			[
 				"puzzl",
 				"demo/game_puzzlegame.hx"
 			],
@@ -1820,138 +1717,6 @@
 			[
 				"demo_gui",
 				"demo/demo_guisystem.hx"
-			],
-			[
-				"musicloo",
-				"demo/doc/Music.musicloop.hx"
-			],
-			[
-				"textsiz",
-				"demo/doc/Text.changesize.hx"
-			],
-			[
-				"text",
-				"terrylibweb/src/terrylib/Text.hx"
-			],
-			[
-				"clearsc",
-				"demo/doc/Gfx.clearscreeneachframe.hx"
-			],
-			[
-				"backgroun",
-				"demo/doc/Game.background.hx"
-			],
-			[
-				"game.home",
-				"demo/doc/Game.homepage.hx"
-			],
-			[
-				"game.tit",
-				"demo/doc/Game.title.hx"
-			],
-			[
-				"musicvo",
-				"demo/doc/Music.musicvol.hx"
-			],
-			[
-				"music.vol",
-				"demo/doc/Music.setmusicvol.hx"
-			],
-			[
-				"linethick",
-				"demo/doc/Gfx.linethickness.hx"
-			],
-			[
-				"webmus",
-				"terrylibweb/src/Webmusic.hx"
-			],
-			[
-				"gfx.h",
-				"terrylibweb/src/terrylib/Gfx.hx"
-			],
-			[
-				"rgb",
-				"demo/doc/Gfx.RGB.hx"
-			],
-			[
-				"webgame.",
-				"terrylibweb/src/Game.hx"
-			],
-			[
-				"gf",
-				"terrylibweb/src/terrylib/Gfx.hx"
-			],
-			[
-				"webgfx",
-				"terrylibweb/src/terrylib/Gfx.hx"
-			],
-			[
-				"getligh",
-				"demo/doc/Gfx.getlightness.hx"
-			],
-			[
-				"getsatu",
-				"demo/doc/Gfx.getsaturation.hx"
-			],
-			[
-				"gethue",
-				"demo/doc/Gfx.gethue.hx"
-			],
-			[
-				"auto",
-				"js/autocompleteArrays.js"
-			],
-			[
-				"consol",
-				"js/console.js"
-			],
-			[
-				"main",
-				"terrylibweb/src/Main.hx"
-			],
-			[
-				"setmusicloo",
-				"demo/doc/Music.setmusicloop.hx"
-			],
-			[
-				"setmusiclo",
-				"demo/doc/Music.setmusicvol.hx"
-			],
-			[
-				"musicen",
-				"terrylibweb/src/MusicEngine.hx"
-			],
-			[
-				"musice",
-				"terrylibweb/src/MusicEngine.hx"
-			],
-			[
-				"main.h",
-				"terrylibweb/src/Main.hx"
-			],
-			[
-				"codemir",
-				"js/codemirror/codemirror.js"
-			],
-			[
-				"codemirro",
-				"css/codemirror.css"
-			],
-			[
-				"diction",
-				"toki-utala/www/js/dictionary.js"
-			],
-			[
-				"confi",
-				"ortho/config.xml"
-			],
-			[
-				"inde.x",
-				"ortho/www/index.html"
-			],
-			[
-				"index.h",
-				"index.html"
 			]
 		],
 		"width": 0.0
