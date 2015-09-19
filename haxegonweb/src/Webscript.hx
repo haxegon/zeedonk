@@ -82,6 +82,8 @@ class Webscript {
 		Gfx.clearimages();
   	Gfx.loadimagestring("__library_zebra", "YKaaapZZZSaaaaaaaaaabeaaaaraaaacE6aaaEOaaavnaaac6avkFqaiHvkaquEHaac6aCabqauaauafaa");
 		Gfx.loadimagestring("__library_donkey", "YKaaaks4f3iMeqaaaaeqaaabeaaacE6aafkCaabsEaaaac6aaaaEEE6akEE8acEECqaCakaakac6afabqa");
+		Gfx.resizeimage("__library_zebra", 3);
+		Gfx.resizeimage("__library_donkey", 3);
 	}
 	
 	public static var myLoader:URLLoader;
@@ -201,8 +203,8 @@ class Webscript {
 			
 			Gfx.clearscreen(Col.LIGHTBLUE);
 			Gfx.fillbox(0, Gfx.screenheightmid, Gfx.screenwidth, Gfx.screenheightmid, Col.GREEN);
-			Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER-10 - zebrahop%5, "__library_donkey", {scale: 2});
-			Gfx.drawimage(Gfx.CENTER - 80 - 16, Gfx.CENTER-10 - donkeyhop%5, "__library_zebra", {scale: 2});
+			Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER-5 - zebrahop%5, "__library_donkey");
+			Gfx.drawimage(Gfx.CENTER - 80, Gfx.CENTER-5 - donkeyhop%5, "__library_zebra");
 			Text.display(Text.CENTER, Text.CENTER + 40, "WAITING FOR SCRIPTFILE", Col.WHITE);
 			Text.display(Text.CENTER, Gfx.screenheight - Text.height()-14, "zeedonk alpha v0.5", Col.WHITE);
 		}

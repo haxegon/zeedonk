@@ -313,6 +313,20 @@ class Gfx {
 		images.push(t);
 	}
 	
+	/** Resizes an image to a new size and stores it with the same label. */
+	public static function resizeimage(imagename:String, scale:Float) {
+		var oldindex:Int = imageindex.get(imagename);
+		var newbitmap:BitmapData = new BitmapData(Std.int(images[oldindex].width * scale), Std.int(images[oldindex].height * scale), true, 0);
+		
+		shapematrix.identity();
+		shapematrix.scale(scale, scale);
+		newbitmap.draw(images[oldindex], shapematrix);
+		shapematrix.identity();
+		
+		images[oldindex].dispose();
+		images[oldindex] = newbitmap;
+	}
+	
 	/** Returns the width of the image. */
 	public static function imagewidth(imagename:String):Int {
 		if(imageindex.exists(imagename)){
