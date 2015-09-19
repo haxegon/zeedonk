@@ -1,7 +1,8 @@
 #!/bin/bash 
 #this toolchain requires the same stuff to be installed in the same places as puzzlescript - see here for how to use
 #https://groups.google.com/forum/#!searchin/puzzlescript/development/puzzlescript/yptIpY9hlng/cjfrOPy_4jcJ
-./build
+#also requires https://www.npmjs.com/package/html-minifier
+./buildscripts
 ./docbuild
 rm -rf bin
 echo copying directory
@@ -9,7 +10,8 @@ cd ..
 cp -R zeedonk zeedonkbin
 mv zeedonkbin zeedonk/bin
 cd zeedonk
-rm -r bin/haxegonweb
+rm -rf bin/haxegonweb
+rm -rf bin/.[^.]*
 cd js
 ./closurecompile
 cd ..
@@ -39,4 +41,8 @@ rm _*.html
 echo gzipping
 cd bin
 ./gzipper
+cd ..
+cd bin
+html-minifier editor.html --remove-comments --collapse-whitespace --minify-css -o editor.html
+html-minifier play.html --remove-comments --collapse-whitespace --minify-css -o play.html
 cd ..
