@@ -5,6 +5,7 @@ import openfl.media.*;
 import openfl.events.*;
 import openfl.Assets;
 
+@:keep
 class MusicDat {
 	public var patternLength:Int;
 	public var cellDuration:Int;
@@ -13,7 +14,7 @@ class MusicDat {
 	public function new(){}
 }
 
-
+@:keep
 class MusicEngine {
 
 	public static var vol:Float=1.0;  

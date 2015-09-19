@@ -27,7 +27,8 @@
 	<source path="src" />
 	
 	<haxeflag name="--macro keep('IntIterator')"/>
-	<haxeflag name="-dce no"/>
+	<haxeflag name="-dce full"/>
+	<haxeflag name="--macro keep('haxegon')"/>
 	<!--<haxeflag name="-xml output.xml"/>-->
 	<!-- haxeflag name="-D" value="webgl" / --> 
 	<!-- set name="webgl" / --> 
