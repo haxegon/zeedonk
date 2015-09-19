@@ -17,7 +17,7 @@ class Err {
 		Webscript.runscript = false;
 		Webscript.errorinscript = true;
 		
-		Gfx.resizescreen(192, 120, 4);
+		Gfx.resizescreen(240, 150);
 		Text.setfont("default", 1);
 		
 		if (errorcode == PRE_BRACKETMISMATCH) {

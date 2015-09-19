@@ -27,7 +27,7 @@ class Webbridge {
 	}
 	
 	public function stop() {
-		Gfx.resizescreen(192, 120, 4);
+		Gfx.resizescreen(240, 150);
 		Text.setfont("default", 1);
 		Webscript.scriptloaded = false;
 		Webscript.runscript = false;
