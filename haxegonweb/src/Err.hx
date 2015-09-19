@@ -57,6 +57,16 @@ class Err {
 		}
 	}
 	
+	public static function getCharPosition(s:String, bytePos:Int):Int {
+		var bytes = haxe.io.Bytes.ofString(s);		
+		trace(bytePos+"/"+bytes.length+"  "+s.length);
+		try {			
+			return bytes.getString(0,bytePos).length;			
+		} catch (e:Dynamic) {
+			return s.length-1;
+		}
+	}
+
 	public static function process(errorhandle:Dynamic):Array<String> {
 		/*
 			e looks like
@@ -67,8 +77,14 @@ class Err {
 		dumpstack = false;
 		var returnarray:Array<String> = [];
 		if (Std.is(errorhandle, hscript.Expr.Error) ) {	
-			errorstart = errorhandle.pmin;
-			errorend = errorhandle.pmax;
+			errorstart = getCharPosition(Webscript.myscript,errorhandle.pmin);
+			errorend = getCharPosition(Webscript.myscript,errorhandle.pmax);
+			if (errorstart>=Webscript.myscript.length){
+				errorstart=Webscript.myscript.length-1;
+			}
+			if (errorend>=Webscript.myscript.length){
+				errorend=Webscript.myscript.length-1;
+			}
 			trace("ERRORHANDLE OBJECT :\n", errorhandle, "\nerrorhandle.e = \n{ \n0: " + errorhandle.e[0] + "\n1: "+ errorhandle.e[1] + "\n2: "+ errorhandle.e[2] + "\n3: "+ errorhandle.e[3] + "\n}");
 			
 			if (errorhandle.e[0] == "EUnexpected") {

@@ -1,1 +1,4 @@
-cat docs.css codemirror.css midnight.css console.css gamecanvas.css soundbar.css layout.css toolbar.css dialog.css  >> combined.css
+cat docs.css codemirror.css ambiance.css dialog.css console.css soundbar.css layout.css toolbar.css show-hint.css buttons.css hintclasses.css >> combined.css
+java -jar ~/progs/yuicompressor-2.4.8.jar combined.css > combined2.css
+mv combined2.css ../bin/css/combined.css
+rm combined.css

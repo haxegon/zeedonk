@@ -14,6 +14,7 @@ var bg:Bitmap = new Bitmap(new BackgroundBD(800, 600));
 addChildAt(bg, 0);
 */
 
+@:keep
 class Preloader extends NMEPreloader{
 	override public function new(){
 		super();

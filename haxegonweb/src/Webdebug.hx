@@ -8,6 +8,7 @@ class Webdebug {
 	public static function getlinenum(c:Int):Int {
 		var numnewlines:Int = 0;
 		var currentchar:String = "";
+		var c = Err.getCharPosition(Webscript.myscript,c);
 		
 		var i:Int = 0;
 		while (i < Webscript.myscript.length) {

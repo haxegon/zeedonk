@@ -1,0 +1,2 @@
+echo "compiling"
+openfl build html5 -minify -yui

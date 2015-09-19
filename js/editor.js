@@ -475,7 +475,6 @@ function tryLoadGist(id) {
 			setEditorClean();
 			unfocus();
 			stopClick();
-			compile(["restart"],code);
 		}
 	}
 	githubHTTPClient.setRequestHeader("Content-type","application/x-www-form-urlencoded");

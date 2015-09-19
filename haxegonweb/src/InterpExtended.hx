@@ -1,6 +1,7 @@
 import hscript.*;
 
 @:access(hscript.Expr)
+@:keep
 class InterpExtended extends hscript.Interp {
 
     override function get( o : Dynamic, f : String ) : Dynamic {

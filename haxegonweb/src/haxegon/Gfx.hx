@@ -49,7 +49,12 @@ class Gfx {
 	public static var drawto:BitmapData;
 	
 	/** Create a screen with a given width, height and scale. Also inits Text. */
-	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
+	#if !haxegonweb
+	private 
+	#else
+	public
+	#end
+	static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
 		Text.init(gfxstage);
 		showfps = false;
@@ -57,7 +62,6 @@ class Gfx {
 		
 		updategraphicsmode();
 	}
-	
 	public static var showfps:Bool;
 	private static var render_fps:Int;
 	private static var render_fps_max:Int = -1;
