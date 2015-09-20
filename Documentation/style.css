@@ -18,6 +18,17 @@ body {
     word-spacing: 10px;
 }
 
+#colorFrame {
+    background-color: #f8f8fa;
+    border: solid 1px #ccc;
+    border-spacing: 0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    max-width:640px;
+    padding: 10px 30px;
+}
+
 dt {
     background-color: #eee;
     display: inline-block;
@@ -206,3 +217,111 @@ table#header td {
 .tutorialCodeInsert {
     width:400px;
 }
+
+
+
+.Col_BLACK {
+  background: #000;
+  color: #fff;
+}
+
+.Col_GREY {
+  background: #9D9D9D;
+  color: #000;
+}
+
+.Col_GRAY {
+  background: #9D9D9D;
+  color: #000;
+}
+
+.Col_WHITE {
+    border: 1px solid black;
+  background: #fff;
+  color: #000;
+}
+
+  .Col_RED {
+    color: #fff;
+    background: #BE2633;
+  }
+  .Col_PINK {
+    content: " ";
+    color: #fff;
+    background: #E06F8B;
+  }
+  .Col_DARKBROWN {
+    content: " ";
+    color: #fff;
+    background: #493C2B;
+    border: 1px solid black;
+  }
+  .Col_BROWN {
+    content: " ";
+    color: #fff;
+    background: #A46422;
+  }
+  .Col_ORANGE {
+    content: " ";
+    color: #fff;
+    background: #EB8931;
+  }
+  .Col_YELLOW {
+    content: " ";
+    color: #000;
+    background: #F7E26B;
+  }
+  .Col_DARKGREEN {
+    content: " ";
+    color: #fff;
+    background: #2F484E;
+    border: 1px solid black;
+  }
+  .Col_GREEN {
+    content: " ";
+    background: #44891A;
+    color:white;
+  }
+  .Col_LIGHTGREEN {
+    content: " ";
+    background: #A3CE27;
+  }
+  .Col_NIGHTBLUE {
+    content: " ";
+    background: #1B2632;
+    color:white;
+  }
+  .Col_DARKBLUE {
+    content: " ";
+    background: #005784;
+    color:white;
+  }
+  .Col_BLUE {
+    content: " ";
+    background: #31A2F2;
+  }
+  .Col_LIGHTBLUE {
+    content: " ";
+    background: #B2DCEF;
+  }
+  .Col_MAGENTA {
+    content: " ";
+    background: #FF00FF;
+    color:white;
+  }
+  
+  .Col_TRANSPARENT {
+    content: " ";
+    background: transparent;
+    border: 1px solid black;
+  }
+
+  .colbubble{
+    border-radius: 5px;
+    padding:3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    line-height: 30px;
+  }

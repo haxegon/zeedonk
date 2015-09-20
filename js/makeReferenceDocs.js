@@ -24,8 +24,8 @@ for (var i=0;i<haxeHintArray.length;i++){
 		moduleName = fn.substring(0,dotIndex);
 		if (modules.indexOf(moduleName)===-1){
 			modules.push(moduleName);
-
-			if (r[2]==="E"){
+			console.log(moduleName+","+r[2]);
+			if (r[2]==="E"||r[2]==="Col"){
 				enums.push(moduleName);
 			}
 		}
@@ -112,6 +112,10 @@ function genReferencePage(moduleName){
 	moduleHeader+="</div><p>";
 
 	var enumContents ="<div id='enumFrame'>";
+
+	if (moduleName==="Col"){
+		enumContents ="<div id='colorFrame'>";		
+	}
 	var enumAdded=false;
 	var counter=0;
 	for (var i=0;i<haxeHintArray.length;i++){
@@ -155,10 +159,18 @@ function genReferencePage(moduleName){
 		row+="<div>"+docString+"</div></td></tr>";
 		pageContents+=row;
 		oldPreface=preface;
-		if (enumAdded){
-			enumContents+=", ";
+		if (moduleName==="Col"){
+
+			if (enumAdded){
+				enumContents+=" <wbr>";
+			}
+			enumContents+="<span class='Col_"+postface+" colbubble'>"+postface+"</span>";
+		} else {
+			if (enumAdded){
+				enumContents+=", <wbr>";
+			}
+			enumContents+=postface;
 		}
-		enumContents+=postface;
 		enumAdded=true;
 	}
 	enumContents+="</div>";

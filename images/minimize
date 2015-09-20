@@ -2,7 +2,7 @@ FILES=*.png
 
 for f in $FILES
 do
-	echo crushing $f
+#	echo crushing $f
 	pngcrush -rem allb -brute -reduce $f ../bin/images/$f &> /dev/null
 done
 
@@ -10,6 +10,6 @@ FONTS=../data/fonts/*/*.png
 
 for f in $FONTS
 do
-	echo crushing $f
+#	echo crushing $f
 	pngcrush -rem allb -brute -reduce $f ../bin/images/$f &> /dev/null
 done

@@ -49,12 +49,107 @@
   background: #00f;
 }
 
+
 .C-Zeedonk-completion:before {
   content: "C";
   background: #fff;
   color: #000;
 }
+  
+.Col_BLACK-Zeedonk-completion:before {
+  content: " ";
+  background: #000;
+  color: #fff;
+}
 
+.Col_GREY-Zeedonk-completion:before {
+  content: " ";
+  background: #9D9D9D;
+  color: #000;
+}
+
+.Col_GRAY-Zeedonk-completion:before {
+  content: " ";
+  background: #9D9D9D;
+  color: #000;
+}
+
+.Col_WHITE-Zeedonk-completion:before {
+  content: " ";
+  background: #fff;
+  color: #000;
+}
+
+  .Col_RED-Zeedonk-completion:before {
+  content: " ";
+    color: #fff;
+    background: #BE2633;
+  }
+  .Col_PINK-Zeedonk-completion:before {
+    content: " ";
+    color: #fff;
+    background: #E06F8B;
+  }
+  .Col_DARKBROWN-Zeedonk-completion:before {
+    content: " ";
+    color: #fff;
+    background: #493C2B;
+    border: 1px solid black;
+  }
+  .Col_BROWN-Zeedonk-completion:before {
+    content: " ";
+    color: #fff;
+    background: #A46422;
+  }
+  .Col_ORANGE-Zeedonk-completion:before {
+    content: " ";
+    color: #fff;
+    background: #EB8931;
+  }
+  .Col_YELLOW-Zeedonk-completion:before {
+    content: " ";
+    color: #fff;
+    background: #F7E26B;
+  }
+  .Col_DARKGREEN-Zeedonk-completion:before {
+    content: " ";
+    color: #fff;
+    background: #2F484E;
+    border: 1px solid black;
+  }
+  .Col_GREEN-Zeedonk-completion:before {
+    content: " ";
+    background: #44891A;
+  }
+  .Col_LIGHTGREEN-Zeedonk-completion:before {
+    content: " ";
+    background: #A3CE27;
+  }
+  .Col_NIGHTBLUE-Zeedonk-completion:before {
+    content: " ";
+    background: #1B2632;
+  }
+  .Col_DARKBLUE-Zeedonk-completion:before {
+    content: " ";
+    background: #005784;
+  }
+  .Col_BLUE-Zeedonk-completion:before {
+    content: " ";
+    background: #31A2F2;
+  }
+  .Col_LIGHTBLUE-Zeedonk-completion:before {
+    content: " ";
+    background: #B2DCEF;
+  }
+  .Col_MAGENTA-Zeedonk-completion:before {
+    content: " ";
+    background: #FF00FF;
+  }
+  
+  .Col_TRANSPARENT-Zeedonk-completion:before {
+    content: " ";
+    background: #fff;
+  }
 
 
 .CodeMirror-Zeedonk-tooltip {

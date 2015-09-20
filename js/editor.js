@@ -313,6 +313,9 @@ CodeMirror.registerHelper("hint", "haxe",
 			if (w.substring(0,token.length).toLowerCase()==token){
 				var w2 = ar.length>1?ar[1]:"";
 				var t = ar.length>2?ar[2]:"";
+				if (t==="C"){
+					t += "_"+w.split(".")[1];
+				}
 				var d = ar.length>3?ar[3]:"";
 				matches.push({text:w,displayText:w2,render:renderHint,tag:t,doc:d});
 			}
