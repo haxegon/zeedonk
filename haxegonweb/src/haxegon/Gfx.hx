@@ -319,8 +319,8 @@ class Gfx {
 		var newbitmap:BitmapData = new BitmapData(Std.int(images[oldindex].width * scale), Std.int(images[oldindex].height * scale), true, 0);
 		
 		shapematrix.identity();
-		shapematrix.scale(scale, scale);
-		newbitmap.draw(images[oldindex], shapematrix);
+		shapematrix.scale(Math.floor(scale), Math.floor(scale));
+	  newbitmap.draw(images[oldindex], shapematrix);
 		shapematrix.identity();
 		
 		images[oldindex].dispose();
