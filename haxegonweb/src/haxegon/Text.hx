@@ -344,6 +344,9 @@ class Text {
 	#if haxegonweb
 	public static function cleartextcache() {
 		cachedtextindex = new Map<String, Int>();
+		for (i in 0 ... cachedtext.length) {
+		  cachedtext[i].dispose();	
+		}
 		cachedtext = [];
 	}
 	

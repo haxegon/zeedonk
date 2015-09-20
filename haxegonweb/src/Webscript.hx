@@ -38,6 +38,7 @@ class Webscript {
 		pausescript = false;
 		errorinscript = false;
 		
+		Text.cleartextcache();
 		Text.setfont(Webfont.ZERO4B11, 1);
 		Text.setfont(Webfont.C64, 1);
 		Text.setfont(Webfont.COMIC, 1);
@@ -80,7 +81,7 @@ class Webscript {
 	
 	public static function cleanupimages() {
 		Gfx.clearimages();
-	  	Gfx.loadimagestring("__library_zebra", "YKaaapZZZSaaaaaaaaaabeaaaaraaaacE6aaaEOaaavnaaac6avkFqaiHvkaquEHaac6aCabqauaauafaa");
+	  Gfx.loadimagestring("__library_zebra", "YKaaapZZZSaaaaaaaaaabeaaaaraaaacE6aaaEOaaavnaaac6avkFqaiHvkaquEHaac6aCabqauaauafaa");
 		Gfx.loadimagestring("__library_donkey", "YKaaaks4f3iMeqaaaaeqaaabeaaacE6aafkCaabsEaaaac6aaaaEEE6akEE8acEECqaCakaakac6afabqa");
 		Gfx.resizeimage("__library_zebra", 3);
 		Gfx.resizeimage("__library_donkey", 3);
@@ -138,7 +139,7 @@ class Webscript {
 		#else
 		if (errorinscript) {
 		#end
-			Text.setfont("default", 1);
+			Text.setfont(Webfont.DEFAULT, 1);
 			Gfx.clearscreen(Gfx.rgb(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
 		}else if (loadwhenready) {
@@ -319,7 +320,8 @@ class Webscript {
 		interpreter.variables.set("Math.abs", Gfx.fastAbs);
 		
 		//Set default font
-		Text.setfont("default", 1);
+		Text.setfont(Webfont.DEFAULT, 1);
+		Text.cleartextcache();
 		Gfx.clearscreeneachframe = true;
 		
 		runscript = true;
@@ -359,7 +361,7 @@ class Webscript {
 			
 			if (initfunction != null) {
 				try {
-					initfunction();	
+					initfunction();
 				}catch (e:Dynamic) {
 					Err.log(Err.PARSER_NEW, Err.process(e));
 				}
