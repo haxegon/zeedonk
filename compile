@@ -4,6 +4,10 @@ timestamp=$(date "+%Y_%m_%d_%H_%M_%S")
 #this toolchain requires the same stuff to be installed in the same places as puzzlescript - see here for how to use
 #https://groups.google.com/forum/#!searchin/puzzlescript/development/puzzlescript/yptIpY9hlng/cjfrOPy_4jcJ
 #also requires https://www.npmjs.com/package/html-minifier
+echo generating font example silhouettes
+cd images/fonts
+./genblacks
+cd ../../
 cd haxegonweb
 ./releasebuild
 cd ..

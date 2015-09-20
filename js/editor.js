@@ -205,9 +205,20 @@ function elt(tagname, cls /*, ... elts*/) {
 	var e = document.createElement(tagname);
 	if (cls) e.className = cls;
 	for (var i = 2; i < arguments.length; ++i) {
-	var elt = arguments[i];
-	if (typeof elt == "string") elt = document.createTextNode(elt);
-	e.appendChild(elt);
+		var elt = arguments[i];
+		if (typeof elt == "string") {
+			if (elt.indexOf("<")===-1){
+				elt = document.createTextNode(elt);
+				e.appendChild(elt);
+			} else {
+				e.innerHTML = elt;
+				e.style.maxWidth="initial";
+				e.style.padding="10px";
+			}
+		} else {
+			e.appendChild(elt);
+			e.style.maxWidth="40em";
+		}
 	}
 	return e;
 }

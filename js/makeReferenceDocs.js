@@ -114,6 +114,8 @@ function genReferencePage(moduleName){
 
 	if (moduleName==="Col"){
 		enumContents ="<div id='colorFrame'>";		
+	} else if (moduleName==="Font"){		
+		enumContents="<table>"
 	}
 	var enumAdded=false;
 	var counter=0;
@@ -164,7 +166,15 @@ function genReferencePage(moduleName){
 				enumContents+=" <wbr>";
 			}
 			enumContents+="<span class='Col_"+postface+" colbubble'>"+postface+"</span>";
-		} else {
+		} else if (moduleName==="Font"){
+
+			var row = '<tr class="' +  ((counter%2==0)?"even":"odd")+'">';
+			doc = doc.replace("images/fonts/","../images/fonts/black_")
+			doc = doc.replace("<img","<img style='padding-top:20px; padding-bottom:20px;padding-left:5px;padding-right:10px;'");
+			doc = "<div style='text-align:center;padding:5px;background:white;border-radius:5px;border:1px solid gray;'>"+doc+"</div>"
+			enumContents+=row+"<td >"+postface+"<p>"+doc+"</td></tr>";
+
+		}else {
 			if (enumAdded){
 				enumContents+=", <wbr>";
 			}
@@ -172,7 +182,11 @@ function genReferencePage(moduleName){
 		}
 		enumAdded=true;
 	}
-	enumContents+="</div>";
+	 if (moduleName==="Font"){
+	 	enumContents+="</table>"
+	 } else {
+		enumContents+="</div>";
+	}
 	var tableHeader = "<h3 class='moduleHeader'>"+ moduleName+"</h3><p>";
 	pageContents = pageContents;
 
