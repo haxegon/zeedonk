@@ -6,10 +6,12 @@ var sound_random = 44531703;
 var sound_clear = 27481303;
 var sound_export = 57854303;
 var sound_import = 41433503;
+var sound_undo = 43337107;
 
 var imgwidth = 16;
 var imgheight = 16;
 var boxsize;
+var oldpalette = [1, 1, 1, 1];
 var palette = [0, 0, 0, 0];
 var palettehue = [0, 0, 0, 0];
 var palettesaturation = [0, 0, 0, 0];
@@ -34,6 +36,7 @@ var cursorx;
 var cursory;
 var huex;
 var huey;
+var temp;
 
 var currentcol;
 var brushsize;
@@ -49,6 +52,10 @@ var buttonhighlightcol;
 var currentstate;
 
 var mouseheld = false;
+
+var undobuffer=[];
+var undobuffersize = 5000;
+var undobufferposition = 0;
 
 function new() {
   Text.setfont(Font.THIN, 1);
@@ -82,10 +89,14 @@ function new() {
   
   Gfx.drawtoscreen();
   
-  
+  for(i in 0 ... undobuffersize){
+    undobuffer.push({time:-1});
+  }
+  undobufferposition = 0;
   
   brushsize = 0;
   randompalette();
+  for(i in 0 ... 4) oldpalette[i] = palette[i];
   currentstate = "editor";
   resize();
 
@@ -451,6 +462,22 @@ function setbackgroundcolour(){
   Game.background=backgroundcol;
 }
 
+function checkpalettechanges(){
+  //If palette has changed, store an undo buffer object for it
+  for(i in 0 ... 4){
+    if(oldpalette[i] != palette[i]){
+      undobuffer[undobufferposition] = {
+        action: "changecol", 
+        oldposition: i, 
+        oldvalue: oldpalette[i], 
+        time: Game.time
+      };
+      undobufferposition = (undobufferposition + 1) % undobuffersize;
+      oldpalette[i] = palette[i];
+    }  
+  }
+}
+
 function randompalette(){
   var randhue = Random.int(0, 360);
   var randsaturation = 0.3;
@@ -567,6 +594,13 @@ function dobuttonaction(t, rclick) {
     mouseheld = true;
   }else if (t == "clear_yes") {
     Music.playsound(sound_clear, 0.8);
+    undobuffer[undobufferposition] = {
+      action:"clear", 
+      oldvalue: [], 
+      time: Game.time
+    };
+    for(i in 0 ... 16) for(j in 0 ... 16) undobuffer[undobufferposition].oldvalue[i + j * 16] = imgcanvas[i + j * 16];     
+    undobufferposition = (undobufferposition + 1) % undobuffersize;
     for (j in 0 ... 16) for (i in 0 ... 16) imgcanvas[i + j * 16] = 0;
     currentstate = "editor";
     mouseheld = true;
@@ -599,6 +633,8 @@ function dobuttonaction(t, rclick) {
   }else if (t == "random") {
     Music.playsound(sound_random, 0.5);
     randompalette();
+    
+    checkpalettechanges();
   }else if (t == "export") {
     Music.playsound(sound_export, 0.5);
     saveimagestring();
@@ -652,9 +688,51 @@ function inbox(x, y, x1, y1, x2, y2) {
   return false;
 }
 
+function undo(){
+  //Do the reverse of the last action
+  if(undobuffer[(undobufferposition+undobuffersize-1)%undobuffersize].time >= 0){
+    Music.playsound(sound_undo);
+    i = (undobufferposition+undobuffersize-1)%undobuffersize;
+    var lasttime = undobuffer[i].time;
+    while(undobuffer[i].time == lasttime){
+      if(undobuffer[i].action == "pset"){
+        //Painting a pixel
+        imgcanvas[undobuffer[i].oldposition] = undobuffer[i].oldvalue;
+      }else if(undobuffer[i].action == "clear"){
+        imgcanvas = undobuffer[i].oldvalue;
+        for(i2 in 0 ... 16) for(j2 in 0 ... 16) imgcanvas[i2 + j2 * 16] = undobuffer[i].oldvalue[i2 + j2 * 16];
+      }else if(undobuffer[i].action == "changecol"){
+        palette[undobuffer[i].oldposition] = undobuffer[i].oldvalue;
+        
+        palettehue[undobuffer[i].oldposition] = Gfx.gethue(palette[undobuffer[i].oldposition]);
+        palettesaturation[undobuffer[i].oldposition] = Gfx.getsaturation(palette[undobuffer[i].oldposition]);
+        palettelightness[undobuffer[i].oldposition] = Gfx.getlightness(palette[undobuffer[i].oldposition]);
+
+        currenthue = palettehue[currentcol];
+        currentsaturation = palettesaturation[currentcol];
+        currentlightness = palettelightness[currentcol];
+        updatehueposition();
+      }
+      undobuffer[i].time = -1;
+      undobufferposition = (undobufferposition+undobuffersize-1)%undobuffersize;
+      i = (undobufferposition+undobuffersize-1)%undobuffersize;
+    }
+  }
+}
+
 function pset(x, y, c) {
   if (inbox(x, y, 0, 0, imgwidth, imgheight)) {
-    imgcanvas[x + y * 16] = c;
+    temp = x + y * 16;
+    if(imgcanvas[temp] != c){
+      undobuffer[undobufferposition] = {
+        action:"pset", 
+        oldposition: temp, 
+        oldvalue: imgcanvas[x + y * 16], 
+        time: Game.time
+      };
+      undobufferposition = (undobufferposition + 1) % undobuffersize;
+      imgcanvas[temp] = c;
+    }
   }
 }
 
@@ -712,12 +790,16 @@ function update() {
       cursorx = -1;
     }
 
-    if (Mouse.mousewheel > 0 || Input.justpressed(Key.Z)) {
+    if (Mouse.mousewheel > 0) {
       brushsize++;
       if (brushsize > 2) brushsize = 2;
-    }else if (Mouse.mousewheel < 0 || Input.justpressed(Key.X)) {
+    }else if (Mouse.mousewheel < 0) {
       brushsize--;
       if (brushsize < 0) brushsize = 0;
+    }
+    
+    if(Input.justpressed(Key.Z)){
+      undo();
     }
 
     if (cursorx > -1) {
@@ -838,6 +920,10 @@ function update() {
           }
         }
       }
+    }
+    
+    if(Mouse.leftreleased()){
+      checkpalettechanges();
     }
 
     Text.display(211, 71, "x");
