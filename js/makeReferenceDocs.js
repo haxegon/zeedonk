@@ -24,7 +24,6 @@ for (var i=0;i<haxeHintArray.length;i++){
 		moduleName = fn.substring(0,dotIndex);
 		if (modules.indexOf(moduleName)===-1){
 			modules.push(moduleName);
-			console.log(moduleName+","+r[2]);
 			if (r[2]==="E"||r[2]==="Col"){
 				enums.push(moduleName);
 			}
