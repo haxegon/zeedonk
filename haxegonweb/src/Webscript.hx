@@ -156,12 +156,22 @@ class Webscript {
 				if (zebrahop > 0) zebrahop--;
 				if (donkeyhop > 0) donkeyhop--;
 				
+				
 				Gfx.clearscreen(Col.LIGHTBLUE);
 				Gfx.fillbox(0, Gfx.screenheightmid, Gfx.screenwidth, Gfx.screenheightmid, Col.GREEN);
-				Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER-5 - zebrahop%5, "__library_donkey");
-				Gfx.drawimage(Gfx.CENTER - 80, Gfx.CENTER-5 - donkeyhop%5, "__library_zebra");
-				Text.display(Text.CENTER, Text.CENTER + 40, "WAITING FOR SCRIPTFILE", Col.WHITE);
-				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "zeedonk alpha v0.5", Col.WHITE);
+				Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER - 5 - zebrahop, "__library_donkey", {rotation: zebrahop, xpivot: Gfx.RIGHT});
+				Gfx.drawimage(Gfx.CENTER - 80, Gfx.CENTER - 5 - donkeyhop, "__library_zebra", {rotation: -donkeyhop});
+				
+				if (counter % 120 < 60) {
+					Gfx.fillcircle(Gfx.screenwidthmid - 60 + ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Gfx.hsl(counter, 0.75, 0.5));
+				}else {
+					Gfx.fillcircle(Gfx.screenwidthmid + 60 - ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Gfx.hsl(counter, 0.75, 0.5));
+				}
+				
+				Text.setfont(Webfont.PRESSSTART, 1);
+				Text.display(Text.CENTER, Text.CENTER + 50, "WAITING FOR SCRIPTFILE", Col.WHITE);
+				Text.setfont(Webfont.DEFAULT, 1);
+				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 10, "zeedonk alpha v0.5", Col.WHITE);
 			}else {
 				Gfx.clearscreen(Col.BLACK);
 				
