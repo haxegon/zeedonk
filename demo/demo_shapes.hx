@@ -49,7 +49,7 @@ function update() {
   }
     
   Gfx.fillbox(0,Gfx.screenheight-10,Gfx.screenwidth,10,Col.BLACK);
-  Text.display(Text.CENTER, Gfx.screenheight - Text.height(), "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE);
+  Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 1, "LEFT CLICK MOUSE TO CYCLE EFFECTS", Col.WHITE);
 }
 
 function drawtriangles(effectnum) {
@@ -59,11 +59,11 @@ function drawtriangles(effectnum) {
   
   if (Game.time % 60 == 0) {
     //Clear the screen every second
-    Gfx.fillbox(0, 0, Gfx.screenwidth, Gfx.screenheight, Col.NIGHTBLUE, 0.9);
+    Gfx.fillbox(0, 0, Gfx.screenwidth, Gfx.screenheight, Col.NIGHTBLUE);
   }
   
   //Draw a triangle with random vertices, random colour and alpha of 0.6.
-  Gfx.filltri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.hsl(Random.int(0, 360), 0.5, 0.5), 0.6);
+  Gfx.filltri(Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Random.int(0, Gfx.screenwidth), Random.int(0, Gfx.screenheight), Gfx.hsl(Random.int(0, 360), 0.5, 0.5));
   
   //Draw that buffer to the screen
   Gfx.drawtoscreen();
