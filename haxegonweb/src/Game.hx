@@ -122,7 +122,6 @@ class Game {
 	
 	public static function restart() {
 		//Reload the stored script file
-		Webscript.resetengine();
 		Webscript.scriptfound();
 	}
 }

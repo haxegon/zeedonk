@@ -465,7 +465,7 @@ class Gfx {
 	 * x and y can be: Gfx.CENTER, Gfx.TOP, Gfx.BOTTOM, Gfx.LEFT, Gfx.RIGHT. 
 	 * */
 	public static function drawimage(x:Float, y:Float, imagename:String, ?parameters:Gfxdrawparams) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		if (!imageindex.exists(imagename)) {
 			throw("ERROR: In drawimage, cannot find image \"" + imagename + "\".");
 			return;
@@ -632,7 +632,7 @@ class Gfx {
 	 * */
 	#if !haxegonweb
 	public static function drawtile(x:Float, y:Float, t:Int, ?parameters:Gfxdrawparams) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		if (currenttileset == -1) {
 			throw("ERROR: No tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.");
 			return;
@@ -753,7 +753,7 @@ class Gfx {
 	}
 	
 	public static function drawanimation(x:Float, y:Float, animationname:String, ?parameters:Gfxdrawparams) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		oldtileset = currenttilesetname;
 		if (!animationindex.exists(animationname)) {
 			throw("ERROR: No animated named \"" +animationname+"\" is defined. Define one first using Gfx.defineanimation!");
@@ -873,7 +873,7 @@ class Gfx {
 	#end
 	
 	public static function drawline(_x1:Float, _y1:Float, _x2:Float, _y2:Float, col:Int, alpha:Float = 1.0) {
-    if (skiprender && drawingtoscreen) return;
+    if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		if (_x1 == _x2) {
 			if (_y2 > _y1) {
@@ -904,7 +904,7 @@ class Gfx {
 	}
 
 	public static function drawhexagon(x:Float, y:Float, radius:Float, angle:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		temprotate = ((Math.PI * 2) / 6);
 		
@@ -941,7 +941,7 @@ class Gfx {
 	}
 	
 	public static function fillhexagon(x:Float, y:Float, radius:Float, angle:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		temprotate = ((Math.PI * 2) / 6);
 		
@@ -978,7 +978,7 @@ class Gfx {
 	}
 	
 	public static function drawcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		x = fastFloor(x);
 		y = fastFloor(y);
@@ -1019,7 +1019,7 @@ class Gfx {
 	private static var fillcirclepoints:Array<Bool> = [];
 	#end
 	public static function fillcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		x = fastFloor(x);
 		y = fastFloor(y);
@@ -1070,7 +1070,7 @@ class Gfx {
 	}
 	
 	public static function drawtri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		drawline(x1, y1, x2, y2, col);
 		drawline(x2, y2, x3, y3, col);
@@ -1110,7 +1110,7 @@ class Gfx {
 	
 	#end
 	public static function filltri(x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		//Sort the points from y value highest to lowest
 		if (y1 < y2 && y1 < y3) {
@@ -1185,7 +1185,7 @@ class Gfx {
 	}
 
 	public static function drawbox(x:Float, y:Float, width:Float, height:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		if (width < 0) {
 			width = -width;
 			x = x - width;
@@ -1234,7 +1234,7 @@ class Gfx {
 	}
 	
 	public static function clearscreen(col:Int = 0x000000) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		drawto.fillRect(drawto.rect, (0xFF << 24) + col);
 	}
 	
@@ -1263,7 +1263,7 @@ class Gfx {
 	}
 	
 	public static function setpixel(x:Float, y:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		if (alpha < 1) {
 			if (_linethickness == 1) {
@@ -1290,7 +1290,7 @@ class Gfx {
 	}
 
 	public static function fillbox(x:Float, y:Float, width:Float, height:Float, col:Int, alpha:Float = 1.0) {
-		if (skiprender && drawingtoscreen) return;
+		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
 		if(alpha == 1.0){
 			settrect(x, y, width, height);

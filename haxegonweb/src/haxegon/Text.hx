@@ -355,7 +355,7 @@ class Text {
 	#else
 	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
 	#end
-		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
+	  if ((Gfx.skiprender && Gfx.drawingtoscreen) || !Gfx.clearscreeneachframe) return;
 		
 		if (typeface[currentindex].type == "bitmap") {
 			cachelabel = text + "_" + currentfont + Convert.tostring(col);
@@ -375,6 +375,7 @@ class Text {
 				drawto = Gfx.drawto;
 			}
 			
+			trace("drawing cached text");
 			cacheindex = cachedtextindex.get(cachelabel);
 			display_bitmap(x, y, cacheindex, currentsize, parameters);
 		}else if (typeface[currentindex].type == "tff") {
@@ -465,8 +466,7 @@ class Text {
 	}
 	
 	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
-		// This was called "print" once. Maybe it was better that way? eh, stuck with display now
-		if (Gfx.skiprender && Gfx.drawingtoscreen) return;
+		if ((Gfx.skiprender && Gfx.drawingtoscreen) || !Gfx.clearscreeneachframe) return;
 		if (parameters == null) {
 			typeface[currentindex].tf_ttf.textColor = col;
 			typeface[currentindex].tf_ttf.text = text;
@@ -551,7 +551,6 @@ class Text {
 		if (!fontfileindex.exists(t)) {
 			addfont(t, s);
 		}
-		
 		if (t != currentfont) {
 			currentfont = t;
 			if (s != -1) {

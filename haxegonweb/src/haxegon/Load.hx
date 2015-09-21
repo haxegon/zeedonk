@@ -2,8 +2,8 @@ package haxegon;
 
 import openfl.display.*;
 
-class Load extends Core {
+class Load extends Core{
 	public function new () {
-		super ();
+		super();
 	}
 }

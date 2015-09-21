@@ -16,6 +16,7 @@ class Core extends Sprite {
 		super();
 		
 		Gfx.initrun = true;
+		Webscript.corecontrol = this;
 		init();
 	}
 	
@@ -37,6 +38,15 @@ class Core extends Sprite {
 	private function addedtostage(e:Event = null) {
 		removeEventListener(Event.ADDED_TO_STAGE, addedtostage);
 		loaded();
+	}
+	
+	public function reset() {
+	  Random.setseed(Std.int(Math.random() * 233280));
+		Gfx.init(this.stage);
+		Gfx.resizescreen(240, 150, 1);
+		Text.setfont(Webfont.DEFAULT, 1);
+		Text.cleartextcache();
+		Input.keybuffer = "";
 	}
 	
 	private function loaded() {
@@ -86,9 +96,6 @@ class Core extends Sprite {
 		Gfx.render_fps = 0;
 		_framesthissecond_counter = -1;
 		
-		#if haxegonweb
-		Webscript.waitforreset = false;
-		#end
 		Gfx.initrun = false;
 	}
 	
@@ -169,13 +176,6 @@ class Core extends Sprite {
 			
 			Gfx.drawto.unlock();
 		}
-		
-		#if haxegonweb
-		if (Webscript.reset) {
-			Webscript.reset = false;
-			init();
-		}
-		#end
 		
 		Mouse.mousewheel = 0;
 	}
