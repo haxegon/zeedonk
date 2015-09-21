@@ -163,7 +163,7 @@ class Text {
 		if (typeface[currentindex].type == "ttf") {
 			return typeface[currentindex].tf_ttf.textWidth;
 		}else if (typeface[currentindex].type == "bitmap") {
-			return typeface[currentindex].tf_bitmap.getStringWidth(typeface[currentindex].tf_bitmap.text, false) * typeface[currentindex].size;
+			return typeface[currentindex].tf_bitmap.getStringWidth(typeface[currentindex].tf_bitmap.text, false) * currentsize;
 		}
 		return 0;
 	}
@@ -172,7 +172,7 @@ class Text {
 		if (typeface[currentindex].type == "ttf") {
 			return typeface[currentindex].tf_ttf.textHeight;
 		}else if (typeface[currentindex].type == "bitmap") {
-			return typeface[currentindex].tf_bitmap.textHeight * typeface[currentindex].size;
+			return typeface[currentindex].tf_bitmap.textHeight * currentsize;
 		}
 		return 0;
 	}
@@ -182,7 +182,7 @@ class Text {
 			typeface[currentindex].tf_ttf.text = t;
 			return typeface[currentindex].tf_ttf.textWidth;
 		}else if (typeface[currentindex].type == "bitmap") {
-			return typeface[currentindex].tf_bitmap.getStringWidth(t, false) * typeface[currentindex].size;
+			return typeface[currentindex].tf_bitmap.getStringWidth(t, false) * currentsize;
 		}
 		return 0;
 	}
@@ -193,7 +193,7 @@ class Text {
 			return typeface[currentindex].tf_ttf.textHeight;
 		}else if (typeface[currentindex].type == "bitmap") {
 			typeface[currentindex].tf_bitmap.text = "???";
-			return typeface[currentindex].tf_bitmap.textHeight * typeface[currentindex].size;
+			return typeface[currentindex].tf_bitmap.textHeight * currentsize;
 		}
 		return 0;
 	}
@@ -207,11 +207,11 @@ class Text {
 			t2 = x - LEFT;
 			t3 = x - RIGHT;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * typeface[currentindex].size / 2));
+				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * currentsize / 2));
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width * typeface[currentindex].size));
+				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width *  currentsize));
 			}
 		}
 		
@@ -224,11 +224,11 @@ class Text {
 			t2 = y - TOP;
 			t3 = y - BOTTOM;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height * typeface[currentindex].size / 2);
+				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height * currentsize / 2);
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height * typeface[currentindex].size));
+				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height * currentsize));
 			}
 		}
 		
@@ -389,7 +389,7 @@ class Text {
 		drawto.draw(typeface[currentindex].tf_bitmap);
 	}
 	
-	private static function display_bitmap(x:Float, y:Float, text:Int, size:Int, ?parameters:Textdrawparams) {
+	private static function display_bitmap(x:Float, y:Float, text:Int, size:Float, ?parameters:Textdrawparams) {
 		if (parameters == null && size == 1) {
 			x = cachealignx(x, text); y = cachealigny(y, text);
 			
@@ -546,7 +546,7 @@ class Text {
 		}
 	}
 	
-	public static function setfont(t:String, s:Int = 1) {
+	public static function setfont(t:String, s:Float = 1) {
 	  if (!fontfileindex.exists(t)) {
 			addfont(t, s);
 			currentfont = "___newfont";
@@ -576,7 +576,7 @@ class Text {
 		changesize(s);
 	}
 	
-	public static function changesize(t:Int) {
+	public static function changesize(t:Float) {
 		if (t != currentsize){
 			currentsize = t;
 			if (currentfont != "null") {
@@ -599,7 +599,7 @@ class Text {
 		}
 	}
 	
-	private static function addfont(t:String, defaultsize:Int = 1) {
+	private static function addfont(t:String, defaultsize:Float = 1) {
 		fontfile.push(new Fontfile(t));
 		fontfileindex.set(t, fontfile.length - 1);
 		currentfont = t;
@@ -607,7 +607,7 @@ class Text {
 		changesize(defaultsize);
 	}
 	
-	private static function addtypeface(_name:String, _size:Int) {
+	private static function addtypeface(_name:String, _size:Float) {
 		typeface.push(new Fontclass(_name, _size));
 		typefaceindex.set(_name+"_" + Std.string(_size), typeface.length - 1);
 	}
@@ -626,7 +626,7 @@ class Text {
 	private static var fontmatrix:Matrix = new Matrix();
 	private static var currentindex:Int = -1;
 	public static var currentfont:String = "null";
-	public static var currentsize:Int = -1;
+	public static var currentsize:Float = -1;
 	private static var gfxstage:Stage;
 	
 	public static var drawto:BitmapData;
@@ -670,7 +670,7 @@ class Text {
 	private static var input_response:String;
 	private static var input_cursorglow:Int;
 	private static var input_font:String;
-	private static var input_textsize:Int;
+	private static var input_textsize:Float;
 	/** Non zero when an input string is being checked. So that I can use 
 	 * the M and F keys without muting or changing to fullscreen.*/
 	public static var input_show:Int;

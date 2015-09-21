@@ -8,7 +8,7 @@ import openfl.geom.*;
 
 @:access(haxegon.Text)
 class Fontclass {
-	public function new(_name:String, _size:Int) {
+	public function new(_name:String, _size:Float) {
 		type = Text.fontfile[Text.fontfileindex.get(_name)].type;
 		if (type == "bitmap") {
 			loadbitmapfont(_name, _size);
@@ -17,7 +17,7 @@ class Fontclass {
 		}
 	}
 	
-	public function loadbitmapfont(_name:String, _size:Int) {
+	public function loadbitmapfont(_name:String, _size:Float) {
 		name = _name;
 		size = _size;
 		
@@ -29,13 +29,13 @@ class Fontclass {
 		tfbitmap = new BitmapData(Gfx.screenwidth, Gfx.screenheight, true, 0);
 	}
 	
-	public function loadttffont(_name:String, _size:Int) {
+	public function loadttffont(_name:String, _size:Float) {
 		name = _name;
 		size = _size;
 		
 		tf_ttf = new TextField();
 		tf_ttf.embedFonts = true;
-		tf_ttf.defaultTextFormat = new TextFormat(Text.getfonttypename(_name), size, 0, false);
+		tf_ttf.defaultTextFormat = new TextFormat(Text.getfonttypename(_name), Convert.toint(size), 0, false);
 		tf_ttf.selectable = false;
 		tf_ttf.width = Gfx.screenwidth; 
 		tf_ttf.height = Gfx.screenheight;
@@ -62,5 +62,5 @@ class Fontclass {
 	
 	public var name:String;
 	public var type:String;
-	public var size:Int;
+	public var size:Float;
 }

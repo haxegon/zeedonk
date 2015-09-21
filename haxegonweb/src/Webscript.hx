@@ -187,7 +187,7 @@ class Webscript {
 	public static var name:String;
 	private static var counter:Int = 0;
 	private static var oldfont:String = "";
-	private static var oldfontsize:Int = 0;
+	private static var oldfontsize:Float = 0;
 
 	private static function resetGlobalVariables(){
 		MusicEngine.stopmusic();
