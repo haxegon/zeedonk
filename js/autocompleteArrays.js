@@ -11,8 +11,8 @@ var moduleDescriptions = {
 	Random:"",
 	Game:"House-keeping",
 	Math:"",
-	String:'The basic String class.<p>A haxe String is immutable: it is not possible to modify individual characters, and no method of this class changes the state of this String.<p>Strings can be constructed using the string literal syntax "string value" or \'string value\'.<p>String can be concatenated by using the + operator ("cat"+"dog" produces "catdog") - you can also concatenate with other data types.',
-	Array:""
+	String:'UH, THIS PAGE ISN\'T ACCURATE RIGHT NOW. For better documentation see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String.<p>The basic String class.<p>A haxe String is immutable: it is not possible to modify individual characters, and no method of this class changes the state of this String.<p>Strings can be constructed using the string literal syntax "string value" or \'string value\'.<p>String can be concatenated by using the + operator ("cat"+"dog" produces "catdog") - you can also concatenate with other data types.',
+	Array:"UH, THIS PAGE ISN\'T ACCURATE RIGHT NOW. For better documentation see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array."
 };
 
 var haxeLibraryArray = [
@@ -52,17 +52,12 @@ var haxeLibraryArray = [
 ["update","() ","F","This function will be called every frame by the engine if you define it."]
 ];
 
-var haxeMathodArray = [
-	["String.length",":Int","P","The number of characters in this String."],
-	["String.charAt","(index:Int):String","F",'Returns the character at position index of this String.<p>If index is negative or exceeds this.length, the empty String "" is returned.<p>This isn\'t really necessary because you can use array access to access characters - "doge"[2] returns "g", for instance.' ],
-	["String.charCodeAt","(index:Int):Int","F",'Returns the character code at position index of this String.<p>If index is negative or exceeds this.length, null is returned.<p>To obtain the character code of a single character, "x".code can be used instead to inline the character code at compile time. Note that this only works on String literals of length 1.'],
-	["String.indexOf","(str:String, startIndex:Int = 0):Int","F","Returns the position of the leftmost occurence of str within this String.<p>If startIndex is given, the search is performed within the substring of this String starting from startIndex. Otherwise the search is performed within this String. In either case, the returned position is relative to the beginning of this String.<p>If str cannot be found, -1 is returned."],
-]
 
 var haxeMethodArray = [
 	["String.length",":Int","M_P","The number of characters in this String."],
 	["String.charAt","(index:Int):String","M_F",'Returns the character at position index of this String.<p>If index is negative or exceeds this.length, the empty String "" is returned.<p>This isn\'t really necessary because you can use array access to access characters - "doge"[2] returns "g", for instance.' ],
 	["String.charCodeAt","(index:Int):Int","M_F",'Returns the character code at position index of this String.<p>If index is negative or exceeds this.length, null is returned.<p>To obtain the character code of a single character, "x".code can be used instead to inline the character code at compile time. Note that this only works on String literals of length 1.'],
+	["String.concat","(string2:String, [...] ):String","M_F",],
 	["String.indexOf","(str:String, startIndex:Int = 0):Int","M_F","Returns the position of the leftmost occurence of str within this String.<p>If startIndex is given, the search is performed within the substring of this String starting from startIndex. Otherwise the search is performed within this String. In either case, the returned position is relative to the beginning of this String.<p>If str cannot be found, -1 is returned."],
 	["String.lastIndexOf","(str:String, startIndex:Int = str.length-1):Int","M_F",'Returns the position of the rightmost occurence of str within this String.<p>If startIndex is given, the search is performed within the substring of this String from 0 to startIndex. Otherwise the search is performed within this String. In either case, the returned position is relative to the beginning of this String.<p>If str cannot be found, -1 is returned.'],
 	["String.split","(delimiter:String):Array<String>","M_F",'Splits this String at each occurence of delimiter.<p>If this String is the empty String "", the result is not consistent across targets and may either be [] (on Js, Cpp) or [""].<p>If delimiter is the empty String "", this String is split into an Array of this.length elements, where the elements correspond to the characters of this String.<p>If delimiter is not found within this String, the result is an Array with one element, which equals this String.<p>If delimiter is null, the result is unspecified.<p>Otherwise, this String is split into parts at each occurence of delimiter. If this String starts (or ends) with [delimiter}, the result Array contains a leading (or trailing) empty String "" element. Two subsequent delimiters also result in an empty String "" element.'],
@@ -93,6 +88,7 @@ var haxeMethodArray = [
 	["Array.toString","():String","M_F","Returns a string representation of this Array.<p>The result will include the individual elements' String representations separated by comma. The enclosing [ ] may be missing on some platforms, use Std.string() to get a String representation that is consistent across platforms."],
 	["Array.unshift","(x:T)","M_F",'Adds the element x at the start of this Array.<p>This operation modifies this Array in place.<p>this.length and the index of each Array element increases by 1.'],
 ];
+
 var haxeHintArray = [
 
 ["Gfx.clearscreen","(color)","F"],
@@ -317,7 +313,7 @@ var haxeHintArray = [
 ["Math.sqrt","(v:Float):Float","F"],
 ["Math.tan","(v:Float):Float","F"],
 
-["String.fromCharCode","(code:Int):String","F"],
+["String.fromCharCode","(code1:Int, code2:Int, ...):String","F","Returns a string created by using the specified sequence of Unicode values."],
 	/*,
 ["break"],
 ["case"],
