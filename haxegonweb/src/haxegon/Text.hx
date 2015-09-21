@@ -193,7 +193,7 @@ class Text {
 			return typeface[currentindex].tf_ttf.textHeight;
 		}else if (typeface[currentindex].type == "bitmap") {
 			typeface[currentindex].tf_bitmap.text = "???";
-			return typeface[currentindex].tf_bitmap.textHeight * currentsize;
+			return typeface[currentindex].height * currentsize;
 		}
 		return 0;
 	}
@@ -367,7 +367,7 @@ class Text {
 				}
 				cacheindex = cachedtext.length;
 				cachedtextindex.set(cachelabel, cacheindex);
-				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].tf_bitmap.textHeight) * numlines, true, 0));
+				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].height) * numlines, true, 0));
 			  
 				drawto = cachedtext[cacheindex];
 				//cachedtext[cacheindex].fillRect(cachedtext[cacheindex].rect, (0xFF << 24) + Col.RED);

@@ -23,6 +23,7 @@ class Fontclass {
 		
 		tf_bitmap = new BitmapTextField(Text.fontfile[Text.fontfileindex.get(_name)].bitmapfont);
 		tf_bitmap.text = "???";
+		height = tf_bitmap.textHeight;
 		
 		tf_bitmap.background = false;
 		
@@ -63,4 +64,5 @@ class Fontclass {
 	public var name:String;
 	public var type:String;
 	public var size:Float;
+	public var height:Float;
 }
