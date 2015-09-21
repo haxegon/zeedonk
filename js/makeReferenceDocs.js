@@ -13,6 +13,8 @@ haxe = require('./codemirror/haxe.js');
 
 var modules = [];
 var enums = [];
+haxeHintArray = haxeHintArray.concat(haxeMethodArray);
+
 for (var i=0;i<haxeHintArray.length;i++){
 	var r = haxeHintArray[i];
 	if (r.length<3){
@@ -126,6 +128,7 @@ function genReferencePage(moduleName){
 		}
 		var tag = r[2];
 		var fn = r[0]+r[1];
+
 		var doc =(r.length>3)?r[3]:"";
 		var dotIndex=fn.indexOf(".");
 		var preface=dotIndex>=0?fn.substring(0,dotIndex):tag;
@@ -133,6 +136,15 @@ function genReferencePage(moduleName){
 		if (fn.indexOf(moduleName)!==0){
 			continue;
 		}
+
+		if (tag.substr(0,2)==="M_"){
+			if (moduleName==="String"){
+				fn = '"abc"'+"."+postface;
+			} else if (moduleName==="Array"){
+				fn = '[1,2,3]'+"."+postface;
+			}
+		}
+
 		counter++;
 		var row = '<tr class="' +  ((counter%2==0)?"even":"odd")+'">';
 		if (preface!=oldPreface&&pageContents.length>0){
