@@ -547,17 +547,28 @@ class Text {
 	}
 	
 	public static function setfont(t:String, s:Int = 1) {
-		if (!fontfileindex.exists(t)) {
+	  if (!fontfileindex.exists(t)) {
 			addfont(t, s);
+			currentfont = "___newfont";
 		}
+		
 		if (t != currentfont) {
 			currentfont = t;
 			if (s != -1) {
-				if (typefaceindex.exists(currentfont + "_" + Std.string(currentsize))) {
-					currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
-				}else {
-					addtypeface(currentfont, currentsize);
-					currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
+				if (fontfile[fontfileindex.get(t)].type == "bitmap") {
+					if (typefaceindex.exists(currentfont + "_1")) {
+						currentindex = typefaceindex.get(currentfont + "_1");
+					}else {
+						addtypeface(currentfont, 1);
+						currentindex = typefaceindex.get(currentfont + "_1");
+					}
+				}else if (fontfile[fontfileindex.get(t)].type == "ttf") {
+					if (typefaceindex.exists(currentfont + "_" + Std.string(currentsize))) {
+						currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
+					}else {
+						addtypeface(currentfont, currentsize);
+						currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
+					}
 				}
 			}
 		}
@@ -569,11 +580,20 @@ class Text {
 		if (t != currentsize){
 			currentsize = t;
 			if (currentfont != "null") {
-				if (typefaceindex.exists(currentfont + "_" + Std.string(currentsize))) {
-					currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
-				}else {
-					addtypeface(currentfont, currentsize);
-					currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
+				if (fontfile[fontfileindex.get(currentfont)].type == "bitmap") {
+					if (typefaceindex.exists(currentfont + "_1")) {
+						currentindex = typefaceindex.get(currentfont + "_1");
+					}else {
+						addtypeface(currentfont, 1);
+						currentindex = typefaceindex.get(currentfont + "_1");
+					}
+				}else if (fontfile[fontfileindex.get(currentfont)].type == "ttf") {
+					if (typefaceindex.exists(currentfont + "_" + Std.string(currentsize))) {
+						currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
+					}else {
+						addtypeface(currentfont, currentsize);
+						currentindex = typefaceindex.get(currentfont + "_" + Std.string(currentsize));
+					}
 				}
 			}
 		}

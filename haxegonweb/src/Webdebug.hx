@@ -27,8 +27,12 @@ class Webdebug {
 		#else
 		var returnarray:Array<String> = [];
 		var linenum:Int = 0;
-		if(Webscript.interpreter != null){
-			linenum = getlinenum(Webscript.interpreter.curExpr.pmin);
+		if (Webscript.interpreter != null) {
+			try{
+				linenum = getlinenum(Webscript.interpreter.curExpr.pmin);
+			}catch (e:Dynamic) {
+			  linenum = 0;	
+			}
 			if (linenum == 0) {
 				returnarray.push(msg1);
 				if (msg2 != null) returnarray.push(msg2);
@@ -54,8 +58,7 @@ class Webdebug {
 				if (msg6 != null) returnarray.push(msg6);
 				if (msg7 != null) returnarray.push(msg7);
 				if (msg8 != null) returnarray.push(msg8);
-
-
+				
 				#if terryhasntupgraded
 					trace(returnarray, linenum);
 					ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);

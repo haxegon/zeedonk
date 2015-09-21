@@ -73,7 +73,7 @@ function loadfontinfo(){
   fontcredits.push("DeluxePaint II's Comic font. Converted by codeman38, zone38.net");
   fontcredits.push("Crypt of Tomorrow by Anna Antrophy, auntiepixelante.com");
   fontcredits.push("\"Normal\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("Standard DOS VGA font. From Zeh Fernando's Perfect DOS VGA font, zehfernando.com");
+  fontcredits.push("Standard DOS VGA font. Ported to Zeedonk from Wikipedia's Code page 437 image.");
   fontcredits.push("Inspired by the font from Zelda: A Link to the Past. Converted by codeman38, zone38.net");
   fontcredits.push("As seen in Flixel! Nokia Cellphone font by Zeh Fernando, zehfernando.com");
   fontcredits.push("\"Old English\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
