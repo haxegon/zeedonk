@@ -31,6 +31,7 @@ class Webbridge {
 		Text.setfont(Webfont.DEFAULT, 1);
 		Webscript.cleanupimages();
 		Text.cleartextcache();
+		Gfx.clearscreeneachframe = true;
 		Webscript.scriptloaded = false;
 		Webscript.runscript = false;
 		Webscript.errorinscript = false;
