@@ -6,6 +6,6 @@ rm black_*
 for f in $FILES
 do
 	#convert $f -background Black -alpha shape  black_$f
-	convert -quiet $f -fuzz XX% -fill black -opaque white black_$f
+	convert -filter point -interpolate Nearest -filter point -resize 200% -quiet $f -fuzz XX% -fill black -opaque white black_$f
 
 done
