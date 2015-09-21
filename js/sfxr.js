@@ -1011,15 +1011,14 @@ function cacheSeed(seed, vol){
     return sfxCache[seedStr];
   }
 
-
   var params = generateFromSeed(seed);
   params.sound_vol = SOUND_VOL*vol;
   params.sample_rate = SAMPLE_RATE;
   params.bit_depth = BIT_DEPTH;
 
   var sound = SoundEffect.generate(params);
-  sfxCache[seed] = sound;
-  cachedSeeds.push(seed);
+  sfxCache[seedStr] = sound;
+  cachedSeeds.push(seedStr);
 
   while (cachedSeeds.length>CACHE_MAX) {
     var toRemove=cachedSeeds[0];
