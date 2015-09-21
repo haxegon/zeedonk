@@ -46,7 +46,7 @@ function gui_changescene(s){
     gui_addtext(Gfx.screenwidthmid, 130, Convert.tostring(examplenumber), Col.WHITE, Text.CENTER);
     
     gui_setid("exampleimage");
-    gui_addimagebutton(Gfx.screenwidthmid - 8, Gfx.screenheightmid - 8, "smiley", "smileyclick");
+    gui_addimagebutton(Gfx.screenwidthmid - 16, Gfx.screenheightmid - 16, "smiley", "smileyclick");
   }
 }
 
@@ -80,6 +80,7 @@ function new(){
   Gfx.loadimagestring("plus", "3KaaamMzmaaaahZZZSvqb5bvXvZZxZXvXqxKbva");
   Gfx.loadimagestring("minus", "3KaaamMzmaaaahZZZSaaaabvvvZZxZXvvqaaaaa");
   Gfx.loadimagestring("smiley", "ZKaaaj=kNiaaahJLnybvvqafxZXqf5ZZXb5ZZZLxZZZXxX5X5PZxZxX5PZPZxZZZZPZZZZX5PvvZvXvv5r5Pv5KvZZZObvZZuabvvqa");
+  Gfx.resizeimage("smiley", 2);
   
   gui_setup();
 }

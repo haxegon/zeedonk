@@ -184,7 +184,7 @@ class Text {
 			}else {
 				longestline = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false));
 			}
-			return longestline * currentsize;
+			return longestline;
 		}
 		return 0;
 	}
@@ -224,7 +224,7 @@ class Text {
 			}else {
 				longestline = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false));
 			}
-			return longestline * currentsize;
+			return longestline;
 		}
 		return 0;
 	}
@@ -249,11 +249,11 @@ class Text {
 			t2 = x - LEFT;
 			t3 = x - RIGHT;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width / 2));
+				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * currentsize / 2));
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width));
+				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width * currentsize));
 			}
 		}
 		
@@ -266,11 +266,11 @@ class Text {
 			t2 = y - TOP;
 			t3 = y - BOTTOM;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height / 2);
+				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height * currentsize / 2);
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height));
+				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height * currentsize));
 			}
 		}
 		
