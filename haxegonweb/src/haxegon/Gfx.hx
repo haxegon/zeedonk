@@ -1250,33 +1250,29 @@ class Gfx {
 	}
 	
 	public static function getpixel(x:Float, y:Float):Int {
-		return drawto.getPixel(Std.int(x), Std.int(y));
-	}
-	
-	public static function ispixeltransparent(x:Float, y:Float):Int {
-		//Webdebug.log("Checking pixel transparency at point " + x + ", " + y);
-		var pixel:Int = drawto.getPixel32(Std.int(x), Std.int(y));
-		Webdebug.log(Convert.tostring(pixel));
+		var pixelalpha:Int = drawto.getPixel32(Std.int(x), Std.int(y)) >> 24 & 0xFF;
+		var pixel:Int = drawto.getPixel(Std.int(x), Std.int(y));
 		
-		var a:Int = pixel >> 24 & 0xFF;
-		var r:Int = pixel >> 16 & 0xFF;
-		var g:Int = pixel >> 8  & 0xFF;
-		var b:Int = pixel       & 0xFF;
-		
-		Webdebug.log(Convert.tostring(a), Convert.tostring(r), Convert.tostring(g), Convert.tostring(b));
-		//return (drawto.getPixel32(Std.int(x), Std.int(y))	>> 24 & 0xFF) > 0?false:true;
-		return a;
-	}
-	
-	public static function setpixeltransparent(x:Float, y:Float) {
-		settrect(Std.int(x)-1, Std.int(y)-1, 3, 3);
-		drawto.fillRect(trect, 0);
+		if (pixelalpha == 0) return Col.TRANSPARENT;
+		return pixel;
 	}
 	
 	public static function setpixel(x:Float, y:Float, col:Int, alpha:Float = 1.0) {
 		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
-		if (alpha < 1) {
+		if (col == Col.TRANSPARENT) {
+			if (_linethickness == 1) {
+				settpoint(fastFloor(x), fastFloor(y));
+				drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+			}else {
+				for (j in Std.int(y - _linethickness + 1) ... Std.int(_linethickness + _linethickness - 2)) {
+					for (i in Std.int(x - _linethickness + 1) ... Std.int(_linethickness + _linethickness - 2)) {
+						settpoint(fastFloor(i), fastFloor(j));
+						drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+					}
+				}
+			}
+		}else	if (alpha < 1) {
 			if (_linethickness == 1) {
 				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
 				settrect(Std.int(x), Std.int(y), 1, 1);
@@ -1303,7 +1299,14 @@ class Gfx {
 	public static function fillbox(x:Float, y:Float, width:Float, height:Float, col:Int, alpha:Float = 1.0) {
 		if ((skiprender && drawingtoscreen) || !clearscreeneachframe) return;
 		#if haxegonweb
-		if(alpha == 1.0){
+		if (col == Col.TRANSPARENT) {
+			for (j in Std.int(y) ... Std.int(y + height)) {
+				for (i in Std.int(x) ... Std.int(x + width)) {
+					settpoint(fastFloor(i), fastFloor(j));
+					drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+				}
+			}
+		}else	if(alpha == 1.0){
 			settrect(x, y, width, height);
 			drawto.fillRect(trect, (0xFF << 24) + col);
 		}else {
@@ -1487,7 +1490,8 @@ class Gfx {
 	private static function init(stage:Stage) {
 		if (initrun) gfxstage = stage;
 		clearscreeneachframe = true;
-		linethickness=1;
+		linethickness = 1;
+		transparentpixel = new BitmapData(1, 1, true, 0);
 	}	
 	
 	/** Called from resizescreen(). Sets up all our graphics buffers. */
@@ -1572,6 +1576,7 @@ class Gfx {
 	private static var ty:Float;
 	private static var tx2:Float;
   private static var ty2:Float;
+	private static var transparentpixel:BitmapData;
 	
 	private static var _linethickness:Float;
 	
