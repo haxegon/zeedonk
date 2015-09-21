@@ -164,8 +164,18 @@ class Webscript {
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "zeedonk alpha v0.5", Col.WHITE);
 			}else {
 				Gfx.clearscreen(Col.BLACK);
+				/*
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk alpha v0.5", Col.GRAY);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "loading script...", Col.GRAY);
+				*/
+				
+				Text.setfont(Webfont.PRESSSTART, 1);
+				var gap:Int = Convert.toint(Text.height());
+				Text.display(0, 0, "HOW QUICKLY DAFT");
+				Text.display(0, gap, "JUMPING ZEBRAS VEX.");
+								
+				Text.display(0, gap*2, "HOW QUICKLY DAFT".toLowerCase());
+				Text.display(0, gap*3, "JUMPING ZEBRAS VEX.".toLowerCase());
 			}
 		}
 		

@@ -1,7 +1,6 @@
 package haxegon;
 	
 import haxegon.util.*;
-import js.Browser;
 import openfl.display.*;
 import openfl.geom.*;
 import openfl.events.*;
@@ -317,12 +316,12 @@ class Gfx {
 	public static function resizeimage(imagename:String, scale:Float) {
 		var oldindex:Int = imageindex.get(imagename);
 		var newbitmap:BitmapData = new BitmapData(Std.int(images[oldindex].width * scale), Std.int(images[oldindex].height * scale), true, 0);
+		var pixelalpha:Int;
+		var pixel:Int;
 		
 		images[oldindex].lock();
 		newbitmap.lock();
 		
-		var pixelalpha:Int;
-		var pixel:Int;
 		for (j in 0 ... images[oldindex].height) {
 			for (i in 0 ... images[oldindex].width) {
 				pixel = images[oldindex].getPixel(i, j);

@@ -103,6 +103,7 @@ class Input {
 	}
 	
 	private static function handlekeydown(event:KeyboardEvent) {
+		#if (js || html5)
 		#if terryhasntupgraded
 			if (ExternalInterface.call("bodyIsTargetted") == false) {
 				return;
@@ -124,11 +125,12 @@ class Input {
 				}
 				keyheld[keycode] = false;
 			}
-		} else {			
+		}else {
 			if (event.controlKey){
 				return;
 			}
 		}
+		#end
 		
 		keycode = event.keyCode;
 		
