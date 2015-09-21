@@ -89,7 +89,7 @@ function inbox(x, y, x1, y1, x2, y2) {
 }
 
 function new() {
-  Text.setfont(Font.PRESSSTART, 1);
+  Text.setfont(Font.ROMAN, 1);
   
   //Push a load of empty entities into the array
   //so that we don't have to create them at runtime
@@ -254,6 +254,8 @@ function titleupdate(){
   Text.display(Text.CENTER, Text.CENTER-20,"SIMPLE EXAMPLE SPACE SHOOTER");
   Text.display(Text.CENTER, Text.CENTER,"SEE \"SUPER SHOT\" FOR", Col.GRAY);
   Text.display(Text.CENTER, Text.CENTER+10,"A MORE COMPLEX EXAMPLE", Col.GRAY);
+  
+  Text.display(Text.CENTER, Text.BOTTOM - 2,"PRESS SPACE", Game.time%16>8?Col.GRAY:Col.WHITE);
   
   if(Input.justpressed(Key.Z) || Input.justpressed(Key.SPACE)){
     gamestate = "game";

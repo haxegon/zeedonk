@@ -375,7 +375,6 @@ class Text {
 				drawto = Gfx.drawto;
 			}
 			
-			trace("drawing cached text");
 			cacheindex = cachedtextindex.get(cachelabel);
 			display_bitmap(x, y, cacheindex, currentsize, parameters);
 		}else if (typeface[currentindex].type == "tff") {
