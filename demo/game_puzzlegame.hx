@@ -184,11 +184,11 @@ function update() {
     if (Input.justpressed(Key.DOWN) || Input.justpressed(Key.UP) || Input.justpressed(Key.LEFT) || Input.justpressed(Key.RIGHT))
     {
       start = 1;
-      Music.playsound(62282106);
+      Music.playsound(82998502);
     }
     if (start > 0)
     { 
-      start += 1;
+      start += 2;
       sb += 5;
       sg += 2;
     }
@@ -239,7 +239,7 @@ function update() {
       finishedyet += 1;
       lr += 10;
       lb += 5;
-      Music.playsound(93287906);
+      Music.playsound(78121304);
     }
 
     if (Input.justpressed(Key.DOWN) )
@@ -248,7 +248,7 @@ function update() {
       finishedyet += 1;
       lg += 10;
       lb += 5;
-      Music.playsound(93287906);
+      Music.playsound(78121304);
     }
 
     if (currentbox > 4) { currentbox = 0; }
@@ -260,13 +260,13 @@ function update() {
       finishedyet += 1; 
       contentat[currentbox] -= 1;
       changecol(currentbox);
-      Music.playsound(2636506);
+      Music.playsound(13093904);
     }
     if (Input.justpressed(Key.RIGHT)) { 
       finishedyet += 1; 
       contentat[currentbox] += 1; 
       changecol(currentbox);
-      Music.playsound(2636506);
+      Music.playsound(13093904);
     }
     if (contentat[currentbox] >= content[currentbox].length) { contentat[currentbox] = 0; }
     if (contentat[currentbox] < 0 ) { contentat[currentbox] += content[currentbox].length; }

@@ -59,9 +59,7 @@ var undobufferposition = 0;
 
 function new() {
   Text.setfont(Font.THIN, 1);
-  Gfx.clearscreeneachframe=false;
 
-  //8, 12, 14, 16]
   //Precache some stuff for speed
   Gfx.createimage("transparent_8", 8, 8);
   Gfx.drawtoimage("transparent_8");
