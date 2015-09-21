@@ -483,86 +483,91 @@ class Gfx {
 		}
 		imagenum = imageindex.get(imagename);
 		
-		tempxpivot = 0;
-		tempypivot = 0;
-		tempxscale = 1.0;
-		tempyscale = 1.0;
-		temprotate = 0;
-		tempred = 1.0; tempgreen = 1.0;	tempblue = 1.0;	tempalpha = 1.0;
-		alphact.redMultiplier = 1.0; alphact.greenMultiplier = 1.0;	alphact.blueMultiplier = 1.0;
-		alphact.alphaMultiplier = tempalpha;
-		changecolours = false;
-		tempxalign = x;	tempyalign = y;
-		
-		x = imagealignx(x); y = imagealigny(y);
-		if (parameters != null) {
-			if (parameters.xalign != null) {
-				if (parameters.xalign == CENTER) {
-					if (tempxalign != CENTER) {
-						x = x - Std.int(images[imagenum].width / 2);
-					}
-				}else if (parameters.xalign == BOTTOM || parameters.xalign == RIGHT) {
-					if (tempxalign != RIGHT) {
-						x = x - Std.int(images[imagenum].width);
+		if (parameters == null) {
+			settpoint(Std.int(x), Std.int(y));
+			drawto.copyPixels(images[imagenum], images[imagenum].rect, tpoint);
+		}else{		
+			tempxpivot = 0;
+			tempypivot = 0;
+			tempxscale = 1.0;
+			tempyscale = 1.0;
+			temprotate = 0;
+			tempred = 1.0; tempgreen = 1.0;	tempblue = 1.0;	tempalpha = 1.0;
+			alphact.redMultiplier = 1.0; alphact.greenMultiplier = 1.0;	alphact.blueMultiplier = 1.0;
+			alphact.alphaMultiplier = tempalpha;
+			changecolours = false;
+			tempxalign = x;	tempyalign = y;
+			
+			x = imagealignx(x); y = imagealigny(y);
+			if (parameters != null) {
+				if (parameters.xalign != null) {
+					if (parameters.xalign == CENTER) {
+						if (tempxalign != CENTER) {
+							x = x - Std.int(images[imagenum].width / 2);
+						}
+					}else if (parameters.xalign == BOTTOM || parameters.xalign == RIGHT) {
+						if (tempxalign != RIGHT) {
+							x = x - Std.int(images[imagenum].width);
+						}
 					}
 				}
-			}
-			
-			if (parameters.yalign != null) {
-				if (parameters.yalign == CENTER) {
-					if (tempyalign != CENTER) {
-						y = y - Std.int(images[imagenum].height / 2);
-					}
-				}else if (parameters.yalign == BOTTOM || parameters.yalign == RIGHT) {
-					if (tempyalign != BOTTOM) {
-						y = y - Std.int(images[imagenum].height);
+				
+				if (parameters.yalign != null) {
+					if (parameters.yalign == CENTER) {
+						if (tempyalign != CENTER) {
+							y = y - Std.int(images[imagenum].height / 2);
+						}
+					}else if (parameters.yalign == BOTTOM || parameters.yalign == RIGHT) {
+						if (tempyalign != BOTTOM) {
+							y = y - Std.int(images[imagenum].height);
+						}
 					}
 				}
+				
+				if (parameters.xpivot != null) tempxpivot = imagealignonimagex(parameters.xpivot);
+				if (parameters.ypivot != null) tempypivot = imagealignonimagey(parameters.ypivot); 
+				if (parameters.scale != null) {
+					tempxscale = parameters.scale;
+					tempyscale = parameters.scale;
+				}else{
+					if (parameters.xscale != null) tempxscale = parameters.xscale;
+					if (parameters.yscale != null) tempyscale = parameters.yscale;
+				}
+				if (parameters.rotation != null) temprotate = parameters.rotation;
+				if (parameters.alpha != null) {
+					tempalpha = parameters.alpha;
+					alphact.alphaMultiplier = tempalpha;
+					changecolours = true;
+				}
+				if (parameters.red != null) {
+					tempred = parameters.red;
+					alphact.redMultiplier = tempred;
+					changecolours = true;
+				}
+				if (parameters.green != null) {
+					tempgreen = parameters.green;
+					alphact.greenMultiplier = tempgreen;
+					changecolours = true;
+				}
+				if (parameters.blue != null) {
+					tempblue = parameters.blue;
+					alphact.blueMultiplier = tempblue;
+					changecolours = true;
+				}
 			}
-			
-			if (parameters.xpivot != null) tempxpivot = imagealignonimagex(parameters.xpivot);
-			if (parameters.ypivot != null) tempypivot = imagealignonimagey(parameters.ypivot); 
-			if (parameters.scale != null) {
-				tempxscale = parameters.scale;
-				tempyscale = parameters.scale;
-			}else{
-				if (parameters.xscale != null) tempxscale = parameters.xscale;
-				if (parameters.yscale != null) tempyscale = parameters.yscale;
+				
+			shapematrix.identity();
+			shapematrix.translate( -tempxpivot, -tempypivot);
+			if (temprotate != 0) shapematrix.rotate((temprotate * 3.1415) / 180);
+			if (tempxscale != 1.0 || tempyscale != 1.0) shapematrix.scale(tempxscale, tempyscale);
+			shapematrix.translate(x + tempxpivot, y + tempypivot);
+			if (changecolours) {
+				drawto.draw(images[imagenum], shapematrix, alphact);	
+			}else {
+				drawto.draw(images[imagenum], shapematrix);
 			}
-			if (parameters.rotation != null) temprotate = parameters.rotation;
-			if (parameters.alpha != null) {
-				tempalpha = parameters.alpha;
-				alphact.alphaMultiplier = tempalpha;
-				changecolours = true;
-			}
-			if (parameters.red != null) {
-				tempred = parameters.red;
-				alphact.redMultiplier = tempred;
-				changecolours = true;
-			}
-			if (parameters.green != null) {
-				tempgreen = parameters.green;
-				alphact.greenMultiplier = tempgreen;
-				changecolours = true;
-			}
-			if (parameters.blue != null) {
-				tempblue = parameters.blue;
-				alphact.blueMultiplier = tempblue;
-				changecolours = true;
-			}
+			shapematrix.identity();
 		}
-			
-		shapematrix.identity();
-		shapematrix.translate( -tempxpivot, -tempypivot);
-		if (temprotate != 0) shapematrix.rotate((temprotate * 3.1415) / 180);
-		if (tempxscale != 1.0 || tempyscale != 1.0) shapematrix.scale(tempxscale, tempyscale);
-		shapematrix.translate(x + tempxpivot, y + tempypivot);
-		if (changecolours) {
-		  drawto.draw(images[imagenum], shapematrix, alphact);	
-		}else {
-			drawto.draw(images[imagenum], shapematrix);
-		}
-		shapematrix.identity();
 	}
 	
 	#if !haxegonweb
