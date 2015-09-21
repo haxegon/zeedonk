@@ -208,7 +208,7 @@ function gameupdate() {
 
     if(Input.delaypressed(Key.Z, 5) || Input.delaypressed(Key.SPACE, 5)){
       create(entity[player].x+6, entity[player].y,"playerbullet");
-      Music.playsound(79506301, 0.1);
+      Music.playsound(79506301, 0.4);
     }
 
     if(entity[player].y < 2) entity[player].y = 2;

@@ -318,10 +318,22 @@ class Gfx {
 		var oldindex:Int = imageindex.get(imagename);
 		var newbitmap:BitmapData = new BitmapData(Std.int(images[oldindex].width * scale), Std.int(images[oldindex].height * scale), true, 0);
 		
-		shapematrix.identity();
-		shapematrix.scale(Math.floor(scale), Math.floor(scale));
-	  newbitmap.draw(images[oldindex], shapematrix);
-		shapematrix.identity();
+		images[oldindex].lock();
+		newbitmap.lock();
+		
+		var pixelalpha:Int;
+		var pixel:Int;
+		for (j in 0 ... images[oldindex].height) {
+			for (i in 0 ... images[oldindex].width) {
+				pixel = images[oldindex].getPixel(i, j);
+				pixelalpha = images[oldindex].getPixel32(i, j) >> 24 & 0xFF;
+				settrect(Convert.toint(i * scale), Convert.toint(j * scale), Convert.toint(scale), Convert.toint(scale));
+				newbitmap.fillRect(trect, (pixelalpha << 24) + pixel);
+			}
+		}
+		
+		images[oldindex].unlock();
+		newbitmap.unlock();
 		
 		images[oldindex].dispose();
 		images[oldindex] = newbitmap;
@@ -1243,7 +1255,7 @@ class Gfx {
 	}
 	
 	public static function ispixeltransparent(x:Float, y:Float):Int {
-		Webdebug.log("Checking pixel transparency at point " + x + ", " + y);
+		//Webdebug.log("Checking pixel transparency at point " + x + ", " + y);
 		var pixel:Int = drawto.getPixel32(Std.int(x), Std.int(y));
 		Webdebug.log(Convert.tostring(pixel));
 		

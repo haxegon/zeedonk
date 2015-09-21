@@ -934,10 +934,10 @@ function gameupdate() {
       shoottime-= 4;
       if (playerpowerup > 0) {
         create(Convert.toint(entity[player].x + 6), Convert.toint(entity[player].y), "powershot");
-        Music.playsound(powershotsound, 0.1);
+        Music.playsound(powershotsound, 0.4);
       }else {
         create(Convert.toint(entity[player].x + 6), Convert.toint(entity[player].y), "playerbullet");
-        Music.playsound(shootsound, 0.1);
+        Music.playsound(shootsound, 0.4);
       }
     }
 
@@ -1028,7 +1028,7 @@ function gameupdate() {
                       }
                     }
                   }else{
-                    Music.playsound(enemyhitsound, 0.5);
+                    Music.playsound(enemyhitsound, 0.7);
                   }
                 }
               }
@@ -1147,7 +1147,7 @@ function gameupdate() {
           for(i in 0 ... 12){
             createbullet(entity[t].x, entity[t].y, Math.cos(randoffset + (i / 6) * 3.14) * 3, Math.sin(randoffset + (i / 6) * 3.14) * 3, 2);
           }
-          Music.playsound(starexplodesound, 0.5);
+          Music.playsound(starexplodesound, 0.7);
           entity[t].active=false;
         }else if(entity[t].frame >= 1){
           entity[t].frame+= gamespeed;
