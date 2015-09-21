@@ -886,6 +886,45 @@ class Gfx {
 			}
 		}
 	}
+	
+	public static function drawbresenhamline(x0:Int, y0:Int, x1:Int, y1:Int, col:Int, alpha:Float):Void {
+		var startx1:Int = x1;
+		var starty1:Int = y1;
+		var swapXY = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+		var tmp:Int;
+		
+		if (swapXY) {
+			// swap x and y
+			tmp = x0; x0 = y0; y0 = tmp; // swap x0 and y0
+			tmp = x1; x1 = y1; y1 = tmp; // swap x1 and y1
+		}
+		
+		if(x0 > x1) {
+			// make sure x0 < x1
+			tmp = x0; x0 = x1; x1 = tmp; // swap x0 and x1
+			tmp = y0; y0 = y1; y1 = tmp; // swap y0 and y1
+		}
+		
+		var deltax = x1 - x0;
+		var deltay = Std.int( Math.abs(y1 - y0));
+		var error = Std.int( deltax / 2 );
+		var y = y0;
+		var ystep = if ( y0 < y1 ) 1 else -1;
+		
+			// Y / X
+		for (x in x0 ... x1 + 1 ) {	
+			if (swapXY) {
+				setpixel(y, x, col, alpha);
+			}else {
+				setpixel(x, y, col, alpha);
+			}
+			error -= deltay;
+			if ( error < 0 ) {
+				y = y + ystep;
+				error = error + deltax;
+			}
+		}
+	}
 	#end
 	
 	public static function drawline(_x1:Float, _y1:Float, _x2:Float, _y2:Float, col:Int, alpha:Float = 1.0) {
@@ -904,11 +943,7 @@ class Gfx {
 				fillbox(_x2, _y1 - linethickness + 1, _x1 - _x2, 1 + linethickness - 1, col, alpha);
 			}
 		}else{
-			bresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), 0);
-			
-			for (i in 0 ... bresx1.length) {
-				setpixel(bresx1[i], bresy1[i], col, alpha);
-			}
+			drawbresenhamline(Std.int(_x1), Std.int(_y1), Std.int(_x2), Std.int(_y2), col, alpha);
 		}
 		#else
     tempshape.graphics.clear();
