@@ -163,7 +163,28 @@ class Text {
 		if (typeface[currentindex].type == "ttf") {
 			return typeface[currentindex].tf_ttf.textWidth;
 		}else if (typeface[currentindex].type == "bitmap") {
-			return typeface[currentindex].tf_bitmap.getStringWidth(typeface[currentindex].tf_bitmap.text, false) * currentsize;
+			var text:String = typeface[currentindex].tf_bitmap.text;
+			var numlines:Int = 1;
+			var currentline:String = "";
+			var longestline:Int = -1;
+			var thislength:Int;
+			var i:Int = 0;
+			if(S.isinstring(text,"\n")){
+				while (i < text.length) {
+					if (text.substr(i, 1) == "\n") {
+						numlines++;
+						thislength = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(currentline, false));
+						if (thislength > longestline) longestline = thislength;
+						currentline = "";
+					}else	currentline += text.substr(i, 1);
+					i++;
+				}
+				thislength = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(currentline, false));
+				if (thislength > longestline) longestline = thislength;
+			}else {
+				longestline = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false));
+			}
+			return longestline * currentsize;
 		}
 		return 0;
 	}
@@ -182,7 +203,28 @@ class Text {
 			typeface[currentindex].tf_ttf.text = t;
 			return typeface[currentindex].tf_ttf.textWidth;
 		}else if (typeface[currentindex].type == "bitmap") {
-			return typeface[currentindex].tf_bitmap.getStringWidth(t, false) * currentsize;
+			var text:String = t;
+			var numlines:Int = 1;
+			var currentline:String = "";
+			var longestline:Int = -1;
+			var thislength:Int;
+			var i:Int = 0;
+			if(S.isinstring(text,"\n")){
+				while (i < text.length) {
+					if (text.substr(i, 1) == "\n") {
+						numlines++;
+						thislength = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(currentline, false));
+						if (thislength > longestline) longestline = thislength;
+						currentline = "";
+					}else	currentline += text.substr(i, 1);
+					i++;
+				}
+				thislength = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(currentline, false));
+				if (thislength > longestline) longestline = thislength;
+			}else {
+				longestline = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false));
+			}
+			return longestline * currentsize;
 		}
 		return 0;
 	}
@@ -207,11 +249,11 @@ class Text {
 			t2 = x - LEFT;
 			t3 = x - RIGHT;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width * currentsize / 2));
+				return t1 + Math.floor(Gfx.screenwidthmid - (cachedtext[c].width / 2));
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width *  currentsize));
+				return t3 + Math.floor(Gfx.screenwidth - (cachedtext[c].width));
 			}
 		}
 		
@@ -224,11 +266,11 @@ class Text {
 			t2 = y - TOP;
 			t3 = y - BOTTOM;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height * currentsize / 2);
+				return t1 + Math.floor(Gfx.screenheightmid - cachedtext[c].height / 2);
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height * currentsize));
+				return t3 + Math.floor(Gfx.screenheight - (cachedtext[c].height));
 			}
 		}
 		
@@ -362,12 +404,29 @@ class Text {
 			if (!cachedtextindex.exists(cachelabel)) {
 				//Cache the text
 				var numlines:Int = 1;
-				for (i in 0 ... text.length) {
-					if (text.substr(i, 1) == "\n") numlines++;
+				var currentline:String = "";
+				var longestline:Int = -1;
+				var thislength:Int;
+				var i:Int = 0;
+				if(S.isinstring(text,"\n")){
+					while (i < text.length) {
+						if (text.substr(i, 1) == "\n") {
+							numlines++;
+							thislength = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(currentline, false));
+							if (thislength > longestline) longestline = thislength;
+							currentline = "";
+						}else	currentline += text.substr(i, 1);
+						i++;
+					}
+					thislength = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(currentline, false));
+					if (thislength > longestline) longestline = thislength;
+				}else {
+					longestline = Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false));
 				}
+				
 				cacheindex = cachedtext.length;
 				cachedtextindex.set(cachelabel, cacheindex);
-				cachedtext.push(new BitmapData(Convert.toint(typeface[currentindex].tf_bitmap.getStringWidth(text, false)), Convert.toint(typeface[currentindex].height) * numlines, true, 0));
+				cachedtext.push(new BitmapData(longestline, Convert.toint(typeface[currentindex].height) * numlines, true, 0));
 			  
 				drawto = cachedtext[cacheindex];
 				//cachedtext[cacheindex].fillRect(cachedtext[cacheindex].rect, (0xFF << 24) + Col.RED);
