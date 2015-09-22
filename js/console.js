@@ -25,6 +25,10 @@ function consolePrintWithLines(text,lineNumber,urgent) {
     if (typeof urgent==="undefined") {
         urgent=false;
     }
+    if (typeof text ==="string"){
+        text = text.replace(/\s/g, '&nbsp;');
+    }
+    
     if (typeof lineNumber === "undefined") {
         return consolePrint(text);
     }
@@ -53,7 +57,7 @@ function consolePrint(text,urgent) {
 }
 
 
-function consolePrintWithLinesArray(text,lineNumber,urgent) {
+function consolePrintWithLinesArray(text,lineNumber,urgent) {    
     if (text.length==1){
         return consolePrintWithLines(text[0],lineNumber,urgent);
     }
@@ -61,6 +65,8 @@ function consolePrintWithLinesArray(text,lineNumber,urgent) {
         text=JSON.stringify(text);
         text=text.slice(1,text.length-1);
     }
+
+    text = text.replace(/\s/g, '&nbsp;');
 
     if (typeof urgent==="undefined") {
         urgent=false;
@@ -86,6 +92,7 @@ function consolePrintArray(text,urgent) {
     if (typeof text === "object"){
         text=JSON.stringify(text);
     }
+    text = text.replace(/\s/g, '&nbsp;')
 
     if (cache_console_messages&&urgent==false) {        
         consolecache.push(text);
