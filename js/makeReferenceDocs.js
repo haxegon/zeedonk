@@ -71,7 +71,7 @@ function genReferencePage(moduleName){
 	"<html>"+
 	"<head>"+
 	' <meta charset="utf-8">'+
-	"	<title>Zeedonk Reference " +moduleName+"</title>"+
+	"	<title>Zeedonk Reference " +"Getting Started"+"</title>"+
 	'<link rel="shortcut icon" href="../images/icon256.png" />'+
 	"<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>"+
 	'<link rel="stylesheet" type="text/css" href="style.css">'+
