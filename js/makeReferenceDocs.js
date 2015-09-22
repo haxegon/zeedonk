@@ -154,14 +154,22 @@ function genReferencePage(moduleName){
 		var docString="";
 		var cs = "";
 		if (enums.indexOf(preface)===-1){
-			var samplePath = "../demo/doc/"+r[0]+".hx";
-			if (!fs.existsSync(samplePath)){
-				fs.writeFileSync(samplePath,"");		
-			}
-			cs = fs.readFileSync(samplePath);
-			if (cs.length>0){
-				var formatted = highlight(cs+"");
-				docString="<div class=\"codeInsert\">"+formatted+"<a class=\"editLink\" href=\"../editor.html?demo=doc/"+r[0]+"\">✎</a></div>";
+			var suffixes=["",".2",".3",".4",".5",".6"];
+			for (var j=0;j<suffixes.length;j++){
+				var suffix=suffixes[j];
+				var samplePath = "../demo/doc/"+r[0]+suffix+".hx";
+				if (!fs.existsSync(samplePath)){
+					if (suffix.length==0){
+						fs.writeFileSync(samplePath,"");		
+					} else {
+						continue;
+					}
+				}
+				cs = fs.readFileSync(samplePath);
+				if (cs.length>0){
+					var formatted = highlight(cs+"");
+					docString+="<div class=\"codeInsert\">"+formatted+"<a class=\"editLink\" href=\"../editor.html?demo=doc/"+r[0]+suffix+"\">✎</a></div>";
+				}
 			}
 		}
 		//row+=<td>"+tag+"</td>;
