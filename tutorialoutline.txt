@@ -40,7 +40,17 @@ for (i in 0...100)
 
 -
 
-For loops can only go up. sorry.
+For loops can only go up. Sorry.
+
+More for loops:
+
+-
+
+var exclamation = ["I","like","big","butts"];
+for (s in exclamation)
+  trace(s)
+
+-
 
 <a class="tutoriallink"  href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci number</a> printer
 
