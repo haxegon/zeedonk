@@ -30,9 +30,9 @@ class Random{
 	
 	/** Returns true n% of the time, where n is a number between 0-100, inclusive. */
 	#if haxegonweb
-	public static function odds(n:Int):Bool{
+	public static function chance(n:Int):Bool{
 	#else
-	public static inline function odds(n:Int):Bool{
+	public static inline function chance(n:Int):Bool{
 	#end
 		return int(0, 100) <= n;
 	}
