@@ -39,6 +39,18 @@ class Text {
 		#end
 	}
 	
+	//** Clear all rotations, scales and image colour changes */
+	private static function reset() {
+		transform = false;
+		/*
+		imagerotate = 0; imagexscale = 1.0; imageyscale = 1.0;
+		imagexpivot = 0; imageypivot = 0;
+		
+		coltransform = false;
+		imagealphamult = 1.0;	imageredmult = 1.0;	imagegreenmult = 1.0;	imagebluemult = 1.0;	
+		*/
+	}
+	
 	public static function align(a:Int) {
 	  textalign = a;	
 	}

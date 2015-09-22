@@ -160,22 +160,20 @@ class Webscript {
 				Gfx.clearscreen(Col.LIGHTBLUE);
 				Gfx.fillbox(0, Gfx.screenheightmid, Gfx.screenwidth, Gfx.screenheightmid, Col.GREEN);
 				
-				Gfx.rotate(zebrahop);
-				Gfx.pivot(Gfx.RIGHT, Gfx.TOP);
+				Gfx.rotation(zebrahop, Gfx.RIGHT, Gfx.TOP);
 				if (zebrahop > 5) {
 					Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER - 15, "__library_donkey");
 				}else {
 					Gfx.drawimage(Gfx.CENTER + 80, Gfx.CENTER - 5 - zebrahop * 2, "__library_donkey");
 				}
-				Gfx.reset();
 				
-				Gfx.rotate(-donkeyhop);
+				Gfx.rotation(-donkeyhop, Gfx.LEFT, Gfx.TOP);
 				if (donkeyhop > 5) {
 					Gfx.drawimage(Gfx.CENTER - 80, Gfx.CENTER - 15, "__library_zebra");
 				}else{
 					Gfx.drawimage(Gfx.CENTER - 80, Gfx.CENTER - 5 - donkeyhop * 2, "__library_zebra");
 				}
-				Gfx.reset();
+				Gfx.rotation(0);
 				
 				if (counter % 120 < 60) {
 					Gfx.fillcircle(Gfx.screenwidthmid - 60 + ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Gfx.hsl(counter, 0.75, 0.5));

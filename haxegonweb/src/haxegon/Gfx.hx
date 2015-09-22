@@ -54,10 +54,12 @@ class Gfx {
 	}
 	
 	//** Clear all rotations, scales and image colour changes */
-	public static function reset() {
+	private static function reset() {
 		transform = false;
-		imagerotate = 0; imagexscale = 1.0; imageyscale = 1.0;
-		imagexpivot = 0; imageypivot = 0;
+		imagerotate = 0; 
+		imagerotatexpivot = 0; imagerotateypivot = 0;
+		imagexscale = 1.0; imageyscale = 1.0;
+		imagescalexpivot = 0; imagescaleypivot = 0;
 		
 		coltransform = false;
 		imagealphamult = 1.0;	imageredmult = 1.0;	imagegreenmult = 1.0;	imagebluemult = 1.0;	
@@ -68,9 +70,7 @@ class Gfx {
 	  if (imagerotate == 0) {
 		  if (imagexscale == 1.0) {
 				if (imageyscale == 1.0) {
-					if (imagexpivot == 0.0 && imageypivot == 0.0) {
-						transform = false;
-					}
+					transform = false;
 				}
 			}
 		}
@@ -83,31 +83,22 @@ class Gfx {
 	}
 	
 	/** Rotates image drawing functions. */
-	public static function rotate(angle:Float) {
+	public static function rotation(angle:Float, xpivot:Float = -15000, ypivot:Float = -15000) {
 	  imagerotate = angle;
+		imagerotatexpivot = xpivot;
+		imagerotateypivot = ypivot;
 		transform = true;
 		reset_ifclear();
 	}
 	
 	/** Scales image drawing functions. Optionally takes a second argument 
 	 * to scale X and Y seperately. */
-	public static function scale(s:Float, ?ys:Float) {
-		if (ys == null) {
-		  imagexscale = s;
-			imageyscale = s;
-		}else {
-			imagexscale = s;
-			imageyscale = ys;
-		}
-		transform = true;
-		reset_ifclear();
-	}
-	
-	/** Choose a point to pivot rotations and scales from. Default is top left corner.
-	 * You can use Gfx.CENTER, Gfx.LEFT, Gfx.RIGHT, Gfx.TOP and Gfx.BOTTOM here. */
-	public static function pivot(xoffset:Float, yoffset:Float) {
-	  imagexpivot = xoffset;
-		imageypivot = yoffset;
+	public static function scale(xscale:Float, yscale:Float, xpivot:Float = -15000, ypivot:Float = -15000) {
+		imagexscale = xscale;
+		imageyscale = yscale;
+		imagescalexpivot = xpivot;
+		imagescaleypivot = ypivot;
+		
 		transform = true;
 		reset_ifclear();
 	}
@@ -560,27 +551,32 @@ class Gfx {
 			settpoint(Std.int(x), Std.int(y));
 			drawto.copyPixels(images[imagenum], images[imagenum].rect, tpoint);
 		}else {		
-			tempxalign = imagexpivot;
-			tempyalign = imageypivot;
+			tempxalign = 0;	tempyalign = 0;
 			
-			if (transform) {
-				if (tempxalign != 0.0) tempxalign = imagealignonimagex(imagexpivot);
-				if (tempyalign != 0.0) tempyalign = imagealignonimagey(imageypivot); 
+			shapematrix.identity();
+			
+			if (imagexscale != 1.0 || imageyscale != 1.0) {
+				if (imagescalexpivot != 0.0) tempxalign = imagealignonimagex(imagescalexpivot);
+				if (imagescaleypivot != 0.0) tempyalign = imagealignonimagey(imagescaleypivot);
+				shapematrix.translate( -tempxalign, -tempyalign);
+				shapematrix.scale(imagexscale, imageyscale);
+				shapematrix.translate( tempxalign, tempyalign);
 			}
 			
-			if (coltransform) {	
+			if (imagerotate != 0) {
+				if (imagerotatexpivot != 0.0) tempxalign = imagealignonimagex(imagerotatexpivot);
+				if (imagerotateypivot != 0.0) tempyalign = imagealignonimagey(imagerotateypivot);
+				shapematrix.translate( -tempxalign, -tempyalign);
+				shapematrix.rotate((imagerotate * 3.1415) / 180);
+				shapematrix.translate( tempxalign, tempyalign);
+			}
+			
+			shapematrix.translate(x, y);
+			if (coltransform) {
 				alphact.alphaMultiplier = imagealphamult;
 				alphact.redMultiplier = imageredmult;
 				alphact.greenMultiplier = imagegreenmult;
 				alphact.blueMultiplier = imagebluemult;
-			}
-			
-			shapematrix.identity();
-			shapematrix.translate( -tempxalign, -tempyalign);
-			if (imagerotate != 0) shapematrix.rotate((imagerotate * 3.1415) / 180);
-			if (imagexscale != 1.0 || imageyscale != 1.0) shapematrix.scale(imagexscale, imageyscale);
-			shapematrix.translate(x + tempxalign, y + tempyalign);
-			if (coltransform) {
 				drawto.draw(images[imagenum], shapematrix, alphact);	
 			}else {
 				drawto.draw(images[imagenum], shapematrix);
@@ -688,28 +684,33 @@ class Gfx {
 			settpoint(Std.int(x), Std.int(y));
 			drawto.copyPixels(tiles[currenttileset].tiles[t], tiles[currenttileset].tiles[t].rect, tpoint);
 		}else {		
-			tempxalign = imagexpivot;
-			tempyalign = imageypivot;
+			tempxalign = 0;	tempyalign = 0;
 			
-			if (transform) {
-				if (tempxalign != 0.0) tempxalign = tilealignontilex(imagexpivot);
-				if (tempyalign != 0.0) tempyalign = tilealignontiley(imageypivot); 
+			shapematrix.identity();
+			
+			if (imagexscale != 1.0 || imageyscale != 1.0) {
+				if (imagescalexpivot != 0.0) tempxalign = tilealignontilex(imagescalexpivot);
+				if (imagescaleypivot != 0.0) tempyalign = tilealignontiley(imagescaleypivot);
+				shapematrix.translate( -tempxalign, -tempyalign);
+				shapematrix.scale(imagexscale, imageyscale);
+				shapematrix.translate( tempxalign, tempyalign);
 			}
 			
-			if (coltransform) {	
+			if (imagerotate != 0) {
+				if (imagerotatexpivot != 0.0) tempxalign = tilealignontilex(imagerotatexpivot);
+				if (imagerotateypivot != 0.0) tempyalign = tilealignontiley(imagerotateypivot);
+				shapematrix.translate( -tempxalign, -tempyalign);
+				shapematrix.rotate((imagerotate * 3.1415) / 180);
+				shapematrix.translate( tempxalign, tempyalign);
+			}
+			
+			shapematrix.translate(x, y);
+			if (coltransform) {
 				alphact.alphaMultiplier = imagealphamult;
 				alphact.redMultiplier = imageredmult;
 				alphact.greenMultiplier = imagegreenmult;
 				alphact.blueMultiplier = imagebluemult;
-			}
-			
-			shapematrix.identity();
-			shapematrix.translate( -tempxalign, -tempyalign);
-			if (imagerotate != 0) shapematrix.rotate((imagerotate * 3.1415) / 180);
-			if (imagexscale != 1.0 || imageyscale != 1.0) shapematrix.scale(imagexscale, imageyscale);
-			shapematrix.translate(x + tempxalign, y + tempyalign);
-			if (coltransform) {
-				drawto.draw(tiles[currenttileset].tiles[t], shapematrix, alphact);
+				drawto.draw(tiles[currenttileset].tiles[t], shapematrix, alphact);	
 			}else {
 				drawto.draw(tiles[currenttileset].tiles[t], shapematrix);
 			}
@@ -1571,10 +1572,12 @@ class Gfx {
 	private static var transform:Bool;
 	private static var coltransform:Bool;
 	private static var imagerotate:Float;
+	private static var imagerotatexpivot:Float;
+	private static var imagerotateypivot:Float;
 	private static var imagexscale:Float;
 	private static var imageyscale:Float;
-	private static var imagexpivot:Float;
-	private static var imageypivot:Float;
+	private static var imagescalexpivot:Float;
+	private static var imagescaleypivot:Float;
 	private static var imagealphamult:Float;
 	private static var imageredmult:Float;
 	private static var imagegreenmult:Float;
