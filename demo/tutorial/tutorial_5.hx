@@ -6,4 +6,4 @@ function f(n) {
 /* if you make the value at all big,  */
 /* your browser will explode.         */
 /* So don't do that!                  */
-trace(f(5))
+trace(f(5));
