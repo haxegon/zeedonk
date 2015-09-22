@@ -397,8 +397,8 @@ class Text {
 	#else
 	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
 	#end
-	  if ((Gfx.skiprender && Gfx.drawingtoscreen) || !Gfx.clearscreeneachframe) return;
-		
+		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
+	  
 		if (typeface[currentindex].type == "bitmap") {
 			cachelabel = text + "_" + currentfont + Convert.tostring(col);
 			if (!cachedtextindex.exists(cachelabel)) {
@@ -524,7 +524,7 @@ class Text {
 	}
 	
 	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
-		if ((Gfx.skiprender && Gfx.drawingtoscreen) || !Gfx.clearscreeneachframe) return;
+		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		if (parameters == null) {
 			typeface[currentindex].tf_ttf.textColor = col;
 			typeface[currentindex].tf_ttf.text = text;
