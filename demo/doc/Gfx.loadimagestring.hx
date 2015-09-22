@@ -12,9 +12,7 @@ function update(){
   }else{
     imgscale = 2+((Game.time / 2) % 10)/2;
   }
-  offset = -8 + Gfx.imagewidth("heart") * imgscale/2;
-  Gfx.drawimage(Gfx.screenwidthmid - offset,
-                Gfx.screenheightmid - offset,
-                "heart", 
-                {scale: imgscale, xalign: Gfx.CENTER, yalign: Gfx.CENTER});
+  Gfx.scale(imgscale);
+  Gfx.pivot(Gfx.CENTER, Gfx.CENTER);
+  Gfx.drawimage(Gfx.CENTER, Gfx.CENTER,"heart");
 }

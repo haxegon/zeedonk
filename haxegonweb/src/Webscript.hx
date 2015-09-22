@@ -200,12 +200,15 @@ class Webscript {
 			oldfontsize = Text.currentsize;
 			Text.setfont("pixel", 1);
 			if (Gfx.fps() > -1) {
-				Text.display(Gfx.screenwidth - 4, 1, "FPS: " + Gfx.fps(), Col.YELLOW, { align: Text.RIGHT } );
+				Text.align(Text.RIGHT);
+				Text.display(Gfx.screenwidth - 4, 1, "FPS: " + Gfx.fps(), Col.YELLOW);
 			}
 			//if (Gfx.updatefps() > -1) {
-			//	Text.display(Gfx.screenwidth - 4, 7, "UPDATE FPS: " + Gfx.updatefps(), Col.YELLOW, { align: Text.RIGHT } );
+			//  Text.align(Text.RIGHT);
+			//	Text.display(Gfx.screenwidth - 4, 7, "UPDATE FPS: " + Gfx.updatefps(), Col.YELLOW);
 			//}
 			
+			Text.align(Text.LEFT);
 			Text.setfont(oldfont, oldfontsize);
 		}
 	}

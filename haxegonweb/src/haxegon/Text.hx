@@ -19,7 +19,7 @@ typedef Textdrawparams = {
 	@:optional var red:Float;
 	@:optional var green:Float;
 	@:optional var blue:Float;
-	@:optional var align:Int;
+	@:optional var align:Float;
 }
 
 @:access(haxegon.Input)
@@ -37,6 +37,10 @@ class Text {
 		#if haxegonweb
 			inputsound = -1;
 		#end
+	}
+	
+	public static function align(a:Int) {
+	  textalign = a;	
 	}
 	
 	//Text Input functions
@@ -696,6 +700,11 @@ class Text {
 	public static var BOTTOM:Int = -20000;
 	public static var CENTER:Int = -15000;
 	
+	private static var transform:Bool;
+	private static var coltransform:Bool;
+	private static var textalign:Int;
+	private static var textrotate:Float;
+	private static var textalphamult:Float;
 	private static var temprotate:Float;
 	private static var tempxscale:Float;
 	private static var tempyscale:Float;
