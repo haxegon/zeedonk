@@ -28,6 +28,15 @@ class Random{
 		return random() < 0.05;
 	}
 	
+	/** Returns true n% of the time, where n is a number between 0-100, inclusive. */
+	#if haxegonweb
+	public static function odds(n:Int):Bool{
+	#else
+	public static inline function odds(n:Int):Bool{
+	#end
+		return int(0, 100) <= n;
+	}
+	
 	/** Return a random integer between 'from' and 'to', inclusive. */
 	#if haxegonweb
 	public static function int(from:Int, to:Int):Int {

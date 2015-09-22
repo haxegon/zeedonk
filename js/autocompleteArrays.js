@@ -280,6 +280,7 @@ var haxeHintArray = [
 ["Random.bool","():Bool","F","50:50 chance of being true/false"],
 ["Random.occasional","():Bool","F","True one time in five."],
 ["Random.rare","():Bool","F","5% chance of being true"],
+["Random.odds","(n:int):Bool","F","n% chance of being true"],
 ["Random.pick","(list:Array<T>):T","F","Picks a random element from an array."],
 ["Random.pickstring",'("this one", "or this one?", "maybe this one?"):String',"F","Pick between a list of strings. Can list up to 12!"],
 ["Random.pickint","(5, 14, 72, 92, 1, -723, 8):Int","F","Pick between a list of integers. Can list up to 12!"],
