@@ -160,6 +160,10 @@ class Random{
 		return s1;
 	}
 	
+	public static function pick<T>(arr:Array<T>):T {
+		return arr[int(0, arr.length - 1)];
+	}
+	
 	public static function random():Float {
 		seed = (seed * 9301 + 49297) % 233280; 
 		return Math.abs(seed/(233280));
