@@ -53,35 +53,35 @@
 
 /*
 .cm-s-ambiance .CodeMirror-matchingbracket { font-weight: bold; background-color: gray; }
-.cm-s-ambiance .CodeMirror-nonmatchingbracket { font-weight:bold;  background-color: red; }
+.cm-s-ambiance .CodeMirror-nonmatchingbracket { font-weight:bold;  background-color: red; color:black;}
 */
 
 div.CodeMirror span.CodeMirror-matchingbracket.cm-bracketDepth0 {
-   color:aqua;
-   text-shadow: 0px 0px 5px white;
+   background-color:aqua;
+   color:black;
    font-weight: bold;
 }
 
 div.CodeMirror span.CodeMirror-matchingbracket.cm-bracketDepth1 {
-   color:orange;
-   text-shadow: 0px 0px 5px white;
+   background-color:orange;
+   color:black;
    font-weight: bold;
 }
 
 div.CodeMirror span.CodeMirror-matchingbracket.cm-bracketDepth2 {
-   color:#88ff88;
-   text-shadow: 0px 0px 5px white;
+   background-color:#88ff88;
+   color:black;
    font-weight: bold;
 }
 div.CodeMirror span.CodeMirror-matchingbracket.cm-bracketDepth3 {
-   color:#ff0000;
-   text-shadow: 0px 0px 5px white;
+   background-color:#d4292f;
+   color:black;
    font-weight: bold;
 }
 
 div.CodeMirror span.CodeMirror-nonmatchingbracket {
-   text-shadow: 0px 0px 5px red;
    font-weight: bold;
+   border : 1px dotted red;
 }
 
 .cm-s-ambiance .CodeMirror-linenumber {
