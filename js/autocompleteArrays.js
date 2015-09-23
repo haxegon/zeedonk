@@ -286,7 +286,7 @@ var haxeHintArray = [
 ["Convert.toint",'("15"):Int',"F","Convert a string or a floating-point number to an integer."],
 ["Convert.tofloat",'("3.1417826"):Float',"F","Convert a string or an integer to a floating-point number."],
 ["Random.int","(from, to_inclusive):Int","F"],
-["Random.float","(from, to_inclusive):Int","F"],
+["Random.float","(from, to_inclusive):Float","F"],
 ["Random.string","(length):String","F"],
 ["Random.bool","():Bool","F","50:50 chance of being true/false"],
 ["Random.occasional","():Bool","F","True one time in five."],
