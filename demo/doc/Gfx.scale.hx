@@ -1,3 +1,5 @@
+//FLASHING COLORS WARNING
+
 Gfx.createimage("backbuffer",Gfx.screenwidth,Gfx.screenheight);
 
 function update(){
