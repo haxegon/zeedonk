@@ -184,11 +184,11 @@ class Webscript {
 				Text.setfont(Webfont.PRESSSTART, 1);
 				Text.display(Text.CENTER, Text.CENTER + 50, "WAITING FOR SCRIPTFILE", Col.WHITE);
 				Text.setfont(Webfont.DEFAULT, 1);
-				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 10, "zeedonk alpha v0.5", Col.WHITE);
+				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 10, "zeedonk beta v0.7", Col.WHITE);
 			}else {
 				Gfx.clearscreen(Col.BLACK);
 				
-				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk alpha v0.5", Col.GRAY);
+				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk beta v0.7", Col.GRAY);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "loading script...", Col.GRAY);
 			}
 		}
