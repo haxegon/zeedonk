@@ -325,3 +325,11 @@ table#header td {
     margin-right: 0;
     line-height: 30px;
   }
+
+  h1 {
+    white-space: normal;
+  }
+
+  .docLine {
+    width:500px;
+  }
