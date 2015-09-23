@@ -30,6 +30,7 @@ class Webbridge {
 		Gfx.resizescreen(240, 150);
 		Gfx.rotation(0);
 		Gfx.scale(1, 1);
+		Gfx.dither(0);
 		Text.setfont(Webfont.DEFAULT, 1);
 		Webscript.cleanupimages();
 		Text.cleartextcache();

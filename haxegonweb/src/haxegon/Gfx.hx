@@ -63,6 +63,12 @@ class Gfx {
 		
 		coltransform = false;
 		imagealphamult = 1.0;	imageredmult = 1.0;	imagegreenmult = 1.0;	imagebluemult = 1.0;	
+		
+		Dither.imagedither = 0;
+	}
+	
+	public static function dither(level:Int) {
+		Dither.imagedither = level;
 	}
 	
 	/** Called when a transform takes place to check if any transforms are active */
@@ -1269,33 +1275,52 @@ class Gfx {
 		#if haxegonweb
 		if (col == Col.TRANSPARENT) {
 			if (_linethickness == 1) {
-				settpoint(fastFloor(x), fastFloor(y));
-				drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+				if (Dither.imagedither > 0) {
+					Dither.settransparentpixel(Std.int(x), Std.int(y));
+				}else{
+					settpoint(fastFloor(x), fastFloor(y));
+					drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+				}
 			}else {
 				for (j in Std.int(y - _linethickness + 1) ... Std.int(_linethickness + _linethickness - 2)) {
 					for (i in Std.int(x - _linethickness + 1) ... Std.int(_linethickness + _linethickness - 2)) {
-						settpoint(fastFloor(i), fastFloor(j));
-						drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+						Dither.settransparentpixel(Std.int(i), Std.int(j));
 					}
 				}
 			}
 		}else	if (alpha < 1) {
 			if (_linethickness == 1) {
 				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
-				settrect(Std.int(x), Std.int(y), 1, 1);
-				drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+				if (Dither.imagedither > 0) {
+					Dither.setpixel(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
+				}else {
+					settrect(Std.int(x), Std.int(y), 1, 1);
+					drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+				}
 			}else {
-				settrect(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2);
-				drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+				if (Dither.imagedither > 0) {
+					Dither.fillrect(Std.int(x - _linethickness + 1), Std.int(y - _linethickness + 1), Std.int(_linethickness + _linethickness - 2), Std.int(_linethickness + _linethickness - 2), (Std.int(alpha * 256) << 24) + col);
+				}else{
+					settrect(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2);
+					drawto.fillRect(trect, (Std.int(alpha * 256) << 24) + col);
+				}
 			}
 		}else {
 			if (_linethickness == 1) {
 				//drawto.setPixel32(Std.int(x), Std.int(y), (Std.int(alpha * 256) << 24) + col);
-				settrect(Std.int(x), Std.int(y), 1, 1);
-				drawto.fillRect(trect, (0xFF << 24) + col);
+				if (Dither.imagedither > 0) {
+					Dither.setpixel(Std.int(x), Std.int(y), (0xFF << 24) + col);
+				}else {
+					settrect(Std.int(x), Std.int(y), 1, 1);
+					drawto.fillRect(trect, (0xFF << 24) + col);
+				}
 			}else {
-				settrect(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2);
-				drawto.fillRect(trect, (0xFF << 24) + col);
+				if (Dither.imagedither > 0) {
+					Dither.fillrect(Std.int(x - _linethickness + 1), Std.int(y - _linethickness + 1), Std.int(_linethickness + _linethickness - 2), Std.int(_linethickness + _linethickness - 2), (0xFF << 24) + col);
+				}else{
+					settrect(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2);
+					drawto.fillRect(trect, (0xFF << 24) + col);
+				}
 			}
 		}
 		#else
@@ -1310,13 +1335,16 @@ class Gfx {
 		if (col == Col.TRANSPARENT) {
 			for (j in Std.int(y) ... Std.int(y + height)) {
 				for (i in Std.int(x) ... Std.int(x + width)) {
-					settpoint(fastFloor(i), fastFloor(j));
-					drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
+					Dither.settransparentpixel(Std.int(i), Std.int(j));
 				}
 			}
-		}else	if(alpha == 1.0){
-			settrect(fastFloor(x), fastFloor(y), fastFloor(width), fastFloor(height));
-			drawto.fillRect(trect, (0xFF << 24) + col);
+		}else	if (alpha == 1.0) {
+			if (Dither.imagedither > 0) {
+				Dither.fillrect(Std.int(x), Std.int(y), Std.int(width), Std.int(height), (0xFF << 24) + col);
+			}else{
+				settrect(fastFloor(x), fastFloor(y), fastFloor(width), fastFloor(height));
+				drawto.fillRect(trect, (0xFF << 24) + col);
+			}
 		}else {
 			tempshape.graphics.clear();
 			tempshape.graphics.beginFill(col, alpha);
