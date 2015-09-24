@@ -625,10 +625,20 @@ class Text {
 		*/
 	}
 	
+	private static function createtypeface(t:String) {
+		//Create a typeface for a bitmap font without changing to it. Used for Zeedonk's
+		//precaching trickery.
+		Webdebug.log("Precaching glyphs for Font." + t.toUpperCase());
+		if (fontfile[fontfileindex.get(t)].type == "bitmap") {
+			if (!typefaceindex.exists(t + "_1")) {
+				addtypeface(t, 1);
+			}
+		}
+	}
+	
 	public static function setfont(t:String, s:Float = 1) {
 	  if (!fontfileindex.exists(t)) {
 			addfont(t, s);
-			currentfont = "___newfont";
 		}
 		
 		if (t != currentfont) {

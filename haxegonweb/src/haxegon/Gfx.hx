@@ -36,7 +36,9 @@ class Gfx {
 	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
 		#if haxegonweb
+		#if (js || html5)
 			onResize(null);
+		#end
 		#end
 		Text.init(gfxstage);
 		showfps = false;
@@ -1498,8 +1500,10 @@ class Gfx {
 		if (initrun) {
 			gfxstage = stage;
 			
+			#if (js || html5)
 			onResize(null);
 			stage.addEventListener(Event.RESIZE, onResize);
+			#end
 		}
 		clearscreeneachframe = true;
 		reset();

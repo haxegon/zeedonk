@@ -8,6 +8,7 @@ import openfl.net.*;
 
 @:access(haxegon.Game)
 @:access(haxegon.Gfx)
+@:access(haxegon.Text)
 @:access(haxegon.Input)
 @:keep
 class Webscript {
