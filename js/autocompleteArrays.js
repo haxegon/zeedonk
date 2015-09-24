@@ -12,7 +12,7 @@ var moduleDescriptions = {
 	Game:"House-keeping",
 	Math:"",
 	String:'<p>The basic String class.<p>A haxe String is immutable: it is not possible to modify individual characters.<p>You can access individual characters by using array notation, so "cat"[1] is "a".',
-	Array:"UH, THIS PAGE ISN\'T ACCURATE RIGHT NOW. For better documentation see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array."
+	Array:"[1,2,3] and all that jazz."
 };
 
 var haxeLibraryArray = [

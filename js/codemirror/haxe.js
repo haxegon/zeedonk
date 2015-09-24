@@ -56,11 +56,20 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
     return style;
   }
 
+
   function haxeTokenBase(stream, state) {
     var ch = stream.next();
     if (ch == '"' || ch == "'") {
       return chain(stream, state, haxeTokenString(ch));
-    } else if (/[\[\]{}\(\),;\:\.]/.test(ch)) {
+    } else if ( /[\[\(\{]/.test(ch) ) {  
+      var d = ((state.bracketDepth/2)%4+state.bracketDepth/2)%4; 
+      state.bracketDepth++;
+      return ret(ch,"bracketDepth"+d);
+    } else if ( /[\]\)\}]/.test(ch) ) {  
+      state.bracketDepth--;  
+      var d = ((state.bracketDepth/2)%4+state.bracketDepth/2)%4;
+      return ret(ch,"bracketDepth"+d);
+    } else if ( /[\,\;\:\.]/.test(ch)) {      
       return ret(ch);
     } else if (ch == "0" && stream.eat(/x/i)) {
       stream.eatWhile(/[\da-f]/i);
@@ -401,7 +410,8 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
         localVars: parserConfig.localVars,
         importedtypes: defaulttypes,
         context: parserConfig.localVars && {vars: parserConfig.localVars},
-        indented: 0
+        indented: 0,
+        bracketDepth: 0,
       };
       if (parserConfig.globalVars && typeof parserConfig.globalVars == "object")
         state.globalVars = parserConfig.globalVars;
