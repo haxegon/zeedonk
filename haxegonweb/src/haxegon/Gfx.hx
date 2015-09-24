@@ -1528,8 +1528,7 @@ class Gfx {
 			scaleY = Math.floor(gfxstage.stageHeight / screenheight);			
 			
 			var jsscale:Int = Convert.toint(Math.min(scaleX, scaleY));
-			untyped __js__('var c = document.getElementById(\'openfl-content\'); c.style.transform = \'scale(\'+(1/window.devicePixelRatio)+\',\'+(1/ window.devicePixelRatio)+\')\'');
- 			
+			
 			gfxstage.scaleX = jsscale;
 			gfxstage.scaleY = jsscale;
 			

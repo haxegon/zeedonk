@@ -1,4 +1,5 @@
-function update(){
-  var c = Gfx.hsl(Game.time*10,1,0.5);
-  Gfx.fillbox(0,0,Gfx.screenwidth,Gfx.screenheight,c);
+for(j in 0 ... Gfx.screenheight){
+  if(j % 2 == 0){
+    Gfx.fillbox(0, j, Gfx.screenwidth, 1, Gfx.hsl(j*2,0.5,0.5));
+  }
 }
