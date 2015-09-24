@@ -1305,7 +1305,7 @@ class Gfx {
 		if (col == Col.TRANSPARENT) {
 			for (j in Std.int(y) ... Std.int(y + height)) {
 				for (i in Std.int(x) ... Std.int(x + width)) {
-					settpoint(fastFloor(x), fastFloor(y));
+					settpoint(fastFloor(i), fastFloor(j));
 					drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
 				}
 			}
