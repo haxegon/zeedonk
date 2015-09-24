@@ -77,6 +77,109 @@ function editor_handleChar(cm,ch){
 	});
 }
 
+var colorPickerVisible=false;
+var adding=false;
+
+function anyParentHasId(el,idName){
+	while(true){
+		if (el.id===idName){
+			return true;
+		} else {
+			el=el.parentNode;
+			if (el==null){
+				return false;
+			}
+		}
+	}
+}
+
+function anyParentHasClass(el,className){
+	while(true){
+		if (el.className.indexOf(className)>=0){
+			return true;
+		} else {
+			el=el.parentNode;
+			if (el==null){
+				return false;
+			}
+		}
+	}
+}
+
+var initCursorPos;
+
+function showColorPicker(c){
+  	colorPickerVisible=true;
+	colorPicker.style.display="initial";
+	window.console.log("hex number " +event.target.innerHTML);
+	colorPickCursorPos=c;
+	adding=true;
+	var dir="above";
+	if (event.clientY<event.currentTarget.clientHeight/2){
+		dir="below";
+	}
+	var numStr = event.target.innerText;
+
+    colorPickerDat.setHex(numStr);
+
+  	editor.addWidget(c,colorPicker,true,dir);
+  	adding=false;
+}
+
+editor.on('mousedown', function(cm, event) {
+  if (event.target.className == 'cm-hexnumber') {
+	var c = cm.coordsChar({left: event.clientX, top: event.clientY}); 	
+	showColorPicker(c);
+  } else if (anyParentHasId(event.target,'color-picker')){
+  	return;
+  }
+  else {
+  	colorPickerVisible=false;
+	colorPicker.style.display="none";  
+  }
+});
+
+function hideColorPicker(){
+  	colorPickerVisible=false;
+	colorPicker.style.display="none";  
+}
+editor.on('keydown',function(cm,event){
+	colorPicker.style.display="none";  
+  	colorPickerVisible=false;
+});
+
+editor.on('scroll',function(cm,event){
+	if (adding) return;
+	colorPicker.style.display="none";  
+  	colorPickerVisible=false;
+});
+
+window.addEventListener("mousedown", function(event){
+	if (colorPickerVisible&&!adding){
+		if (anyParentHasId(event.target,'color-picker')||anyParentHasClass(event.target,"CodeMirror-code")||anyParentHasClass(event.target,"CodeMirror-line")){
+
+		} else {
+			hideColorPicker();
+		}
+	}
+});
+
+editor.on('beforeSelectionChange',function(cm,selection){
+	if (adding) return;
+	for  (var i=0;i<selection.ranges.length;i++){
+		var s = selection.ranges[i];
+		if (s.anchor.line!=s.head.line||s.anchor.ch!=s.head.ch){
+			colorPicker.style.display="none";  
+  			colorPickerVisible=false;
+			return;
+		}
+	}
+	if (selection.ranges.length==0){
+			colorPicker.style.display="none";  
+  			colorPickerVisible=false;		
+	}
+});
+
 var semiColonMap=[];
 semiColonMap["';'"]=editor_handler(';');
 editor.addKeyMap(semiColonMap);
@@ -119,6 +222,28 @@ function renderHint(elt,data,cur){
 	elt.appendChild(t2);
 }
 
+
+function getMatchRange(cursor) {
+  var re = /0x[a-fA-F0-9]*/g;
+  var line = editor.getLine(cursor.line);
+  var match = re.exec(line);
+  while (match) {
+    var val = match[0];
+    var len = val.length;
+    var start = match.index;
+    var end = match.index + len;
+    if (cursor.ch >= start && cursor.ch <= end) {
+      match = null;
+      return {
+        start: start,
+        end: end,
+        string: val
+      };
+    }
+    match = re.exec(line);
+  }
+  return null;
+}
 
 function CompletionsPick( p_oCompletion ) { 
  //  console.log( "==> Function entry: " + arguments.callee.name + "() <==" ) ; 

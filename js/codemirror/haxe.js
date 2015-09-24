@@ -73,7 +73,7 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
       return ret(ch);
     } else if (ch == "0" && stream.eat(/x/i)) {
       stream.eatWhile(/[\da-f]/i);
-      return ret("number", "number");
+      return ret("number", "hexnumber");
     } else if (/\d/.test(ch) || ch == "-" && stream.eat(/\d/)) {
        stream.match(/^\d*(?:\.\d*(?!\.))?(?:[eE][+\-]?\d+)?/);
        return ret("number", "number");

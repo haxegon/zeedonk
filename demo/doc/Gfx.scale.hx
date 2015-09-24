@@ -8,8 +8,8 @@ function update(){
   var h = Gfx.screenheight;
   var nw = s*Gfx.screenwidth;
   var nh = s*Gfx.screenheight;
-	Gfx.scale(s,s,0,0);
- Gfx.drawimage((w-nw)/2,(h-nh)/2,"backbuffer"); 
+  Gfx.scale(s,s);
+ Gfx.drawimage(Gfx.CENTER,Gfx.CENTER,"backbuffer"); 
   
   var t = (Game.time)/15+10;
   var big_r=10;
@@ -21,7 +21,7 @@ function update(){
     var p2 = Random.int(1,6);
     var p3 = Random.int(1,6);
     var p4 = Random.int(1,6);
-		var r = 10+(Math.sin(Game.time/10+i)+1)*5;
+    var r = 10+(Math.sin(Game.time/10+i)+1)*5;
     var a1 = 2*Math.PI*(i+0.5)/6-t;
     var a2 = 2*Math.PI*(i+p1+0.5)/6-t;
     var a3 = 2*Math.PI*(i+p1+p2+0.5)/6-t;
@@ -34,7 +34,7 @@ function update(){
     var y2 = Gfx.screenheightmid+big_r*Math.cos(a2)*m2;
     var x3 = Gfx.screenwidthmid+big_r*Math.sin(a3)*m3;
     var y3 = Gfx.screenheightmid+big_r*Math.cos(a3)*m3;
-	  Gfx.filltri(x1,y1,x2,y2,x3,y3,Gfx.hsl((t+i+130)*100,1,.5));
+    Gfx.filltri(x1,y1,x2,y2,x3,y3,Gfx.hsl((t+i+130)*100,1,.5));
  Gfx.grabimagefromscreen("backbuffer",0,0); 
   }
 }
