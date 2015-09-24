@@ -186,23 +186,10 @@ class Webscript {
 				Text.setfont(Webfont.DEFAULT, 1);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 10, "zeedonk beta v0.7", Col.WHITE);
 			}else {
-				/*
 				Gfx.clearscreen(Col.BLACK);
 				
   			Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk beta v0.7", Col.GRAY);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "loading script...", Col.GRAY);
-				*/
-				
-				Gfx.clearscreen(Col.NIGHTBLUE);
-				
-				Text.setfont(Webfont.ROMAN);
-				Text.display(Gfx.screenwidthmid, 10, "CENTER: LEFT ALIGNED", Col.LIGHTBLUE);
-				Text.display(Gfx.screenwidthmid, 30, "CENTER: CENTER ALIGNED", Col.LIGHTBLUE);
-				Text.display(Gfx.screenwidthmid, 50, "CENTER: CENTER ALIGNED", Col.LIGHTBLUE);
-				Text.display(0, 70, "LEFT: LEFT ALIGNED", Col.LIGHTBLUE);
-				Text.display(0, 90, "LEFT: CENTER ALIGNED", Col.LIGHTBLUE);
-				Text.display(Gfx.screenwidth, 110, "RIGHT: RIGHT ALIGNED", Col.LIGHTBLUE);
-				Text.display(Gfx.screenwidth, 130, "RIGHT: CENTER ALIGNED", Col.LIGHTBLUE);
 			}
 		}
 		

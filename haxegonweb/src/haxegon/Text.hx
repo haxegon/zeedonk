@@ -8,20 +8,6 @@ import openfl.events.*;
 import openfl.net.*;
 import openfl.text.*;
 
-typedef Textdrawparams = {
-  @:optional var scale:Float;
-  @:optional var xscale:Float;
-  @:optional var yscale:Float;
-  @:optional var rotation:Float;
-  @:optional var xpivot:Float;
-  @:optional var ypivot:Float;
-	@:optional var alpha:Float;
-	@:optional var red:Float;
-	@:optional var green:Float;
-	@:optional var blue:Float;
-	@:optional var align:Float;
-}
-
 @:access(haxegon.Input)
 @:access(haxegon.Gfx)
 class Text {
@@ -39,20 +25,14 @@ class Text {
 		#end
 	}
 	
-	//** Clear all rotations, scales and image colour changes */
-	private static function reset() {
-		transform = false;
-		/*
-		imagerotate = 0; imagexscale = 1.0; imageyscale = 1.0;
-		imagexpivot = 0; imageypivot = 0;
-		
-		coltransform = false;
-		imagealphamult = 1.0;	imageredmult = 1.0;	imagegreenmult = 1.0;	imagebluemult = 1.0;	
-		*/
-	}
-	
 	public static function align(a:Int) {
 	  textalign = a;	
+	}
+	
+	public static function rotation(a:Float, xpivot:Int = -15000, ypivot:Int = -15000) {
+	  textrotate = a;
+		textrotatexpivot = xpivot;
+		textrotateypivot = ypivot;
 	}
 	
 	//Text Input functions
@@ -259,6 +239,7 @@ class Text {
 	private static var t1:Float;
 	private static var t2:Float;
 	private static var t3:Float;
+	
 	private static function cachealignx(x:Float, c:Int):Float {
 		if (x <= -5000) {
 			t1 = x - CENTER;
@@ -334,11 +315,11 @@ class Text {
 			t2 = x - LEFT;
 			t3 = x - RIGHT;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(cachedtext[c].width / 2);
+				return t1 + Math.floor(cachedtext[c].width * currentsize / 2);
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + cachedtext[c].width;
+				return t3 + cachedtext[c].width * currentsize;
 			}
 		}
 		
@@ -351,11 +332,11 @@ class Text {
 			t2 = y - TOP;
 			t3 = y - BOTTOM;
 			if (t1 == 0 || (Math.abs(t1) < Math.abs(t2) && Math.abs(t1) < Math.abs(t3))) {
-				return t1 + Math.floor(cachedtext[c].height / 2);
+				return t1 + Math.floor(cachedtext[c].height * currentsize / 2);
 			}else if (t2 == 0 || ((Math.abs(t2) < Math.abs(t1) && Math.abs(t2) < Math.abs(t3)))) {
 				return t2;
 			}else {
-				return t3 + cachedtext[c].height;
+				return t3 + cachedtext[c].height * currentsize;
 			}
 		}
 		return y;
@@ -408,10 +389,10 @@ class Text {
 		cachedtext = [];
 	}
 	
-	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
+	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF) {
 	  var text:String = Convert.tostring(dytext);
 	#else
-	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
+	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF) {
 	#end
 		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 	  
@@ -451,9 +432,9 @@ class Text {
 			}
 			
 			cacheindex = cachedtextindex.get(cachelabel);
-			display_bitmap(x, y, cacheindex, currentsize, parameters);
+			display_bitmap(x, y, cacheindex, currentsize);
 		}else if (typeface[currentindex].type == "tff") {
-			display_ttf(x, y, text, col, parameters);
+			display_ttf(x, y, text, col);
 		}
 	}
 	
@@ -464,7 +445,24 @@ class Text {
 		drawto.draw(typeface[currentindex].tf_bitmap);
 	}
 	
-	private static function display_bitmap(x:Float, y:Float, text:Int, size:Float, ?parameters:Textdrawparams) {
+	private static function display_bitmap(x:Float, y:Float, text:Int, size:Float) {
+		x = cachealignx(x, text); y = cachealigny(y, text);
+		x -= cachealigntextx(text, textalign);
+		
+		fontmatrix.identity();
+		if(size != 1){
+			fontmatrix.scale(size, size);
+		}
+		if (textrotate != 0) {
+			if (textrotatexpivot != 0.0) tempxpivot = cachealigntextx(text, textrotatexpivot);
+			if (textrotateypivot != 0.0) tempypivot = cachealigntexty(text, textrotatexpivot);
+			fontmatrix.translate( -tempxpivot, -tempypivot);
+			fontmatrix.rotate((textrotate * 3.1415) / 180);
+			fontmatrix.translate( tempxpivot, tempypivot);
+		}
+		fontmatrix.translate(Math.floor(x), Math.floor(y));
+		drawto.draw(cachedtext[text], fontmatrix);
+		/*
 		if (parameters == null && size == 1) {
 			x = cachealignx(x, text); y = cachealigny(y, text);
 			
@@ -537,10 +535,12 @@ class Text {
 			}
 		}
 		return;
+		*/
 	}
 	
-	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF, ?parameters:Textdrawparams) {
+	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF) {
 		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
+		/*
 		if (parameters == null) {
 			typeface[currentindex].tf_ttf.textColor = col;
 			typeface[currentindex].tf_ttf.text = text;
@@ -619,6 +619,7 @@ class Text {
 			  drawto.draw(typeface[currentindex].tfbitmap, fontmatrix);	
 			}
 		}
+		*/
 	}
 	
 	public static function setfont(t:String, s:Float = 1) {
@@ -712,10 +713,10 @@ class Text {
 	public static var BOTTOM:Int = -20000;
 	public static var CENTER:Int = -15000;
 	
-	private static var transform:Bool;
-	private static var coltransform:Bool;
 	private static var textalign:Int;
 	private static var textrotate:Float;
+	private static var textrotatexpivot:Float;
+	private static var textrotateypivot:Float;
 	private static var textalphamult:Float;
 	private static var temprotate:Float;
 	private static var tempxscale:Float;
