@@ -1272,12 +1272,7 @@ class Gfx {
 				settpoint(fastFloor(x), fastFloor(y));
 				drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
 			}else {
-				for (j in Std.int(y - _linethickness + 1) ... Std.int(_linethickness + _linethickness - 2)) {
-					for (i in Std.int(x - _linethickness + 1) ... Std.int(_linethickness + _linethickness - 2)) {
-						settpoint(fastFloor(i), fastFloor(j));
-						drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
-					}
-				}
+				fillbox(x - _linethickness + 1, y - _linethickness + 1, _linethickness + _linethickness - 2, _linethickness + _linethickness - 2, col);
 			}
 		}else	if (alpha < 1) {
 			if (_linethickness == 1) {
@@ -1310,11 +1305,11 @@ class Gfx {
 		if (col == Col.TRANSPARENT) {
 			for (j in Std.int(y) ... Std.int(y + height)) {
 				for (i in Std.int(x) ... Std.int(x + width)) {
-					settpoint(fastFloor(i), fastFloor(j));
+					settpoint(fastFloor(x), fastFloor(y));
 					drawto.copyPixels(transparentpixel, transparentpixel.rect, tpoint);
 				}
 			}
-		}else	if(alpha == 1.0){
+		}else	if (alpha == 1.0) {
 			settrect(fastFloor(x), fastFloor(y), fastFloor(width), fastFloor(height));
 			drawto.fillRect(trect, (0xFF << 24) + col);
 		}else {

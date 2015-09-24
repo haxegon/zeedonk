@@ -12,7 +12,6 @@ function update(){
   }else{
     imgscale = 2+((Game.time / 2) % 10)/2;
   }
-  Gfx.scale(imgscale);
-  Gfx.pivot(Gfx.CENTER, Gfx.CENTER);
+  Gfx.scale(imgscale, imgscale);
   Gfx.drawimage(Gfx.CENTER, Gfx.CENTER,"heart");
 }

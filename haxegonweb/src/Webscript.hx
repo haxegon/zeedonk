@@ -188,7 +188,7 @@ class Webscript {
 			}else {
 				Gfx.clearscreen(Col.BLACK);
 				
-				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk beta v0.7", Col.GRAY);
+  			Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk beta v0.7", Col.GRAY);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "loading script...", Col.GRAY);
 			}
 		}
