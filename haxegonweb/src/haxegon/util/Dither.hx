@@ -31,7 +31,37 @@ class Dither {
 		}
 	}
 	
+	public static var ditherpattern:BitmapData;
+	public static var templayer:BitmapData;
+	public static function init() {
+		ditherpattern = new BitmapData(240, 150, true, 0);
+		templayer = new BitmapData(240, 150, true, 0);
+		ditherpattern.lock();
+		for (j in 0 ... 150) {
+			for (i in 0 ... 240) {
+				if (thresholdmap[i % 4][j % 4] > 8) {
+					settrect(i, j, 1, 1);
+					ditherpattern.fillRect(trect, 0xFFFFFFFF);
+				}
+			}
+		}
+		ditherpattern.unlock();	
+	}
+	
 	public static function fillrect(x:Int, y:Int, width:Int, height:Int, col:Int) {
+		//Draw a fillrect to a temp layer
+		//Copy the dither pattern alpha over it
+		//Draw that layer on the screen
+		settrect(x, y, width, height);
+		templayer.fillRect(trect, col);
+		
+		settpoint(x, y);
+		templayer.copyChannel(ditherpattern, trect, tpoint, BitmapDataChannel.ALPHA, BitmapDataChannel.ALPHA);
+		
+		Gfx.drawto.copyPixels(templayer, trect, tpoint);
+	}
+	
+	public static function brokenfillrect(x:Int, y:Int, width:Int, height:Int, col:Int) {
 		if (x < 0) {
 		  width -= -x;
 			x = 0;

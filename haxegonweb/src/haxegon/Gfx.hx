@@ -1527,6 +1527,7 @@ class Gfx {
 		if (initrun) gfxstage = stage;
 		clearscreeneachframe = true;
 		reset();
+		Dither.init();
 		linethickness = 1;
 		transparentpixel = new BitmapData(1, 1, true, 0);
 	}	

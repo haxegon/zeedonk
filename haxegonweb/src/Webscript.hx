@@ -187,9 +187,13 @@ class Webscript {
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 10, "zeedonk beta v0.7", Col.WHITE);
 			}else {
 				Gfx.clearscreen(Col.BLACK);
-				
+				Gfx.showfps = true;
   Gfx.dither(8);
   Gfx.fillcircle(Gfx.screenwidthmid, Gfx.screenheightmid, 60, Col.ORANGE);
+	//Gfx.fillbox(20, 20, 80, 80, Col.ORANGE);
+  Gfx.dither(8);
+	//Gfx.fillbox(120, 60, 80, 80, Col.LIGHTBLUE);
+  Gfx.fillcircle(Gfx.screenwidthmid+50, Gfx.screenheightmid+20, 40, Col.LIGHTBLUE);
 	
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk beta v0.7", Col.GRAY);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "loading script...", Col.GRAY);
@@ -202,7 +206,7 @@ class Webscript {
 			Text.setfont("pixel", 1);
 			if (Gfx.fps() > -1) {
 				Text.align(Text.RIGHT);
-				Text.display(Gfx.screenwidth - 4, 1, "FPS: " + Gfx.fps(), Col.YELLOW);
+				Text.display(Gfx.screenwidth - 4-50, 1, "FPS: " + Gfx.fps(), Col.YELLOW);
 			}
 			//if (Gfx.updatefps() > -1) {
 			//  Text.align(Text.RIGHT);
