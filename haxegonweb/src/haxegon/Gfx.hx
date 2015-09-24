@@ -959,6 +959,7 @@ class Gfx {
 		#if haxegonweb alpha = 1.0; #end
 		#if haxegonweb
 		temprotate = ((Math.PI * 2) / 6);
+		if (angle == 0) angle = Math.PI;
 		
 		tx = (Math.cos(angle) * radius) + x;
 		ty = (Math.sin(angle) * radius) + y;
