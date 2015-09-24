@@ -4,6 +4,7 @@ import openfl.display.*;
 import openfl.geom.*;
 import openfl.events.*;
 import openfl.net.*;
+import openfl.Lib;
 
 /*Adding assets to a preloader:
 After the imports add this line to your file:
@@ -28,6 +29,7 @@ class Preloader extends NMEPreloader{
 		frontcol = RGB(128, 128, 128);
 		loadercol = RGB(196, 196, 196); 
 		loadingbarwidth = 125;
+		loadingbarheight = 6;
 		//----------------
 		
 		ct = new ColorTransform(0, 0, 0, 1, 255, 255, 255, 1); //Set to white			
@@ -36,13 +38,13 @@ class Preloader extends NMEPreloader{
 		tl = new Point(0, 0); tpoint = new Point(0, 0);
 		
 		glyphletters = new Map<String, Array<String>>();
-		glyphletters.set("A", ["4", "111", "101", "111", "101", "101"]); 
-		glyphletters.set("B", ["4", "111", "101", "110", "101", "111"]); 
-		glyphletters.set("C", ["4", "111", "100", "100", "100", "111"]); 
+		glyphletters.set("A", ["4", "010", "101", "111", "101", "101"]); 
+		glyphletters.set("B", ["4", "110", "101", "110", "101", "110"]); 
+		glyphletters.set("C", ["4", "011", "100", "100", "100", "011"]); 
 		glyphletters.set("D", ["4", "110", "101", "101", "101", "110"]); 
 		glyphletters.set("E", ["4", "111", "100", "110", "100", "111"]); 
 		glyphletters.set("F", ["4", "111", "100", "110", "100", "100"]); 
-		glyphletters.set("G", ["4", "111", "100", "101", "101", "111"]); 
+		glyphletters.set("G", ["4", "011", "100", "101", "101", "011"]); 
 		glyphletters.set("H", ["4", "101", "101", "111", "101", "101"]); 
 		glyphletters.set("I", ["2", "1", "1", "1", "1", "1"]); 
 		glyphletters.set("J", ["3", "01", "01", "01", "01", "11"]);
@@ -50,14 +52,14 @@ class Preloader extends NMEPreloader{
 		glyphletters.set("L", ["4", "100", "100", "100", "100", "111"]);
 		glyphletters.set("M", ["6", "10001", "11011", "10101", "10001", "10001"]); 
 		glyphletters.set("N", ["5", "1001", "1101", "1111", "1011", "1001"]); 
-		glyphletters.set("O", ["4", "111", "101", "101", "101", "111"]); 
-		glyphletters.set("P", ["4", "111", "101", "111", "100", "100"]); 
-		glyphletters.set("Q", ["4", "111", "101", "101", "101", "111", "001"]); 
-		glyphletters.set("R", ["4", "111", "101", "110", "101", "101"]); 
-		glyphletters.set("S", ["4", "111", "100", "111", "001", "111"]); 
+		glyphletters.set("O", ["4", "010", "101", "101", "101", "010"]); 
+		glyphletters.set("P", ["4", "110", "101", "110", "100", "100"]); 
+		glyphletters.set("Q", ["4", "010", "101", "101", "101", "011", "001"]); 
+		glyphletters.set("R", ["4", "110", "101", "110", "101", "101"]); 
+		glyphletters.set("S", ["4", "011", "100", "010", "001", "110"]); 
 		glyphletters.set("T", ["4", "111", "010", "010", "010", "010"]);
-		glyphletters.set("U", ["4", "101", "101", "101", "101", "111"]); 
-		glyphletters.set("V", ["4", "101", "101", "101", "101", "010"]); 
+		glyphletters.set("U", ["4", "101", "101", "101", "101", "010"]); 
+		glyphletters.set("V", ["4", "101", "101", "101", "011", "001"]); 
 		glyphletters.set("W", ["6", "10001", "10001", "10101", "11011", "10001"]); 
 		glyphletters.set("X", ["4", "101", "101", "010", "101", "101"]); 
 		glyphletters.set("Y", ["4", "101", "101", "111", "010", "010"]); 
@@ -72,13 +74,40 @@ class Preloader extends NMEPreloader{
 		
 		addChild(screen);
 		startgame = false;
+		gfxstage = Lib.current.stage;
+		
+		#if haxegonweb
+			onResize(null);
+			gfxstage.addEventListener(Event.RESIZE, onResize);
+		#end
 	}
+	
+	#if html5
+	private function onResize(e:Event):Void {
+		//trace(gfxstage.stageWidth, gfxstage.stageHeight);
+		//Window.devicePixelratio
+		var scaleX:Float;
+		var scaleY:Float;
+		
+		scaleX = Math.floor(gfxstage.stageWidth / screenwidth);
+		scaleY = Math.floor(gfxstage.stageHeight / screenheight);			
+		
+		var jsscale:Int = Std.int(Math.min(scaleX, scaleY));
+		
+		gfxstage.scaleX = jsscale;
+		gfxstage.scaleY = jsscale;
+		
+		gfxstage.x = (gfxstage.stageWidth - screenwidth * jsscale) / 2;
+		gfxstage.y = (gfxstage.stageHeight - screenheight * jsscale) / 2;
+	}
+	#end
 	
 	public function RGB(red:Int, green:Int, blue:Int):Int {
 		return (blue | (green << 8) | (red << 16));
 	}
 	
 	override public function onLoaded() {
+		gfxstage.removeEventListener(Event.RESIZE, onResize);
 		if (contains(screen)) removeChild(screen);
 		dispatchEvent(new Event(Event.COMPLETE));
 	}
@@ -109,7 +138,8 @@ class Preloader extends NMEPreloader{
 			for (j in 1 ... sarray.length) {
 				for (i in 0 ... sarray[j].length) {
 					if (sarray[j].substr(i, 1) == "1") {
-						pset(i, j);
+						pset(i, j * 2);
+						pset(i, j * 2 + 1);
 					}
 				}
 			}
@@ -125,11 +155,11 @@ class Preloader extends NMEPreloader{
 		if (p >= 1) startgame = true;
 		backbuffer.fillRect(backbuffer.rect, backcol);
 		
-		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2) - 2), Std.int((screenheight / 2) - 13)-10, loadingbarwidth+4, 32, frontcol);
-		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)), Std.int((screenheight / 2) - 11)-10, loadingbarwidth, 28, backcol);
-		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)) + 1, Std.int((screenheight / 2) - 11)+1-10, Std.int(p * (loadingbarwidth))-2, 28-2, loadercol);
+		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2) - 2), Std.int((screenheight / 2) - 13)-10, loadingbarwidth+4, loadingbarheight+6, frontcol);
+		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)), Std.int((screenheight / 2) - 11)-10, loadingbarwidth, loadingbarheight+2, backcol);
+		fillrect(Std.int((screenwidth/2) - (loadingbarwidth/2)) + 1, Std.int((screenheight / 2) - 11)+1-10, Std.int(p * (loadingbarwidth))-2, loadingbarheight, loadercol);
 		
-		glyphprint(Std.int((screenwidth / 2)) - 7 * 4, Std.int((screenheight / 2) + 12), "LOADING ZEEDONK");
+		glyphprint(Std.int((screenwidth / 2)) - 7 * 4, Std.int((screenheight / 2) - 12) + loadingbarheight, "LOADING ZEEDONK");
 		
 		//Render
 		screenbuffer.lock();
@@ -151,11 +181,13 @@ class Preloader extends NMEPreloader{
 	public var frontcol:Int;
 	public var loadercol:Int;
 	public var loadingbarwidth:Int;
+	public var loadingbarheight:Int;
 	
 	public var buffer:BitmapData;
 	public var backbuffer:BitmapData;
 	public var screenbuffer:BitmapData;
 	public var screen:Bitmap;
+	public var gfxstage:Stage;
 	
 	public var temprect:Rectangle;
 	
