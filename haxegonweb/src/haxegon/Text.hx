@@ -387,6 +387,9 @@ class Text {
 		  cachedtext[i].dispose();	
 		}
 		cachedtext = [];
+		
+		align(LEFT);
+		rotation(0);
 	}
 	
 	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF) {
