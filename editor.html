@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="css/show-hint.css">
 <link rel="stylesheet" href="css/buttons.css">
 <link rel="stylesheet" href="css/hintclasses.css">
+<link rel="stylesheet" type="text/css" href="FlexiColorPicker/themes.css" />
 
 <!--CSSREPLACE-->
 
@@ -120,6 +121,9 @@ function update() {
 <div class="clearconsolebutton" style="float:right;position:fixed;right:4px;"><a id="clearConsoleClick" title="clears the console" href="javascript:void('Clear Console');"><span class="button1" alt="clear console contents"></span></a></div>
 <div id = "consoletextarea" >
 
+<script type="text/javascript" src="FlexiColorPicker/colorpicker.js"></script>
+
+
 =================================<br>
 &nbsp;&nbsp;&nbsp;zeedonk log BETA V0.6<br>
 =================================<br>
@@ -133,6 +137,40 @@ S+T
 </div>
 	</div>
 </div>
+
+<div id="color-picker" style="display:none;" class="cp-small"></div>
+
+    <script type="text/javascript">
+
+     var colorPicker = document.getElementById('color-picker');
+     var colorPickerDat = ColorPicker(
+        colorPicker,
+
+        function(hex, hsv, rgb) {
+          var cursor = colorPickCursorPos;//editor.getCursor();
+          var range = getMatchRange(cursor);
+          
+          var start = {
+	        line: cursor.line,
+	        ch: range.start+2
+	      };
+	      var end = {
+	        line: cursor.line,
+	        ch: range.end
+	      };
+	      if (hex[0]==="#"){
+	      	hex=hex.slice(1);
+	      } else {
+	      	hex=hex.slice(2);
+	      }
+		  editor.replaceRange(hex, start, end);
+	      //console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
+          //console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
+          //document.body.style.backgroundColor = hex;        // #HEX
+
+        });
+
+    </script>
 
 <!--TOREPLACE-->
 <script type="text/javascript" src="haxegonweb/bin/html5/bin/lib/soundjs.min.js"></script>

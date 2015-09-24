@@ -8,6 +8,7 @@
 .cm-s-ambiance .cm-keyword { color: #cda869; }
 .cm-s-ambiance .cm-atom { color: #CF7EA9; }
 .cm-s-ambiance .cm-number { color: #78CF8A; }
+.cm-s-ambiance .cm-hexnumber { color: #78CF8A; text-decoration: underline; cursor: pointer;}
 .cm-s-ambiance .cm-def { color: #aac6e3; }
 .cm-s-ambiance .cm-variable { color: #ffb795; }
 .cm-s-ambiance .cm-variable-2 { color: #eed1b3; }
