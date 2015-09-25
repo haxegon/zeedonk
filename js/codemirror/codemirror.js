@@ -6967,6 +6967,20 @@
       }
     }
     if (style || startStyle || endStyle || mustWrap || css) {
+
+      if (style==="cm-hexnumber"){
+        var hex = content.textContent.slice(2);
+        var num = parseInt(hex,16);        
+        css = "background-color:#"+hex+";";
+        var r = 299*Math.floor(num / 0x10000)/255;
+        var g = 587*Math.floor((num / 0x100) % 0x100)/255;
+        var b = 114*Math.floor(num % 0x100)/255;
+        if (r+g+b>500) {
+          css += "color:black;";
+        } else {
+          css += "color:white;";
+        }
+      }
       var fullStyle = style || "";
       if (startStyle) fullStyle += startStyle;
       if (endStyle) fullStyle += endStyle;
