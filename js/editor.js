@@ -39,6 +39,7 @@ var editor = window.CodeMirror.fromTextArea(code, {
     matchBrackets:true,
     tabSize:2,
     indentUnit:2,
+
 //	smartIndent:false,
     //hintOptions: {"completeSingle": true},
     extraKeys: {"Ctrl-Space": "autocomplete",
@@ -94,42 +95,43 @@ function anyParentHasId(el,idName){
 }
 
 function anyParentHasClass(el,className){
-	while(true){
+	while(el!=null){
 		if (el.className.indexOf(className)>=0){
 			return true;
 		} else {
 			el=el.parentNode;
-			if (el==null){
-				return false;
-			}
-		}
+		}		
 	}
+	return false;
 }
 
 var initCursorPos;
 
-function showColorPicker(c){
+function showColorPicker(c,dir){
   	colorPickerVisible=true;
 	colorPicker.style.display="initial";
-	window.console.log("hex number " +event.target.innerHTML);
 	colorPickCursorPos=c;
 	adding=true;
-	var dir="above";
-	if (event.clientY<event.currentTarget.clientHeight/2){
-		dir="below";
-	}
+
 	var numStr = event.target.innerText;
 
     colorPickerDat.setHex(numStr);
 
   	editor.addWidget(c,colorPicker,true,dir);
   	adding=false;
-}
+  }
 
 editor.on('mousedown', function(cm, event) {
   if (event.target.className == 'cm-hexnumber') {
 	var c = cm.coordsChar({left: event.clientX, top: event.clientY}); 	
-	showColorPicker(c);
+	console.log("preshow");
+
+	var dir="above";
+	if (event.clientY<event.currentTarget.clientHeight/2){
+		dir="below";
+	}
+	showColorPicker(c,dir);
+	
   } else if (anyParentHasId(event.target,'color-picker')){
   	return;
   }
@@ -137,6 +139,16 @@ editor.on('mousedown', function(cm, event) {
   	colorPickerVisible=false;
 	colorPicker.style.display="none";  
   }
+});
+
+
+editor.on('blur',function(cm,event){
+	console.log(event);		
+
+    // If we just hangout an extra tick, we'll find out which element got focus really
+    setTimeout(function(){
+       document.activeElement; // This is the element that has focus
+    },1);
 });
 
 function hideColorPicker(){

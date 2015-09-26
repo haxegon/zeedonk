@@ -54,9 +54,15 @@
         return el;
     }
 
+    function squareCol(col){
+        el = document.createElement("div");
+        el.className = "colorSquare-"+col;
+        return el;
+    }
+
     /**
      * Create slide and picker markup depending on the supported technology.
-     */
+     */    
     if (type == 'SVG') {
 
         slide = $('svg', { xmlns: 'http://www.w3.org/2000/svg', version: '1.1', width: '100%', height: '100%' },
@@ -264,6 +270,7 @@
             var slideClone = slide.cloneNode(true);
             var pickerClone = picker.cloneNode(true);
             
+
             var hsvGradient = slideClone.getElementById('gradient-hsv');
             
             var hsvRect = slideClone.getElementsByTagName('rect')[0];
@@ -291,6 +298,14 @@
             this.pickerElement.innerHTML = picker;            
         }
 
+
+        var colors = [];
+        for (var i=0;i<colorNames.length;i++) {
+            var n = colorNames[i];
+            var s = squareCol(n);
+            colors.push(s);
+        }
+        
         addEventListener(this.slideElement, 'click', slideListener(this, this.slideElement, this.pickerElement));
         addEventListener(this.pickerElement, 'click', pickerListener(this, this.pickerElement));
 
@@ -354,6 +369,7 @@
     };
     
     ColorPicker.hex2rgb = function(hex) {
+        console.log(hex);
         return { r: parseInt(hex.substr(2, 2), 16), g: parseInt(hex.substr(4, 2), 16), b: parseInt(hex.substr(6, 2), 16) };
     };
 

@@ -119,7 +119,6 @@ CodeMirror.defineMode("haxe", function(config, parserConfig) {
       }
     }
   }
-  var colorNames= ["BLACK", "GREY", "GRAY", "WHITE", "RED", "PINK", "DARKBROWN", "BROWN", "ORANGE", "YELLOW", "DARKGREEN", "GREEN", "LIGHTGREEN", "NIGHTBLUE", "DARKBLUE", "BLUE", "LIGHTBLUE", "MAGENTA", "TRANSPARENT"];
 
   function haxeTokenString(quote) {
     return function(stream, state) {
