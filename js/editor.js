@@ -107,13 +107,12 @@ function anyParentHasClass(el,className){
 
 var initCursorPos;
 
-function showColorPicker(c,dir){
+function showColorPicker(c,dir,numStr){
   	colorPickerVisible=true;
 	colorPicker.style.display="initial";
 	colorPickCursorPos=c;
 	adding=true;
 
-	var numStr = event.target.innerText;
 
     colorPickerDat.setHex(numStr);
 
@@ -130,7 +129,10 @@ editor.on('mousedown', function(cm, event) {
 	if (event.clientY<event.currentTarget.clientHeight/2){
 		dir="below";
 	}
-	showColorPicker(c,dir);
+	var numStr = event.target.innerHTML;
+	showColorPicker(c,dir,numStr);
+	cm.setCursor(c.line,c.ch);
+	setTimeout(function(){	cm.display.input.focus();},0);
 	
   } else if (anyParentHasId(event.target,'color-picker')){
   	return;
@@ -143,8 +145,6 @@ editor.on('mousedown', function(cm, event) {
 
 
 editor.on('blur',function(cm,event){
-	console.log(event);		
-
     // If we just hangout an extra tick, we'll find out which element got focus really
     setTimeout(function(){
        document.activeElement; // This is the element that has focus
