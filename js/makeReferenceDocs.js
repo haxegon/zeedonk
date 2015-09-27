@@ -8,6 +8,7 @@
 var fs = require('fs');
 eval(fs.readFileSync('autocompleteArrays.js')+'');
 
+
 CodeMirror = require('./addon/runmode/runmode.node.js');
 haxe = require('./codemirror/haxe.js');
 
