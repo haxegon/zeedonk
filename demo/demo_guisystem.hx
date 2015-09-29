@@ -166,7 +166,9 @@ function gui_draw(){
         Gfx.fillbox(gui_button[i].x, gui_button[i].y, gui_button[i].width, gui_button[i].height, gui_button[i].col);
       }else if(gui_button[i].type == "text"){
         if (gui_button[i].text != "") {
-          Text.display(gui_button[i].x, gui_button[i].y + 1, gui_button[i].text, gui_button[i].col, {align:gui_button[i].align });
+          Text.align(gui_button[i].align);
+          Text.display(gui_button[i].x, gui_button[i].y + 1, gui_button[i].text, gui_button[i].col);
+          Text.align(Text.LEFT);
         }
       }else if(gui_button[i].type == "imagebutton"){     
         gui_button[i].mouseover = false; 
