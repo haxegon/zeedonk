@@ -176,10 +176,12 @@ function update() {
       Gfx.fillbox(0, box[i], Gfx.screenwidth, boxheight, Col.GREY);
       Gfx.fillbox(0, line[i], Gfx.screenwidth, lineheight, Col.BLACK);
     }
-
-    Text.display(Gfx.screenwidthmid, box[1] + 12, "PUZZLE GAME", startcolour, {align: Text.CENTER});
-    Text.display(Gfx.screenwidthmid, box[2] + 12, "use arrow keys to play", lightblack, {align: Text.CENTER});
-    Text.display(Gfx.screenwidthmid, box[3] + 12, "Holly Gramazio", lightblack, { align: Text.CENTER } );
+    
+    Text.align(Text.CENTER);
+    Text.display(Gfx.screenwidthmid, box[1] + 12, "PUZZLE GAME", startcolour);
+    Text.display(Gfx.screenwidthmid, box[2] + 12, "use arrow keys to play", lightblack);
+    Text.display(Gfx.screenwidthmid, box[3] + 12, "Holly Gramazio", lightblack);
+    Text.align(Text.LEFT);
 
     if (Input.justpressed(Key.DOWN) || Input.justpressed(Key.UP) || Input.justpressed(Key.LEFT) || Input.justpressed(Key.RIGHT))
     {
