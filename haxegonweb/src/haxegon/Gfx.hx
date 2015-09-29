@@ -382,7 +382,7 @@ class Gfx {
 			for (i in 0 ... images[oldindex].width) {
 				pixel = images[oldindex].getPixel(i, j);
 				pixelalpha = images[oldindex].getPixel32(i, j) >> 24 & 0xFF;
-				settrect(Convert.toint(i * scale), Convert.toint(j * scale), Convert.toint(scale), Convert.toint(scale));
+				settrect(Math.ceil(i * scale), Math.ceil(j * scale), Math.ceil(scale), Math.ceil(scale));
 				newbitmap.fillRect(trect, (pixelalpha << 24) + pixel);
 			}
 		}
