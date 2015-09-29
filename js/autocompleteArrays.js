@@ -126,7 +126,7 @@ var haxeHintArray = [
 ["Gfx.drawtoscreen","()","F"],
 ["Gfx.drawtoimage","(imagename)","F"],
 ["Gfx.grabimagefromscreen","(imagename, screen x, screen y)","F","This function grabs a copy of the screen from position x,y, and places it in the image."],
-["Gfx.grabimagefromimage","(imagename, sourceimagename, image x, image y)","F"],
+["Gfx.grabimagefromimage","(imagename, sourceimagename, image x, image y, imagewidth=w, imageheight=h)","F", "Imagewidth and Imageheight are optional parameters. If left out, the function will use the width and height of the destination image."],
 ["Gfx.showfps",":Bool","P","Whether or not to show the fps counter."],
 ["Gfx.rotation","(angle:Float, xpivot=Gfx.CENTER, ypivot=Gfx.CENTER)","F","Rotates image drawing functions. Optionally set rotation pivot point."],
 ["Gfx.scale","(xscale, yscale, xpivot=Gfx.CENTER, ypivot=Gfx.CENTER)","F","Scales image drawing functions, as it's being drawn. Optionally set scaling pivot point."],
