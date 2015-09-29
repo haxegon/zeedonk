@@ -958,11 +958,11 @@ function gameupdate() {
   }
 
   if (playermoving > 0) {
-    gamespeed = 1.5;
+    gamespeed = 1.3;
     Music.musicvol = 0;
   }else {
     if (gamespeed > 0.15) {
-      gamespeed -= 0.075;
+      gamespeed -= 0.15;
       if (gamespeed < 0.15) {
         gamespeed = 0.15;
       }
