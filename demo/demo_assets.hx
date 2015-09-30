@@ -100,7 +100,7 @@ Gfx.loadimagestring("icon89", "3SaaapZZZSa4daK4pNW4a"); // Potion
 Gfx.loadimagestring("icon90", "3SaaapZZZTS7ls$=lse4a"); // S Token
 Gfx.loadimagestring("icon91", "3SaaapZZZTSZ5ZZZZVW4a"); // Circle
 Gfx.loadimagestring("icon92", "3SaaapZZZSKmh7SZpRZZ6"); // Triangle
-Gfx.loadimagestring("icon93", "3SaaapZZZZZaRHlsPHd56"); // Spiral
+Gfx.loadimagestring("icon93", "3SaaapZZZZZaRHlsQGlY6"); // Spiral
 Gfx.loadimagestring("icon94", "3SaaapZZZSbZjtWDpMeZ6"); // Scroll
 Gfx.loadimagestring("icon95", "3SaaapZZZSa4iuNmCrSaa"); // Eye
 Gfx.loadimagestring("icon96", "3SaaapZZZX3xvvvRvfrua"); // HP
@@ -111,9 +111,17 @@ Gfx.loadimagestring("icon100", "3SaaapZZZZZaRHV4RGdZ6"); // Block 1
 Gfx.loadimagestring("icon101", "3SaaapZZZZZ7NnlsNohZ6"); // Block 2
 Gfx.loadimagestring("icon102", "3SaaapZZZXuaR7lshGaE6"); // Block 3
 Gfx.loadimagestring("icon103", "3SaaapZZZSb5RXYa4ZJV6"); // Block 4
+Gfx.loadimagestring("icon104", "3SaaapZZZSbgRXYem5JV6"); // Block 5
+Gfx.loadimagestring("icon105", "3SaaapZZZSa6aaeaabaaa"); // Ground 1
+Gfx.loadimagestring("icon106", "3SaaapZZZSaSaaad6haaa"); // Ground 2
+Gfx.loadimagestring("icon107", "3SaaapZZZSKZiwh7CtWma"); // Target
+Gfx.loadimagestring("icon108", "3SaaapZZZSacdyaaegKaa"); // Water
+Gfx.loadimagestring("icon109", "3SaaapZZZVXZV5ZNS5YZa"); // Sad face, filled
+Gfx.loadimagestring("icon110", "3SaaapZZZVXaOGdmRGcZa"); // Sad face, outlined
+Gfx.loadimagestring("icon111", "3SaaapZZZZYa5SbZ6hYaa"); // Grate
 
 var icon = [];
-for(i in 0 ... 104) icon.push("icon"+i);
+for(i in 0 ... 112) icon.push("icon"+i);
 // ASSETS END HERE
 
 function new(){
@@ -122,12 +130,13 @@ function new(){
 }
 
 function update(){
-  Gfx.clearscreen(Col.BLACK);
-  Gfx.fillbox(Gfx.screenwidthmid - 50, 0, 100, Gfx.screenheight - 14, Col.NIGHTBLUE);
+  Gfx.clearscreen(Col.NIGHTBLUE);
   
-  for(j in 0 ... 13){
-    for(i in 0 ... 8){
-      Gfx.drawimage(Gfx.screenwidthmid - 40 + i*10, 4+ j*10, icon[i + (j * 8)]);
+  Text.align(Text.CENTER);
+  for(j in 0 ... 7){
+    for(i in 0 ... 16){
+      Gfx.drawimage(2 + i*15, 2+ j*19, icon[i + (j * 16)]);
+      Text.display(7 + i*15, 12+ j*19, "" + (i + (j * 16)), Gfx.rgb(128,128,128));
     }  
   }
   Text.display(Text.LEFT + 5, Text.BOTTOM, "ZEEDONK ASSET PACK");
