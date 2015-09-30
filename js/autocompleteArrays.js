@@ -130,7 +130,7 @@ var haxeHintArray = [
 ["Gfx.showfps",":Bool","P","Whether or not to show the fps counter."],
 ["Gfx.rotation","(angle:Float, xpivot=Gfx.CENTER, ypivot=Gfx.CENTER)","F","Rotates image drawing functions. Optionally set rotation pivot point."],
 ["Gfx.scale","(xscale, yscale, xpivot=Gfx.CENTER, ypivot=Gfx.CENTER)","F","Scales image drawing functions, as it's being drawn. Optionally set scaling pivot point."],
-["Gfx.imagecolor","(r:Float, g:Float, b:Float)","F","Set a colour multipler (0-1.0) in RGB for image drawing functions."],
+["Gfx.imagecolor","(c:Int = Col.WHITE)","F","Set a colour multipler in RGB for image drawing functions. Leave parameter blank to return to normal."],
 ["Gfx.CENTER","","P"],
 ["Gfx.LEFT","","P"],
 ["Gfx.RIGHT","","P"],

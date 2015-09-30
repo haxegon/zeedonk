@@ -115,11 +115,11 @@ class Gfx {
 		reset_ifclear();
 	}
 	
-	/** Set a red multipler for image drawing functions. */
-	public static function imagecolor(r:Float, g:Float, b:Float) {
-	  imageredmult = r;
-		imagegreenmult = g;
-		imagebluemult = b;
+	/** Set a colour multipler for image drawing functions. */
+	public static function imagecolor(c:Int = 0xFFFFFF) {
+	  imageredmult = getred(c) / 255;
+		imagegreenmult = getgreen(c) / 255;
+		imagebluemult = getblue(c) / 255;
 		coltransform = true;
 		reset_ifclear();
 	}
