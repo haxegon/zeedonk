@@ -31,7 +31,7 @@ var cls = "CodeMirror-Zeedonk-";
 
 var editor = window.CodeMirror.fromTextArea(code, {
 //	viewportMargin: Infinity,
-	lineWrapping: true,
+	//lineWrapping: true,
 	lineNumbers: true,
     styleActiveLine: true,
     mode: {name:"haxe",globalVars: true},
