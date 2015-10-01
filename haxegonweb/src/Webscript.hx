@@ -221,7 +221,10 @@ class Webscript {
 		MusicEngine.vol=1.0;		
 		MusicEngine.musicLoop=true;
 		Input.resetKeys();
-		Gfx._linethickness=1;
+		Gfx.rotation(0);
+		Gfx.scale(1, 1);
+		Gfx._linethickness = 1;
+		Gfx.imagecolor(Col.WHITE);
 		Game._title="zeedonk game";
 		Game._homepage="http://www.zeedonk.net";
 		Game._background=0x000000;
