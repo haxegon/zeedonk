@@ -578,7 +578,7 @@ function update() {
     if (collide==3){
       if (dat.notes.length>1){
         dat.notes.splice(i,1);
-        if (selectedSequence==i){
+        if (selectedSequence>=i&&selectedSequence>0){
           selectedSequence--;
         }
         break;
