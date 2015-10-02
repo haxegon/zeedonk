@@ -141,6 +141,7 @@ class Err {
 		errorline = Webdebug.getlinenum(Webscript.interpreter.curExpr.pmin);
 		returnarray.push("Unknown error type in line " + errorline + ":");
 		returnarray.push("Error name: " + errorhandle.name);
+		returnarray.push("Error: " + errorhandle);
 		returnarray.push("Javascript Stack:");
 		dumpstack = true; javastack = errorhandle.stack;
 		return returnarray;
