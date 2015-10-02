@@ -1,4 +1,4 @@
-var fonts = [Font.COMIC, Font.APPLE, Font.BOLD, Font.C64,Font.DEFAULT];
+var fonts = [Font.C64, Font.COMIC, Font.DEFAULT, Font.DOS,Font.PRESSSTART,Font.RETROFUTURE];
 var curfonts = [];
 var colors = [];
 function genString(){
