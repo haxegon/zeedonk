@@ -1,5 +1,3 @@
-function update()	{
-  if (Input.justpressed(Key.UP)){
-    trace("pressed up, innit");
-  }
+function update() {
+    Text.display(0,0,"Hello, sailor!");
 }

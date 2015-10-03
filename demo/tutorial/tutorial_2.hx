@@ -1,5 +1,2 @@
-var x = 5;
-do {
-	x++;
-	trace(x);
-} while (x<10)
+for (i in 0...100)
+	trace((100-i)+"bottles of beer on the wall");

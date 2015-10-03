@@ -1,9 +1,3 @@
-function f(n) {
-    if (n<2) return 1;
-    else return f(n-1)+f(n-2);
+function update(){
+  Gfx.fillbox(10,10,20,20,Col.RED);
 }
-
-/* if you make the value at all big,  */
-/* your browser will explode.         */
-/* So don't do that!                  */
-trace(f(5));
