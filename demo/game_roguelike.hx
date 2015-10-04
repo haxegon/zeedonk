@@ -1,5 +1,62 @@
 Game.title = "Fancy Roguelike Example";
 
+var sfx = [];
+sfx.hitwall = 68417307;
+sfx.opendoor = 32259507;
+sfx.hitghost = 81923904;
+sfx.killenemy = 88552902;
+sfx.collectpotion = 72329307;
+sfx.collectscroll = 84140903;
+sfx.playerhit = 14229104;
+
+//Entity creation function. Most of the game logic is in here, if 
+//you want to hack it!
+
+var entity = [];
+var numentity = 0;
+
+var player = [];
+player.x = 0;
+player.y = 0;
+player.tile = 93;
+player.health = 3;
+
+function create(_x, _y, t) {
+  var i = getfreeentityindex();
+  resetentity(i);
+
+  entity[i].x = _x;
+  entity[i].y = _y;
+  entity[i].active = true;
+  entity[i].type = t;
+  if(t == "enemy"){
+    entity[i].solid = true;
+    entity[i].tile = 88;
+    entity[i].col = Col.WHITE;
+    entity[i].health = 3;
+    
+    entity[i].onplayerhit = function(j){
+      entity[j].health--;
+      if(entity[j].health <= 0){
+        Music.playsound(sfx.killenemy);
+        killentity(j);
+      }else{
+      	Music.playsound(sfx.hitghost);
+      }
+    };
+    
+    entity[i].update = function(j){
+      entity[j].timer++;
+      seekplayer(j, player.x, player.y);
+    }
+      
+    entity[i].attack = function(j){
+      trace("player hit!");
+      Music.playsound(sfx.playerhit);
+    }
+  }
+}
+
 // ASSETS START HERE
 Gfx.loadimagestring("icon0", "3SaaapZZZSaZCcYJFcQHa"); // Corner, Top left
 Gfx.loadimagestring("icon1", "3SaaapZZZSbZaxPXdwOHa"); // Corner, Top right
@@ -121,21 +178,15 @@ for(i in 0 ... 112) icon.push("icon"+i);
 var currentmap;
 var lightmap;
 
-var playerx;
-var playery;
-
-var entity = [];
-var numentity = 0;
-
 var mapwidth;
 var mapheight;
 
-var playertile;
 var floortile;
 var walltile;
 var scrolltile;
 var potiontile;
 var doortile;
+var bloodtile;
 
 var steppedon;
 var oldtile;
@@ -145,7 +196,7 @@ var newtile;
 
 var iconcolor = [];
 
-var uselighting = 1;
+var uselighting = 0;
 
 var message = "SIMPLE ROGUELIKE EXAMPLE - PRESS ARROW KEYS TO MOVE";
 var messagecol = Col.GRAY;
@@ -170,20 +221,20 @@ function new(){
   currentmap = [];
   lightmap = [];
   
-  playerx = 20;
-  playery = 9;
+  player.x = 20;
+  player.y = 9;
   
   mapwidth = 30;
   mapheight = 17;
   
   //These numbers corespond to the icons we want to use from the asset pack
-  playertile = 93;
   floortile = 105;
   walltile = 103;
   scrolltile = 94;
   potiontile = 89;
   doortile = 81;
   opendoortile = 80;
+  bloodtile = 25;
   
   steppedon = floortile;
   
@@ -199,31 +250,36 @@ function new(){
     lightmap.push([]);
     for(j in 0 ... mapheight){
       currentmap[i].push(-1);
-      lightmap[i].push(0);
+      if(uselighting == 0){
+        lightmap[i].push(3);
+      }else{
+      	lightmap[i].push(0);
+      }
     }
   }
   redrawmap = true;
   
   for(i in 0 ... 140) iconcolor.push(Col.RED);
-  iconcolor[playertile] = Col.WHITE;
+  iconcolor[player.tile] = Col.WHITE;
   iconcolor[floortile] = Col.NIGHTBLUE;
   iconcolor[walltile] = 0x7070e5;
   iconcolor[scrolltile] = Col.WHITE;
   iconcolor[potiontile] = Col.MAGENTA;
   iconcolor[doortile] = Col.BROWN;
   iconcolor[opendoortile] = Col.DARKBROWN;
+  iconcolor[bloodtile] = 0x541919;
   
   generate(0);
   
   placeentity("enemy");
   
-  playerx = Random.int(1,mapwidth-2);
-  playery = Random.int(1,mapheight-2);
-  while(currentmap[playerx][playery] != floortile){
-    playerx = Random.int(1,mapwidth-2);
-    playery = Random.int(1,mapheight-2);
+  player.x = Random.int(1,mapwidth-2);
+  player.y = Random.int(1,mapheight-2);
+  while(currentmap[player.x][player.y] != floortile){
+    player.x = Random.int(1,mapwidth-2);
+    player.y = Random.int(1,mapheight-2);
   }
-  currentmap[playerx][playery]=playertile;
+  currentmap[player.x][player.y]=player.tile;
   
 }
 
@@ -357,16 +413,31 @@ function generate(type){
 }
 
 function shake(x, y, xoff, yoff){
-  if(numshaketiles<100){
+  if(numshaketiles < 100) {
     shaketiles[numshaketiles].x = x;
     shaketiles[numshaketiles].y = y;
     shaketiles[numshaketiles].xoff = xoff;
     shaketiles[numshaketiles].yoff = yoff;
     shaketiles[numshaketiles].shake = 5;
+    shaketiles[numshaketiles].entity = 0;
+    if(currentmap[x][y] == 999){
+      for(i in 0 ... numentity){
+        if(entity[i].active){
+          if(x == entity[i].x){
+            if(y == entity[i].y){
+            	shaketiles[numshaketiles].entity = entity[i].tile;
+            	shaketiles[numshaketiles].hurtcol = entity[i].hurtcol;
+            	shaketiles[numshaketiles].entitycol = entity[i].col;
+            }
+          }
+        }
+      }
+    }
     numshaketiles++;
   }
 }
 
+var shakecol;
 function processshake(){
   for(i in 0 ... numshaketiles){
     if(shaketiles[i].shake>0){
@@ -379,6 +450,15 @@ function processshake(){
         xoff = 0; yoff = 0;
       }
       var t = currentmap[x][y];
+      if(t == 999){
+        t = shaketiles[i].entity;
+        shakecol = shaketiles[i].hurtcol;
+        if(shaketiles[i].shake==0){
+          shakecol = shaketiles[i].entitycol;
+        }
+      }else if(t > -1){
+        shakecol = iconcolor[t];
+      }
       Gfx.fillbox((x * 8), (y * 8), 8, 8, Col.BLACK);
       pset(x-1,y-1);
       pset(x,y-1);
@@ -390,7 +470,7 @@ function processshake(){
       pset(x+1,y+1);
 
       if(t > -1) {
-        Gfx.imagecolor(iconcolor[t]);
+        Gfx.imagecolor(shakecol);
         Gfx.drawimage((x * 8) + xoff, (y * 8) + yoff, icon[t]);
       }
     }
@@ -399,6 +479,64 @@ function processshake(){
   if(numshaketiles > 0){
     if(shaketiles[numshaketiles-1].shake==0){
       numshaketiles--;
+    }
+  }
+}
+
+function moveentityor(t, x1, y1, x2, y2){
+  if(collide(entity[t].x + x1, entity[t].y + y1)){
+    if(!collide(entity[t].x + x2, entity[t].y + y2)){
+    	moveentity(t, x2, y2);
+    }
+  }else{
+    moveentity(t, x1, y1);
+  }
+}
+
+function seekplayer(t, x, y){
+  if(entity[t].x != x || entity[t].y != y){
+    if(entity[t].x == x){
+      if(entity[t].y < y){
+        moveentityor(t, 0, 1, 0, 0);
+      }else{
+        moveentityor(t, 0, -1, 0, 0);
+      }
+    }else if(entity[t].x < x){
+      if(entity[t].y == y){
+        moveentityor(t, 1, 0, 0, 0);
+      }else{
+        if(Random.bool()){
+          if(entity[t].y < y){
+            moveentityor(t, 1, 0, 0, 1);
+          }else{
+            moveentityor(t, 1, 0, 0, -1);
+          }
+        }else{
+          if(entity[t].y < y){
+            moveentityor(t, 0, 1, 1, 0);
+          }else{
+            moveentityor(t, 0, -1, 1, 0);
+          }
+        }
+      }
+    }else if(entity[t].x > x){
+      if(entity[t].y == y){
+        moveentityor(t, -1, 0, 0, 0);
+      }else{
+        if(Random.bool()){
+          if(entity[t].y < y){
+            moveentityor(t, -1, 0, 0, 1);
+          }else{
+            moveentityor(t, -1, 0, 0, -1);
+          }
+        }else{
+          if(entity[t].y < y){
+            moveentityor(t, 0, 1, -1, 0);
+          }else{
+            moveentityor(t, 0, -1, -1, 0);
+          }
+        }
+      }
     }
   }
 }
@@ -577,23 +715,24 @@ function light(x, y){
 }
 
 function drawtile(x, y, t, ?color){
-  //Change the character
-  Gfx.fillbox(x * 8, y * 8, 8, 8, Col.BLACK);
-  if(t == 999){
-    for(i in 0 ... numentity){
-      if(entity[i].active){
-        if(x == entity[i].x){
-          if(y == entity[i].y){
-        		drawtile(entity[i].x, entity[i].y, entity[i].tile, entity[i].col);
-            setlight(entity[i].x, entity[i].y, lightmap[entity[i].x][entity[i].y]);
+  if(lightmap[x][y]>=3){
+    Gfx.fillbox(x * 8, y * 8, 8, 8, Col.BLACK);
+    if(t == 999){
+      for(i in 0 ... numentity){
+        if(entity[i].active){
+          if(x == entity[i].x){
+            if(y == entity[i].y){
+              drawtile(entity[i].x, entity[i].y, entity[i].tile, entity[i].col);
+              setlight(entity[i].x, entity[i].y, lightmap[entity[i].x][entity[i].y]);
+            }
           }
         }
       }
+    }else if(t > -1) {
+      if(color == null) color = iconcolor[t];
+      Gfx.imagecolor(color);
+      Gfx.drawimage(x*8, y*8, icon[t]);
     }
-  }else if(t > -1) {
-    if(color == null) color = iconcolor[t];
-    Gfx.imagecolor(color);
-    Gfx.drawimage(x*8, y*8, icon[t]);
   }
 }
 
@@ -614,6 +753,16 @@ function pset(x, y, ?t, ?color){
   }
 }
 
+var tcollide;
+function collide(x, y){
+  tcollide = pget(x,y);
+  if(tcollide == floortile || 
+     tcollide == opendoortile || 
+     tcollide == bloodtile ||
+     tcollide == player.tile) return false;
+  return true;
+}
+
 function pget(x, y){
   if(x>=0 && y>=0){
     if(x < mapwidth && y < mapheight){
@@ -623,43 +772,68 @@ function pget(x, y){
   return -1;
 }
 
-function moveplayer(xoff, yoff){
-  pset(playerx, playery, steppedon);
+function moveentity(j, xoff, yoff){
+  pset(entity[j].x, entity[j].y, floortile);
+  
+  newtile = pget((entity[j].x + mapwidth + xoff) % mapwidth, (entity[j].y + mapheight + yoff) % mapheight);
+  
+  if(newtile == walltile){
+    xoff = 0; yoff = 0;
+  }else if(newtile == player.tile){
+    shake((entity[j].x + mapwidth + xoff) % mapwidth, 
+          (entity[j].y + mapheight + yoff) % mapheight,
+         	xoff, yoff);
+    xoff = 0; yoff = 0;
+    entity[j].attack(j);
+  }
+  
+  entity[j].x += xoff;
+  entity[j].y += yoff;
+  
+  pset(entity[j].x, entity[j].y, 999);
+  /*
+  pset(player.x, player.y, steppedon);
   
   //Check new position for interaction
   oldtile = steppedon;
-  newtile = pget((playerx + mapwidth + xoff) % mapwidth, (playery + mapheight + yoff) % mapheight);
+  newtile = pget((player.x + mapwidth + xoff) % mapwidth, (player.y + mapheight + yoff) % mapheight);
   steppedon = newtile;
   if(newtile == 999){
     //ENTITY! Do entity collision logic here.
     for(i in 0 ... numentity){
       if(entity[i].active){
-        if(entity[i].x == (playerx + mapwidth + xoff) % mapwidth && 
-           entity[i].y == (playery + mapheight + yoff) % mapheight){
+        if(entity[i].x == (player.x + mapwidth + xoff) % mapwidth && 
+           entity[i].y == (player.y + mapheight + yoff) % mapheight){
           entity[i].onplayerhit(i);
+          if(entity[i].solid){
+            shake((player.x + mapwidth + xoff) % mapwidth, 
+                  (player.y + mapheight + yoff) % mapheight,
+                 	xoff, yoff);
+            xoff = 0; yoff = 0;
+          }
         }
       }
     }
   }else if(newtile == walltile){
     //Wall, play a bump sound
-    Music.playsound(68417307);
+    Music.playsound(sfx.hitwall);
     //Prevent the player from moving
-    shake((playerx + mapwidth + xoff) % mapwidth, 
-          (playery + mapheight + yoff) % mapheight,
+    shake((player.x + mapwidth + xoff) % mapwidth, 
+          (player.y + mapheight + yoff) % mapheight,
          xoff, yoff);
     xoff = 0; yoff = 0;
   }else if(newtile == opendoortile){
     steppedon = opendoortile;
   }else if(newtile == doortile){
     //Remove the door, drop and open door, play a sound
-    Music.playsound(32259507);
+    Music.playsound(sfx.opendoor);
     steppedon = opendoortile;
   }else if(newtile == potiontile){
     //Remove the potion, play a sound
-    Music.playsound(72329307);
+    Music.playsound(sfx.collectpotion);
   }else if(newtile == scrolltile){
     //Scroll, play a collect sound and change the message
-    Music.playsound(84140903);
+    Music.playsound(sfx.collectscroll);
     message = "SEE *** FOR A MORE COMPLEX ROGUELIKE EXAMPLE";
     messagecol = Col.YELLOW;
   }
@@ -671,10 +845,74 @@ function moveplayer(xoff, yoff){
     turn = "player";
   }
   
-  playerx = (playerx + mapwidth + xoff) % mapwidth; playery = (playery + mapheight + yoff) % mapheight;
+  player.x = (player.x + mapwidth + xoff) % mapwidth; player.y = (player.y + mapheight + yoff) % mapheight;
   
-  pset(playerx, playery, playertile);
-  light(playerx, playery);
+  pset(player.x, player.y, player.tile);
+  light(player.x, player.y);
+  */
+}
+
+function moveplayer(xoff, yoff){
+  turn = "enemy";
+  pset(player.x, player.y, steppedon);
+  
+  //Check new position for interaction
+  oldtile = steppedon;
+  newtile = pget((player.x + mapwidth + xoff) % mapwidth, (player.y + mapheight + yoff) % mapheight);
+  steppedon = newtile;
+  if(newtile == 999){
+    //ENTITY! Do entity collision logic here.
+    for(i in 0 ... numentity){
+      if(entity[i].active){
+        if(entity[i].x == (player.x + mapwidth + xoff) % mapwidth && 
+           entity[i].y == (player.y + mapheight + yoff) % mapheight){
+          entity[i].onplayerhit(i);
+          if(entity[i].solid){
+            shake((player.x + mapwidth + xoff) % mapwidth, 
+                  (player.y + mapheight + yoff) % mapheight,
+                 	xoff, yoff);
+            xoff = 0; yoff = 0;
+          }
+        }
+      }
+    }
+  }else if(newtile == walltile){
+    //Wall, play a bump sound
+    Music.playsound(sfx.hitwall);
+    //Prevent the player from moving
+    /*
+    shake((player.x + mapwidth + xoff) % mapwidth, 
+          (player.y + mapheight + yoff) % mapheight,
+         xoff, yoff);
+*/
+    xoff = 0; yoff = 0;
+    turn = "player";
+  }else if(newtile == opendoortile){
+    steppedon = opendoortile;
+  }else if(newtile == doortile){
+    //Remove the door, drop an open door, play a sound
+    Music.playsound(sfx.opendoor);
+    pset((player.x + mapwidth + xoff) % mapwidth, 
+         (player.y + mapheight + yoff) % mapheight, opendoortile);
+    xoff = 0; yoff = 0;
+  }else if(newtile == potiontile){
+    //Remove the potion, play a sound
+    Music.playsound(sfx.collectpotion);
+  }else if(newtile == scrolltile){
+    //Scroll, play a collect sound and change the message
+    Music.playsound(sfx.collectscroll);
+    message = "SEE *** FOR A MORE COMPLEX ROGUELIKE EXAMPLE";
+    messagecol = Col.YELLOW;
+  }
+  
+  if(xoff == 0 && yoff == 0){
+    steppedon = oldtile;
+  }
+  
+  player.x = (player.x + mapwidth + xoff) % mapwidth; player.y = (player.y + mapheight + yoff) % mapheight;
+  
+  pset(player.x, player.y, player.tile);
+  light(player.x, player.y);
 }
 
 //Entity functions
@@ -704,6 +942,11 @@ function getfreeentityindex(){
   return z;
 }
 
+function killentity(t){
+  pset(entity[t].x, entity[t].y, bloodtile);
+  entity[t].active = false;
+}
+
 function resetentity(t){
   entity[t].x = 0;
   entity[t].y = 0;
@@ -711,33 +954,16 @@ function resetentity(t){
   entity[t].health = 1;
   entity[t].timer = 0;
   entity[t].col = Col.WHITE;
+  entity[t].hurtcol = 0xffbfbf;
   entity[t].active = false;
   entity[t].type = "nothing";
   entity[t].rule = "nothing";
+  entity[t].solid = false;
   
   entity[t].onplayerhit = function(t){};
+  entity[t].update = function(t){};
+  entity[t].attack = function(t){};
 }
-
-function create(_x, _y, t) {
-  var i = getfreeentityindex();
-  resetentity(i);
-
-  entity[i].x = _x;
-  entity[i].y = _y;
-  entity[i].active = true;
-  entity[i].type = t;
-  if(t == "enemy"){
-    entity[i].tile = 88;
-    entity[i].col = Col.WHITE;
-    entity[i].health = 1;
-    entity[i].onplayerhit = function(j){
-      entity[j].timer++;
-      trace("You've hit me " + entity[j].timer + " times.");
-      Music.playsound(34807505);
-    };
-  }
-}
-
 
 function getplayer() {
   for(i in 0 ... numentity){
@@ -803,13 +1029,17 @@ function input(){
 
 function logic(){
   if(turn == "enemy"){
-    for(i in 0 ... numentity){
-      if(entity[i].active){
-        drawtile(entity[i].x, entity[i].y, entity[i].tile, entity[i].col);
-        setlight(entity[i].x, entity[i].y, lightmap[entity[i].x][entity[i].y]);
+    //wait for shake animations to finish
+    if(numshaketiles == 0){
+      for(i in 0 ... numentity){
+        if(entity[i].active){
+          entity[i].update(i);
+          drawtile(entity[i].x, entity[i].y, entity[i].tile, entity[i].col);
+          setlight(entity[i].x, entity[i].y, lightmap[entity[i].x][entity[i].y]);
+        }
       }
+      turn = "player";
     }
-    turn = "player";
   }
 }
 
@@ -817,7 +1047,7 @@ function render(){
   if(redrawmap){
     //Redraw the entire map. For when loads of stuff changes at once.
     redrawmap=false; 
-    light(playerx, playery);
+    light(player.x, player.y);
     for(j in 0 ... mapheight){
       for(i in 0 ... mapwidth){
         if(currentmap[i][j]<999){
