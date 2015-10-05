@@ -5,9 +5,16 @@ sfx.hitwall = 68417307;
 sfx.opendoor = 32259507;
 sfx.hitghost = 81923904;
 sfx.killenemy = 88552902;
-sfx.collectpotion = 72329307;
+sfx.collect = 72329307;
 sfx.collectscroll = 84140903;
 sfx.playerhit = 14229104;
+sfx.menunudge = 87758904;
+sfx.select = 25955707;
+sfx.closemenu = 13221904;
+sfx.rest = 72272107;
+
+sfx.music = {};
+sfx.music.dead = "qckYcOeyIåKeMUsVfb3agJEvéacdåaãaæa3eagm3j4acäaRa2i2c2j4a";
 
 //Entity creation function. Most of the game logic is in here, if 
 //you want to hack it!
@@ -16,10 +23,91 @@ var entity = [];
 var numentity = 0;
 
 var player = [];
-player.x = 0;
-player.y = 0;
-player.tile = 93;
-player.health = 3;
+var dogamefade;
+
+var item = {};
+item.cannedfood = {
+  name: "Canned Food", 
+  description: "Delicious tin + meats yum",
+  type: "use"
+};
+
+var inventory = [];
+var numitems;
+
+var menu = {};
+menu.list = [];
+menu.x = 0;
+menu.y = 0;
+menu.w = 0;
+menu.h = 0;
+menu.selection = 0;
+
+var currentmenu = "";
+
+function changemenu(t){
+  currentmenu = t;
+  if(t == "init"){
+    menu.selection = 0;
+    menu.list = ["MAGIC", "ITEM"];
+    menu.x = 1;
+    menu.y = 2;
+    menu.w = 8;
+    menu.h = menu.list.length + 2;  
+  }
+}
+
+function giveitem(t){
+  if(inventory.length < numitems){
+    inventory.push(t);
+    numitems++;
+  }else{
+    inventory[numitems] = t;
+    numitems++;
+  }
+}
+
+function resetplayer(){
+  player.x = 0;
+  player.y = 0;
+  player.tile = 93;
+  player.health = 5;
+  player.maxhealth = 5;
+  player.sp = 5;
+  player.maxsp = 5;
+  player.hunger = 1000;
+  player.hungerspeed = 2;
+  player.restclock = 0;
+  player.restrate = 4; //How many turns you need to rest before you get something.  
+  player.starveclock = 0;
+  player.starvepoint = 100;
+}
+
+animation = [];
+animation.hp = 0;
+animation.hplost = 0;
+animation.mp = 0;
+animation.hunger = 0;
+animation.full = 0;
+animation.menu = 0;
+
+hungerstat = [
+  "Starving", "Starving", "Hungry", "Hungry", 
+  "OK", "OK", "OK", 
+  "Full", "Full", "Full", "Full"
+];
+
+
+Gfx.createimage("screen", 240,150);
+
+function grabscreen(){
+  Gfx.grabimagefromscreen("screen", 0, 0);
+}
+
+function redrawscreen(){
+  Gfx.drawimage(0, 0, "screen");
+}
+
 
 function create(_x, _y, t) {
   var i = getfreeentityindex();
@@ -29,31 +117,62 @@ function create(_x, _y, t) {
   entity[i].y = _y;
   entity[i].active = true;
   entity[i].type = t;
-  if(t == "enemy"){
+  if(t == "food"){
+    entity[i].tile = 73;
+    entity[i].col = 0x8f8f8f;
+    
+    entity[i].onplayerhit = function(j){
+      Music.playsound(sfx.collect);
+      giveitem(item.cannedfood);
+      setmessage("FOUND CANNED FOOD", Col.WHITE);
+      killentity(j);
+    };
+    
+  }else if(t == "enemy"){
     entity[i].solid = true;
     entity[i].tile = 88;
     entity[i].col = Col.WHITE;
     entity[i].health = 3;
+    entity[i].alertsound = 42911908;
     
     entity[i].onplayerhit = function(j){
       entity[j].health--;
+      Music.playsound(sfx.hitghost);
+    };
+    
+    entity[i].update = function(j){
       if(entity[j].health <= 0){
         Music.playsound(sfx.killenemy);
         killentity(j);
       }else{
-      	Music.playsound(sfx.hitghost);
+      	entity[j].timer++;
+      	seekplayer(j, player.x, player.y);
       }
-    };
-    
-    entity[i].update = function(j){
-      entity[j].timer++;
-      seekplayer(j, player.x, player.y);
     }
       
     entity[i].attack = function(j){
-      trace("player hit!");
-      Music.playsound(sfx.playerhit);
+      hurtplayer();
     }
+  }
+}
+
+function hurtplayer(?str){
+  if(str == null){
+  	player.health--;
+  }else{
+    player.health -= str;
+  }
+  if(player.health < 0) player.health = 0;
+  animation.hplost = 5;
+  
+  if(player.health > 0){
+    Music.playsound(sfx.playerhit);
+  }else{
+    Music.playmusic(sfx.music.dead);
+    Music.musicloop = false;
+    setmessage("GAME OVER", Col.RED);
+    messagetime = -1;
+    dogamefade = true;
   }
 }
 
@@ -180,6 +299,7 @@ var lightmap;
 
 var mapwidth;
 var mapheight;
+var bottombar;
 
 var floortile;
 var walltile;
@@ -196,10 +316,27 @@ var newtile;
 
 var iconcolor = [];
 
-var uselighting = 0;
+var uselighting = 1;
 
-var message = "SIMPLE ROGUELIKE EXAMPLE - PRESS ARROW KEYS TO MOVE";
+var message;
 var messagecol = Col.GRAY;
+var messageflickercol = Col.WHITE;
+var messagetime = 0;
+
+var state;
+
+function setmessage(m, col, ?doflicker){
+  message = m;
+  messagecol = col;
+  if(doflicker != null){
+    messageflickercol = col; 
+  }else{
+    messageflickercol = Gfx.rgb(Convert.toint(Gfx.getred(col)*0.75), 
+                                Convert.toint(Gfx.getgreen(col)*0.75), 
+                                Convert.toint(Gfx.getblue(col)*0.75));
+  }
+  messagetime=60;
+}
 
 var shaketiles = [];
 var numshaketiles = 0;
@@ -212,7 +349,20 @@ var ty;
 var tw;
 var th;
 
-var turn = "player";
+var turn;
+
+function resetgame(){
+  message = "";
+  messagecol = Col.GRAY;
+  messageflickercol = Col.WHITE;
+  messagetime = 0;
+  turn = "player";
+  numitems = 0;
+  state = "game";
+  
+  dogamefade = false;
+  resetplayer(); 
+}
 
 function new(){
   Gfx.showfps=true;
@@ -221,11 +371,15 @@ function new(){
   currentmap = [];
   lightmap = [];
   
+  //setmessage("FANCY ROGUELIKE EXAMPLE", Col.WHITE, true);
+  resetgame();
+  
   player.x = 20;
   player.y = 9;
   
   mapwidth = 30;
-  mapheight = 17;
+  mapheight = 16;
+  bottombar = (mapheight + 1) * 8;
   
   //These numbers corespond to the icons we want to use from the asset pack
   floortile = 105;
@@ -271,6 +425,12 @@ function new(){
   
   generate(0);
   
+  placeentity("food");
+  placeentity("food");
+  placeentity("food");
+  
+  placeentity("enemy");
+  placeentity("enemy");
   placeentity("enemy");
   
   player.x = Random.int(1,mapwidth-2);
@@ -335,7 +495,6 @@ function generate(type){
   	//Basic room type
     //Generate between 5 - 10 non intersecting rooms
     while (roomsleft == 0 && roomscreated < 7){
-      trace("generating room...");
       roomsleft = 10;
       roomscreated = 0;
       numrooms = 0;
@@ -408,8 +567,7 @@ function generate(type){
     adddoorlayer();
     //Entrance:
     //Exit:
-  }  
-  trace("generated!");
+  }
 }
 
 function shake(x, y, xoff, yoff){
@@ -459,7 +617,7 @@ function processshake(){
       }else if(t > -1){
         shakecol = iconcolor[t];
       }
-      Gfx.fillbox((x * 8), (y * 8), 8, 8, Col.BLACK);
+      Gfx.fillbox((x * 8), ((y+1) * 8)+3, 8, 8, Col.BLACK);
       pset(x-1,y-1);
       pset(x,y-1);
       pset(x+1,y-1);
@@ -471,7 +629,7 @@ function processshake(){
 
       if(t > -1) {
         Gfx.imagecolor(shakecol);
-        Gfx.drawimage((x * 8) + xoff, (y * 8) + yoff, icon[t]);
+        Gfx.drawimage((x * 8) + xoff, ((y+1) * 8)+3 + yoff, icon[t]);
       }
     }
   }
@@ -493,17 +651,27 @@ function moveentityor(t, x1, y1, x2, y2){
   }
 }
 
+var doseek;
 function seekplayer(t, x, y){
-  if(entity[t].x != x || entity[t].y != y){
+  //Tries to move towards the player. Does some random stuff to make the
+  //movement more interesting and less likely to stick behind walls.
+  
+  //Don't seek if we're literally standing on top of them
+  doseek = entity[t].x != x || entity[t].y != y;
+  //Don't seek unless you're within 4 steps of them or fully lit
+  doseek = doseek && ((entity[t].x + entity[t].y < 4) || 
+                     lightmap[entity[t].x][entity[t].y] >= 3);
+                      
+  if(doseek){
     if(entity[t].x == x){
       if(entity[t].y < y){
-        moveentityor(t, 0, 1, 0, 0);
+        moveentityor(t, 0, 1, Random.int(-1, 1), 0);
       }else{
-        moveentityor(t, 0, -1, 0, 0);
+        moveentityor(t, 0, -1, Random.int(-1, 1), 0);
       }
     }else if(entity[t].x < x){
       if(entity[t].y == y){
-        moveentityor(t, 1, 0, 0, 0);
+        moveentityor(t, 1, 0, 0, Random.int(-1, 1));
       }else{
         if(Random.bool()){
           if(entity[t].y < y){
@@ -521,7 +689,7 @@ function seekplayer(t, x, y){
       }
     }else if(entity[t].x > x){
       if(entity[t].y == y){
-        moveentityor(t, -1, 0, 0, 0);
+        moveentityor(t, -1, 0, 0, Random.int(-1, 1));
       }else{
         if(Random.bool()){
           if(entity[t].y < y){
@@ -538,6 +706,13 @@ function seekplayer(t, x, y){
         }
       }
     }
+  }else{
+    //Take a random walk
+     if(Random.bool()){
+       moveentityor(t, Random.pickint(-1, 1), 0, 0, Random.pickint(-1, 1));
+     }else{
+       moveentityor(t, 0, Random.pickint(-1, 1), Random.pickint(-1, 1), 0);
+     }
   }
 }
 
@@ -642,6 +817,17 @@ function addwalllayer(){
 */
 }
 
+function getlight(x, y){
+  if(uselighting > 0){
+    if(x>=0 && y>=0){
+      if(x < mapwidth && y < mapheight){
+        return lightmap[x][y];
+      }
+    }
+  }
+  return 0;
+}
+
 function setlight(x, y, t){
   if(uselighting > 0){
     if(x>=0 && y>=0){
@@ -653,17 +839,17 @@ function setlight(x, y, t){
             	drawtile(x, y, currentmap[x][y]);
             }
           }else if(t == 2){
-            Gfx.fillbox(x * 8, y * 8, 8, 8, Col.BLACK);
+            Gfx.fillbox(x * 8, 3 + (y+1) * 8, 8, 8, Col.BLACK);
             Gfx.imagecolor(Col.GRAY);
-            Gfx.drawimage(x*8, y*8, icon[25]);
+            Gfx.drawimage(x*8, 3 + (y+1)*8, icon[25]);
           }else if(t == 1){
-            Gfx.fillbox(x * 8, y * 8, 8, 8, Col.BLACK);
+            Gfx.fillbox(x * 8, 3 + (y+1) * 8, 8, 8, Col.BLACK);
             Gfx.imagecolor(Col.GRAY);
-            Gfx.drawimage(x*8, y*8, icon[28]);
+            Gfx.drawimage(x*8, 3 + (y+1)*8, icon[28]);
           }else if(t == 0){
-            Gfx.fillbox(x * 8, y * 8, 8, 8, Col.BLACK);
+            Gfx.fillbox(x * 8, 3 + (y+1) * 8, 8, 8, Col.BLACK);
             Gfx.imagecolor(Col.GRAY);
-            Gfx.drawimage(x*8, y*8, icon[31]);
+            Gfx.drawimage(x*8, 3 + (y+1)*8, icon[31]);
           }
         }
       }
@@ -716,7 +902,7 @@ function light(x, y){
 
 function drawtile(x, y, t, ?color){
   if(lightmap[x][y]>=3){
-    Gfx.fillbox(x * 8, y * 8, 8, 8, Col.BLACK);
+    Gfx.fillbox(x * 8, 3 + (y+1) * 8, 8, 8, Col.BLACK);
     if(t == 999){
       for(i in 0 ... numentity){
         if(entity[i].active){
@@ -731,7 +917,7 @@ function drawtile(x, y, t, ?color){
     }else if(t > -1) {
       if(color == null) color = iconcolor[t];
       Gfx.imagecolor(color);
-      Gfx.drawimage(x*8, y*8, icon[t]);
+      Gfx.drawimage(x*8, 3 + (y+1)*8, icon[t]);
     }
   }
 }
@@ -830,7 +1016,7 @@ function moveentity(j, xoff, yoff){
     steppedon = opendoortile;
   }else if(newtile == potiontile){
     //Remove the potion, play a sound
-    Music.playsound(sfx.collectpotion);
+    Music.playsound(sfx.collect);
   }else if(newtile == scrolltile){
     //Scroll, play a collect sound and change the message
     Music.playsound(sfx.collectscroll);
@@ -897,7 +1083,7 @@ function moveplayer(xoff, yoff){
     xoff = 0; yoff = 0;
   }else if(newtile == potiontile){
     //Remove the potion, play a sound
-    Music.playsound(sfx.collectpotion);
+    Music.playsound(sfx.collect);
   }else if(newtile == scrolltile){
     //Scroll, play a collect sound and change the message
     Music.playsound(sfx.collectscroll);
@@ -943,8 +1129,8 @@ function getfreeentityindex(){
 }
 
 function killentity(t){
-  pset(entity[t].x, entity[t].y, bloodtile);
   entity[t].active = false;
+  pset(entity[t].x, entity[t].y, bloodtile);
 }
 
 function resetentity(t){
@@ -953,6 +1139,8 @@ function resetentity(t){
   entity[t].tile = 0;
   entity[t].health = 1;
   entity[t].timer = 0;
+  entity[t].alertsound = 0;
+  entity[t].alert = false;
   entity[t].col = Col.WHITE;
   entity[t].hurtcol = 0xffbfbf;
   entity[t].active = false;
@@ -972,12 +1160,154 @@ function getplayer() {
   return -1;
 }
 
-function update(){
-  input();
-  logic();
-  render();
+function displaystats(){
+  //Show message
+  Gfx.fillbox(0, 0, Gfx.screenwidth, 10, Col.BLACK);
+  Gfx.fillbox(0, bottombar, Gfx.screenwidth, 16, Col.BLACK);
+  if(messagetime!=0){
+    messagetime--;
+    if(Game.time%8>4){
+    	Text.display(Text.CENTER, 2, message, messagecol);
+    }else{
+      Text.display(Text.CENTER, 2, message, messageflickercol);
+    }
+  }
+  
+  Text.display(1, 3 + bottombar, "HP", Col.LIGHTBLUE);
+  if(animation.hplost > 0){
+    animation.hplost--;
+    Text.display(12, 2 + bottombar, player.health + "/" + player.maxhealth, Col.PINK);
+  }else if(animation.hp > 0){
+    animation.hp--;
+    Text.display(12, 2 + bottombar, player.health + "/" + player.maxhealth, Col.LIGHTGREEN);
+  }else{
+    Text.display(12, 3 + bottombar, player.health + "/" + player.maxhealth);
+  }
+  
+  
+  Text.display(45, 3 + bottombar, "MP", Col.LIGHTBLUE);
+  if(animation.mp > 0){
+    animation.mp--;
+  	Text.display(58, 2 + bottombar, player.sp + "/" + player.maxsp, Col.LIGHTGREEN);
+  }else{
+  	Text.display(58, 3 + bottombar, player.sp + "/" + player.maxsp);
+  }
+
+  Text.display(90, 3 + bottombar, "HUNGER", Col.LIGHTBLUE);
+  if(animation.hunger > 0){
+    animation.hunger--;
+    Text.display(120, 2 + bottombar, hungerstat[Convert.toint(player.hunger/100)], Col.PINK);
+  }else if(animation.full > 0){
+    animation.full--;
+    Text.display(120, 2 + bottombar, hungerstat[Convert.toint(player.hunger/100)], Col.LIGHTGREEN);
+  }else{
+  	Text.display(120, 3 + bottombar, hungerstat[Convert.toint(player.hunger/100)]);
+  }
 }
 
+function drawguibox(x, y, w, h, col, ?animate){
+  if(animation.menu > 0 && animate != null){
+    x += w/2;
+    y += h/2;
+    w = w * ((5 - animation.menu)/5);
+    h = h * ((5 - animation.menu)/5);
+    x -= w/2;
+    y -= h/2;
+  }
+  
+  Gfx.imagecolor(col);
+  Gfx.fillbox(x * 8, y * 8, (w+1) * 8, (h+1) * 8, Col.BLACK);
+  
+  for(i in x + 1 ... x + w){
+    Gfx.drawimage(i*8, y * 8, icon[8]);
+    Gfx.drawimage(i*8, (y + h) * 8, icon[8]);
+  }
+  
+  for(j in y + 1 ... y + h){
+    Gfx.drawimage(x * 8, j * 8, icon[9]);
+    Gfx.drawimage((x+w)*8, j * 8, icon[9]);
+  }
+  
+  //Corners
+  Gfx.drawimage(x * 8, y * 8, icon[0]);
+  Gfx.drawimage((x + w) * 8, y * 8, icon[1]);
+  Gfx.drawimage(x * 8, (y + h) * 8, icon[2]);
+  Gfx.drawimage((x + w) * 8, (y + h) * 8, icon[3]);
+}
+
+function update(){
+  if(state == "game"){
+    input();
+    logic();
+  	render();
+  }else if (state == "menu"){
+    if(Input.delaypressed(Key.UP, 6)){
+      menu.selection = (menu.selection + menu.list.length - 1) % menu.list.length;
+      Music.playsound(sfx.menunudge);
+    }else if(Input.delaypressed(Key.DOWN, 6)){
+      menu.selection = (menu.selection + 1) % menu.list.length;
+      Music.playsound(sfx.menunudge);
+    }
+    //Music.playsound(sfx.select);
+    if(Input.justpressed(Key.ENTER)){
+      state = "game";
+      Music.playsound(sfx.closemenu);
+    }
+    
+    Gfx.imagecolor(0xAAAACC);
+    redrawscreen();
+    
+    if(animation.menu > 0) animation.menu--;
+    
+    drawguibox(menu.x, menu.y, menu.w, menu.h, Col.WHITE, true);
+      
+    if(animation.menu == 0){
+      for(i in 0 ... menu.list.length){
+        if(menu.selection == i){
+          Gfx.drawimage((Game.time % 16)/8 + 2+(menu.x+1) * 8, 1 + (menu.y+1) * 8 + (i * 10), icon[19]);
+          Text.display(18+(menu.x+1) * 8, 2 + (menu.y+1) * 8 + (i * 10), menu.list[i]);
+        }else{
+        	Text.display(14+(menu.x+1) * 8, 2 + (menu.y+1) * 8 + (i * 10), menu.list[i]);
+        }
+      }
+    }
+    
+    displaystats();
+    
+    
+    if(state == "game"){
+      Gfx.imagecolor();
+    	redrawscreen();
+    }
+  }
+}
+
+function rest(){
+  if(player.hunger >= 200){
+  	setmessage("You rest for a moment...", Col.WHITE);
+  }else{
+    setmessage("You rest, but you are too hungry to recover...", Col.GRAY);
+  }
+  Music.playsound(sfx.rest);
+  turn = "enemy";
+  
+  player.hunger -= player.hungerspeed * 4;
+  if(player.hunger <= 0) player.hunger = 0;
+  
+  player.restclock++;
+  if(player.restclock >= player.restrate){
+    player.restclock -= player.restrate;
+    if(player.hunger >= 200){
+      player.health++;
+      if(player.health > player.maxhealth){
+        player.health = player.maxhealth;
+      }else{
+        animation.hp = 5;
+      }
+    }
+  }
+}
+  
 var press_left;
 var press_right;
 var press_up;
@@ -1009,20 +1339,55 @@ function input(){
     keydelay--;
     if(!(press_left || press_right || press_up || press_down)) keydelay=0;
   }else{
-    if(press_left){
-      moveplayer(-1, 0);
-      keydelay=2;
-    }else if(press_right){
-      moveplayer(1, 0);
-      keydelay=2;
-    }
-    
-    if(press_up){
-      moveplayer(0, -1);
-      keydelay=2;
-    }else if(press_down){
-      moveplayer(0, 1);
-      keydelay=2;
+    if(turn == "player"){
+      if(player.health > 0){
+        if(numshaketiles == 0){
+          if(press_left){
+            moveplayer(-1, 0);
+            keydelay=2;
+          }else if(press_right){
+            moveplayer(1, 0);
+            keydelay=2;
+          }
+
+          if(press_up){
+            moveplayer(0, -1);
+            keydelay=2;
+          }else if(press_down){
+            moveplayer(0, 1);
+            keydelay=2;
+          }
+          
+          if(Input.justpressed(Key.SPACE)){
+            rest();
+          }
+          
+          if(Input.justpressed(Key.ENTER)){
+            grabscreen();
+            state = "menu";
+            changemenu("init");
+            animation.menu = 5;
+            Music.playsound(sfx.select);
+          }
+        }  
+      }else{
+        //Death sequence stuff
+        if(dogamefade){
+          if(Game.time % 5 == 0){
+            tx = 0;
+            for(j in 0 ... mapheight){
+              for(i in 0 ... mapwidth){
+                if(lightmap[i][j] > 0){
+                  lightmap[i][j]--;
+                  tx++;
+                  setlight(i, j, lightmap[i][j]);
+                }
+              }
+            }
+            if(tx == 0) dogamefade = false;
+          }
+        }
+      }
     }
   }
 }
@@ -1034,11 +1399,32 @@ function logic(){
       for(i in 0 ... numentity){
         if(entity[i].active){
           entity[i].update(i);
+        }
+        if(entity[i].active){
+          if(lightmap[entity[i].x][entity[i].y]>=3){
+            if(!entity[i].alert){
+              if(entity[i].alertsound > 0) Music.playsound(entity[i].alertsound);
+              entity[i].alert= true;
+            }
+          }
           drawtile(entity[i].x, entity[i].y, entity[i].tile, entity[i].col);
           setlight(entity[i].x, entity[i].y, lightmap[entity[i].x][entity[i].y]);
         }
       }
       turn = "player";
+      
+      //Do game turn update stuff here
+      player.hunger -= player.hungerspeed;
+      if(player.hunger < 0) player.hunger = 0;
+      
+      if(player.hunger <= player.starvepoint){
+        player.starveclock++;
+        if(player.starveclock > 6){
+          player.starveclock = 0;
+          animation.hunger = 5;
+          hurtplayer();
+        }
+      }
     }
   }
 }
@@ -1068,8 +1454,5 @@ function render(){
   
   processshake();
   
-  Gfx.fillbox(Gfx.screenwidth-35,0,35,7,Col.DARKBLUE);
-  //Show message
-  Gfx.fillbox(0, mapheight * 8, Gfx.screenwidth, 16, Col.BLACK);
-  Text.display(Text.CENTER, 4 + mapheight * 8, message, messagecol);
+  displaystats();
 }
