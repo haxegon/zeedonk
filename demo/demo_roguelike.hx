@@ -132,7 +132,6 @@ var walltile;
 var scrolltile;
 var potiontile;
 
-var redrawmap;
 var newtile;
 
 var iconcolor = [];
@@ -164,7 +163,6 @@ function new(){
       currentmap[i].push(floortile);
     }
   }
-  redrawmap = true;
   
   for(i in 0 ... 140) iconcolor.push(Col.RED);
   iconcolor[playertile] = Col.WHITE;
@@ -242,16 +240,6 @@ function update(){
   if(Input.delaypressed(Key.RIGHT, 4)) moveplayer(1, 0);
   if(Input.delaypressed(Key.UP, 4)) moveplayer(0, -1);
   if(Input.delaypressed(Key.DOWN, 4)) moveplayer(0, 1);
-  
-  if(redrawmap){
-    //Redraw the entire map. For when loads of stuff changes at once.
-    redrawmap=false;
-    for(j in 0 ... mapheight){
-      for(i in 0 ... mapwidth){
-        pset(i, j, currentmap[i][j]);
-      }
-    }
-  }
   
   //Show message
   Gfx.fillbox(0, mapheight * 8, Gfx.screenwidth, 16, Col.BLACK);
