@@ -113,23 +113,8 @@ class Webscript {
 		scriptfound();
 	}
 	
-	public static var	reloaddelay:Int = 0;
-	
 	public static function update() {
-		#if flash
-		  if (Input.justpressed(Key.R)) {
-				reloaddelay = 10;
-			}
-		#end
-		#if flash
-		if (reloaddelay > 0) {
-			Gfx.clearscreen(Col.BLACK);
-			reloaddelay--;
-			if (reloaddelay <= 0) loadfile("script.txt");
-		}else	if (errorinscript) {
-		#else
 		if (errorinscript) {
-		#end
 		  Text.setfont(Webfont.DEFAULT, 1);
 			Gfx.clearscreen(Gfx.rgb(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);

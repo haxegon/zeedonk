@@ -3,7 +3,7 @@ import openfl.external.ExternalInterface;
 
 @:keep
 class Webmusic{
-	public static function playsound(t:Int, vol:Float) {
+	public static function playsound(t:Int, vol:Float = 1.0) {
 	  #if !flash	
 
 			#if terryhasntupgraded

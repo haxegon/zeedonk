@@ -398,6 +398,7 @@ class Text {
 	public static function display(x:Float, y:Float, text:String, col:Int = 0xFFFFFF) {
 	#end
 		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
+		if (text == "") return;
 	  
 		if (typeface[currentindex].type == "bitmap") {
 			cachelabel = text + "_" + currentfont + Convert.tostring(col);
