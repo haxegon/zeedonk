@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <link rel="shortcut icon" href="images/icon256.png" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>zeedonk game</title>
+<style>
+
+body {
+	background-color:black;
+	font-family:"Courier New", Courier, monospace
+}
+canvas {
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+}
+
+h1 {
+	color:white;
+	font-weight:normal;
+}
+a {
+	color:white;
+}
+.title {
+	background-color:none;
+	text-align:center;
+	font-size:100%;
+	float:center;
+	color:gray;
+	position:absolute;
+	left:10%;
+	right:10%;
+	top:0%;
+	height:10%;
+}
+
+.footer {
+	background-color:none;
+	text-align:center;
+	float:center;
+	color:white;
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+  height:20px;
+  padding:0;
+  margin:0;
+}
+.gameContainer {
+	background-color:none;
+	position:absolute;
+	left:0;
+	right:0;
+	top:0px;
+	bottom:20px;
+	margin: auto;
+	width:720px;
+	height:450px;
+}
+
+      .mobile-menu {
+          position: relative;
+          top: 4em;
+          margin-left: auto;
+          margin-right: auto;
+          font-weight: bold;
+          border-radius: 0.25em;
+      }
+
+      .mobile-menu.item-count-3 {
+          width: 30em;
+      }
+      .mobile-menu.item-count-3 .button {
+          width: 28.3333%;
+          /* scale the height of the button relative to the width of .mobile-menu */
+          padding: 7.5% 0%;
+      }
+
+      .mobile-menu.item-count-2 {
+          width: 20em;
+      }
+      .mobile-menu.item-count-2 .button {
+          width: 46%;
+          /* scale the height of the button relative to the width of .mobile-menu */
+          padding: 12.1765% 0%;
+      }
+
+      .mobile-menu.item-count-1 {
+          width: 10em;
+      }
+      .mobile-menu.item-count-1 .button {
+          width: 98%;
+          /* scale the height of the button relative to the width of .mobile-menu */
+          padding: 26.5% 0%;
+      }
+
+      .mobile-menu,
+      .tab-icon,
+      .mobile-menu .close {
+          background: rgba(0,0,0,0.4);
+          border: 2px solid rgba(255, 255, 255, 0.4);
+          color: rgba(255, 255, 255, 1);
+      }
+
+      .mobile-menu .button {
+          margin: 2%;
+          border-radius: 0.25em;
+          text-align: center;
+          float: left;
+      }
+      .mobile-menu .clear {
+          clear: both;
+      }
+
+      .tab-affordance,
+      .close-affordance {
+          width: 6em;
+          height: 6em;
+          position: absolute;
+          z-index: 1000;
+      }
+
+      .tab-affordance {
+          left: -2em;
+          top: 55px;
+      }
+
+      .close-affordance {
+          left: -4em;
+          top: -1em;
+      }
+
+      .tab-icon,
+      .mobile-menu .close {
+          height: 48px;
+          position: absolute;
+          border-radius: 6px;
+      }
+
+      .tab-icon {
+          left: -0.5em;
+          top: 70px;
+          width: 18px;
+          border-radius: 0 6px 6px 0;
+          border-left: 0;
+      }
+
+      .mobile-menu .close {
+          left: -18px;
+          width: 18px;
+          top: 0px;
+          border-radius: 6px 0 0 6px;
+          border-right: 0;
+      }
+
+      .tab-icon .slice,
+      .mobile-menu .close .slice {
+          margin: 4.5px 1px;
+          width: 2px;
+          height: 80%;
+          background: rgba(255, 255, 255, 0.4);
+      }
+
+      .tab-icon .slice {
+          float: right;
+      }
+
+      .tab-icon .slice:first-child {
+           margin-right: 4.5px;
+      }
+
+      .mobile-menu .close .slice {
+          float: left;
+      }
+      .mobile-menu .close .slice:first-child {
+           margin-left: 4.5px;
+      }
+
+      @media screen and (max-width: 32em) {
+          .mobile-menu {
+              font-size: 0.8em;
+              width: 90%;
+          }
+      }
+      @media screen and (max-width: 24em) {
+          .mobile-menu {
+              font-size: 0.65em;
+              width: 90%;
+          }
+      }
+
+     .disable-select {
+         -webkit-touch-callout: none;
+         -webkit-user-select: none;
+         -khtml-user-select: none;
+         -moz-user-select: none;
+         -ms-user-select: none;
+         user-select: none;
+     }
+
+</style>
+
+	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+
+
+<style>
+	html,body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+	#openfl-content { background: #000000; width: 100%; height: 100%; }
+
+</style>
+
+</head>
+<body>
+<div class="gameContainer" id="gc">
+  <object type="application/x-shockwave-flash"
+     data="haxegonweb/bin/flash/bin/webthing.swf"
+     width="100%" height="100%" id="openfl-content">
+     <param name="movie" value="haxegonweb/bin/flash/bin/webthing.swf" />
+     <param name="quality" value="low"/>
+     <PARAM NAME="SCALE" VALUE="default">
+   </object>
+</div>
+<div class="footer">
+<span id="errormessage" style="color:red;"></span>
+<a id="homepagelink" href="http://www.zeedonk.net">www.zeedonk.net</a> <span id="separator">|</span> <a id="hacklink" href="#">hack</a>
+</div>
+
+<!--TOREPLACE-->
+<script type="text/javascript" src="haxegonweb/bin/html5/bin/lib/soundjs.min.js"></script>
+<script type="text/javascript" src="haxegonweb/bin/html5/bin/webthing.js"></script>
+
+<script type="text/javascript" src="js/globalVariables.js"></script>
+<script type="text/javascript" src="js/debug_off.js"></script>
+<script type="text/javascript" src="js/rng.js"></script>
+<script type="text/javascript" src="js/riffwave.js"></script>
+<script type="text/javascript" src="js/sfxr.js"></script>
+<script type="text/javascript" src="js/inputoutput.js"></script>
+<script type="text/javascript" src="js/playscript.js"></script>
+
+
+</body>
+</html>
