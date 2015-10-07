@@ -23,7 +23,9 @@ function update() {
     Text.display(5, 5, "NAME:", Col.YELLOW);
     Text.display(5 + Text.len("NAME: "), 5, playername, Col.WHITE);
 
-    Text.display(Gfx.screenwidth - 5, Gfx.screenheight - 10, "[press ENTER to change]", Col.GRAY, { align: Text.RIGHT } );
+    Text.align(Text.RIGHT);
+    Text.display(Gfx.screenwidth - 5, Gfx.screenheight - 10, "[press ENTER to change]", Col.GRAY);
+    Text.align(Text.LEFT);
   }else {
     //Display the ENTER YOUR NAME prompt in the middle of the screen.
     //Text.input is true when the player presses Key.ENTER.
