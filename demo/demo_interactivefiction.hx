@@ -4,27 +4,150 @@ author = Stephen Lavelle
 homepage = www.increpare.com
 
 background = #ffffff
-foreground = #0000ff
+panel = #0000ff
 text = #000000
 
-Carlos = ZMex$2NmArrFw5txpykaaeaaBZ6acb=bPacbAguja565daaafqBY67ur6Qd2ayrrubpabTatLXayefiagfdyiabvvvqk7x6Pvqbrq6a
-Rob = ZMex$2NmArrFw5txpykaaeaaBZ6acb=bPacbAguja565daaafqBY67ur6Qd2ayrrubpabTatLXayefiagfdyiabvvvqk7x6Pvqbrq6a
+===CAST===
+
+jose
+name = José
+portrait = ZMex$2NmArrFw5txpykaaeaaBZ6acb=bPacbAguja565daaafqBY67ur6Qd2ayrrubpabTatLXayefiagfdyiabvvvqk7x6Pvqbrq6a
+panel = #0000ff
+text = #ffffff
+
+carl
+name = Carl
+portrait = ZMex$2NmArrFw5txpykaaeaaBZ6acb=bPacbAguja565daaafqBY67ur6Qd2ayrrubpabTatLXayefiagfdyiabvvvqk7x6Pvqbrq6a
+panel = #00ff00
+text = #ffffff
+
+===SCRIPT===
+
+START
 
 Carl : Hey, how're you doing?
 Rob : I'm doing fine. Where do you want to go for food?
 
-Where do you want to go?
-The supermarket sounds good! -> SUPERMARKET
-I need to get some new clothes. -> CLOTHES SHOP
+The supermarket sounds good! > SUPERMARKET
+I need to eat some food. > FOODSHOP
 
 SUPERMARKET
 
 Carl : Wow, it's busy here, how about we get some food?
+Let's do it! > FOODSHOP
+I'm not sure, let's try again tomorrow. > START
+
 FOODSHOP
+Carl : Rad
+Indeed > END
+Yeah > END
 
+END
 
+Carl : Woo!
+Woo!
 
 ";
+
+function parse(s){
+  var a = s.split("\n");
+  trace(a);
+  var configLines = [];
+  var castLines = [];
+  var scriptLines = [];
+  
+  //step 1 , split into sections
+  var state=0;//config/cast/script
+  trace(a.length);
+  for (i in 0...a.length) 
+  {    
+    var l = a[i];   
+    if (state==0&&l.trim()=="===CAST==="){
+      state=1;    
+      continue;
+    }
+    if (state==1&&l.trim()=="===SCRIPT==="){
+      state=2;       
+      continue;
+    }
+    switch(state){
+      case 0:
+        configLines.push(l);
+      case 1:
+        castLines.push(l);
+    trace(l);
+        scriptLines.push(l);
+    }
+  }
+  var dat = {};
+  dat.startup = ParseStartup(castLines);
+  dat.cast = ParseCast(castLines);
+  return dat;
+}
+
+
+function ParseStartup(startupLines){
+  var startupDat = {
+    title:"",
+    author:"",
+    homepage:"",
+    background:"#215e5e",
+    window:"#db9e23",
+    text:"#f9dede"
+  };
+  trace(startupLines);
+  for (i in 0...startupLines.length){
+    var l = startupLines[i];
+    var trimmed = l.trim();
+    if (trimmed.length==0){
+      continue;
+    }
+    
+    var index = l.indexOf("=");
+    if (index== -1){
+      trace("ERROR PARSING LINE "+l);
+    } else {
+      var key = l.slice(0,index).trim();
+      var val = l.slice(index+1).trim();
+      startupDat[key]=val;
+    }
+  }
+  return startupDat;  
+}
+
+function ParseCast(castLines){
+  var castDat = {};
+  trace(castLines);
+  var curchar;
+  for (i in 0...castLines.length){
+    var l = castLines[i];
+    var trimmed = l.trim();
+    if (trimmed.length==0){
+      continue;
+    }
+    
+    var index = l.indexOf("=");
+    if (index== -1){
+      var curName = l.trim();
+      curchar={name:curName};
+      castDat[curName]=curchar;     
+    } else {
+      var key = l.slice(0,index).trim();
+      var val = l.slice(index+1).trim();
+      curchar[key]=val;
+    }
+  }
+  return castDat;  
+}
+
+function parseScript(scriptLines){
+  
+}
+
+var d = parse(game);
+trace(d);
+
+Game.title = "Interactive Fiction";
 
 var portraitScale=2;
 var boxWidth=200;
@@ -173,27 +296,27 @@ function drawchoice(h,person,text){
   }
 
 //   Text.display(lxmargin+windowbordersize+windowbordersize*isnpc+isnpc*portraitwidth-1,yoffset+ymargin+windowbordersize-1,person,highlightcol);
-//	Text.display(lxmargin+boxwidth-portraitwidth-xmargin, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin,"^");
+//  Text.display(lxmargin+boxwidth-portraitwidth-xmargin, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin,"^");
  
   if (uppressed>0){
-	  Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+1,portraitwidth , Text.height()*1.3, windowcol);
-		Gfx.drawimage(1+lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4,1+ yoffset+ymargin+Text.height()/4+3,"up_arrow");
+    Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+1,portraitwidth , Text.height()*1.3, windowcol);
+    Gfx.drawimage(1+lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4,1+ yoffset+ymargin+Text.height()/4+3,"up_arrow");
   } else {
-	  Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+1,portraitwidth , Text.height()*1.3, highlightcol2);
-	  Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin, yoffset+ymargin+Text.height()/4,portraitwidth , Text.height()*1.3, windowcol);
-		Gfx.drawimage(lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4, yoffset+ymargin+Text.height()/4+3,"up_arrow");    
+    Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+1,portraitwidth , Text.height()*1.3, highlightcol2);
+    Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin, yoffset+ymargin+Text.height()/4,portraitwidth , Text.height()*1.3, windowcol);
+    Gfx.drawimage(lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4, yoffset+ymargin+Text.height()/4+3,"up_arrow");    
   }
   
   if (downpressed>0){
-	  Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+1,portraitwidth , Text.height()*1.3, windowcol);
-	  Gfx.drawimage(1+lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4,1+ yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+2,"down_arrow");
+    Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+1,portraitwidth , Text.height()*1.3, windowcol);
+    Gfx.drawimage(1+lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4,1+ yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+2,"down_arrow");
   } else {
-	  Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+1,portraitwidth , Text.height()*1.3, highlightcol2);
-  	Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin,portraitwidth , Text.height()*1.3, windowcol);
-	  Gfx.drawimage(lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+2,"down_arrow");
+    Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin+1, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+1,portraitwidth , Text.height()*1.3, highlightcol2);
+    Gfx.fillbox(lxmargin+boxwidth-portraitwidth-xmargin, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin,portraitwidth , Text.height()*1.3, windowcol);
+    Gfx.drawimage(lxmargin+boxwidth-portraitwidth-xmargin+portraitwidth/2-4, yoffset+ymargin+Text.height()/4+boxheight-Text.height()*2+ymargin+2,"down_arrow");
   }
   
-	
+  
   
   //  var centerx=lxmargin+textboxwidth/2
   Text.display(lxmargin+windowbordersize+windowbordersize*isnpc+isnpc*portraitwidth,yoffset+ymargin+windowbordersize+Text.height()/2,wrappeds,textcol);
