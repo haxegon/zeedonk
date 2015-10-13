@@ -354,6 +354,41 @@ function drawchoice(h,person,text){
   return boxheight+1;
 }
 
+
+
+function drawwait(h,text){
+  var isnpc=0;
+  var s = text;
+  var wrappeds = wrap(s,textboxwidth); 
+  var lines = linecount(wrappeds);
+
+  var highlightcol = colorLerp(windowcol,backgroundcol,0.5);
+  var highlightcol2 = colorLerp(windowcol,backgroundcol,0.25);
+  var height = Text.height()*(lines+0.5);
+  var boxheight = height;
+  var yoffset = Gfx.screenheight-h-boxheight-ymargin*2;
+  var boxwidth=portraitwidth+3*windowbordersize+textboxwidth;
+  var lxmargin=xmargin;
+  if (isnpc==false){
+    //    boxwidth-=portraitwidth+windowbordersize;
+    lxmargin=Gfx.screenwidth-xmargin-boxwidth; 
+  }
+  
+  
+  //  var centerx=lxmargin+textboxwidth/2
+  Text.display(Text.CENTER,yoffset+ymargin+windowbordersize,"wrappeds",textcol);
+  return boxheight+1;
+}
+
+var history = [  
+  ["chris","pix?"],
+  ["player","hey are you there I hope a a a a a a a a?"],
+  ["chris","hey\nbabe"],  
+];
+
+var curPrompt = ["continue","..."];
+//var curprompt = ["choice","What'm I supposed to do?"];
+
 var options =["hey","what am i to \ndo aaa \n oopp\nasdf \nh","really","aah go away"];
 var optionIndex=0;
 function update(){  
@@ -374,12 +409,20 @@ function update(){
     optionIndex=(optionIndex+1+options.length)%options.length;
   }
   
-  var h = drawchoice(0,"chris",options[optionIndex]);
-  h+=ymargin;
-  h+=drawdialog(h,"chris","hey\nbabe");
-  h+=ymargin;
-  h+=drawdialog(h,"player","hey are you there I hope a a a a a a a a?");
-  h+=ymargin;
-  h+=drawdialog(h,"chris","pix?");
-
+  var h=0;
+  if (curPrompt[0]=="choice"){
+    h = drawchoice(0,"chris",options[optionIndex]);
+  } else {
+    h = drawwait(h,curPrompt[1]);  
+  }
+  
+  var loop=1;
+  for (l in history){
+    h+=ymargin;
+    h+=drawdialog(h,l[0],l[1]);
+    h+=ymargin;
+    h+= drawwait(h,curPrompt[1]);  
+    if (loop==0) break;
+    if (h>Gfx.screenheight) loop=0;
+  }
 }
