@@ -34,6 +34,7 @@ I need to eat some food. > FOODSHOP
 SUPERMARKET
 
 Carl : Wow, it's busy here, how about we get some food?
+
 Let's do it! > FOODSHOP
 I'm not sure, let's try again tomorrow. > START
 
@@ -51,7 +52,6 @@ Woo!
 
 function parse(s){
   var a = s.split("\n");
-  trace(a);
   var configLines = [];
   var castLines = [];
   var scriptLines = [];
@@ -75,13 +75,14 @@ function parse(s){
         configLines.push(l);
       case 1:
         castLines.push(l);
-    trace(l);
+      case 2:
         scriptLines.push(l);
     }
   }
   var dat = {};
-  dat.startup = ParseStartup(castLines);
+  dat.startup = ParseStartup(configLines);
   dat.cast = ParseCast(castLines);
+  dat.scrtip = ParseScript(scriptLines);
   return dat;
 }
 
@@ -95,7 +96,6 @@ function ParseStartup(startupLines){
     window:"#db9e23",
     text:"#f9dede"
   };
-  trace(startupLines);
   for (i in 0...startupLines.length){
     var l = startupLines[i];
     var trimmed = l.trim();
@@ -117,7 +117,6 @@ function ParseStartup(startupLines){
 
 function ParseCast(castLines){
   var castDat = {};
-  trace(castLines);
   var curchar;
   for (i in 0...castLines.length){
     var l = castLines[i];
@@ -125,7 +124,6 @@ function ParseCast(castLines){
     if (trimmed.length==0){
       continue;
     }
-    
     var index = l.indexOf("=");
     if (index== -1){
       var curName = l.trim();
@@ -140,8 +138,41 @@ function ParseCast(castLines){
   return castDat;  
 }
 
-function parseScript(scriptLines){
-  
+function ParseScript(scriptLines){
+  var result={};
+  var cursection;
+  for (l in scriptLines){
+    l=l.trim();
+    if (l=="") {
+      continue;
+    }    
+    var lup = l.toUpperCase();   
+    if (l==lup){ //new section
+      cursection=[];
+      result[l]=cursection;    
+      continue;      
+    }
+    var colonindex = l.indexOf(':');
+    if (colonindex>=0) { //statement
+      var key = l.slice(0,colonindex).trim();
+      var val = l.slice(colonindex+1).trim();
+      cursection.push(["line",key,val]);
+      continue;
+    }
+    var arrowindex = l.indexOf('>');
+    if (arrowindex>=0){ //move option
+      var key = l.slice(0,arrowindex).trim();
+      var val = l.slice(arrowindex+1).trim();
+      var c = [key,val];
+      if (cursection.length==0||cursection[cursection.length-1][0]!="choice"){
+        cursection.push(["choice",[c]]);
+      } else {
+        cursection[cursection.length-1][1].push(c);
+      }
+      continue;
+    } 
+  }
+  return result;
 }
 
 var d = parse(game);
