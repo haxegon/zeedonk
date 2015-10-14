@@ -1,12 +1,12 @@
 /*
-  SUPER SHOT
+  FANCY SHOOTER EXAMPLE
 
   This example game has been heavily optimised! In general, Zeedonk is not really
   built for fast action games, but there are things you can do to speed things up.
-  Here are some tips that helped a lot in Super Shot:
+  Here are some tips that helped a lot in this example:
 
   - Drawing lots of primitives (especially lines) starts to add up pretty quickly.
-    Super Shot caches all the graphics as images before it starts in the 
+    This game caches all the graphics as images before it starts in the 
     cache() function, which is much faster.
 
   - Interpreting code at runtime is slow! So give hscript as little to do as you 
@@ -953,12 +953,17 @@ function gameupdate() {
     playermoving = 1;
   }
 
+  
+  //Played around with a time slowing mechanic at one point in developing this
+  //game. Comment out this line to reenable it!
+  playermoving = 1;
+  
   if (playermoving == 0) {
     Gfx.fillbox(0,0,Gfx.screenwidth, Gfx.screenheight, 0x111111);
   }
-
+    
   if (playermoving > 0) {
-    gamespeed = 1.3;
+    gamespeed = 1.25;
     Music.musicvol = 0;
   }else {
     if (gamespeed > 0.15) {
@@ -1372,9 +1377,11 @@ function titleupdate(){
   if(titlecountdown % 2 == 0){
     Text.setfont(Font.RETROFUTURE, 1);
     Text.changesize(4);
-    Text.display(Text.CENTER, Gfx.screenheightmid - 39, "SUPER");
-    Text.changesize(4.36);
-    Text.display(Text.CENTER, Gfx.screenheightmid-6, "SHOT");
+    Text.display(Text.CENTER, Gfx.screenheightmid - 49, "FANCY");
+    Text.changesize(2.86);
+    Text.display(Text.CENTER, Gfx.screenheightmid-16, "SHOOTER");
+    Text.changesize(3);
+    Text.display(Text.CENTER, Gfx.screenheightmid+8, "EXAMPLE");
     Text.setfont(Font.PIXEL, 1);
   }
 
