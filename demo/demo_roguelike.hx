@@ -139,6 +139,7 @@ var iconcolor = [];
 var message = "SIMPLE ROGUELIKE EXAMPLE - PRESS ARROW KEYS TO MOVE";
 var messagecol = Col.GRAY;
 
+//New is an optional function that's called at startup
 function new(){
   Text.setfont(Font.THIN);
   Gfx.clearscreeneachframe=false;

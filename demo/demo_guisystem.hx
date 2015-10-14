@@ -1,4 +1,5 @@
 Game.title="Simple GUI System";
+Text.setfont(Font.THIN, 1);
 // This is a simple GUI system that you can copy and paste to use in your own games!
 
 // HOW TO USE:
@@ -13,6 +14,11 @@ Game.title="Simple GUI System";
 var examplenumber = 100; //Just used as an example of modifying a variable
 
 // Stuff you can edit
+//Load in some 8x8 sprite strings for icons
+Gfx.loadimagestring("plus", "3KaaamMzmaaaahZZZSvqb5bvXvZZxZXvXqxKbva");
+Gfx.loadimagestring("minus", "3KaaamMzmaaaahZZZSaaaabvvvZZxZXvvqaaaaa");
+Gfx.loadimagestring("smiley", "ZKaaaj=kNiaaahJLnybvvqafxZXqf5ZZXb5ZZZLxZZZXxX5X5PZxZxX5PZPZxZZZZPZZZZX5PvvZvXvv5r5Pv5KvZZZObvZZuabvvqa");
+Gfx.resizeimage("smiley", 2);
 var gui_buttonwidth = 75;
 var gui_buttonheight = 9;
 var gui_buttonsounds = [55877306, 48646904, 95527503];
@@ -71,18 +77,6 @@ function gui_buttonaction(act){
     Music.playsound(gui_buttonsounds[2], 0.4);
     gui_changeposition("exampleimage", Random.int(0,Gfx.screenwidth-16), Random.int(0,Gfx.screenheight-16));
   }
-}
-
-function new(){
-  Text.setfont(Font.THIN, 1);
-  
-  //Load in some 8x8 sprite strings for icons
-  Gfx.loadimagestring("plus", "3KaaamMzmaaaahZZZSvqb5bvXvZZxZXvXqxKbva");
-  Gfx.loadimagestring("minus", "3KaaamMzmaaaahZZZSaaaabvvvZZxZXvvqaaaaa");
-  Gfx.loadimagestring("smiley", "ZKaaaj=kNiaaahJLnybvvqafxZXqf5ZZXb5ZZZLxZZZXxX5X5PZxZxX5PZPZxZZZZPZZZZX5PvvZvXvv5r5Pv5KvZZZObvZZuabvvqa");
-  Gfx.resizeimage("smiley", 2);
-  
-  gui_setup();
 }
 
 function update(){
@@ -228,9 +222,7 @@ function gui_setid(id){
   gui_id = id;
 }
 
-function gui_setup(){
-	gui_id = "none";
-  gui_button = [];
+gui_id = "none";
+gui_button = [];
   
-  gui_changescene("init");
-}
+gui_changescene("init");

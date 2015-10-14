@@ -57,6 +57,7 @@ var undobuffer=[];
 var undobuffersize = 5000;
 var undobufferposition = 0;
 
+//New is an optional function that's called at startup
 function new() {
   Text.setfont(Font.THIN, 1);
 

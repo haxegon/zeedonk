@@ -515,7 +515,7 @@ function cachegraphics() {
   Gfx.drawtoscreen();
 }
 
-
+//New is an optional function that's called at startup
 function new() {
   Text.setfont(Font.PIXEL, 1);
 

@@ -3,10 +3,6 @@ var y = Gfx.screenheightmid;
 var r = 10;
 var speed = 3;
 
-function new() {
-}
-
-
 function update() {
   if (Input.pressed(Key.LEFT)){
     x-=speed;

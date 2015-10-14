@@ -11,12 +11,41 @@ var scrolldelay = 0;
 var counter = 0;
 var coloroffset = 60;
 
-function new(){
-  initstars();
-  
-  loadfontinfo();
-  currentfont = 0;
-}
+numstars = 30;
+starspeed = [];
+starx = [];
+stary = [];
+for(i in 0 ... numstars){
+  starspeed.push(Random.int(3,6));
+  starx.push(Random.int(0, Gfx.screenwidth * 2));
+  stary.push(Random.int(0, Gfx.screenheight));
+} 
+
+fontlist = [Font.ZERO4B11, Font.C64, Font.COMIC, Font.CRYPT, Font.DEFAULT,
+            Font.DOS, Font.GANON, Font.NOKIA, Font.OLDENGLISH, Font.PIXEL,
+            Font.PRESSSTART, Font.RETROFUTURE, Font.ROMAN, Font.SPECIAL,
+            Font.THIN, Font.TINY, Font.YOSTER];
+
+fontcredits = [];
+fontcredits.push("04B11 by Yuji Oshimoto, 04.jp.org");
+fontcredits.push("Standard C64 font. Converted by ck! of Freaky Fonts as \"Adore64\".");
+fontcredits.push("DeluxePaint II's Comic font. Converted by codeman38, zone38.net");
+fontcredits.push("Crypt of Tomorrow by Anna Antrophy, auntiepixelante.com");
+fontcredits.push("\"Normal\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
+fontcredits.push("Standard DOS VGA font. Ported to Zeedonk from Wikipedia's Code page 437 image.");
+fontcredits.push("Inspired by the font from Zelda: A Link to the Past. Converted by codeman38, zone38.net");
+fontcredits.push("As seen in Flixel! Nokia Cellphone font by Zeh Fernando, zehfernando.com");
+fontcredits.push("\"Old English\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
+fontcredits.push("Slightly modified version of PixelZim by Zeh Fernando, zehfernando.com");
+fontcredits.push("NAMCO inspired font by codeman38, zone38.net");
+fontcredits.push("Retro Future Heavy, by Cyclone Graphics.");
+fontcredits.push("\"Roman\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
+fontcredits.push("\"Special\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
+fontcredits.push("Small, thin 3x7 font with lowercase letters! Made for Zeedonk by Terry.");
+fontcredits.push("Useless unreadable 3x3 font! Made for Zeedonk by Terry.");
+fontcredits.push("Inspired by the font from Yoshi's Island. Converted by codeman38, zone38.net");
+
+currentfont = 0;
 
 function update(){
   if(Mouse.leftclick()){
@@ -60,58 +89,16 @@ function update(){
   }
 
 }
-
-function loadfontinfo(){
-  fontlist = [Font.ZERO4B11, Font.C64, Font.COMIC, Font.CRYPT, Font.DEFAULT,
-              Font.DOS, Font.GANON, Font.NOKIA, Font.OLDENGLISH, Font.PIXEL,
-              Font.PRESSSTART, Font.RETROFUTURE, Font.ROMAN, Font.SPECIAL,
-              Font.THIN, Font.TINY, Font.YOSTER];
-  
-  fontcredits = [];
-  fontcredits.push("04B11 by Yuji Oshimoto, 04.jp.org");
-  fontcredits.push("Standard C64 font. Converted by ck! of Freaky Fonts as \"Adore64\".");
-  fontcredits.push("DeluxePaint II's Comic font. Converted by codeman38, zone38.net");
-  fontcredits.push("Crypt of Tomorrow by Anna Antrophy, auntiepixelante.com");
-  fontcredits.push("\"Normal\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("Standard DOS VGA font. Ported to Zeedonk from Wikipedia's Code page 437 image.");
-  fontcredits.push("Inspired by the font from Zelda: A Link to the Past. Converted by codeman38, zone38.net");
-  fontcredits.push("As seen in Flixel! Nokia Cellphone font by Zeh Fernando, zehfernando.com");
-  fontcredits.push("\"Old English\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("Slightly modified version of PixelZim by Zeh Fernando, zehfernando.com");
-  fontcredits.push("NAMCO inspired font by codeman38, zone38.net");
-  fontcredits.push("Retro Future Heavy, by Cyclone Graphics.");
-  fontcredits.push("\"Roman\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("\"Special\" Font from PC Paint by Mouse Systems. Converted by codeman38, zone38.net");
-  fontcredits.push("Small, thin 3x7 font with lowercase letters! Made for Zeedonk by Terry.");
-  fontcredits.push("Useless unreadable 3x3 font! Made for Zeedonk by Terry.");
-  fontcredits.push("Inspired by the font from Yoshi's Island. Converted by codeman38, zone38.net");
-}
-  
-function initstars(){
-  numstars = 30;
-  starspeed = [];
-  starx = [];
-  stary = [];
-  for(i in 0 ... numstars){
-    starspeed.push(altrandom(3,6));
-    starx.push(altrandom(0, Gfx.screenwidth * 2));
-    stary.push(altrandom(0, Gfx.screenheight));
-  } 
-}
   
 function updatestars(){
   for(i in 0 ... numstars){
     starx[i] -= starspeed[i];
     if(starx[i] < -10){    
-      starspeed[i] = altrandom(3,6);
+      starspeed[i] = Random.int(3,6);
       starx[i] = Gfx.screenwidth;
-      stary[i] = altrandom(0, Gfx.screenheight);
+      stary[i] = Random.int(0, Gfx.screenheight);
     }
   }
-}
-
-function altrandom(from, to){
-	return from + Math.floor(((to - from + 1) * Math.random()));
 }
 
 var starcol;

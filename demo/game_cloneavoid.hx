@@ -24,17 +24,13 @@ var cdy=0;
 var score=0;
 var scoreStr="0";
 
-function new() {
-  Music.musicvol=0.5;
-  Music.playmusic(titlemusic);
+Music.musicvol=0.5;
+Music.playmusic(titlemusic);
 //  Gfx.showfps=true;
-  newLevel();
-  repositionCollectable();
-  Game.background=0x333333;
-  Game.foreground=Col.GREY;
-  Game.title="CLONE AVOID";
-  Game.homepage="http://www.increpare.com";
-}
+Game.background=0x333333;
+Game.foreground=Col.GREY;
+Game.title="CLONE AVOID";
+Game.homepage="http://www.increpare.com";
 
 function newLevel(){
   level+=2;

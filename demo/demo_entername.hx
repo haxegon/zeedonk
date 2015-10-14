@@ -1,13 +1,11 @@
 var playername;         // String containing the playername typed in.
 var nameentered;        // true once you've typed in the name, false otherwise.
 
-function new() {
-  Text.setfont(Font.SPECIAL, 1);
-  Text.inputsound = 55859504;
-  Text.inputmaxlength = 16;
-  playername = "";
-  nameentered = false;
-}
+Text.setfont(Font.SPECIAL, 1);
+Text.inputsound = 55859504;
+Text.inputmaxlength = 16;
+playername = "";
+nameentered = false;
 
 function update() {
   Gfx.clearscreen(Col.NIGHTBLUE);

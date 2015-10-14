@@ -1,8 +1,6 @@
-function new(){
-  //This image was created using the Zeedonk Sprite editor! Select "Sprite Editor"
-  //from the "Load Examples" dropdown to make your own!
-  Gfx.loadimagestring("heart", "ZSaaanWtgyaah7SZpRZZZZZZZZZZZZYZZNZZhZSpZa5SaZabSadaa");
-}
+//This image was created using the Zeedonk Sprite editor! Select "Sprite Editor"
+//from the "Load Examples" dropdown to make your own!
+Gfx.loadimagestring("heart", "ZSaaanWtgyaah7SZpRZZZZZZZZZZZZYZZNZZhZSpZa5SaZabSadaa");
 
 function update(){
   var imgscale;

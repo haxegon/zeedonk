@@ -124,10 +124,8 @@ var icon = [];
 for(i in 0 ... 112) icon.push("icon"+i);
 // ASSETS END HERE
 
-function new(){
-  Game.title = "Zeedonk Asset Pack";
-  Text.setfont(Font.THIN);
-}
+Game.title = "Zeedonk Asset Pack";
+Text.setfont(Font.THIN);
 
 function update(){
   Gfx.clearscreen(Col.NIGHTBLUE);

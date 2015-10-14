@@ -9,20 +9,16 @@ var currenteffectname;
 var pulse;            // A variable that counts from 0 to 50 and back.
 var pulsedir;      // Controls the direction of the pulse.
 
-// new() is a special function that is called on startup.
-function new() {
-  currenteffect = 1;
-  totaleffects = 4;
-  currenteffectname = "1: TRIANGLES";
-  
-  pulse = 0;
-  pulsedir = "up";
-  
-  Text.setfont(Font.ZERO4B11, 1);
-  //Set up the triangle buffer
-  Gfx.createimage("triangles", Gfx.screenwidth, Gfx.screenheight);
-  drawtriangles(1);
-}
+currenteffect = 1;
+totaleffects = 4;
+currenteffectname = "1: TRIANGLES";
+
+pulse = 0;
+pulsedir = "up";
+
+Text.setfont(Font.ZERO4B11, 1);
+//Set up the triangle buffer
+Gfx.createimage("triangles", Gfx.screenwidth, Gfx.screenheight);
 
 function update() {
   if (Mouse.leftclick()) {

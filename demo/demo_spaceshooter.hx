@@ -1,4 +1,5 @@
 Game.title="Shooter Example";
+Text.setfont(Font.ROMAN, 1);
 
 var deathsequence = 0;
 var gamestate = "title";
@@ -9,6 +10,13 @@ var score = 0;
 //Entity functions
 var entity;
 var numentity;
+
+//Push a load of empty entities into the array
+//so that we don't have to create them at runtime
+entity = [];
+for(i in 0 ... 100){
+  entity.push({});
+}
 
 var player;
 
@@ -86,18 +94,6 @@ function inbox(x, y, x1, y1, x2, y2) {
     }
   }
   return false;
-}
-
-function new() {
-  Text.setfont(Font.ROMAN, 1);
-  
-  //Push a load of empty entities into the array
-  //so that we don't have to create them at runtime
-  entity = [];
-  for(i in 0 ... 100){
-    entity.push({});
-    resetentity(i);
-  }
 }
 
 function killplayer(p){

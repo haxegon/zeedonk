@@ -21,44 +21,42 @@ var baractive;  // True when the bar is actively repeating.
 var barhammer;  // True when we've clicked on a bar: hammers it down.
 var barrestore; // True when we've clicked on a repeating bar: restores it.
 
-function new() {
-  //To get the rounded edges on the bars, we create images for the tops.
-  Gfx.createimage("corner1", 35, 35);
-  Gfx.createimage("corner2", 35, 35);
-  Gfx.createimage("corner3", 35, 35);
+//To get the rounded edges on the bars, we create images for the tops.
+Gfx.createimage("corner1", 35, 35);
+Gfx.createimage("corner2", 35, 35);
+Gfx.createimage("corner3", 35, 35);
 
-  //On each image, we draw a circle in the corner, so that we are left with only a quadrant.
-  Gfx.drawtoimage("corner1");
-  Gfx.fillcircle(35, 35, 35, ACCENT1);
+//On each image, we draw a circle in the corner, so that we are left with only a quadrant.
+Gfx.drawtoimage("corner1");
+Gfx.fillcircle(35, 35, 35, ACCENT1);
 
-  Gfx.drawtoimage("corner2");
-  Gfx.fillcircle(35, 35, 35, ACCENT2);
+Gfx.drawtoimage("corner2");
+Gfx.fillcircle(35, 35, 35, ACCENT2);
 
-  Gfx.drawtoimage("corner3");
-  Gfx.fillcircle(35, 35, 35, ACCENT3);
+Gfx.drawtoimage("corner3");
+Gfx.fillcircle(35, 35, 35, ACCENT3);
 
-  //Switch to drawing on the screen again.
-  Gfx.drawtoscreen();
+//Switch to drawing on the screen again.
+Gfx.drawtoscreen();
 
-  xstart = 5;							// How many pixels from the left to start from.
-  ystart = 32;							// How many pixels from the top to start from.
-  yend = Gfx.screenheight - ystart - 2;  // The lowest point that the bars should fall.
-  barwidth = 35;						// Gap between each bar.
-  gapsize = 38;						// Width of each bar.
+xstart = 5;							// How many pixels from the left to start from.
+ystart = 32;							// How many pixels from the top to start from.
+yend = Gfx.screenheight - ystart - 2;  // The lowest point that the bars should fall.
+barwidth = 35;						// Gap between each bar.
+gapsize = 38;						// Width of each bar.
 
-  //Contains the y positions of the bars. Default to offscreen so that they appear at startup.
-  barheight = [Gfx.screenheight, Gfx.screenheight + 10, Gfx.screenheight + 20, Gfx.screenheight + 30, Gfx.screenheight + 40, Gfx.screenheight + 50];
+//Contains the y positions of the bars. Default to offscreen so that they appear at startup.
+barheight = [Gfx.screenheight, Gfx.screenheight + 10, Gfx.screenheight + 20, Gfx.screenheight + 30, Gfx.screenheight + 40, Gfx.screenheight + 50];
 
-  // True when the bar is actively repeating. Default all to false.
-  baractive = [false, false, false, false, false, false];
+// True when the bar is actively repeating. Default all to false.
+baractive = [false, false, false, false, false, false];
 
-  // True when we've clicked on a bar: hammers it down. Default all to false.
-  barhammer = [false, false, false, false, false, false];
+// True when we've clicked on a bar: hammers it down. Default all to false.
+barhammer = [false, false, false, false, false, false];
 
-  // True when we've clicked on a repeating bar: restores it. 
-  // Default to true; we want them to pop up at the start.
-  barrestore = [true, true, true, true, true, true];
-}
+// True when we've clicked on a repeating bar: restores it. 
+// Default to true; we want them to pop up at the start.
+barrestore = [true, true, true, true, true, true];
 
 function update() {
   //Seperating input, logic and render into three functions for clarity!
