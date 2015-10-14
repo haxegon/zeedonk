@@ -5,13 +5,27 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
-var r = window.devicePixelRatio;
-var w = Math.round(window.innerWidth * r);
-var h = Math.round(window.innerHeight * r);
 
-var c = document.getElementById('openfl-content');
-c.style.width = w + 'px';
-c.style.height = h + 'px';
-c.style.transform = 'scale('+(1/r)+','+(1/r)+')';
-c.style.transformOrigin = '0 0';
-lime.embed ("openfl-content", w, h, "000000");
+function onresize(e){
+	var r = window.devicePixelRatio;
+	var w = Math.round(window.innerWidth * r);
+	var h = Math.round((window.innerHeight-20) * r);
+
+	var c = document.getElementById('openfl-content');
+	c.style.width = w + 'px';
+	c.style.height = h + 'px';
+	c.style.transform = 'scale('+(1/r)+','+(1/r)+')';
+	c.style.transformOrigin = '0 0';
+	var content = document.getElementById("openfl-content");		
+	var canvas = content.childNodes[0];
+	canvas.width=w;
+	canvas.height=h;
+	var ctx = canvas.getContext("2d");
+	ctx.width=w;
+	canvas.height=h;
+}
+
+lime.embed ("openfl-content", 0,0, "000000");
+setTimeout(onresize,100);
+
+window.addEventListener("resize", onresize, false);
