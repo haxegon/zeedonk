@@ -9,6 +9,7 @@ window.addEventListener("keydown", function(e) {
 function onresize(e){
 	console.log("resizing");
 	var r = window.devicePixelRatio;
+	console.log(r);
 	var w = Math.round(window.innerWidth * r);
 	var h = Math.round((window.innerHeight-20) * r);
 
@@ -26,6 +27,17 @@ function onresize(e){
 	ctx.height=h;
 }
 
-lime.embed ("openfl-content", 0,0, "000000");
+
+var r = window.devicePixelRatio;
+console.log(r);
+var w = Math.round(window.innerWidth * r);
+var h = Math.round((window.innerHeight-20) * r);
+
+var c = document.getElementById('openfl-content');
+c.style.width = w + 'px';
+c.style.height = h + 'px';
+c.style.transform = 'scale('+(1/r)+','+(1/r)+')';
+c.style.transformOrigin = '0 0';
+lime.embed ("openfl-content", w,h, "000000");
 setInterval(onresize,500);
 window.addEventListener("resize", onresize, false);
