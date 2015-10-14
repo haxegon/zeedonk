@@ -78,14 +78,14 @@ class Preloader extends NMEPreloader{
 		
 		#if haxegonweb
 			#if (js || html5)
-			onResize(null);
-			gfxstage.addEventListener(Event.RESIZE, onResize);
+			onresize(null);
+			gfxstage.addEventListener(Event.RESIZE, onresize);
 			#end
 		#end
 	}
 	
 	#if (js || html5)
-	private function onResize(e:Event):Void {
+	private function onresize(e:Event):Void {
 		//trace(gfxstage.stageWidth, gfxstage.stageHeight);
 		//Window.devicePixelratio
 		var scaleX:Float;
@@ -110,7 +110,7 @@ class Preloader extends NMEPreloader{
 	
 	override public function onLoaded() {
 		#if (js || html5)
-		gfxstage.removeEventListener(Event.RESIZE, onResize);
+		gfxstage.removeEventListener(Event.RESIZE, onresize);
 		#end
 		if (contains(screen)) removeChild(screen);
 		dispatchEvent(new Event(Event.COMPLETE));
