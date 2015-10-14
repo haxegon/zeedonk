@@ -27,7 +27,7 @@ java -jar ~/progs/closure.jar --warning_level QUIET --language_in ECMASCRIPT5 --
         --js toolbar.js\
         --js layout.js\
         --js addlisteners_editor.js\
-        --js lime_embed.js
+        --js lime_embededitor.js
 java -jar ~/progs/closure.jar --warning_level QUIET --language_in ECMASCRIPT5 --js_output_file player_compiled.js \
 	--js ../haxegonweb/bin/html5/bin/lib/soundjs.min.js\
         --js ../haxegonweb/bin/html5/bin/webthing.js \
