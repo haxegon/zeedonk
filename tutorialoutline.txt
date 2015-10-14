@@ -92,7 +92,7 @@ Switch cases in Zeedonk look like this:
 -
 var animal = "zeedonk";
 
-//Note that you can have multiple patterns in a case,
+//Note that you can have multiple patterns,
 //and that break commands are not used.
 switch (animal) {
   case "zebra", "donkey":
