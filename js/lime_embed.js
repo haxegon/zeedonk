@@ -7,6 +7,7 @@ window.addEventListener("keydown", function(e) {
 
 
 function onresize(e){
+	console.log("resizing");
 	var r = window.devicePixelRatio;
 	var w = Math.round(window.innerWidth * r);
 	var h = Math.round((window.innerHeight-20) * r);
@@ -22,10 +23,9 @@ function onresize(e){
 	canvas.height=h;
 	var ctx = canvas.getContext("2d");
 	ctx.width=w;
-	canvas.height=h;
+	ctx.height=h;
 }
 
 lime.embed ("openfl-content", 0,0, "000000");
-setTimeout(onresize,100);
-
+setInterval(onresize,500);
 window.addEventListener("resize", onresize, false);
