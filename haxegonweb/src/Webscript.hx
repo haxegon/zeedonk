@@ -217,6 +217,9 @@ class Webscript {
 	}
 
 	public static function loadscript(script:String) {
+		try {
+			if(!Game.editor()) ExternalInterface.call("onresize()");
+		}catch (e:Dynamic) {}
 		if (skipnextloadscript) {
 			skipnextloadscript = false;
 		}else{

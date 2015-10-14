@@ -2,7 +2,7 @@ A simple program:
 
 -
 
-trace("hello world")
+trace("hello world");
 
 -
 
@@ -22,7 +22,7 @@ For loops:
 
 -
 
-for (i in 0...100)
+for (i in 0 ... 100)
 	trace((100-i)+"bottles of beer on the wall");
 
 -
@@ -33,7 +33,7 @@ More for loops:
 
 -
 
-var exclamation = ["I","like","big","butts"];
+var exclamation = ["I","like","big","zeedonks"];
 for (s in exclamation)
   trace(s);
 
@@ -86,6 +86,8 @@ function update() {
 }
 
 -
+
+
 
 For more, browse the examples via the examples dropdown in the <a class="tutoriallink" href="../editor.html">editor</a>, or browse the many examples in the <a class="tutoriallink" href="index.html">library reference</a>.
 
