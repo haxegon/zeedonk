@@ -2,12 +2,7 @@ haxegonweb/bin
 haxegonweb/bin/*
 haxegonweb/bin.build
 haxegonweb/project.xml
-Find Results
-
 *.gz
-
 .htaccess
-
 bin/
-
 *.swp
