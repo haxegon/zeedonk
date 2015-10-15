@@ -70,8 +70,8 @@ function Params() {
 
   // Sample parameters
   result.sound_vol = 0.5;
-  result.sample_rate = SAMPLE_RATE;
-  result.bit_depth = BIT_DEPTH;
+  result.sample_rate = 44100;
+  result.bit_depth = 8;
   return result;
 }
 
@@ -598,9 +598,20 @@ SoundEffect.prototype.getBuffer = function() {
 
 SoundEffect.prototype.play = function() {
   var source = AUDIO_CONTEXT.createBufferSource();
-  source.buffer = this._buffer;
-  source.connect(AUDIO_CONTEXT.destination);
+  var filter1 = AUDIO_CONTEXT.createBiquadFilter();
+  var filter2 = AUDIO_CONTEXT.createBiquadFilter();
+  var filter3 = AUDIO_CONTEXT.createBiquadFilter();
 
+  source.buffer = this._buffer;
+  source.connect(filter1);
+
+  filter1.frequency.value = 1600;
+  filter2.frequency.value = 1600;
+  filter3.frequency.value = 1600;
+
+  filter1.connect(filter2);
+  filter2.connect(filter3);
+  filter3.connect(AUDIO_CONTEXT.destination);
   var t = AUDIO_CONTEXT.currentTime;
   if (typeof source.start != 'undefined') {
     source.start(t);
@@ -708,12 +719,6 @@ window.console.log(psstring);*/
     Math.floor(ps.p_env_sustain * ps.p_env_sustain * 100000.0),
     Math.floor(ps.p_env_decay * ps.p_env_decay * 100000.0)
   ];
-  if (env_length[0]<2000){
-    env_length[0]=2000;
-  }
-  if (env_length[2]<2000){
-    env_length[2]=2000;
-  }
   var env_total_length = env_length[0] + env_length[1] + env_length[2];
 
   // Phaser
@@ -901,32 +906,22 @@ window.console.log(psstring);*/
     sample = sample / 8 * masterVolume;
     sample *= gain;
 
-    var lerpAmount = 0.1;
-    if (buffer_i>0){
-      sample = sample*lerpAmount+buffer[buffer_i-1]*(1-lerpAmount);
-    } else {
-      sample = 0;
-    }
     buffer[buffer_i++] = sample;
 
     if (ps.sample_rate < SoundEffect.MIN_SAMPLE_RATE) {
-      sample = sample*lerpAmount+buffer[buffer_i-1]*(1-lerpAmount);
       buffer[buffer_i++] = sample;
-      sample = sample*lerpAmount+buffer[buffer_i-1]*(1-lerpAmount);
       buffer[buffer_i++] = sample;
-      sample = sample*lerpAmount+buffer[buffer_i-1]*(1-lerpAmount);
       buffer[buffer_i++] = sample;
     }
 
-    lerpAmount=0;//0.999;
     if (buffer_complete) {
       for (; buffer_i < buffer_length; buffer_i++) {
         if (ps.sample_rate < SoundEffect.MIN_SAMPLE_RATE) {
-          buffer[buffer_i++] = buffer[buffer_i-1]*(1-lerpAmount);
-          buffer[buffer_i++] = buffer[buffer_i-1]*(1-lerpAmount);
-          buffer[buffer_i++] = buffer[buffer_i-1]*(1-lerpAmount);
+          buffer[buffer_i++] = 0;
+          buffer[buffer_i++] = 0;
+          buffer[buffer_i++] = 0;
         }
-        buffer[buffer_i] = buffer[buffer_i-1]*(1-lerpAmount);
+        buffer[buffer_i] = 0;
       }
       break;
     }
@@ -956,8 +951,6 @@ function cacheNote(seed,frequency,length,volume){
   } 
 
   var params = generateFromSeed(seed);
-
-
 
   var env_length = [
     Math.floor(params.p_env_attack * params.p_env_attack * 100000.0),
