@@ -62,6 +62,11 @@ function tryLoadFile(fileName) {
 
 function loadDefault(){
   tryLoadFile("default");
+
+	var hacklink = document.getElementById("hacklink");
+	hacklink.style.display="none";
+	var separator = document.getElementById("separator");
+	separator.style.display="none";
 }
 
 function getData(){
