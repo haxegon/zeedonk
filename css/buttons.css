@@ -166,6 +166,13 @@ select {
     height: 18px;
 }
 
+.button13 {
+    display: inline-block;
+    background: url('../images/spritesheet.png') no-repeat -108px -18px;
+    width: 18px;
+    height: 18px;
+}
+
 .zeedonkimg {
     display: inline-block;
     background: url('../images/spritesheet.png') no-repeat -90px -18px;
