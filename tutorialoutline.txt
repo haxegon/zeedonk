@@ -128,6 +128,6 @@ if(nothing == null) nothing = "something";
 trace(nothing);
 -
 
-For more, browse the examples via the examples dropdown in the <a class="tutoriallink" href="../editor.html">editor</a>, or browse the many examples in the <a class="tutoriallink" href="index.html">library reference</a>.
+For more, browse the examples via the examples dropdown in <a class="tutoriallink" href="../editor.html">the editor</a>, or browse the many examples in the <a class="tutoriallink" href="index.html">library reference</a>.
 
 Good luck!
