@@ -9,7 +9,6 @@ function runClick(evt) {
 	clearConsole();
 	setbackgroundcolor(0);
 	//compile(["restart"]);
-	stopClick();
 	terryRun();
 	consolePrint("Running Program",true);
 	evt.preventDefault();
@@ -51,6 +50,7 @@ function terryRun(){
 	var editor = code.editorreference;
 
 	text = editor.getValue();
+	stopClick();
 	interpreter.runScript(text);
 	unfocus();
 }
