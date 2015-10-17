@@ -26,6 +26,7 @@ function consolePrintWithLines(text,lineNumber,urgent) {
         urgent=false;
     }
     if (typeof text ==="string"){
+        text = text.replace(/\n/g, '<br>');
         text = text.replace(/\s/g, '&nbsp;');
     }
     
@@ -66,6 +67,7 @@ function consolePrintWithLinesArray(text,lineNumber,urgent) {
         text=text.slice(1,text.length-1);
     }
 
+    text = text.replace(/\n/g, '<br>');
     text = text.replace(/\s/g, '&nbsp;');
 
     if (typeof urgent==="undefined") {
@@ -92,7 +94,8 @@ function consolePrintArray(text,urgent) {
     if (typeof text === "object"){
         text=JSON.stringify(text);
     }
-    text = text.replace(/\s/g, '&nbsp;')
+    text = text.replace(/\n/g, '<br>');
+    text = text.replace(/\s/g, '&nbsp;');
 
     if (cache_console_messages&&urgent==false) {        
         consolecache.push(text);
