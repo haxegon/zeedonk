@@ -275,8 +275,10 @@
             
             var hsvRect = slideClone.getElementsByTagName('rect')[0];
             
-            hsvGradient.id = 'gradient-hsv-' + uniqID;
-            hsvRect.setAttribute('fill', 'url(#' + hsvGradient.id + ')');
+            if (hsvGradient!=null&&hsvGradient.id!=null){
+                hsvGradient.id = 'gradient-hsv-' + uniqID;
+                hsvRect.setAttribute('fill', 'url(#' + hsvGradient.id + ')');
+            }
 
             var blackAndWhiteGradients = [pickerClone.getElementById('gradient-black'), pickerClone.getElementById('gradient-white')];
             var whiteAndBlackRects = pickerClone.getElementsByTagName('rect');
@@ -459,3 +461,33 @@
     window.ColorPicker = ColorPicker;
 
 })(window, window.document);
+
+
+
+ var colorPicker = document.getElementById('color-picker');
+ var colorPickerDat = ColorPicker(
+    colorPicker,
+
+    function(hex, hsv, rgb) {
+      var cursor = colorPickCursorPos;//editor.getCursor();
+      var range = getMatchRange(cursor);
+      
+      var start = {
+        line: cursor.line,
+        ch: range.start+2
+      };
+      var end = {
+        line: cursor.line,
+        ch: range.end
+      };
+      if (hex[0]==="#"){
+        hex=hex.slice(1);
+      } else {
+        hex=hex.slice(2);
+      }
+      editor.replaceRange(hex, start, end,"+");
+      //console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
+      //console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
+      //document.body.style.backgroundColor = hex;        // #HEX
+
+    });

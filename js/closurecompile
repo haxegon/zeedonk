@@ -6,6 +6,7 @@ java -jar ~/progs/closure.jar --warning_level QUIET --language_in ECMASCRIPT5 --
         --js ../haxegonweb/bin/html5/bin/webthing.js \
         --js debug.js \
         --js globalVariables.js \
+        --js ../FlexiColorPicker/colorpicker.js \
 	--js autocompleteArrays.js\
         --js rng.js \
         --js riffwave.js \

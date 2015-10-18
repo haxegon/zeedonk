@@ -142,6 +142,7 @@ S+T
 	</div>
 </div>
 
+<div id="color-picker" style="display:none;" class="cp-small"></div>
 
 <!--TOREPLACE-->
 <script type="text/javascript" src="haxegonweb/bin/html5/bin/lib/soundjs.min.js"></script>
@@ -152,41 +153,6 @@ S+T
 
 <script type="text/javascript" src="FlexiColorPicker/colorpicker.js"></script>
 
-
-<div id="color-picker" style="display:none;" class="cp-small"></div>
-
-    <script type="text/javascript">
-
-     var colorPicker = document.getElementById('color-picker');
-     var colorPickerDat = ColorPicker(
-        colorPicker,
-
-        function(hex, hsv, rgb) {
-          var cursor = colorPickCursorPos;//editor.getCursor();
-          var range = getMatchRange(cursor);
-          
-          var start = {
-	        line: cursor.line,
-	        ch: range.start+2
-	      };
-	      var end = {
-	        line: cursor.line,
-	        ch: range.end
-	      };
-	      if (hex[0]==="#"){
-	      	hex=hex.slice(1);
-	      } else {
-	      	hex=hex.slice(2);
-	      }
-		  editor.replaceRange(hex, start, end,"+");
-	      //console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
-          //console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
-          //document.body.style.backgroundColor = hex;        // #HEX
-
-        });
-
-    </script>
-    
 <script type="text/javascript" src="js/autocompleteArrays.js"></script>
 <script type="text/javascript" src="js/rng.js"></script>
 <script type="text/javascript" src="js/riffwave.js"></script>
