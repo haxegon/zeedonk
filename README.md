@@ -6,7 +6,7 @@
 
 If you'd like to contribute to Zeedonk, here's a quick guide to running it locally:
 
- - First, download the project from github by clicking "Download ZIP" on the bottom right at this page: https://github.com/increpare/zeedonk
+ - First, download the project from github by clicking "Download ZIP" on the bottom right at this page: https://github.com/terrycavanagh/zeedonk
  - Once downloaded, you'll need Haxe and Openfl to compile the Haxegon side of the project. Follow this guide to install and build Haxe: http://www.openfl.org/download/
  - Next, you'll need a "project.xml" file to build the project. Copy the one from this folder into haxegonweb/, and build the project from there.
  - Finally, on most browsers you'll need to start a HTTP server to run the editor. If you install python on your computer, you can start a HTTP server with this command from the root Zeedonk directory:

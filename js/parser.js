@@ -7,7 +7,7 @@ all open source mit license blah blah
 
 the editor is a slight modification of codemirror (codemirror.net), which is crazy awesome.
 
-for post-launch credits, check out activty on github.com/increpare/zeedonk
+for post-launch credits, check out activty on github.com/terrycavanagh/zeedonk
 
 */
 
