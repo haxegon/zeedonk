@@ -1,3 +1,4 @@
 cd haxegonweb
 ./buildscripts
 cd ..
+./processwebthing

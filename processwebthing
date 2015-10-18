@@ -1,0 +1,2 @@
+sed -E 's/([\.a-zA-Z_ ]*)mozImageSmoothingEnabled([_a-zA-Z= }]*)/\1mozImageSmoothingEnabled\2;\1webkitImageSmoothingEnabled\2/g' haxegonweb/bin/html5/bin/webthing.js > rt2
+mv rt2 haxegonweb/bin/html5/bin/webthing.js

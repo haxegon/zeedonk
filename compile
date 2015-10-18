@@ -11,6 +11,7 @@ cd ../../
 cd haxegonweb
 ./releasebuild
 cd ..
+./processwebthing
 ./docbuild
 rm -rf bin
 echo copying directory
