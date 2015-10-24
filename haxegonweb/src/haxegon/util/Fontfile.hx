@@ -23,13 +23,15 @@ class Fontfile {
 			
 			bitmapfont = BitmapFont.fromAngelCode(fontimage, fontxml);
 			typename = _file;
-		}else if(Assets.exists("data/fonts/" + _file + "/" + _file + ".ttf")){		
-			type = "ttf";
+		}else {//if(Assets.exists("data/fonts/" + _file + "/" + _file + ".ttf")){	
+		  type = "ttf";
 			filename = "data/fonts/" + _file + "/" + _file + ".ttf";
-			font = Assets.getFont(filename);
-			typename = font.fontName;
-		}else {
-			throw("ERROR: Cannot set font to \"" + _file + "\", no TTF or Bitmap Font found.");
+			try {
+				font = Assets.getFont(filename);
+				typename = font.fontName;
+			}catch (e:Dynamic) {
+				throw("ERROR: Cannot set font to \"" + _file + "\", no TTF or Bitmap Font found.");
+			}
 		}
 	}
 	

@@ -16,7 +16,9 @@ class Core extends Sprite {
 		super();
 		
 		Gfx.initrun = true;
+		#if haxegonweb
 		Webscript.corecontrol = this;
+		#end
 		init();
 	}
 	
@@ -40,6 +42,7 @@ class Core extends Sprite {
 		loaded();
 	}
 	
+	#if haxegonweb
 	public function reset() {
 	  Random.setseed(Std.int(Math.random() * 233280));
 		Gfx.init(this.stage);
@@ -48,6 +51,7 @@ class Core extends Sprite {
 		Text.cleartextcache();
 		Input.keybuffer = "";
 	}
+	#end
 	
 	private function loaded() {
 		//Init library classes
@@ -68,7 +72,7 @@ class Core extends Sprite {
 		//Default setup
 		#if haxegonweb
 			Gfx.resizescreen(240, 150, 1);
-			Text.setfont(Webfont.DEFAULT, 1);
+			Text.setfont("default", 1);
 			Text.cleartextcache();
 			Input.keybuffer = "";
 		#else

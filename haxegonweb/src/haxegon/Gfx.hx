@@ -162,7 +162,7 @@ class Gfx {
 		}
 		
 		var tiles_rect:Rectangle = new Rectangle(0, 0, width, height);
-		tiles.push(new Tileset(imagename, width, height));
+		tiles.push(new haxegon.util.Tileset(imagename, width, height));
 		tilesetindex.set(imagename, tiles.length - 1);
 		currenttileset = tiles.length - 1;
 		
@@ -187,7 +187,7 @@ class Gfx {
 	#if !haxegonweb
 	/** Creates a blank tileset, with the name "imagename", with each tile a given width and height, containing "amount" tiles. */
 	public static function createtiles(imagename:String, width:Float, height:Float, amount:Int) {
-		tiles.push(new Tileset(imagename, Std.int(width), Std.int(height)));
+		tiles.push(new haxegon.util.Tileset(imagename, Std.int(width), Std.int(height)));
 		tilesetindex.set(imagename, tiles.length - 1);
 		currenttileset = tiles.length - 1;
 		
@@ -735,7 +735,7 @@ class Gfx {
 		animations.push(new AnimationContainer(animationname, tileset, startframe, endframe, delayperframe));
 	}
 	
-	public static function drawanimation(x:Float, y:Float, animationname:String, ?parameters:Gfxdrawparams) {
+	public static function drawanimation(x:Float, y:Float, animationname:String) {
 		if (!clearscreeneachframe) if (skiprender && drawingtoscreen) return;
 		oldtileset = currenttilesetname;
 		if (!animationindex.exists(animationname)) {
@@ -747,12 +747,12 @@ class Gfx {
 		
 		animations[animationnum].update();
 		tempframe = animations[animationnum].currentframe;
-		
+		/*
 		if (parameters != null) {
 		  drawtile(x, y, tempframe, parameters);
 		}else {
 			drawtile(x, y, tempframe);
-		}
+		}*/
 		
 		changetileset(oldtileset);
 	}
@@ -918,6 +918,7 @@ class Gfx {
 		tempshape.graphics.lineStyle(_linethickness, col, alpha);
 		tempshape.graphics.moveTo(_x1, _y1);
     tempshape.graphics.lineTo(_x2, _y2);
+		shapematrix.identity();
     drawto.draw(tempshape, shapematrix);
 		#end
 	}
@@ -1035,6 +1036,7 @@ class Gfx {
 		shapematrix.identity();
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
+		shapematrix.identity();
 		#end
 	}
 	
@@ -1089,7 +1091,7 @@ class Gfx {
 		
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate( -x, -y);
+		shapematrix.identity();
 		#end
 	}
 	
@@ -1111,7 +1113,7 @@ class Gfx {
 		
 		shapematrix.translate(x1, y1);
 		drawto.draw(tempshape, shapematrix);
-		shapematrix.translate( -x1, -y1);
+		shapematrix.identity();
 		#end
 	}
 	
@@ -1228,10 +1230,10 @@ class Gfx {
 			fillbox(x + width - 1, y + 1, 1, height, col, alpha);
 		#else
 		if (_linethickness < 2) {				
-			drawline(x, y, x + width, y, col, alpha);
-			drawline(x, y + height, x + width, y + height, col, alpha);
-			drawline(x, y + 1, x, y + height, col, alpha);
-			drawline(x + width - 1, y + 1, x + width - 1, y + height, col, alpha);
+			fillbox(x, y, width, 1, col, alpha);
+			fillbox(x, y + height, width - 1, 1, col, alpha);
+			fillbox(x, y + 1, 1, height, col, alpha);
+			fillbox(x + width - 1, y + 1, 1, height, col, alpha);
 		}else{
 			tempshape.graphics.clear();
 			tempshape.graphics.lineStyle(_linethickness, col, alpha);
@@ -1240,9 +1242,10 @@ class Gfx {
 			tempshape.graphics.lineTo(0, height);
 			tempshape.graphics.lineTo(0, 0);
 			
+			shapematrix.identity();
 			shapematrix.translate(x, y);
 			drawto.draw(tempshape, shapematrix);
-			shapematrix.translate( -x, -y);
+			shapematrix.identity();
 		}
 		#end
 	}
@@ -1347,6 +1350,7 @@ class Gfx {
 		shapematrix.identity();
 		shapematrix.translate(x, y);
 		drawto.draw(tempshape, shapematrix);
+		shapematrix.identity();
 		#end
 	}
 	
@@ -1521,7 +1525,12 @@ class Gfx {
 		var scaleX:Float;
 		var scaleY:Float;
 		
-		if (Game.editor()) {
+		var ignoreresize:Bool = false;
+		#if haxegonweb
+		if (Game.editor()) ignoreresize = true;
+		#end
+		
+		if (ignoreresize) {
 			scaleX = gfxstage.stageWidth / screenwidth;
 			scaleY = gfxstage.stageHeight / screenheight;
 			var jsscaleeditor:Float = Math.min(scaleX, scaleY);
@@ -1598,7 +1607,7 @@ class Gfx {
 		tpoint.y = y;
 	}
 	
-	private static var tiles:Array<Tileset> = new Array<Tileset>();
+	private static var tiles:Array<haxegon.util.Tileset> = new Array<haxegon.util.Tileset>();
 	private static var tilesetindex:Map<String, Int> = new Map<String, Int>();
 	private static var currenttileset:Int = -1;
 	

@@ -227,8 +227,11 @@ class Text {
 	
 	public static function height():Float {
 		if (typeface[currentindex].type == "ttf") {
+			var oldtext:String = typeface[currentindex].tf_ttf.text;
 			typeface[currentindex].tf_ttf.text = "???";
-			return typeface[currentindex].tf_ttf.textHeight;
+			var h:Float = typeface[currentindex].tf_ttf.textHeight;
+			typeface[currentindex].tf_ttf.text = oldtext;
+			return h;
 		}else if (typeface[currentindex].type == "bitmap") {
 			typeface[currentindex].tf_bitmap.text = "???";
 			return typeface[currentindex].height * currentsize;
@@ -380,7 +383,6 @@ class Text {
 	private static var cacheindex:Int;
 	private static var cachelabel:String;
 	
-	#if haxegonweb
 	public static function cleartextcache() {
 		cachedtextindex = new Map<String, Int>();
 		for (i in 0 ... cachedtext.length) {
@@ -392,6 +394,7 @@ class Text {
 		rotation(0);
 	}
 	
+	#if haxegonweb
 	public static function display(x:Float, y:Float, dytext:Dynamic, col:Int = 0xFFFFFF) {
 	  var text:String = Convert.tostring(dytext);
 	#else
@@ -399,7 +402,6 @@ class Text {
 	#end
 		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
 		if (text == "") return;
-	  
 		if (typeface[currentindex].type == "bitmap") {
 			cachelabel = text + "_" + currentfont + Convert.tostring(col);
 			if (!cachedtextindex.exists(cachelabel)) {
@@ -437,7 +439,7 @@ class Text {
 			
 			cacheindex = cachedtextindex.get(cachelabel);
 			display_bitmap(x, y, cacheindex, currentsize);
-		}else if (typeface[currentindex].type == "tff") {
+		}else if (typeface[currentindex].type == "ttf") {
 			display_ttf(x, y, text, col);
 		}
 	}
@@ -464,6 +466,7 @@ class Text {
 			fontmatrix.rotate((textrotate * 3.1415) / 180);
 			fontmatrix.translate( tempxpivot, tempypivot);
 		}
+		
 		fontmatrix.translate(Math.floor(x), Math.floor(y));
 		drawto.draw(cachedtext[text], fontmatrix);
 		/*
@@ -544,6 +547,27 @@ class Text {
 	
 	private static function display_ttf(x:Float, y:Float, text:String, col:Int = 0xFFFFFF) {
 		if (!Gfx.clearscreeneachframe) if (Gfx.skiprender && Gfx.drawingtoscreen) return;
+		
+		typeface[currentindex].tf_ttf.textColor = col;
+		typeface[currentindex].tf_ttf.text = text;
+		
+		x = alignx(x); y = aligny(y);
+		x -= aligntextx(text, textalign);
+		
+		fontmatrix.identity();
+		
+		if (textrotate != 0) {
+			if (textrotatexpivot != 0.0) tempxpivot = aligntextx(text, textrotatexpivot);
+			if (textrotateypivot != 0.0) tempypivot = aligntexty(textrotatexpivot);
+			fontmatrix.translate( -tempxpivot, -tempypivot);
+			fontmatrix.rotate((textrotate * 3.1415) / 180);
+			fontmatrix.translate( tempxpivot, tempypivot);
+		}
+		
+		fontmatrix.translate(x, y);
+		drawto.draw(typeface[currentindex].tf_ttf, fontmatrix);
+		fontmatrix.identity();
+		
 		/*
 		if (parameters == null) {
 			typeface[currentindex].tf_ttf.textColor = col;
@@ -629,7 +653,6 @@ class Text {
 	private static function createtypeface(t:String) {
 		//Create a typeface for a bitmap font without changing to it. Used for Zeedonk's
 		//precaching trickery.
-		Webdebug.log("Precaching glyphs for Font." + t.toUpperCase());
 		if (fontfile[fontfileindex.get(t)].type == "bitmap") {
 			if (!typefaceindex.exists(t + "_1")) {
 				addtypeface(t, 1);
@@ -727,21 +750,21 @@ class Text {
 	public static var BOTTOM:Int = -20000;
 	public static var CENTER:Int = -15000;
 	
-	private static var textalign:Int;
-	private static var textrotate:Float;
-	private static var textrotatexpivot:Float;
-	private static var textrotateypivot:Float;
-	private static var textalphamult:Float;
-	private static var temprotate:Float;
-	private static var tempxscale:Float;
-	private static var tempyscale:Float;
-	private static var tempxpivot:Float;
-	private static var tempypivot:Float;
-	private static var tempalpha:Float;
-	private static var tempred:Float;
-	private static var tempgreen:Float;
-	private static var tempblue:Float;
-	private static var changecolours:Bool;
+	private static var textalign:Int = -10000;
+	private static var textrotate:Float = 0;
+	private static var textrotatexpivot:Float = 0;
+	private static var textrotateypivot:Float = 0;
+	private static var textalphamult:Float = 1.0;
+	private static var temprotate:Float = 0;
+	private static var tempxscale:Float = 1;
+	private static var tempyscale:Float = 1;
+	private static var tempxpivot:Float = 0;
+	private static var tempypivot:Float = 0;
+	private static var tempalpha:Float = 1;
+	private static var tempred:Float = 1;
+	private static var tempgreen:Float = 1;
+	private static var tempblue:Float = 1;
+	private static var changecolours:Bool = false;
 	private static var alphact:ColorTransform;
 	
 	//Text input variables

@@ -144,6 +144,7 @@ class Input {
 			keyheld[keycode] = true;
 		}
 		
+		#if haxegonweb
 		#if (js || html5)
 		if (Text.input_show > 0) {
 			if (keycode == 8) {
@@ -166,6 +167,7 @@ class Input {
 				}
 			}
 		}
+		#end
 		#end
 	}
 	
