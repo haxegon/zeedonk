@@ -1225,15 +1225,15 @@ class Gfx {
 		}
 		#if haxegonweb
 			fillbox(x, y, width, 1, col, alpha);
-			fillbox(x, y + height, width - 1, 1, col, alpha);
-			fillbox(x, y + 1, 1, height, col, alpha);
-			fillbox(x + width - 1, y + 1, 1, height, col, alpha);
+			fillbox(x, y + height - 1, width - 1, 1, col, alpha);
+			fillbox(x, y + 1, 1, height - 1, col, alpha);
+			fillbox(x + width - 1, y + 1, 1, height - 1, col, alpha);
 		#else
 		if (_linethickness < 2) {				
 			fillbox(x, y, width, 1, col, alpha);
-			fillbox(x, y + height, width - 1, 1, col, alpha);
-			fillbox(x, y + 1, 1, height, col, alpha);
-			fillbox(x + width - 1, y + 1, 1, height, col, alpha);
+			fillbox(x, y + height - 1, width - 1, 1, col, alpha);
+			fillbox(x, y + 1, 1, height - 1, col, alpha);
+			fillbox(x + width - 1, y + 1, 1, height - 1, col, alpha);
 		}else{
 			tempshape.graphics.clear();
 			tempshape.graphics.lineStyle(_linethickness, col, alpha);
