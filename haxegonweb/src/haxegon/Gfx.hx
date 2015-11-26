@@ -212,7 +212,7 @@ class Gfx {
 	
 	/** Loads an image into the game. */
 	#if haxegonweb
-	private static var BASE64:String = "abcdefghijklmnopqrstuvwxyz0123456789$=ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private static var BASE64:String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJQLMNOPQRSTUVWXYZàáâäæãåāèéüö";
 	public static var KEEPCOL:Int = -1;
 	
 	private static function convertobinary(t:Int, len:Int):String {
@@ -278,6 +278,35 @@ class Gfx {
 		images = [];
 	}
 	
+	private static function unmakerle(s:String):String {
+		var result:String = "";
+		var lastInt:Int = 0;
+		var i:Int = 0;
+		
+		while (i < s.length) {
+			var c:String = s.substr(i, 1);
+			while (c == "0" || c == "1" || c == "2" || c == "3" || c == "4" ||
+			       c == "5" || c == "6" || c == "7" || c == "8" || c == "9") {
+				lastInt = lastInt * 10 + Convert.toint(c);
+				i++;
+				c = s.substr(i, 1);
+			}
+			
+			if (lastInt == 0) {
+				lastInt = 1;
+			}
+			
+			for (i in 0 ... lastInt) {
+				result = result + c;
+			}
+			i++;
+			c = s.substr(i, 1);
+			lastInt=0;
+		}
+		
+		return result;
+	}
+	
 	public static function loadimagestring(imagename:String, inputstring:String, col1:Int = -1, col2:Int = -1, col3:Int = -1, col4:Int = -1) {
 		inputstring = replacechar(inputstring, " ", "");
 		inputstring = replacechar(inputstring, "\n", "");
@@ -288,6 +317,7 @@ class Gfx {
 			inputstring = inputstring.substr(size);
 		}
 		
+		inputstring = unmakerle(inputstring);
 		inputstring = convertbase64tobinary(inputstring);
 		
 		//Get image width:
