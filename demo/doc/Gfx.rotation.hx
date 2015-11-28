@@ -1,5 +1,5 @@
 //This image string is an image made in the Zeedonk Sprite Editor
-Gfx.loadimagestring("zebra", "YKaaapZZZSaaaaaaaaaabeaaaaraaaacE6aaaEOaaavnaaac6avkFqaiHvkaquEHaac6aCabqauaauafaa");
+Gfx.loadimagestring("zebra", "öW3ap3üæ10abe4ar4acQG3aQà3avn3acGavkRqaiTvkaquQT2acGaOabqau2auaf2a");
 Gfx.resizeimage("zebra", 4);
 
 function update(){

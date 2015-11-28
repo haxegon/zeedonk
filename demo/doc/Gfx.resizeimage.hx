@@ -1,6 +1,6 @@
 //This image string is a 16x12 image made in the Zeedonk Sprite Editor
-Gfx.loadimagestring("donkey", "YKaaaks4f3iMeqaaaaeqaaabeaaacE6aafkCaabsE
-                               aaaac6aaaaEEE6akEE8acEECqaCakaakac6afabqa");
+Gfx.loadimagestring("donkey", "öW3aksEfDiYeq4aeq3abe3acQG2afkO2absQ
+                               4acG4a3QGak2QIac2QOqaOak2akacGafabqa");
 
 //This resizes the image to be 5 times larger, 80x60.
 Gfx.resizeimage("donkey", 5);
