@@ -212,7 +212,7 @@ class Gfx {
 	
 	/** Loads an image into the game. */
 	#if haxegonweb
-	private static var BASE64:String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJQLMNOPQRSTUVWXYZàáâäæãåāèéüö";
+	private static var BASE64:String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàáâäæãåøèéöü";
 	public static var KEEPCOL:Int = -1;
 	
 	private static function convertobinary(t:Int, len:Int):String {
@@ -301,7 +301,7 @@ class Gfx {
 			}
 			i++;
 			c = s.substr(i, 1);
-			lastInt=0;
+			lastInt = 0;
 		}
 		
 		return result;
