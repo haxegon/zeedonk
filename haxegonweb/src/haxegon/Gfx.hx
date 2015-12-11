@@ -1,6 +1,6 @@
 package haxegon;
 
-#if !haxegon3d
+#if haxegon3D
 import haxegon3D.*;
 #end
 
@@ -14,6 +14,9 @@ import openfl.Assets;
 import openfl.Lib;
 import openfl.system.Capabilities;
 
+#if haxegon3D
+@:access(haxegon3D.Gfx3D)
+#end
 class Gfx {
 	public static var LEFT:Int = -10000;
 	public static var RIGHT:Int = -20000;
@@ -1552,7 +1555,7 @@ class Gfx {
 		linethickness = 1;
 		transparentpixel = new BitmapData(1, 1, true, 0);
 		
-		#if !haxegon3d
+		#if haxegon3D
 		Gfx3D.init3d();
 		#end
 	}	
@@ -1617,7 +1620,7 @@ class Gfx {
 		hslval.push(0.0); hslval.push(0.0); hslval.push(0.0);
 		
 		if (backbuffer != null) backbuffer.dispose();
-		#if !haxegon3d
+		#if haxegon3D
 		backbuffer = new BitmapData(screenwidth, screenheight, true, 0);
 		#else
 		backbuffer = new BitmapData(screenwidth, screenheight, false, 0x000000);
