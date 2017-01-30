@@ -1,1 +1,1 @@
-C:\coding\python\python.exe -m SimpleHTTPServer 8000
+C:\coding\python\python.exe -m http.server 2000
