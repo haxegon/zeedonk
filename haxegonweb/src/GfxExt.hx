@@ -1,4 +1,7 @@
 import haxegon.*;
+import haxegon.Gfx;
+import starling.display.Image;
+import starling.textures.Texture;
 
 import openfl.display.BitmapData;
 
@@ -48,7 +51,7 @@ class GfxExt {
 	public static function clearimages() {
 		Gfx.imageindex = new Map<String, Int>();
 		for(i in 0 ... Gfx.images.length){
-		  Gfx.images[i].dispose();
+		  Gfx.images[i].contents.dispose();
 		}
 		
 		Gfx.images = [];
@@ -122,7 +125,7 @@ class GfxExt {
 			g = convertbinarytoint(currentchunk);
 			getnextchunk(8);
 			b = convertbinarytoint(currentchunk);
-			if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.rgb(r, g, b);
+			if (imgpal[i] == KEEPCOL) imgpal[i] = Col.rgb(r, g, b);
 		}
 		
 		//Clear the image before starting
@@ -139,8 +142,16 @@ class GfxExt {
 				}
 			}
 		}
-			
+		
 		Gfx.imageindex.set(imagename, Gfx.images.length);
-		Gfx.images.push(t);
+		
+		var img:Image = new Image(Texture.fromBitmapData(t));
+		img.touchable = false;
+		img.smoothing = "none";
+		
+		var haxeimage:HaxegonImage = new HaxegonImage(imagename);
+		haxeimage.contents = img;
+		
+		Gfx.images.push(haxeimage);
 	}
 }

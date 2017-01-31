@@ -31,10 +31,9 @@ class Webbridge {
 		Gfx.rotation(0);
 		Gfx.scale(1, 1);
 		Gfx.imagecolor(Col.WHITE);
-		Text.setfont(Webfont.DEFAULT, 1);
+		Text.font = Webfont.DEFAULT; Text.size = 1;
 		Webscript.cleanupimages();
-		Text.cleartextcache();
-		Gfx.clearscreeneachframe = true;
+		
 		Webscript.scriptloaded = false;
 		Webscript.runscript = false;
 		Webscript.errorinscript = false;
@@ -43,12 +42,12 @@ class Webbridge {
 }
 
 @:access(haxegon.Input)
+@:access(haxegon.Text)
 class Main {
 	public function new() {
 		if (firstrun) {
-			Gfx.resizescreen(240, 150, 1);
+			//Gfx.resizescreen(240, 150);
 			Text.setfont("default", 1);
-			Text.cleartextcache();
 			Input.keybuffer = "";
 			
 			Webscript.init();

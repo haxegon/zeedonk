@@ -18,7 +18,7 @@ class Err {
 		Webscript.errorinscript = true;
 		
 		Gfx.resizescreen(240, 150);
-		Text.setfont(Webfont.DEFAULT, 1);
+		Text.font = Webfont.DEFAULT; Text.size = 1;
 		
 		if (errorcode == PRE_BRACKETMISMATCH) {
 			Webdebug.error("ERROR: Bracket mismatch.");

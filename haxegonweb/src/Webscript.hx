@@ -39,7 +39,6 @@ class Webscript {
 		pausescript = false;
 		errorinscript = false;
 		
-		Text.cleartextcache();
 		Text.setfont(Webfont.ZERO4B11, 1);
 		Text.setfont(Webfont.C64, 1);
 		Text.setfont(Webfont.COMIC, 1);
@@ -84,8 +83,9 @@ class Webscript {
 		GfxExt.clearimages();
 	  GfxExt.loadimagestring("__library_zebra", "öW3ap3üæ10abe4ar4acQG3aQà3akT3acGavkRqaiTvkaquQT2acGaOabqau2auaf2a");
 		GfxExt.loadimagestring("__library_donkey", "öW3aksEfDiYeq4aeq3abe3acQG2afkO2absQ4acG4a3QGak2QIac2QOqaOak2akacGafabqa");
-		Gfx.resizeimage("__library_zebra", 3);
-		Gfx.resizeimage("__library_donkey", 3);
+		//TODO
+		//Gfx.resizeimage("__library_zebra", 3);
+		//Gfx.resizeimage("__library_donkey", 3);
 	}
 	
 	public static var myLoader:URLLoader;
@@ -115,7 +115,7 @@ class Webscript {
 	public static function update() {
 		if (errorinscript) {
 		  Text.setfont(Webfont.DEFAULT, 1);
-			Gfx.clearscreen(Gfx.rgb(32, 0, 0));
+			Gfx.clearscreen(Col.rgb(32, 0, 0));
 			Text.display(Text.CENTER, Text.CENTER, "ERROR! ERROR! ERROR!", Col.RED);
 		}else if (loadwhenready) {
 			if (readytogo) {
@@ -161,9 +161,9 @@ class Webscript {
 				Gfx.rotation(0);
 				
 				if (counter % 120 < 60) {
-					Gfx.fillcircle(Gfx.screenwidthmid - 60 + ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Gfx.hsl(counter, 0.75, 0.5));
+					Gfx.fillcircle(Gfx.screenwidthmid - 60 + ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Col.hsl(counter, 0.75, 0.5));
 				}else {
-					Gfx.fillcircle(Gfx.screenwidthmid + 60 - ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Gfx.hsl(counter, 0.75, 0.5));
+					Gfx.fillcircle(Gfx.screenwidthmid + 60 - ((counter % 60) * 120) / 60, Gfx.screenheightmid - 30 - 30 * Math.sin((counter % 60) * Math.PI / 60), 8, Col.hsl(counter, 0.75, 0.5));
 				}
 				
 				Text.setfont(Webfont.PRESSSTART, 1);
@@ -176,23 +176,6 @@ class Webscript {
   			Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 24, "zeedonk beta v0.7", Col.GRAY);
 				Text.display(Text.CENTER, Gfx.screenheight - Text.height() - 14, "loading script...", Col.GRAY);
 			}
-		}
-		
-		if (Gfx.showfps) {
-			oldfont = Text.currentfont;
-			oldfontsize = Text.currentsize;
-			Text.setfont("pixel", 1);
-			if (Gfx.fps() > -1) {
-				Text.align(Text.RIGHT);
-				Text.display(Gfx.screenwidth - 4, 1, "FPS: " + Gfx.fps(), Col.YELLOW);
-			}
-			//if (Gfx.updatefps() > -1) {
-			//  Text.align(Text.RIGHT);
-			//	Text.display(Gfx.screenwidth - 4, 7, "UPDATE FPS: " + Gfx.updatefps(), Col.YELLOW);
-			//}
-			
-			Text.align(Text.LEFT);
-			Text.setfont(oldfont, oldfontsize);
 		}
 	}
 	public static var name:String;
@@ -263,10 +246,7 @@ class Webscript {
 		
 		//Set default font
 		Text.setfont(Webfont.DEFAULT, 1);
-		Text.cleartextcache();
-		Gfx.clearscreeneachframe = true;
 		
-		Gfx.skiprender = false;
 		runscript = true;
 		try{
 			parsedscript = parser.parseString(myscript);
@@ -311,7 +291,7 @@ class Webscript {
 			}
 			
 			if (updatefunction == null) {
-				Gfx.clearscreeneachframe = false;
+				Gfx.clearcolor = Col.TRANSPARENT;
 				Webscript.pausescript = true;
 			}
 		}
