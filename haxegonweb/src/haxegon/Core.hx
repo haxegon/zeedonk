@@ -5,15 +5,8 @@ import openfl.display.*;
 import openfl.events.*;
 import openfl.Lib;
 
-#if haxegon3D
-import haxegon3D.*;
-#end
-
 @:access(Main)
 @:access(haxegon.Gfx)
-#if haxegon3D
-@:access(haxegon3D.Gfx3D)
-#end
 @:access(haxegon.Music)
 @:access(haxegon.Mouse)
 @:access(haxegon.Input)
@@ -23,9 +16,6 @@ class Core extends Sprite {
 		super();
 		
 		Gfx.initrun = true;
-		#if haxegonweb
-		Webscript.corecontrol = this;
-		#end
 		init();
 	}
 	
@@ -49,17 +39,6 @@ class Core extends Sprite {
 		loaded();
 	}
 	
-	#if haxegonweb
-	public function reset() {
-	  Random.setseed(Std.int(Math.random() * 233280));
-		Gfx.init(this.stage);
-		Gfx.resizescreen(240, 150, 1);
-		Text.setfont(Webfont.DEFAULT, 1);
-		Text.cleartextcache();
-		Input.keybuffer = "";
-	}
-	#end
-	
 	private function loaded() {
 		//Init library classes
 		Random.setseed(Std.int(Math.random() * 233280));
@@ -71,29 +50,13 @@ class Core extends Sprite {
 		
 		Gfx.init(this.stage);
 		
-		#if haxegonweb
-		#else
 		Music.init();
-		#end
 		
 		//Default setup
-		#if haxegonweb
-			Gfx.resizescreen(240, 150, 1);
-			Text.setfont("default", 1);
-			Text.cleartextcache();
-			Input.keybuffer = "";
-		#else
-			Gfx.resizescreen(768, 480);
-			Text.setfont("opensans", 24);
-		#end
+		Gfx.resizescreen(768, 480);
+		Text.setfont("opensans", 24);
 		
-		#if haxegonweb
-		if (Gfx.initrun) {
-			if (haxegonmain == null) haxegonmain = new Main();
-		}
-		#else
 		Scene.init();
-		#end
 		
 		// start game loop
 		_rate = 1000 / TARGETFRAMERATE;
@@ -176,28 +139,18 @@ class Core extends Sprite {
 			Gfx.drawto.lock();			
 			if (Gfx.clearscreeneachframe) Gfx.clearscreen();
 		}
-		#if haxegonweb
-		haxegonmain.update();
-		#else
+		
 		Scene.update();
-		#end
+		
 		if(!Gfx.skiprender) {
 			Text.drawstringinput();
 			Debug.showlog();
 			
 			Gfx.drawto.unlock();
-			
-			#if haxegon3D
-			Gfx3D.view.render();
-			#end
 		}
 		
 		Mouse.mousewheel = 0;
 	}
-	
-	#if haxegonweb
-	public var haxegonmain:Main; //No scene control in online version
-	#end
 	
 	//NEW FRAMERATE CODE - From HaxePunk fixed FPS implementation
 	private var maxelapsed:Float;

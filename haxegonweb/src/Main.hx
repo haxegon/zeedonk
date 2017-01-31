@@ -42,9 +42,15 @@ class Webbridge {
 	}
 }
 
+@:access(haxegon.Input)
 class Main {
 	public function new() {
-		if(firstrun){
+		if (firstrun) {
+			Gfx.resizescreen(240, 150, 1);
+			Text.setfont("default", 1);
+			Text.cleartextcache();
+			Input.keybuffer = "";
+			
 			Webscript.init();
 			firstrun = false;
 		}

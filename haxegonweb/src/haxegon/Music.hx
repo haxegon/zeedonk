@@ -1,4 +1,3 @@
-#if !haxegonweb
 package haxegon;
 
 import openfl.display.*;          
@@ -188,4 +187,3 @@ class Music {
 	public static var muted:Bool; 
 	public static var mutebutton:Int;
 }
-#end

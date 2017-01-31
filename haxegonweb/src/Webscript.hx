@@ -32,7 +32,6 @@ class Webscript {
 	
 	public static var donkeyhop:Int = 0;
 	public static var zebrahop:Int = 0;
-	public static var corecontrol:Core;
 	
 	public static function init() {
 		scriptloaded = false;
@@ -230,7 +229,7 @@ class Webscript {
 	
 	public static function scriptfound() {
 		resetGlobalVariables();
-		corecontrol.reset();
+		CoreExt.reset();
 		
 		scriptloaded = true;
 		errorinscript = false;
@@ -261,7 +260,6 @@ class Webscript {
 		interpreter.variables.set("Random", Random);
 		interpreter.variables.set("String", String);
 		interpreter.variables.set("trace", Webdebug.log);
-		interpreter.variables.set("Math.abs", Gfx.fastAbs);
 		
 		//Set default font
 		Text.setfont(Webfont.DEFAULT, 1);
