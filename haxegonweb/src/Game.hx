@@ -67,19 +67,11 @@ class Game {
 		#if flash
 		return false;
 		#else
-		#if terryhasntupgraded
-		  try{
-			  return ExternalInterface.call("isIDE");
-			}catch (e:Dynamic) {
-			  return false;	
-			}
-		#else
-		  try{
-			  return untyped __js__('IDE');
-			}catch (e:Dynamic) {
-			  return false;	
-			}
-		#end
+		try{
+			return untyped __js__('IDE');
+		}catch (e:Dynamic) {
+			return false;	
+		}
 		#end
 	}
 
@@ -87,22 +79,14 @@ class Game {
 		#if flash
 		return "";
 		#else
-		#if terryhasntupgraded
-			return ExternalInterface.call("prompt",description,defaultText);
-		#else
-			return untyped __js__('prompt({0},{1})',description,defaultText);
-		#end
+		return untyped __js__('prompt({0},{1})',description,defaultText);
 		#end
 	}
 
 	public static function save(key:String, value:String) {
 		#if flash
 		#else
-		#if terryhasntupgraded
-			ExternalInterface.call('saveKey_terryhasntupgraded',key,value);
-		#else
-			untyped __js__('localStorage.setItem(window.document.URL.toString()+{0},{1})', key, value);
-		#end
+		untyped __js__('localStorage.setItem(window.document.URL.toString()+{0},{1})', key, value);
 		#end
 	}
 
@@ -110,13 +94,7 @@ class Game {
 		#if flash
 		return "";
 		#else
-		
-		#if terryhasntupgraded
-			return  ExternalInterface.call('loadKey_terryhasntupgraded',key);
-		#else
-			return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})', key);
-		#end
-		
+		return untyped __js__('localStorage.getItem(window.document.URL.toString()+{0})', key);
 		#end
 	}
 	

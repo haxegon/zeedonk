@@ -104,15 +104,9 @@ class Input {
 	
 	private static function handlekeydown(event:KeyboardEvent) {
 		#if (js || html5)
-		#if terryhasntupgraded
-			if (ExternalInterface.call("bodyIsTargetted") == false) {
-				return;
-			}
-		#else
-			if (untyped __js__('document.activeElement.nodeName!="BODY"')){
-				return;
-			}
-		#end
+		if (untyped __js__('document.activeElement.nodeName!="BODY"')){
+			return;
+		}
 		
 		charcode = event.charCode;
 		

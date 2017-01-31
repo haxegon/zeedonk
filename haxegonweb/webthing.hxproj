@@ -26,7 +26,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="openfl=4.6.0&#xA;lime=3.6.2&#xA;hscript=2.0.7&#xA;hscriptPos&#xA;tools=3.6.2&#xA;no-compilation&#xA;openfl-flash&#xA;haxegonweb&#xA;RENDER_BLIT&#xA;terryhasntupgraded&#xA;web&#xA;display" />
+    <option directives="openfl=4.6.0&#xA;lime=3.6.2&#xA;hscript=2.0.7&#xA;hscriptPos&#xA;tools=3.6.2&#xA;no-compilation&#xA;openfl-flash&#xA;RENDER_BLIT&#xA;web&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

@@ -43,12 +43,7 @@ class Webdebug {
 				if (msg7 != null) returnarray.push(msg7);
 				if (msg8 != null) returnarray.push(msg8);
 				
-				#if terryhasntupgraded
-					trace(returnarray);
-					ExternalInterface.call("consolePrintArray", returnarray, true);
-				#else
-					untyped __js__('consolePrintArray({0},true)', returnarray);
-				#end
+				untyped __js__('consolePrintArray({0},true)', returnarray);
 			}else{
 				returnarray.push(msg1);
 				if (msg2 != null) returnarray.push(msg2);
@@ -59,12 +54,7 @@ class Webdebug {
 				if (msg7 != null) returnarray.push(msg7);
 				if (msg8 != null) returnarray.push(msg8);
 				
-				#if terryhasntupgraded
-					trace(returnarray, linenum);
-					ExternalInterface.call("consolePrintWithLinesArray", returnarray, linenum, true);
-				#else
-					untyped __js__('consolePrintWithLinesArray({0},{1},true)', returnarray,linenum);
-				#end
+				untyped __js__('consolePrintWithLinesArray({0},{1},true)', returnarray,linenum);
 			}
 		}else {
 		  trace("!CONSOLE NOT AVAILABLE YET!");

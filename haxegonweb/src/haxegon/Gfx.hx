@@ -42,10 +42,8 @@ class Gfx {
 	/** Create a screen with a given width, height and scale. Also inits Text. */
 	public static function resizescreen(width:Float, height:Float, scale:Int = 1) {
 		initgfx(Std.int(width), Std.int(height), scale);
-		#if haxegonweb
 		#if (js || html5)
 			onresize(null);
-		#end
 		#end
 		Text.init(gfxstage);
 		showfps = false;
@@ -132,7 +130,6 @@ class Gfx {
 	}
 	
 	/** Change the tileset that the draw functions use. */
-	#if !haxegonweb
 	public static function changetileset(tilesetname:String) {
 		if (currenttilesetname != tilesetname) {
 			if(tilesetindex.exists(tilesetname)){
@@ -143,24 +140,12 @@ class Gfx {
 			}
 		}
 	}
-	#else
-	public static function changetileset(tilesetname:String) {
-		//Do nothing in web version
-	}
-	#end
 	
-	#if !haxegonweb
 	public static function numberoftiles():Int {
 		return tiles[currenttileset].tiles.length;
 	}
-	#end
 		
 	/** Makes a tile array from a given image. */
-	#if haxegonweb
-	public static function loadtiles(imagename:String, width:Int, height:Int) {
-		Webdebug.log("Error: \"loadtiles\" function not available in webscript version.");
-	}
-	#else
 	public static function loadtiles(imagename:String, width:Int, height:Int) {
 		buffer = new Bitmap(Assets.getBitmapData("data/graphics/" + imagename + ".png")).bitmapData;
 		if (buffer == null) {
@@ -189,9 +174,7 @@ class Gfx {
 		
 		changetileset(imagename);
 	}
-	#end
 	
-	#if !haxegonweb
 	/** Creates a blank tileset, with the name "imagename", with each tile a given width and height, containing "amount" tiles. */
 	public static function createtiles(imagename:String, width:Float, height:Float, amount:Int) {
 		tiles.push(new haxegon.util.Tileset(imagename, Std.int(width), Std.int(height)));
@@ -215,172 +198,7 @@ class Gfx {
 	public static function tileheight():Int {
 		return tiles[currenttileset].height;
 	}
-	#end
 	
-	/** Loads an image into the game. */
-	#if haxegonweb
-	private static var BASE64:String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàáâäæãåøèéöü";
-	public static var KEEPCOL:Int = -1;
-	
-	private static function convertobinary(t:Int, len:Int):String {
-		var endstring:String = "";
-		var currentbit:Int;
-		
-		while (t > 0) {
-			currentbit = t % 2;
-			endstring = Convert.tostring(currentbit) + endstring;
-			t = t - currentbit;
-			t = Std.int(t / 2);
-		}
-		
-		while (endstring.length < len) endstring = "0" + endstring;
-		return endstring;
-	}
-	
-	private static function convertbase64tobinary(t:String):String {
-		var endstring:String = "";
-		var currentval:Int = 0;
-		
-		for (i in 0 ... t.length) {
-			currentval = BASE64.indexOf(t.substr(i, 1));
-			endstring += convertobinary(currentval, 6);
-		}
-		return endstring;
-	}
-	
-	private static function convertbinarytoint(binarystring:String):Int {
-		var returnval:Int = 0;
-		for (i in -binarystring.length ... 0) {
-			if (binarystring.substr( -i - 1, 1) == "1"){
-				returnval += Std.int(Math.pow(2, binarystring.length + i));
-			}
-		}
-		return returnval;
-	}
-	
-	/** Return characters from the middle of a string. */
-	private static function mid(currentstring:String, start:Int = 0, length:Int = 1):String {
-		if (start < 0) return "";
-		return currentstring.substr(start,length);
-	}
-	
-	private static function replacechar(currentstring:String, ch:String = "|", ch2:String = ""):String {
-		var fixedstring:String = "";
-		for (i in 0 ... currentstring.length) {
-			if (mid(currentstring, i) == ch) {
-				fixedstring += ch2;
-			}else {
-				fixedstring += mid(currentstring, i);
-			}
-		}
-		return fixedstring;
-	}
-	
-	public static function clearimages() {
-		imageindex = new Map<String, Int>();
-		for(i in 0 ... images.length){
-		  images[i].dispose();
-		}
-		
-		images = [];
-	}
-	
-	private static function unmakerle(s:String):String {
-		var result:String = "";
-		var lastInt:Int = 0;
-		var i:Int = 0;
-		
-		while (i < s.length) {
-			var c:String = s.substr(i, 1);
-			while (c == "0" || c == "1" || c == "2" || c == "3" || c == "4" ||
-			       c == "5" || c == "6" || c == "7" || c == "8" || c == "9") {
-				lastInt = lastInt * 10 + Convert.toint(c);
-				i++;
-				c = s.substr(i, 1);
-			}
-			
-			if (lastInt == 0) {
-				lastInt = 1;
-			}
-			
-			for (i in 0 ... lastInt) {
-				result = result + c;
-			}
-			i++;
-			c = s.substr(i, 1);
-			lastInt = 0;
-		}
-		
-		return result;
-	}
-	
-	public static function loadimagestring(imagename:String, inputstring:String, col1:Int = -1, col2:Int = -1, col3:Int = -1, col4:Int = -1) {
-		inputstring = replacechar(inputstring, " ", "");
-		inputstring = replacechar(inputstring, "\n", "");
-		inputstring = replacechar(inputstring, "\t", "");
-		var currentchunk:String = "";
-		function getnextchunk(size:Int) {
-			currentchunk = inputstring.substr(0, size);
-			inputstring = inputstring.substr(size);
-		}
-		
-		inputstring = unmakerle(inputstring);
-		inputstring = convertbase64tobinary(inputstring);
-		
-		//Get image width:
-		getnextchunk(4);
-		var imgwidth:Int = convertbinarytoint(currentchunk) + 1;
-		
-		//Get image height:
-		getnextchunk(4);
-		var imgheight:Int = convertbinarytoint(currentchunk) + 1;
-		
-		getnextchunk(1);
-		var imgformat:Int = Convert.toint(currentchunk);
-		if (imgformat == 0) imgformat = 2;
-		
-		var t:BitmapData = new BitmapData(imgwidth, imgheight, true, 0x000000);
-		
-		//Load the palette
-		var r:Int; var g:Int; var b:Int;
-		var imgpal:Array<Int> = [col1, col2, col3, col4];
-		
-		//Four colour format
-		for (i in 0 ... (imgformat * 2)) {
-			getnextchunk(8);
-			r = convertbinarytoint(currentchunk);
-			getnextchunk(8);
-			g = convertbinarytoint(currentchunk);
-			getnextchunk(8);
-			b = convertbinarytoint(currentchunk);
-			if (imgpal[i] == KEEPCOL) imgpal[i] = Gfx.rgb(r, g, b);
-		}
-		
-		//Clear the image before starting
-		var pixel:Int = 0;
-		for (j in 0 ... imgheight) {
-			for (i in 0 ... imgwidth) {
-				getnextchunk(imgformat);
-				pixel = convertbinarytoint(currentchunk);
-				pixel = imgpal[pixel];
-				
-				if(pixel != Col.TRANSPARENT){
-					settrect(i, j, 1, 1);
-					t.fillRect(trect, (0xFF << 24) + pixel);
-				}
-			}
-		}
-			
-		imageindex.set(imagename, images.length);
-		images.push(t);
-	}
-	
-	
-	public static function loadimage(imagename:String) {
-		Webdebug.log("Error: \"loadimage\" function not available in webscript version.");
-		Webdebug.log("Try loadimagestring, using the sprite editor tool.");
-	}
-	#else
 	public static function loadimage(imagename:String) {
 		buffer = new Bitmap(Assets.getBitmapData("data/graphics/" + imagename + ".png")).bitmapData;
 		if (buffer == null) {
@@ -395,7 +213,6 @@ class Gfx {
 		t.copyPixels(buffer, trect, tl);
 		images.push(t);
 	}
-	#end
 	
 	/** Creates a blank image, with the name "imagename", with given width and height. */
 	public static function createimage(imagename:String, width:Float, height:Float) {
@@ -477,7 +294,6 @@ class Gfx {
 		Text.drawto = Gfx.drawto;
 	}
 	
-	#if !haxegonweb
 	/** Tell draw commands to draw to the given tile in the current tileset. */
 	public static function drawtotile(tilenumber:Int) {
 		drawingtoscreen = false;
@@ -487,7 +303,6 @@ class Gfx {
 		
 		Text.drawto = Gfx.drawto;
 	}
-	#end
 	
 	/** Helper function for image drawing functions. */
 	private static var t1:Float;
@@ -615,7 +430,6 @@ class Gfx {
 		}
 	}
 	
-	#if !haxegonweb
 	public static function grabtilefromscreen(tilenumber:Int, x:Float, y:Float) {
 		if (currenttileset == -1) {
 			throw("ERROR: In grabtilefromscreen, there is no tileset currently set. Use Gfx.changetileset(\"tileset name\") to set the current tileset.");
@@ -642,7 +456,6 @@ class Gfx {
 		settrect(x, y, tilewidth(), tileheight());
 		tiles[currenttileset].tiles[tilenumber].copyPixels(images[imagenum], trect, tl);
 	}
-	#end
 	
 	public static function grabimagefromscreen(imagename:String, x:Float, y:Float) {
 		if (!imageindex.exists(imagename)) {
@@ -675,7 +488,6 @@ class Gfx {
 		images[imagenum].copyPixels(images[imagenumfrom], trect, tl);
 	}
 	
-	#if !haxegonweb
 	public static function copytile(totilenumber:Int, fromtileset:String, fromtilenumber:Int) {
 		if (tilesetindex.exists(fromtileset)) {
 			if (tiles[currenttileset].width == tiles[tilesetindex.get(fromtileset)].width && tiles[currenttileset].height == tiles[tilesetindex.get(fromtileset)].height) {
@@ -689,13 +501,11 @@ class Gfx {
 			return;
 		}
 	}
-	#end
 	
 	/** Draws tile number t from current tileset.
 	 * Parameters can be: rotation, scale, xscale, yscale, xpivot, ypivoy, alpha
 	 * x and y can be: Gfx.CENTER, Gfx.TOP, Gfx.BOTTOM, Gfx.LEFT, Gfx.RIGHT. 
 	 * */
-	#if !haxegonweb
 	public static function drawtile(x:Float, y:Float, t:Int) {
 		if (!clearscreeneachframe) if (skiprender && drawingtoscreen) return;
 		if (currenttileset == -1) {
@@ -821,9 +631,7 @@ class Gfx {
 		if (y == RIGHT || y == BOTTOM) return tiles[currenttileset].height;
 		return y;
 	}
-	#end
 	
-	#if haxegonweb
 	public static var bresx1:Array<Int> = new Array<Int>();
 	public static var bresy1:Array<Int> = new Array<Int>();
 	//public static var bresswap1:Array<Int> = new Array<Int>();
@@ -929,7 +737,6 @@ class Gfx {
 			}
 		}
 	}
-	#end
 	
 	public static function drawline(_x1:Float, _y1:Float, _x2:Float, _y2:Float, col:Int, alpha:Float = 1.0) {
     if (!clearscreeneachframe) if (skiprender && drawingtoscreen) return;
@@ -1077,12 +884,9 @@ class Gfx {
 		#end
 	}
 	
-	#if haxegonweb
 	private static var fillcirclepoints:Array<Bool> = [];
-	#end
 	public static function fillcircle(x:Float, y:Float, radius:Float, col:Int, alpha:Float = 1.0) {
 		if (!clearscreeneachframe) if (skiprender && drawingtoscreen) return;
-		#if haxegonweb alpha = 1.0; #end
 		#if haxegonweb
 		x = fastFloor(x);
 		y = fastFloor(y);

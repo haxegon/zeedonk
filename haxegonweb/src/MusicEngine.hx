@@ -1,5 +1,3 @@
-#if haxegonweb
-
 import openfl.display.*;          
 import openfl.media.*; 
 import openfl.events.*;
@@ -274,4 +272,3 @@ private static function loadDat(s:String){
            
 
 }
-#end

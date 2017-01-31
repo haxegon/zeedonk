@@ -81,9 +81,9 @@ class Webscript {
 	}
 	
 	public static function cleanupimages() {
-		Gfx.clearimages();
-	  Gfx.loadimagestring("__library_zebra", "öW3ap3üæ10abe4ar4acQG3aQà3akT3acGavkRqaiTvkaquQT2acGaOabqau2auaf2a");
-		Gfx.loadimagestring("__library_donkey", "öW3aksEfDiYeq4aeq3abe3acQG2afkO2absQ4acG4a3QGak2QIac2QOqaOak2akacGafabqa");
+		GfxExt.clearimages();
+	  GfxExt.loadimagestring("__library_zebra", "öW3ap3üæ10abe4ar4acQG3aQà3akT3acGavkRqaiTvkaquQT2acGaOabqau2auaf2a");
+		GfxExt.loadimagestring("__library_donkey", "öW3aksEfDiYeq4aeq3abe3acQG2afkO2absQ4acG4a3QGak2QIac2QOqaOak2akacGafabqa");
 		Gfx.resizeimage("__library_zebra", 3);
 		Gfx.resizeimage("__library_donkey", 3);
 	}
